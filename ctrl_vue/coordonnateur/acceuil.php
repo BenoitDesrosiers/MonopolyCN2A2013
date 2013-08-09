@@ -12,7 +12,7 @@ switch ($action) {
 	case 'liste_parties' :
 		// liste toutes les parties appartenant au coordonnateur présentement connecté
 		$coordonnateur = $_SESSION['usager'];
-		$parties = $coordonnateur->getParties();
+		$parties = $coordonnateur->getPartiesEnCours();
 		$titrePage = "Accueil Coordonnateur";
 		include('liste_parties_view.php');
 		break;
@@ -22,12 +22,12 @@ switch ($action) {
 		//TODO: valider que l'id est numerique
 		//TODO: valider que la partie appartient bien au coordonnateur
 		//TODO: aller chercher la partie correspondant dans l'usager connecte et le mettre dans une var de session pour le recuperer plus tard
-		$redirection = "partieEdition?action=edit&partieId=" . $_POST['partieId'];
+		$redirection = "ctrl_vue/partieEdition?action=edit&partieId=" . $_POST['partieId'];
 		redirect($redirection);
 		break;
 	case 'ajouterPartie' :
 		// l'usager veut ajouter un test
-			redirect("partieEdition?action=ajouter");
+			redirect("ctrl_vue/partieEdition?action=ajouter");
 		break;
 }
 ?>

@@ -18,7 +18,7 @@ class Database {
 									self::$options);
 			} catch (PDOException $e) {
 				$msg_erreur = $e->getMessage();
-				include('erreurs/db_erreur.php');
+				include('erreurs/db_erreur_connect.php');
 				exit();
 			}
 		}

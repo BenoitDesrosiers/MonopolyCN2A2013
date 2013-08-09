@@ -3,7 +3,7 @@
 require_once('../util/main.php');
 require_once('util/secure_conn.php');
 
-require_once('factories/usager_factory.php');
+require_once('modele/usager.php');
 
 // Démarre la session pour conserver l'usager
 session_start();
@@ -25,25 +25,19 @@ if ($redirect=="") {
 $titrePage = "Connection";
 switch ($action) {
 	case 'voir_compte':
-		include 'voir_connection.php';
+		include 'voir_connection_view.php';
 		break;
     case 'demande_de_connection':
-    	//reset les factories  
-    	//TODO: est-ce que c'est correct de faire ca? est-ce que je crée des objets sans parents
-    	//TODO: et est-ce ici que ca devrait se faire?
-    	$_SESSION['lesFactories']=null;
-        include 'loginUsager.php';
+        include 'loginUsager_view.php';
         break;
     case 'view_register':
         include 'enregistrer_compte.php'; //TODO: à faire, demande toute l'info d'un usager
-        
         break;
     case 'connection':
         $compte = $_POST['compte'];
         $password = $_POST['password'];
         unset($_SESSION['usager']);
-        $usagerFactory = Usager_Factory::singleton();
-        $usager = $usagerFactory->parComptePW($compte, $password);
+        $usager = Usager::parComptePW($compte, $password);
         if ($usager <> null) {
             $_SESSION['usager'] = $usager;
             redirect($redirect);

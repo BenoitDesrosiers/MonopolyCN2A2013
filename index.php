@@ -1,10 +1,12 @@
 <?php
-/*page principale du site */ 
+/*
+ * page principale du site 
+ */
+ 
 require_once('util/main.php'); 
 require_once('modele/usager.php');
-require_once('modele/coordonnateur.php');
 
-// demarre la session, doit être fait après tout les includes
+//NOTE: demarre la session, doit être fait après tout les includes
 session_start();
 
 
@@ -17,7 +19,7 @@ $usager = $_SESSION['usager'];
 
 switch ($usager->getRole()) {
 	case 'coordonnateur' :
-		include('coordonnateur/acceuil.php');
+		include('ctrl_vue/coordonnateur/acceuil.php');
 		break;
 	case 'joueur' :
 		

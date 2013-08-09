@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <?php include 'vue/headCommun.php'; ?>
+    <?php 
+        $titrePage = "Login";
+        include 'vue/headCommun.php'; 
+    ?>
 </head>
 
 <body>    
     <?php include 'vue/enteteCommune.php'; ?>
-   
-    <?php //include '../view/sidebar.php'; ?>
     <div id="contenue">
     
         <h1>Connection</h1>
