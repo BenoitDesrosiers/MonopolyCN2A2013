@@ -16,7 +16,7 @@ set_include_path($doc_root . $app_path);
 // inclut le gestionnaire de bd
 require_once('modele/database.php');
 
-// Defini quelque fonctions commune
+// Defini quelques fonctions communes
 function affiche_erreur_db($msg_erreur) {
     global $app_path;
     include 'erreurs/db_erreur.php';

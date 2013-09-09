@@ -10,6 +10,7 @@ class Coordonnateur extends Usager {
     // Setter et Getter
     public function getPartiesEnCours() {
         // les parties appartenant à ce coordonnateur
+        //LISTEPARTIE 1.3.1.x : on utilise une factory de parties 
         $this->setPartiesEnCours(Partie::pourCoordonnateur($this));
         return $this->partiesEnCours;
     }

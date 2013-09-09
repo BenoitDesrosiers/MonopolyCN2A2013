@@ -8,7 +8,8 @@ require_once "modele/joueur.php";
 class UsagerDataMapper extends Mapper {
     
     function __construct() {
-        parent::__construct();
+        //CONNECTION 1.2.4.2.1 : batit le datamapper. Faire un 'new' appele "__construct"
+        parent::__construct(); // "parent" veut dire "cette méthode de ma superclasse. 
         $this->selectStmt = self::$db->prepare("SELECT * FROM Usagers where compte=?");
         $this->updateStmt = self::$db->prepare('update Usagers set compte=?, password=?, nom=?, role=?,  where compte=?');
         $this->insertStmt = self::$db->prepare("insert into Usagers ( compte, password, nom, role ) values (?, ?)");
@@ -16,6 +17,7 @@ class UsagerDataMapper extends Mapper {
     }
 
     protected function doCreateObject( array $array) {
+        //CONNECTION 1.2.4.3.2.1 choisit si on fait un coordonnateur ou un joueur
         switch ($array['role']) {
             case 'coordonnateur' :
                 $obj = new Coordonnateur($array['password'], $array['compte'], $array['nom']);

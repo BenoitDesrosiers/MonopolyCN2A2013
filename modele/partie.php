@@ -38,6 +38,7 @@ class Partie implements EntreposageDatabase {
          * retourne la liste des parties associées à un coordonnateur
          */
         $partieMapper = new PartieDataMapper();
+        //LISTEPARTIES 1.3.1.1.x : cette fonction est une factory. Utilise un datamapper pour extraire la liste des parties pour un coordonnateur.
         return $partieMapper->findPourCoordonnateur($coordonnateur->getCompte());
     }    
     

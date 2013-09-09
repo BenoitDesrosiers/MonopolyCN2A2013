@@ -11,6 +11,7 @@
     	<form id="ajout-Form" action="." method="post">
     		<input type="hidden" name="action" value="ajouterPartie"/>
      		<button type="submit" name="Ajout">Créer une nouvelle partie</button>
+     		<?php //LISTEJOUEUR 1 vous pouvez ajouter le bouton pour lister les joueurs ici ?>
      	</form>
     	<h1>Liste des parties disponibles</h1>
     	<table border="1">
@@ -19,6 +20,7 @@
     			<td>nom</td>
     			<td>coordonnateur</td>
     		</tr>
+    		<?php //LISTPARTIE 1.4.1 affiche toutes les parties pour ce coordonnateur?>
     		<?php  foreach ($parties as $partie) : ?>
     			
     			<tr>

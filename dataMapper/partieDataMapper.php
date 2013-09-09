@@ -78,7 +78,7 @@ class PartieDataMapper extends Mapper {
         *     un array vide si aucune partie n'est associée au coordonnateur
         *
         */
-        
+        //LISTEPARTIE 1.3.1.1.1 extrait la liste des parties pour un coordonnateur. 
         $queryTxt = 'SELECT * FROM PartiesEnCours
                         WHERE coordonnateur = :coordonnateur';
         $query = self::$db->prepare($queryTxt);

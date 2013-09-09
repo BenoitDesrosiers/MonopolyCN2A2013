@@ -19,13 +19,17 @@ abstract class Usager {  //implements EntreposageDatabase {
     // Static Factory
     
     public static function parCompte($compte) {
+        //CONNECTION 1.2.4.2.x : un data mapper sert à faire l'interface avec la bd. 
         $usagerMapper = new UsagerDataMapper();
+        //CONNECTION 1.2.4.3.x : cherche l'usager avec ce compte dans la bd
         return $usagerMapper->find($compte);
     }
     
     public static function parComptePW($compte, $password) {
         // crée l'usager associer à un numéro de compte en verifiant si le mot de passe est le bon
         // si aucun usager n'est associé ou si le pw est mauvais, null sera retourné
+        
+        //CONNECTION 1.2.4.1 : appelé à partir de connectionUsager/index.php. 
         $usager = null;
         $usager1 = self::parCompte($compte);
         if ($usager1 <> null) {
