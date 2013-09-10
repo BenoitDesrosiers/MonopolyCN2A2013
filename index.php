@@ -1,6 +1,7 @@
 <?php
 /*
  * page principale du site 
+ * 
  */
  
 require_once('util/main.php'); 
