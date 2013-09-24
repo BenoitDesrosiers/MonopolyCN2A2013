@@ -10,20 +10,20 @@ class UsagerDataMapper extends Mapper {
     function __construct() {
         //CONNECTION 1.2.4.2.1 : batit le datamapper. Faire un 'new' appele "__construct"
         parent::__construct(); // "parent" veut dire "cette méthode de ma superclasse. 
-        $this->selectStmt = self::$db->prepare("SELECT * FROM Usagers where compte=?");
-        $this->updateStmt = self::$db->prepare('update Usagers set compte=?, password=?, nom=?, role=?,  where compte=?');
-        $this->insertStmt = self::$db->prepare("insert into Usagers ( compte, password, nom, role ) values (?, ?)");
+        $this->selectStmt = self::$db->prepare("SELECT * FROM Usager where compte=?");
+        $this->updateStmt = self::$db->prepare('update Usager set compte=?, password=?, nom=?, role=?,  where compte=?');
+        $this->insertStmt = self::$db->prepare("insert into Usager ( compte, password, nom, role ) values (?, ?)");
         
     }
 
     protected function doCreateObject( array $array) {
         //CONNECTION 1.2.4.3.2.1 choisit si on fait un coordonnateur ou un joueur
-        switch ($array['role']) {
+        switch ($array['Role']) {
             case 'coordonnateur' :
-                $obj = new Coordonnateur($array['password'], $array['compte'], $array['nom']);
+                $obj = new Coordonnateur($array['MotDePasse'], $array['Compte'], $array['Nom']);
                 break;
             case 'joueur' :
-                $obj = new Joueur($array['password'], $array['compte'], $array['nom']);
+                $obj = new Joueur($array['MotDePasse'], $array['Compte'], $array['Nom']);
                 break;
         }
         return $obj;        
@@ -57,8 +57,8 @@ class UsagerDataMapper extends Mapper {
         *
         */
         
-        $queryTxt = 'SELECT * FROM PartiesEnCours
-                        WHERE coordonnateur = :coordonnateur';
+        $queryTxt = 'SELECT * FROM PartieEnCours
+                        WHERE Coordonnateur = :coordonnateur';
         $query = self::$db->prepare($queryTxt);
         $query->bindValue(':coordonnateur', $idCoordonnateur);
         $query->setFetchMode(PDO::FETCH_ASSOC);

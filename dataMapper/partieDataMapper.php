@@ -7,16 +7,20 @@ class PartieDataMapper extends Mapper {
     
     function __construct() {
         parent::__construct();
-        $this->selectStmt = self::$db->prepare("SELECT * FROM PartiesEnCours where id=?");
-        $this->updateStmt = self::$db->prepare('update PartiesEnCours set id=?, nom=?, coordonnateur=?,  where id=?');
-        $this->insertStmt = self::$db->prepare("insert into PartiesEnCours ( nom, coordonnateur ) values (?, ?)");
+        $this->selectStmt = self::$db->prepare("SELECT * FROM PartieEnCours where id=?");
+        $this->updateStmt = self::$db->prepare('update PartieEnCours set id=?, nom=?, coordonnateur=?, DefinitionPartieId, JoueurTour, DebutPartie  
+                                                    where id=?');
+        $this->insertStmt = self::$db->prepare("insert into PartieEnCours ( nom, coordonnateur, DefinitionPartieId, JoueurTour, DebutPartie ) values (?, ?, ?, ?, ?)");
         
     }
 
     protected function doCreateObject( array $array) {
         
-        $obj = new Partie($array['nom'],$array['coordonnateur'] );
-        $obj->setId($array['id']);
+        $obj = new Partie($array['Nom'],$array['Coordonnateur'] );
+        $obj->setId($array['Id']);
+        $obj->setDefinitionPartieId($array['DefinitionPartieId']);
+        $obj->setJoueurTour($array['JoueurTour']);
+        $obj->setDebutPartie($array['DebutPartie']);
         return $obj;        
     }
     
@@ -26,14 +30,23 @@ class PartieDataMapper extends Mapper {
             throw new Exception('nom déjà utilisé');
         }
         //TODO ajouter un check si le coordonnateur n'est pas null ou inexistant
-        $values = array($object->getNom(), $object->getCoordonnateur());
+        $values = array($object->getNom(), 
+                        $object->getCoordonnateur(), 
+                        $object->getDefinitionPartieId(),
+                        $object->getJoueurTour(),
+                        $object->getDebutPartie());
         $this->insertStmt->execute($values);
         $id = self::$db->lastInsertId();
         $object->setId($id);
     }
     
     function update($object) {
-        $values= array ($object->getId(), $object->getNom(), $object->getCoordonnateur(), $object->getId());
+        $values= array ($object->getId(), 
+                        $object->getNom(), 
+                        $object->getCoordonnateur(), 
+                        $object->getDefinitionPartieId(),
+                        $object->getJoueurTour(),
+                        $object->getDebutPartie());
         $this->updateStmt->execute($values);
     }
     
@@ -53,7 +66,7 @@ class PartieDataMapper extends Mapper {
          *     true: le nom n'est pas utilisé
          *     false: une partie a déjà ce nom
          */
-        $queryTxt = 'SELECT * FROM PartiesEnCours
+        $queryTxt = 'SELECT * FROM PartieEnCours
                 WHERE nom = :nom';
         $query = self::$db->prepare($queryTxt);
         $query->bindValue(':nom', $nom);
@@ -79,7 +92,7 @@ class PartieDataMapper extends Mapper {
         *
         */
         //LISTEPARTIE 1.3.1.1.1 extrait la liste des parties pour un coordonnateur. 
-        $queryTxt = 'SELECT * FROM PartiesEnCours
+        $queryTxt = 'SELECT * FROM PartieEnCours
                         WHERE coordonnateur = :coordonnateur';
         $query = self::$db->prepare($queryTxt);
         $query->bindValue(':coordonnateur', $idCoordonnateur);

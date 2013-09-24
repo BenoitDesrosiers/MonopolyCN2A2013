@@ -7,6 +7,18 @@ class Partie implements EntreposageDatabase {
     protected $id;
     protected $nom;
     protected $coordonnateur;
+    protected $definitionPartieId;
+    protected $joueurTour;
+    protected $debutPartie;
+        
+    public function getDebutPartie() { return $this->debutPartie;}
+    public function setDebutPartie($value) {  $this->debutPartie = $value; }
+        
+    public function getJoueurTour() { return $this->joueurTour;}
+    public function setJoueurTour($value) {  $this->joueurTour = $value; }
+        
+    public function getDefinitionPartieId() { return $this->definitionPartieId;}
+    public function setDefinitionPartieId($value) {  $this->definitionPartieId = $value; }
         
     
     
