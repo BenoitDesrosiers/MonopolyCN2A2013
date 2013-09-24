@@ -1,14 +1,22 @@
 <?php
-/*page principale du site */ 
+/*
+ * page principale du site 
+ * 
+ */
+ 
 require_once('util/main.php'); 
 require_once('modele/usager.php');
-require_once('modele/coordonnateur.php');
 
-// demarre la session, doit être fait après tout les includes
+//NOTE: demarre la session, doit être fait après tout les includes
 session_start();
 
+//Pour suivre le cheminement, vous n'avez qu'a suivre les commentaires numérotés commencant par
+//CONNECTION -> le processus de connection
+//LISTEPARTIE -> le processus d'affichage de la liste des parties pour un coordonnateur connecté
+//LISTEJOUEUR -> du code qui vous aidera a faire le travail formatif consistant à ajouter une liste des joueurs. 
 
 //verifie si un usager est connecté
+//CONNECTION 1.x : cet include est utilisé dans tous les controleurs afin de s'assurer que l'usager est bien connecté
 include "util/login.php";
 
 
@@ -17,7 +25,9 @@ $usager = $_SESSION['usager'];
 
 switch ($usager->getRole()) {
 	case 'coordonnateur' :
-		include('coordonnateur/acceuil.php');
+	    //CONNECTION 1.2.5.1 : une fois qu'on s'est connecté, on revient ici
+	    //LISTEPARTIE 1.x : après CONNECTION 1.2.5.1 on affiche la page d'acceuil du coordonnateur.
+		include('ctrl_vue/coordonnateur/acceuil.php');
 		break;
 	case 'joueur' :
 		

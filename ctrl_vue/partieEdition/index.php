@@ -1,11 +1,13 @@
 <?php
-/* page de creation/edition des tests par le coordonnateur */
-require_once('../util/main.php');
+/* 
+ * page de creation/edition des tests par le coordonnateur 
+ */
+require_once('../../util/main.php');
 require_once('util/secure_conn.php');
 require_once('modele/usager.php');
 require_once('modele/coordonnateur.php');
 require_once('modele/partie.php');
-require_once('factories/partie_factory.php');
+require_once('dataMapper/partieDataMapper.php');
 
 // demarre la session, doit être fait après tout les includes
 session_start();
@@ -35,14 +37,27 @@ switch ($action) {
         break;
     case 'ajouter' :
     	$titrePage= "Création d'une partie";
-    	$partie = new Partie();
+    	$partie = new Partie('', $coordonnateur->getCompte());
       	include('./creationPartie_view.php');
        	break;
+    case 'validerEtContinuer' :
+        $partie = new Partie($_POST['nomPartie'], $coordonnateur->getCompte());
+        try {
+            $partie->sauvegarde();
+        }
+        catch (Exception $e) {
+            $msg_erreur = $e->getMessage();
+            include("erreurs/db_erreur.php");
+            exit;
+        }
+        include("./afficherPartie_view.php");
+        break;
+       
     case 'terminer' :
         //TODO terminer une partie
         break;
     default:
-        display_error("Action inconnue: " . $action);
+        affiche_erreur("Action inconnue: " . $action);
         break;
 }
 ?>

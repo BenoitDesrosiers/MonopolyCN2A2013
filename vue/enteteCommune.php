@@ -1,4 +1,11 @@
-<!-- l'entête commune à toutes les views -->
+<?php 
+/*
+ * l'entête commune à toutes les views
+ * 
+ * ENTRÉS
+ *     $_SESSION['usager']: un objet de la classe Usager
+ */
+?>
 <div id="page">
 	<div id="entete">
 		<h1>Monopoly</h1>
