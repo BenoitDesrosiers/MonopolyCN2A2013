@@ -52,9 +52,14 @@ switch ($action) {
 		$redirection = "ctrl_vue/partieEdition?action=edit&partieId=" . $_POST['partieId'];
 		redirect($redirection);
 		break;
-	case 'ajouterPartie' :
-		// l'usager veut ajouter un test
+	case 'menu' :
+	    if (isset($_POST['Ajout'])) {
+		    // l'usager veut ajouter un test
 			redirect("ctrl_vue/partieEdition?action=ajouter");
+	    } elseif (isset($_POST['AfficherTableau'])) {
+	        // l'usager veut afficher le tableau de jeu
+	        redirect("ctrl_vue/affichageTableau?action=afficher");
+	    }
 		break;
 }
 ?>

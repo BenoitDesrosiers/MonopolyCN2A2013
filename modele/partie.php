@@ -2,7 +2,7 @@
 require_once "interface/entreposageDatabase.php";
 require_once "modele/coordonnateur.php";
 require_once "dataMapper/partieDataMapper.php";
-
+require_once "modele/tableau.php";
 class Partie implements EntreposageDatabase {
     protected $id;
     protected $nom;
@@ -36,6 +36,8 @@ class Partie implements EntreposageDatabase {
     public function __construct($nom, $compteCoordonnateur) {
         $this->setNom($nom);
         $this->setCoordonnateur($compteCoordonnateur);
+        //reset les variables qui sont lazy loaded
+        $this->setTableau(Null);
     }
     
     // Static Factory
@@ -152,6 +154,10 @@ class Partie implements EntreposageDatabase {
     }
 
     public function getTableau() {
+        if ($this->tableau == null) {
+            //lazy load
+            $this->setTableau(Tableau::pourDefinition($this->getDefinitionPartieId()));
+        }    
         return $this->tableau;
     }
 

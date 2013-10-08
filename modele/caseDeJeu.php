@@ -1,18 +1,34 @@
 <?php
 
-class CaseDeJeu  {
-    protected $Id;
-    protected $Nom;
-    protected $Carte;
-        
-    public function getCarte() { return $this->Carte;}
-    public function setCarte($value) {  $this->Carte = $value; }
-        
-    public function getNom() { return $this->Nom;}
-    public function setNom($value) {  $this->Nom = $value; }
-        
-    public function getId() { return $this->Id;}
-    public function setId($value) {  $this->Id = $value; }
+require_once "interface/entreposageDatabase.php";
+
+abstract class CaseDeJeu implements EntreposageDatabase {
+    protected $id;
+    protected $nom;
+    protected $position;
     
+    // static Factory
+    static abstract  function pourDefinitionPartie($idDefinitionPartie);
+    
+    public function getNom() {
+        return $this->Nom;
+    }
+    public function setNom($value) {
+        $this->Nom = $value;
+    }
+    
+    public function getId() {
+        return $this->Id;
+    }
+    public function setId($value) {
+        $this->Id = $value;
+    }
+    public function getPosition() {
+        return $this->position;
+    }
+    public function setPosition($value) {
+        $this->position = $value;
+    }
+    public abstract function getType();
     
 }

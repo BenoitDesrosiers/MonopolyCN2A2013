@@ -8,7 +8,7 @@ class PartieDataMapper extends Mapper {
     function __construct() {
         parent::__construct();
         $this->selectStmt = self::$db->prepare("SELECT * FROM PartieEnCours where id=?");
-        $this->updateStmt = self::$db->prepare('update PartieEnCours set id=?, nom=?, coordonnateur=?, DefinitionPartieId, JoueurTour, DebutPartie  
+        $this->updateStmt = self::$db->prepare('update PartieEnCours set id=?, nom=?, coordonnateur=?, DefinitionPartieId = ?, JoueurTour =?, DebutPartie = ?  
                                                     where id=?');
         $this->insertStmt = self::$db->prepare("insert into PartieEnCours ( nom, coordonnateur, DefinitionPartieId, JoueurTour, DebutPartie ) values (?, ?, ?, ?, ?)");
         
