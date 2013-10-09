@@ -35,7 +35,7 @@ switch ($action) {
     	$partie = Partie::parId('1'); //ceci étant un démo, nous utiliserons la partie #1
     	$tableauDeJeu = $partie->getTableau();
     	
-      	include('./affichageTableau_view.php');
+      	include('./affichageTableau_view_0822113.php');
        	break;
     default:
         affiche_erreur("Action inconnue: " . $action);
