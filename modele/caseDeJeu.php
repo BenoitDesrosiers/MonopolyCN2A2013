@@ -8,7 +8,9 @@ abstract class CaseDeJeu implements EntreposageDatabase {
     protected $position;
     
     // static Factory
-    static abstract  function pourDefinitionPartie($idDefinitionPartie);
+    static   function pourDefinitionPartie($idDefinitionPartie){
+    	
+    }
     
     public function getNom() {
         return $this->Nom;
