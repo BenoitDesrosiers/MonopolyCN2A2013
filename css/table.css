@@ -5,7 +5,9 @@ svg{display: block;}
 .tableau {
     width: 985px;
     background: #DFA;
-    border: 1px solid black;
+    border: 5px solid black;
+    border-radius:5px;
+    padding:0;
     margin: auto;
 }
 

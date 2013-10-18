@@ -88,5 +88,6 @@
             }
     	    ?>
     	</div>
+    	<br/>
     </div>
     <?php include 'vue/piedpage.php'; ?>
