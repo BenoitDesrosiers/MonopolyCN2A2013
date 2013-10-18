@@ -43,5 +43,13 @@ class Tableau {  //implements EntreposageDatabase {
     public function setCases($value) {
         $this->cases = $value;
     }
+    
+    public function getCasePostion($pos){
+        foreach($this->cases as $case){
+            if($pos==$case->getPosition())
+                return $case;
+        }
+        return null;
+    }
 
 }

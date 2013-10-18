@@ -2,6 +2,7 @@
 require_once "interface/entreposageDatabase.php";
 require_once "dataMapper/definitionPartieDataMapper.php";
 require_once "modele/caseDeJeuAchetable.php";
+require_once "modele/caseDeJeuAction.php";
 
 
 class DefinitionPartie implements EntreposageDatabase {
