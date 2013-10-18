@@ -1,0 +1,54 @@
+table
+{
+	width: 875px;
+	height: 875px;
+	border: 5px solid black;
+	border-radius: 10px;
+	background-color: #C5FFE1;
+}
+
+td
+{
+	padding: 0px;
+	margin: 0px;
+	border: 2px solid black;
+}
+
+.verticalCase
+{
+	width: 71px;
+	height: 96px;
+	font-size: 12px;
+}
+
+.horizontalCase
+{
+	width: 96px;
+	height: 71px;
+	font-size: 12px;
+}
+
+.cornerCase
+{
+	width: 96px;
+	height: 96px;
+	font-size: 12px;
+}
+
+.centerCase
+{
+	font-size: 30px;
+	text-align: center;
+}
+
+text
+{
+	text-anchor: middle;
+}
+
+svg
+{
+	display:block;
+	padding: 0;
+	margin: 0;
+}

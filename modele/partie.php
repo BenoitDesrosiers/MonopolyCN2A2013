@@ -164,6 +164,10 @@ class Partie implements EntreposageDatabase {
     public function setTableau($value) {
         $this->tableau = $value;
     }
+	
+	//Fonctions autres
+	public function jouerCoup($joueur) {
+	}
 
 }
 

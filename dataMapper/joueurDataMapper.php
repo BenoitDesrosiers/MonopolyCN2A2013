@@ -7,11 +7,15 @@ class CaseAchetableDataMapper extends Mapper {
     
     function __construct() {
         parent::__construct();
-        $this->selectStmt = self::$db->prepare("SELECT * FROM CaseAchetable where id=?");
+        $this->selectStmt = self::$db->prepare("SELECT * FROM JoueurPartie WHERE UsagerCompte=?
+        																	AND PartieEnCoursId=");
         //TODO: ajouter tous les champs
-        $this->updateStmt = self::$db->prepare('update CaseAchetable set id=?, Titre=?, Prix=?  
-                                                    where id=?');
-        $this->insertStmt = self::$db->prepare("insert into CaseAchetable ( Titre, Prix ) values (?, ?)");
+        $this->updateStmt = self::$db->prepare("UPDATE JoueurPartie 
+        										SET UsagerCompte=?, PartieEnCoursId=?, PionId=?, Position=?, OrdreDeJeu=?, EnPrison=?, ToursRestants_Prison=? 
+        										WHERE UsagerCompte=? 
+        										AND PartieEnCoursId=");
+        $this->insertStmt = self::$db->prepare("INSERT INTO JoueurPartie ( UsagerCompte, PartieEnCoursId, PionId, Position, OrdreDeJeu, EnPrison, ToursRestants_Prison )
+        										VALUES (?, ?, ?, ?, ?, ?, ?)");
     }
 
     protected function doCreateObject( array $array) {

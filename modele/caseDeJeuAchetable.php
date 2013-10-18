@@ -17,6 +17,11 @@ class CaseDeJeuAchetable extends CaseDeJeu {
         return $dataMapper->pourDefinitionPartie($idDefinitionPartie);
     }
     
+    static function parPositionCase($positionCase, $idDefinitionPartie) {
+    	$dataMapper = new CaseAchetableDataMapper();
+    	return $dataMapper->parPositionCase($positionCase, $idDefinitionPartie);
+    }
+    
     // interface entreposageDatabase
     public function getDataMapper() {
         return new CaseAchetableDataMapper();

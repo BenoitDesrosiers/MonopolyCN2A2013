@@ -35,8 +35,15 @@ switch ($action) {
     	$partie = Partie::parId('1'); //ceci étant un démo, nous utiliserons la partie #1
     	$tableauDeJeu = $partie->getTableau();
     	
-      	include('./affichageTableau_view.php');
+      	include('./affichageTableau_view_1149647.php');
        	break;
+	case 'jouerCoup' :
+		$titrePage= "Jouer un coup";
+		$partie = Partie::parId('1');
+		$tableauDeJeu = $partie->getTableau();
+		
+		include('./boutonTableau_controleur.php');
+		break;
     default:
         affiche_erreur("Action inconnue: " . $action);
         break;
