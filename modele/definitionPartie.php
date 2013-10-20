@@ -19,7 +19,7 @@ class DefinitionPartie implements EntreposageDatabase {
     
     public static function parId($id) {
         $definitionPartieMapper = new DefinitionPartieDataMapper();
-        return $definitionPartieMapper->find($id);
+        return $definitionPartieMapper->find(array($id));
     }
     
    

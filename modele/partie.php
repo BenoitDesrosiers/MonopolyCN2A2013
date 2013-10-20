@@ -2,7 +2,9 @@
 require_once "interface/entreposageDatabase.php";
 require_once "modele/coordonnateur.php";
 require_once "dataMapper/partieDataMapper.php";
+require_once "dataMapper/joueurDataMapper.php";
 require_once "modele/tableau.php";
+
 class Partie implements EntreposageDatabase {
     protected $id;
     protected $nom;
@@ -11,15 +13,7 @@ class Partie implements EntreposageDatabase {
     protected $joueurTour;
     protected $debutPartie;
         
-    public function getDebutPartie() { return $this->debutPartie;}
-    public function setDebutPartie($value) {  $this->debutPartie = $value; }
-        
-    public function getJoueurTour() { return $this->joueurTour;}
-    public function setJoueurTour($value) {  $this->joueurTour = $value; }
-        
-    public function getDefinitionPartieId() { return $this->definitionPartieId;}
-    public function setDefinitionPartieId($value) {  $this->definitionPartieId = $value; }
-        
+    
     
     
     protected $joueurs; // la liste des joueurs (de 1 à 8)
@@ -44,7 +38,7 @@ class Partie implements EntreposageDatabase {
     
     public static function parId($id) {
         $partieMapper = new PartieDataMapper();
-        return $partieMapper->find($id);
+        return $partieMapper->find(array($id));
     }
     
     public static function pourCoordonnateur(Coordonnateur $coordonnateur) {
@@ -65,7 +59,17 @@ class Partie implements EntreposageDatabase {
         $this->getDataMapper()->insert($this);
     }
     
+    // fonction de jeu
     
+    public function ajouteUsager($usager) {
+        /*
+         * ajoute un usager à la partie
+         * 
+         */
+        
+         
+        
+    }
     //Getters & Setters
     public function getNom() {
         return $this->nom;
@@ -165,6 +169,27 @@ class Partie implements EntreposageDatabase {
         $this->tableau = $value;
     }
 
+    public function getDebutPartie() {
+        return $this->debutPartie;
+    }
+    public function setDebutPartie($value) {
+        $this->debutPartie = $value;
+    }
+    
+    public function getJoueurTour() {
+        return $this->joueurTour;
+    }
+    public function setJoueurTour($value) {
+        $this->joueurTour = $value;
+    }
+    
+    public function getDefinitionPartieId() {
+        return $this->definitionPartieId;
+    }
+    public function setDefinitionPartieId($value) {
+        $this->definitionPartieId = $value;
+    }
+    
 }
 
 ?>

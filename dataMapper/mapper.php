@@ -18,7 +18,7 @@ abstract class Mapper {
         self::$db = Database::getDB(); 
     }
     
-    function find( $id) {
+    function find( array $cle) {
         /*
          * find est la méthode "générique" pour trouver un objet avec la clé égale à $id
          * trouve l'objet qui a cet $id dans la bd
@@ -26,14 +26,30 @@ abstract class Mapper {
          */
         //TODO: garder les items dans un Registry pour eviter la duplication d'instance
         //TODO: trouver un moyen pour les cas ou la clé est composée (au lieu de id, prendre un array. Devra matcher dans le selectStmt 
-        $this->selectStmt()->execute( array ( $id));
+        $this->selectStmt()->execute( $cle);
         $array = $this->selectStmt()->fetch();
         //$this->selectStmt()->closeCursor(); // appel optionnel non nécessaire pour mysql
-        if (!is_array($array)){return null;}
+        if (!is_array($array)){return null;} // aucune row de retourner, donc l'objet n'existe pas dans la bd. 
         //if (!isset($array['id'])) {return null;}   //TODO: a quoi sert ce check? je l'ai enleve parce que le clés ne sont pas toujours ID
         //CONNECTION 1.2.4.3.1 créé l'usager
         $object = $this->createObject($array);
         return $object;
+    }
+    
+    function findAll(array $array) {
+        /*
+         * retourne tous les objects correspondant aux critères passés dans $array 
+         */
+        $this->selectAllStmt()->execute($array);
+        $listeItems = array();
+        
+        foreach($this->selectAllStmt() as $row) {
+            $unItem = $this->createObject($row);
+            if ($unItem <> null) {
+                $listeItems[] = $unItem;
+            }
+        }
+        return $listeItems;
     }
     
     function createObject($array) {

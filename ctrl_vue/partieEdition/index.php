@@ -1,6 +1,6 @@
 <?php
 /* 
- * page de creation/edition des tests par le coordonnateur 
+ * page de creation/edition des parties par le coordonnateur 
  */
 require_once('../../util/main.php');
 require_once('util/secure_conn.php');

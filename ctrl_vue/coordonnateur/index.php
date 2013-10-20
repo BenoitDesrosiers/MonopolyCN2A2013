@@ -1,7 +1,17 @@
 <?php
 /* 
- * page d'acceuil pour le coordonnateur 
+ * controlleur pour la page d'acceuil d'un coordonnateur 
  */
+
+require_once('../../util/main.php');
+require_once('modele/usager.php');
+require_once('modele/coordonnateur.php');
+require_once('modele/partie.php');
+
+session_start();
+
+//verifie si un usager est connecté
+include "util/login.php";
 
 if (isset($_POST['action'])) {
 	$action=$_POST['action'];
@@ -23,26 +33,7 @@ switch ($action) {
 		include('liste_parties_view.php');
 		break;
 		
-	//LISTEJOUEUR 2 : après avoir ajouter le bouton, vous retournez ici avec une action xyz ... ajouter un case
-	//LISTEJOUEUR 3 : étant donné qu'il n'y a pas d'objet en charge de lister les joueurs (ca viendra...) vous pouvez 
-	//                simplement mettre le SQL nécessaire à la création (fournit-ci bas) de cette liste directement ici. 
-	//                et ensuite ouvrir un page similaire à liste_parties_view.php.
-	/*
-	    $queryTxt = 'SELECT * FROM Usagers';
-	    $db = Database::getDB(); //Je vous laisse trouver quel include utiliser pour faire fonctionner cette ligne
-        $query = $db->prepare($queryTxt);
-        $query->setFetchMode(PDO::FETCH_ASSOC);
-        $query->execute();
-        
-        $listeUsagers = array(); 
-        foreach($query as $row) {
-            ////Je vous laisse trouver comment initialiser $compte et $password
-            $unItem = Usager::parComptePW($compte, $password); 
-            if ($unItem <> null) {
-                $listeUsagers[] = $unItem;
-            }
-        }
-	 */
+	
 	case 'edit' :
 		// l'usager veut editer une partie
 		// 'edit' contient l'id de la partie a editer
@@ -55,10 +46,10 @@ switch ($action) {
 	case 'menu' :
 	    if (isset($_POST['Ajout'])) {
 		    // l'usager veut ajouter un test
-			redirect("ctrl_vue/partieEdition?action=ajouter");
+			redirect("../../ctrl_vue/partieEdition?action=ajouter");
 	    } elseif (isset($_POST['AfficherTableau'])) {
 	        // l'usager veut afficher le tableau de jeu
-	        redirect("ctrl_vue/affichageTableau?action=afficher");
+	        redirect('../../ctrl_vue/affichageTableau/?action=afficher');
 	    }
 		break;
 }

@@ -81,6 +81,10 @@ class PartieDataMapper extends Mapper {
         
     }
     function findPourCoordonnateur( $idCoordonnateur) {
+        //TODO: remplacer par un call a findAll en mettant selectAllStmt = au select. ??? est ce que ca fit dans le modele ou ca va mélanger le selectAllStmt, on saura pas lequel est pour etre appelé 
+        
+        
+        
         // crée les parties associées à un coordonnateur a partir de la db
         
         /*

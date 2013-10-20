@@ -111,7 +111,7 @@ class CaseAchetableDataMapper extends Mapper {
         $listeItems = array();
         
         foreach($query as $row) {
-            $unItem = $this->find($row['CaseAchetableId']);
+            $unItem = $this->find(array($row['CaseAchetableId']));
             if ($unItem <> null) {
                 //set la position à partir de celle trouvée dans DefinitionPartie_CaseAchetable
                 $unItem->setPosition($row['Position']);
