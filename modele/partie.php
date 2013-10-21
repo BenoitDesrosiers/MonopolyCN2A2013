@@ -61,15 +61,35 @@ class Partie implements EntreposageDatabase {
     
     // fonction de jeu
     
-    public function ajouteUsager($usager) {
+    public function ajouteJoueur($usager) {
         /*
          * ajoute un usager à la partie
          * 
+         * 
          */
         
-         
+        //TODO: ajouter le check si jamais ce joueur existe déjà
+        $ordre = 1; //TODO: calculer le vrai ordre d'après ce qui est déjà dans la table
+        $joueur = Joueur::nouveauJoueur(array('Compte'=>$usager->getCompte(),
+                                    'PartieId'=>$this->getId(),
+                                    'PionId'=>0,
+                                    'Position'=>0,
+                                    'OrdreDeJeu'=>$ordre,
+                                    'EnPrison'=>0,
+                                    'ToursRestants_Prison'=>0,
+                                    'Billets'=>array()));
         
     }
+    
+    public function estDemarre() {
+        /*
+         * retourne vrai si la partie est démarrée, faux si non
+         */
+        
+        $heureDebut =$this->getHeureDebut();
+        return  $heureDebut != 0;
+    }
+    
     //Getters & Setters
     public function getNom() {
         return $this->nom;

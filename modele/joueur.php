@@ -1,38 +1,38 @@
 <?php
 require_once "interface/entreposageDatabase.php";
-require_once('modele/usager.php');
 require_once('modele/caseDeJeu.php');
 
-class Joueur extends Usager implements EntreposageDatabase {
-    protected $argent; // une array associative contenant le nombre de billets de chaque sortes. 
-    protected $partieEnCours;
+/*
+ * un joueur n'est pas un usager, un usager est identifié par son compte, un joueur est identifié par son compte et une partie. 
+ * un joueur a un usager d'associé
+ */
+class Joueur  implements EntreposageDatabase {
+    
+    protected $compte;   
+    protected $partieId;
     protected $pionId;
     protected $position;
     protected $ordreDeJeu;
     protected $enPrison;
     protected $toursRestantEnPrison;
+    protected $argent; // une array associative contenant le nombre de billets de chaque sortes.
     
     function __construct(array $array) {
         /*
          * input
         *     un array associative contenant le
-        *     mot de passe 'MotDePasse',
-        *     le compte 'Compte',
-        *     le nom 'Nom',
-        *     le role 'Role' pour l'usager à créer
-        *     
-        *     ainsi que les champs pour le joueurs
-        *     la partie en cours 'PartieEnCours'
-        *     l'id du pion 'PionId'
-        *     la position du joueur 'Position'
-        *     l'ordre de jeu 'OrdreDeJeu'
-        *     un flag indiquant si le joueur est en prison 'EnPrison'
-        *     le nombre de tours restant au joueur à passer en prison  'ToursRestant_Prison' 
-        *     une liste de billets 'Billets'
+        *     'Compte' : le compte ,
+        *     'PartieId' : l'id de la partie en cours 
+        *     'PionId' : l'id du pion 
+        *     'Position' : la position du joueur 
+        *     'OrdreDeJeu' : l'ordre de jeu 
+        *     'EnPrison' : un flag indiquant si le joueur est en prison 
+        *     'ToursRestants_Prison' : le nombre de tours restant au joueur à passer en prison   
+        *     'Billets' : une liste de billets 
         *     
         */
-        parent::__construct($array);
-        $this->setPartieEnCours($array['PartieEnCours']);
+        $this->setCompte($array['Compte']);
+        $this->setPartieId($array['PartieId']);
         $this->setPionId($array['PionId']);
         $this->setPosition($array['Position']);
         $this->setOrdreDeJeu($array['OrdreDeJeu']);
@@ -49,6 +49,40 @@ class Joueur extends Usager implements EntreposageDatabase {
         $joueur = $mapper->find(array($compte, $partieId));
         
         return $joueur;
+    }
+    
+    public static function nouveauJoueur(array $array) {
+        /*
+         * input
+        *     un array associative contenant le
+        *     'Compte' : le compte ,
+        *     'PartieId' : l'id de la partie en cours
+        *     'PionId' : l'id du pion
+        *     'Position' : la position du joueur
+        *     'OrdreDeJeu' : l'ordre de jeu
+        *     'EnPrison' : un flag indiquant si le joueur est en prison
+        *     'ToursRestants_Prison' : le nombre de tours restant au joueur à passer en prison
+        *     'Billets' : une liste de billets
+        *
+        */
+        
+        $joueur = new Joueur($array);
+        $mapper = new JoueurDataMapper();
+        $mapper->insert($joueur);
+        return $joueur;
+    }
+    
+    // interface entreposageDatabase
+    public function getDataMapper() {
+        return new UsagerDataMapper();
+    }
+    
+    public function sauvegarde() {
+        $this->getDataMapper->insert($this);
+    }
+    
+    public function update() {
+        $this->getDatamapper->update($this);
     }
     
     //fonctions pour jouer
@@ -78,6 +112,13 @@ class Joueur extends Usager implements EntreposageDatabase {
 
 
 	// Getter & Setter
+	
+	public function getCompte() {
+	    return $this->compte;
+	}
+	public function setCompte($value) {
+	    $this->compte = $value;
+	}
 	
 	public function getArgent() {
 	    return $this->argent;
@@ -122,11 +163,11 @@ class Joueur extends Usager implements EntreposageDatabase {
 	    $this->pionId = $value;
 	}
 	
-	public function getPartieEnCours() {
-	    return $this->partieEnCours;
+	public function getPartieId() {
+	    return $this->partieId;
 	}
-	public function setPartieEnCours($value) {
-	$this->partieEnCours = $value;
+	public function setPartieId($value) {
+	$this->partieId = $value;
 	}
 	
 }

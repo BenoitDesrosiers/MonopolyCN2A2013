@@ -770,9 +770,9 @@ CREATE TABLE IF NOT EXISTS `Usager` (
 
 INSERT INTO `Usager` (`Compte`, `Nom`, `MotDePasse`, `Role`) VALUES
 ('benoit', 'Benoit Desrosiers', '1a91d62f7ca67399625a4368a6ab5d4a3baa6073', 'coordonnateur'),
-('marc', 'Marc-André', '', 'joueur'),
-('tom', 'Tommy', '', 'joueur'),
-('vero', 'Veronique', '', 'coordonnateur');
+('marc', 'Marc-André', '1a91d62f7ca67399625a4368a6ab5d4a3baa6073', 'joueur'),
+('tom', 'Tommy', '1a91d62f7ca67399625a4368a6ab5d4a3baa6073', 'joueur'),
+('vero', 'Veronique', '1a91d62f7ca67399625a4368a6ab5d4a3baa6073', 'coordonnateur');
 
 --
 -- Contraintes pour les tables exportées
@@ -843,8 +843,7 @@ ALTER TABLE `JoueurPartie`
 -- Contraintes pour la table `JoueurPartie_Argent`
 --
 ALTER TABLE `JoueurPartie_Argent`
-  ADD CONSTRAINT `fk2_JoueurPartieargent` FOREIGN KEY (`JoueurPartieUsagerCompte`) REFERENCES `joueurpartie` (`UsagerCompte`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk3_JoueurPartieargent` FOREIGN KEY (`JoueurPartiePartieEnCoursId`) REFERENCES `joueurpartie` (`PartieEnCoursId`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk4_JoueurPartieargent` FOREIGN KEY (`JoueurPartieUsagerCompte`,`JoueurPartiePartieEnCoursId`) REFERENCES `joueurpartie` (`UsagerCompte`,`PartieEnCoursId`) ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_JoueurPartieargent` FOREIGN KEY (`ArgentMontant`) REFERENCES `argent` (`Montant`) ON UPDATE CASCADE;
 
 --

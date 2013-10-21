@@ -23,7 +23,7 @@ if (isset($_POST['action'])) {
 	$action = 'liste_parties';
 }
 
-$usager = $_SESSION['usager'];
+$usager = $_SESSION['usager']; //TODO: demo bug, changer usager pour Usager
 
 switch ($action) {
 	case 'liste_parties' :
@@ -37,8 +37,8 @@ switch ($action) {
 	    $partieId = $_POST['joindre']; // l'id de la partie à rejoindre est dans la value du submit 'joindre'
 
 	    $parti = Partie::parId($partieId);
-	    $parti->ajouteUsager($usager); //fait la demande pour être ajouté à cette partie. 
-	    redirect("/ctrl_vue/joueur/?action=attenteConnectionPartie&partieId=".$partieId); //l'usager est en attente de devenir un joueur, on le redirige à son écran d'acceuil.
+	    $parti->ajouteJoueur($usager); //fait la demande pour être ajouté à cette partie. 
+	    redirect("../../ctrl_vue/joueur/?action=attenteConnectionPartie&partieId=".$partieId); //l'usager est en attente de devenir un joueur, on le redirige à son écran d'acceuil.
         
 	    break;
 }
