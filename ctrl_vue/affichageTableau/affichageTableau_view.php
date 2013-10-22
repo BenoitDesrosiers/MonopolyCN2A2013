@@ -77,7 +77,7 @@ echo '<body>';
 	$flag2=false;
 	$caseD = 11;
 	
-   for($x=0; $x<9;$x++)   //Boucle pour les côtés
+   for($x=0; $x<9;$x++)   //Boucle pour les 2 côtés
 		{
 			$caseG = $caseG-$x;
 			$caseD = $caseD+$x;
@@ -184,7 +184,7 @@ echo '<body>';
 			echo '</tr>';
 			
 				
-	} //fin de la grande boucle
+	} //fin de la grande boucle pour les 2 côtés
 	
 echo '<tr class="tr">';
 echo '<td class="coin"></td>';
