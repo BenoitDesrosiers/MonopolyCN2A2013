@@ -45,9 +45,9 @@ class CaseAchetableDataMapper extends Mapper {
         $obj->setCouleurHTML($array2['CouleurHTML']);
         
         //set le propriétaire et ses propriétés si applicable
-        $obj->setProprio($array3['JoueurPartieUsagerCompte']);
-        $obj->setMaisons($array3['NombreMaisons']);
-        $obj->setHotels($array3['NombreHotels']);
+        $obj->setProprietaire($array3['JoueurPartieUsagerCompte']);
+        $obj->setNombreMaison($array3['NombreMaisons']);
+        $obj->setNombreHotel($array3['NombreHotels']);
         
         return $obj;        
     }

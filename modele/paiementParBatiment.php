@@ -1,6 +1,7 @@
 <?php
 require_once('modele/paiement.php'); //TODO: faire modele/paiement.php
 require_once('modele/caseDeJeuAchetable.php');
+require_once('modele/banque.php');
 
 class paiementParBatiment extends paiement {
 	
@@ -45,6 +46,9 @@ class paiementParBatiment extends paiement {
     {
     	$facture = $totalmaisons * 10 + $totalhotels * 20;
     }
+    
+    $banque = new banque;
+    $banque->fairePayer($joueur,$facture);
     		
     //paiement à la banque a partir du $joueur du montant $facture 
     		
