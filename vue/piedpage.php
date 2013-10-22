@@ -9,7 +9,7 @@
  *     rien
  */
 ?>
-		<div id="piedPage"
+		<div id="piedPage"/>
 			<p>
 				&copy; <?php echo date("Y"); ?> Cegep de Drummondville.
 			</p>

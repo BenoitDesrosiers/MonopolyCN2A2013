@@ -4,7 +4,7 @@ require_once "dataMapper/mapper.php";
 require_once "modele/caseDeJeuAchetable.php";
 
 class CaseAchetableDataMapper extends Mapper {
-    
+	
     function __construct() {
         parent::__construct();
         $this->selectStmt = self::$db->prepare("SELECT * FROM CaseAchetable where id=?");
