@@ -43,12 +43,17 @@ echo '<body>';
 				$c = $array[$x-1]->getPosition();
 				if ($c==$x)
 				{
+
 					echo '<td class="haut"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 75 100" >';
+					
+					if ($array[$x-1]->GetCouleurHTML() != '#000000')
+					{
 					echo '<rect x="0" y="75" width="75" height="30" style="fill:';
 						
 					echo $array[$x-1]->getCouleurHTML();
 
 					echo '"/>';
+					}
 					
 					echo '<text x="0" y="60" fill="red" font-size="12px" >';
 							
@@ -89,11 +94,14 @@ echo '<body>';
 									$flag=true;
 						
 									echo '<td class="gauche"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 100 75" >';
+									if ($array[$y-1]->GetCouleurHTML() != '#000000')
+									{
 									echo '<rect x="69" y="0" width="30" height="75" style="fill:';
 						
 									echo $array[$y-1]->getCouleurHTML();
 						
 									echo '"/>';
+									}
 									echo '<text x="55" y="0" fill="red" font-size="12px" transform="rotate(90 55,0)" >';
 						
 									echo $array[$y-1]->getNom();
@@ -134,11 +142,14 @@ echo '<body>';
 						{
 							
 							echo '<td class="droite"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 100 75" >';
+							if ($array[$z-1]->GetCouleurHTML() != '#000000')
+							{
 							echo '<rect x="1" y="0" width="30" height="75" style="fill:';
 						
 							echo $array[$z-1]->getCouleurHTML();
 						
 							echo '"/>';
+							}
 							echo '<text x="45" y="75" fill="red" font-size="12px" transform="rotate(270 45,75)" >';
 						
 							echo $array[$z-1]->getNom();
@@ -187,11 +198,14 @@ echo '<td class="coin"></td>';
 					{
 					
 						echo '<td class="bas"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 75 100" >';
+						if ($array[$x-1]->GetCouleurHTML() != '#000000')
+						{
 						echo '<rect x="0" y="0" width="75" height="30" style="fill:';
 						
 						echo $array[$x-1]->getCouleurHTML();
 							
 						echo '"/>';
+						}
 						
 						echo '<text x="0" y="50" fill="red" font-size="12px" >';
 							
