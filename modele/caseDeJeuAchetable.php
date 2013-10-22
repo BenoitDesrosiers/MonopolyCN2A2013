@@ -8,13 +8,23 @@ class CaseDeJeuAchetable extends CaseDeJeu {
     protected $prix;
     protected $couleur;
     protected $couleurHTML;
-      
-    
     
     // static Factory
     static function pourDefinitionPartie($idDefinitionPartie) {
         $dataMapper = new CaseAchetableDataMapper();
         return $dataMapper->pourDefinitionPartie($idDefinitionPartie);
+    }
+    
+    public function atterirSur($unJoueur){
+    	 if($this->getType()=="achetable"){
+    	 	if($this->getProprio() != null){
+    	 		
+    	 	}
+    	 	else {
+    	 		$unJoueur->tenterAchat($this);
+    	 		
+    	 	}
+    	 }
     }
     
     // interface entreposageDatabase
@@ -25,8 +35,6 @@ class CaseDeJeuAchetable extends CaseDeJeu {
     public function sauvegarde() {
         $this->getDataMapper()->insert($this);
     }
-    
-   
     
     //Getters & Setters
     public function getCouleur() {
@@ -49,8 +57,8 @@ class CaseDeJeuAchetable extends CaseDeJeu {
         $this->couleurHTML = $value;
     }
      
-    
     public function getType() {
         return "achetable";
     }
+
 }

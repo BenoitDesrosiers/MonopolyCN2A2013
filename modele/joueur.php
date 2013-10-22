@@ -19,11 +19,39 @@ class Joueur extends Usager implements EntreposageDatabase {
 	}
 	
 	public function paye( $montant) {
-	    
+	    $arrayBillet[0]="500";
+	    $arrayBillet[1]="100";
+	    $arrayBillet[2]="50";
+	    $arrayBillet[3]="20";
+	    $arrayBillet[4]="10";
+	    $arrayBillet[5]="5";
+	    $arrayBillet[6]="1";
+	    $i=0;
+	    $ctr=0;
+	    $arrayMontant = array() ;
+	    while($i < count($arrayBillet)){
+	    	while($montant >= $arrayBillet[$i]){
+	    		$ctr++;
+	    		$montant = $montant-$arrayBillet[$i];
+	    	}
+	    	$arrayMontant[$i]=$ctr;
+	    	$ctr=0;
+	    	echo $i;
+	    	echo "-----------";
+	    	echo $arrayMontant[$i];
+	    	echo "++++++++++++++++++++++++";
+	    	$i++;
+	    }
+	    echo $montant;
 	}
+	
 	
 	public function getRole() {
 	    return 'joueur';
+	}
+	
+	public function tenterAchat(CaseDeJeuAchetable $uneCase){
+		return true;
 	}
 	
 }

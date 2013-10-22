@@ -37,6 +37,13 @@ switch ($action) {
     	
       	include('./affichageTableau_view_0822113.php');
        	break;
+  	case 'atterir' :
+       		$titrePage= "Atterir sur une case non acheté";
+       		$partie = Partie::parId('1'); //ceci étant un démo, nous utiliserons la partie #1
+       		$tableauDeJeu = $partie->getTableau();
+       		 
+       		include('./atterirSur_view.php');
+       		break;
     default:
         affiche_erreur("Action inconnue: " . $action);
         break;

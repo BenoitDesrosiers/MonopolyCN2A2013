@@ -41,15 +41,19 @@ class Tableau {  //implements EntreposageDatabase {
         return $this->cases;
     }
     public function getCasesParPosition($position){
-    	$i =0;
-    	while($position != $this->cases[$i]->getPosition()){
-    		if($position == $this->cases[$i]->getPosition()){
-    			$position = $this->cases[$i]->getPosition();
-    		}
+    	$i = 0;
+    	$stop = false;
+    	while($stop != true){
+    		if($i > count($this->cases)-1)
+    			$stop = true;
+    		else if($position == $this->cases[$i]->getPosition())
+    			$stop = true;
    			$i++;
-   			
     	}
-		return $cases[$i];
+    	if ($i > count($this->cases))
+    		return null;
+    	else
+			return $this->cases[$i-1];
     }
     public function setCases($value) {
         $this->cases = $value;

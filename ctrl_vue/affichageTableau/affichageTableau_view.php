@@ -10,8 +10,6 @@
     <div id="main">			
     	
     	<h1>Tableau de jeu</h1>
-    	<
-    	
     		<?php  foreach ($tableauDeJeu->getCases() as $case) : ?>
     			<p>
     			<?php echo $case->getId();?>
@@ -21,8 +19,7 @@
     			</p>
     			
     		<?php endforeach; ?>
-    	</table>
     	<br/>
-        </form-->
+
     </div>
     <?php include 'vue/piedpage.php'; ?>
