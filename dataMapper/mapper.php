@@ -1,8 +1,8 @@
 <?php
 require_once('modele/database.php');
-
+require_once('interface/observateur.php');
 /*
- * cette classe est tirée du livre PHP objects patters and practice, 3rd edition (p227)
+ * cette classe est tirée du livre PHP objects patterns and practice, 3rd edition (p227)
  */
 
 /*
@@ -11,10 +11,12 @@ require_once('modele/database.php');
  * 
  * 
  */
-abstract class Mapper {
+abstract class Mapper implements Observateur {
     protected static $db;
     
     function __construct() {
+        //TODO: le mapper devrait être un singleton pour chaque sous-classe, il devrait donc s'enregistrer et avoir une factory sinon le pattern observateur peut faire qu'on fera plusieur écritures
+        
         self::$db = Database::getDB(); 
     }
     
@@ -36,21 +38,39 @@ abstract class Mapper {
         return $object;
     }
     
-    function findAll(array $array) {
+    function findAll($pdoSelect) {
         /*
-         * retourne tous les objects correspondant aux critères passés dans $array 
+         * retourne tous les objects correspondant au query pdo passé en paramètre 
          */
-        $this->selectAllStmt()->execute($array);
+        $pdoSelect->setFetchMode(PDO::FETCH_ASSOC);
+        $pdoSelect->execute();
         $listeItems = array();
-        
-        foreach($this->selectAllStmt() as $row) {
-            $unItem = $this->createObject($row);
-            if ($unItem <> null) {
+    
+        foreach($pdoSelect as $row) {
+             $unItem = $this->createObject($row);
+             if ($unItem <> null) {
                 $listeItems[] = $unItem;
-            }
+             }
         }
         return $listeItems;
     }
+        
+     //   function findAll(array $array) {
+            /*
+             * retourne tous les objects correspondant aux critères passés dans $array
+            */
+     /*      $this->selectAllStmt()->execute($array);
+            $listeItems = array();
+            foreach($this->selectAllStmt() as $row) {
+                $unItem = $this->createObject($row);
+                if ($unItem <> null) {
+                    $listeItems[] = $unItem;
+                }
+            }
+            return $listeItems;
+        }
+        */
+    
     
     function createObject($array) {
         /*
@@ -69,7 +89,9 @@ abstract class Mapper {
     }
     
     //Ces functions doivent être créée dans les sous-classes
-    abstract function update ($object); 
+    public function update ($objet) {
+        //devrait être abstract, mais ca marche pas a cause de l'interface Observateur; 
+    }
     protected abstract function doCreateObject( array $array);
     protected abstract function doInsert( $object);
     protected abstract function selectStmt();

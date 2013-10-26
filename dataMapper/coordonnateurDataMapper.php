@@ -7,15 +7,19 @@ class CoordonnateurDataMapper extends UsagerDataMapper {
  
     function __construct() {
         parent::__construct();
-        $this->selectAllStmt = self::$db->prepare("SELECT * FROM Usager WHERE Role = 'coordonnateur'");
     }
 
     protected function doCreateObject( array $array) {
         return new Coordonnateur($array) ;        
     }
    
-    function selectAllStmt() {
-        return $this->selectAllStmt;
+    
+    public function findAllCoordonnateur() {
+        $queryTxt = "SELECT * FROM Usager WHERE Role = 'coordonnateur'";
+        $query = self::$db->prepare($queryTxt);
+        return $this->findAll($query);
     }
+    
+    
    
 }

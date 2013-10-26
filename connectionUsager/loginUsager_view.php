@@ -28,6 +28,5 @@
             <label>&nbsp;</label>
             <input type="submit" value="Login" />
         </form>
-        <?php phpinfo();?>
     </div>
 <?php include 'vue/piedpage.php'; ?>

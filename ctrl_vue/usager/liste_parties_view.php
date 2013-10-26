@@ -32,7 +32,7 @@
         			<td>joindre</td>
         		</tr>
         		<?php  foreach ($coordonnateurs as $coordonnateur) : 
-        		            $parties = $coordonnateur->getPartiesEnCours();
+        		            $parties = $coordonnateur->getPartiesEnCours();  //TODO: generer, dans le ctrl,  un array de celle ou l'usager est déjà afin de ne pas permettre de joindre un partie ou il est déjà. 
         		            foreach ($parties as $partie) :?>
                                 <tr>
                     			    <td><?php echo $partie->getCoordonnateur(); ?></td>

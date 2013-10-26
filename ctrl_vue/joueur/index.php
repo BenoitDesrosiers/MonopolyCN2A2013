@@ -39,6 +39,10 @@ switch ($action) {
             include('attenteDemarragePartie_view.php');
 	    break;
 	
-	
+	case 'menu' :
+            echo "rendu icitte >>>>>>>>>>";
+            // faut boucler tant que la partie démarre pas. 
+            // ensuite afficher le tableau et c'est partie mon kiki
+	    break;
 }
 ?>

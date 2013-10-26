@@ -1,12 +1,13 @@
 <?php
-require_once "interface/entreposageDatabase.php";
-require_once('modele/caseDeJeu.php');
-
+require_once 'interface/entreposageDatabase.php';
+require_once 'modele/objet.php';
+require_once 'modele/caseDeJeu.php';
+require_once 'modele/coupure.php';
 /*
  * un joueur n'est pas un usager, un usager est identifié par son compte, un joueur est identifié par son compte et une partie. 
  * un joueur a un usager d'associé
  */
-class Joueur  implements EntreposageDatabase {
+class Joueur extends Objet  implements EntreposageDatabase{
     
     protected $compte;   
     protected $partieId;
@@ -31,14 +32,15 @@ class Joueur  implements EntreposageDatabase {
         *     'Billets' : une liste de billets 
         *     
         */
-        $this->setCompte($array['Compte']);
-        $this->setPartieId($array['PartieId']);
-        $this->setPionId($array['PionId']);
-        $this->setPosition($array['Position']);
-        $this->setOrdreDeJeu($array['OrdreDeJeu']);
-        $this->setEnPrison($array['EnPrison']);
-        $this->setToursRestantEnPrison($array['ToursRestants_Prison']);
-        $this->setArgent($array['Billets']);
+        
+        $this->compte = $array['Compte'];
+        $this->partieId = $array['PartieId'];
+        $this->pionId = $array['PionId'];
+        $this->position = $array['Position'];
+        $this->ordreDeJeu = $array['OrdreDeJeu'];
+        $this->enPrison = $array['EnPrison'];
+        $this->toursRestantEnPrison = $array['ToursRestants_Prison'];
+        $this->argent = $array['Billets'];
 
     }
     
@@ -72,6 +74,11 @@ class Joueur  implements EntreposageDatabase {
         return $joueur;
     }
     
+    public static function pourPartie($partieId) {
+        $mapper = new JoueurDataMapper();
+        return $mapper->findPourPartie($partieId);
+    }
+    
     // interface entreposageDatabase
     public function getDataMapper() {
         return new UsagerDataMapper();
@@ -81,9 +88,11 @@ class Joueur  implements EntreposageDatabase {
         $this->getDataMapper->insert($this);
     }
     
-    public function update() {
+    /*TODO: obsolete ?
+     * public function update() {
         $this->getDatamapper->update($this);
     }
+    */
     
     //fonctions pour jouer
 	public function brasseDes() {
@@ -99,11 +108,10 @@ class Joueur  implements EntreposageDatabase {
 	     * $billets: un array de billets   coupures et qte
 	     */ 
 	    $monArgent = $this->getArgent();
-        foreach ($billets as $coupure => $qte) {
-            $monArgent[$coupure] += $qte;
+        foreach ($billets as $valeur => $qte) {
+            $monArgent[$valeur] += $qte;
         }	    
         $this->setArgent($monArgent);
-        $this->update(); // update la db
 	}
 	
 	public function paye( $montant) {
@@ -118,13 +126,20 @@ class Joueur  implements EntreposageDatabase {
 	}
 	public function setCompte($value) {
 	    $this->compte = $value;
+	    $this->notifie();
 	}
 	
 	public function getArgent() {
+	    if (count($this->argent) == 0) {
+	        //lazy load
+	        $ths->argent = Coupure::pourJoueur($this);
+	    }
 	    return $this->argent;
 	}
+	
 	public function setArgent($value) {
 	    $this->argent = $value;
+	    $this->notifie();
 	}
 	
 	public function getToursRestantEnPrison() {
@@ -132,6 +147,7 @@ class Joueur  implements EntreposageDatabase {
 	}
 	public function setToursRestantEnPrison($value) {
 	    $this->toursRestantEnPrison = $value;
+	    $this->notifie();
 	}
 	
 	public function getEnPrison() {
@@ -139,14 +155,15 @@ class Joueur  implements EntreposageDatabase {
 	}
 	public function setEnPrison($value) {
 	    $this->enPrison = $value;
+	    $this->notifie();
 	}
-	
-	
+
 	public function getOrdreDeJeu() {
 	    return $this->ordreDeJeu;
 	}
 	public function setOrdreDeJeu($value) {
 	    $this->ordreDeJeu = $value;
+	    $this->notifie();
 	}
 	
 	public function getPosition() {
@@ -154,6 +171,7 @@ class Joueur  implements EntreposageDatabase {
 	}
 	public function setPosition($value) {
 	    $this->position = $value;
+	    $this->notifie();
 	}
 	
 	public function getPionId() {
@@ -161,13 +179,15 @@ class Joueur  implements EntreposageDatabase {
 	}
 	public function setPionId($value) {
 	    $this->pionId = $value;
+	    $this->notifie();
 	}
 	
 	public function getPartieId() {
 	    return $this->partieId;
 	}
 	public function setPartieId($value) {
-	$this->partieId = $value;
+	    $this->partieId = $value;
+	    $this->notifie();
 	}
 	
 }

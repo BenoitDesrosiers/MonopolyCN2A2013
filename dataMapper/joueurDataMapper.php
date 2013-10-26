@@ -9,13 +9,10 @@ class JoueurDataMapper extends Mapper {
         parent::__construct(); 
         
         $this->selectStmt = self::$db->prepare("SELECT * FROM JoueurPartie WHERE usagercompte = ? AND partieencoursid =? ");
+        $this->updateStmt = self::$db->prepare("update JoueurPartie set UsagerCompte = ?, PartieEncoursId = ?, PionId = ?, Position = ?, OrdreDeJeu = ?, EnPrison = ?, ToursRestants_Prison = ?
+                                                where usagercompte = ? AND partieencoursid =? ");
         $this->insertStmt = self::$db->prepare("insert into JoueurPartie ( UsagerCompte, PartieEncoursId, PionId, Position, OrdreDeJeu, EnPrison, ToursRestants_Prison ) values (?,?,?,?,?,?,?)");
         
-        
-        $this->selectArgentStmt = self::$db->prepare("SELECT * FROM Usager where compte=?");
-        $this->updateArgentStmt = self::$db->prepare('update Usager set compte=?, password=?, nom=?, role=?,  where compte=?');
-        $this->insertArgentStmt = self::$db->prepare("insert into Usager ( compte, password, nom, role ) values (?, ?)");
-       
     }
     
     protected function doCreateObject( array $array) {
@@ -30,18 +27,62 @@ class JoueurDataMapper extends Mapper {
     }
     
     function update($objet) {
-        $values= array ($objet->getCompte(), $objet->getPartieId(), $objet->getPionId(), $objet->getPosition(),$objet->getOrdreDeJeu(), $objet->getEnPrison(), $objet->getToursRestantEnPrison());
+        $values= array ($objet->getCompte(), $objet->getPartieId(), $objet->getPionId(), $objet->getPosition(),$objet->getOrdreDeJeu(), $objet->getEnPrison(), $objet->getToursRestantEnPrison(),
+                        $objet->getCompte(), $objet->getPartieId());
         $this->updateStmt->execute($values);        
         $this->updateArgent($objet);
     }
     
-    function updateArgent($objet) {
-        
+    private function updateArgent($objet) {
+        // update la table contenant l'argent à partir de l'array de coupures 
+        $coupures = $objet->getArgent();
+        $queryTxt = 'update JoueurPartie_Argent set ArgentMontant = :montant, 
+                                                    JoueurPartieUsagerCompte = :joueurId, 
+                                                    JoueurPartiePartieEnCoursId = :partieId,
+                                                    Quantite = :qte  
+                                                    where JoueurPartieUsagerCompte = :joueurId 
+                                                      and JoueurPartiePartieEnCoursId = :partieId';
+        $query = self::$db->prepare($queryTxt);
+        $query->bindValue(':joueurId', $objet->getCompte());
+        $query->bindValue(':partieId', $objet->getPartieId());
+        foreach($coupures as $valeur=>$qte) {
+            $query->bindValue(':montant', $valeur);
+            $query->bindValue(':qte', $qte);
+            $query->execute(); //TODO: trapper les erreurs. 
+        }
     }
     
     function selectStmt() {
         return $this->selectStmt;
     }
     
+    function findPourPartie($partieId) {
+        /*
+         * input
+        *     $partieId: l'id d'une partie
+        * output
+        *     un array contenant les joueurs associées à la partie.
+        *     un array vide si aucun joueur n'est trouvé
+        *
+        */
+        
+        $queryTxt = 'SELECT * FROM JoeurPartie
+                        WHERE  partieencoursid = :partieId';
+        $query = self::$db->prepare($queryTxt);
+        $query->bindValue(':partieId', $partieId);
+        $query->setFetchMode(PDO::FETCH_ASSOC);
+        $query->execute();
+        
+        $listeItems = array();
+        
+        foreach($query as $row) {
+            $unItem = $this->createObject($row);
+            if ($unItem <> null) {
+                $listeItems[] = $unItem;
+            }
+        }
+        return $listeItems;
+    } 
+        
   
 }

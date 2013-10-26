@@ -13,7 +13,7 @@ class Coordonnateur extends Usager {
          * retourne tous les coordonnateurs existant dans le système
          */
         $mapper = new CoordonnateurDataMapper();
-        $coordonnateurs = $mapper->findAll(array());
+        $coordonnateurs = $mapper->findAllCoordonnateur();
         //recrée l'usager selon son type.
         return $coordonnateurs;
     }

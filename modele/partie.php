@@ -64,12 +64,14 @@ class Partie implements EntreposageDatabase {
     public function ajouteJoueur($usager) {
         /*
          * ajoute un usager à la partie
+         * l'usager devient donc un joueur
          * 
          * 
          */
         
-        //TODO: ajouter le check si jamais ce joueur existe déjà
-        $ordre = 1; //TODO: calculer le vrai ordre d'après ce qui est déjà dans la table
+        //TODO: ajouter le check si jamais ce joueur est déjà dans la partie
+        $ordre = 1; //TODO: calculer le vrai ordre d'après les joueurs qui sont déjà dans la table
+        
         $joueur = Joueur::nouveauJoueur(array('Compte'=>$usager->getCompte(),
                                     'PartieId'=>$this->getId(),
                                     'PionId'=>0,
@@ -77,7 +79,7 @@ class Partie implements EntreposageDatabase {
                                     'OrdreDeJeu'=>$ordre,
                                     'EnPrison'=>0,
                                     'ToursRestants_Prison'=>0,
-                                    'Billets'=>array()));
+                                    'Billets'=>array())); //les billets seront ajoutés quand la partie sera vraiment démarrée
         
     }
     
@@ -163,9 +165,10 @@ class Partie implements EntreposageDatabase {
         $this->heureDebut = $value;
     }
 
-    public function getJoueurs() {
-        return $this->joueurs;
+    public function getJoueurs() {    
+        return Joueur::PourPartie($this->getId());
     }
+    
     public function setJoueurs($value) {
         $this->joueurs = $value;
     }
