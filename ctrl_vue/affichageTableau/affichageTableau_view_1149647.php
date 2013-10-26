@@ -3,7 +3,7 @@
 <head>
     <?php include 'vue/headCommun.php'; ?>
 	<link rel="stylesheet" type="text/css" href="<?php echo $GLOBALS['app_path']; ?>css/mainStyle.css" />
-</head>
+</head > 
 
 <body>
     <?php include 'vue/enteteCommune.php'; ?>
