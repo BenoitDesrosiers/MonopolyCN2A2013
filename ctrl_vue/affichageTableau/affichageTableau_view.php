@@ -89,5 +89,14 @@
     	    ?>
     	</div>
     	<br/>
+    	<?php
+    	    $carte=CarteCC::parPositionCarte(11,1);
+        ?>
+        <p><?php print $carte->getDescription();?></p>
+        <?php
+            $carteCh=CarteChance::pourDefinitionPartie(1);
+        ?>
+        <p><?php foreach($carteCh as $ch){ print $ch->getDescription()."<br>";}?></p>
+    	<br/>
     </div>
     <?php include 'vue/piedpage.php'; ?>

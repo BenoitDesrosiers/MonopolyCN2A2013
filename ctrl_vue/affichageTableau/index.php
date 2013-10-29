@@ -9,6 +9,8 @@ require_once('modele/usager.php');
 require_once('modele/coordonnateur.php');
 require_once('modele/partie.php');
 require_once('dataMapper/partieDataMapper.php');
+require_once "modele/carteCC.php";
+require_once "modele/carteChance.php";
 
 // demarre la session, doit être fait après tout les includes
 session_start();

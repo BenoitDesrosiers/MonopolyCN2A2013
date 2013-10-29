@@ -1,41 +1,28 @@
 <?php
 
 require_once "dataMapper/mapper.php";
-require_once "modele/caseDeJeuAchetable.php";
+require_once "modele/caseDeJeuAction.php";
 
-class CaseAchetableDataMapper extends Mapper {
+class CaseActionDataMapper extends Mapper {
     
     function __construct() {
         parent::__construct();
-        $this->selectStmt = self::$db->prepare("SELECT * FROM CaseAchetable where id=?");
+        $this->selectStmt = self::$db->prepare("SELECT * FROM CaseAction where id=?");
         //TODO: ajouter tous les champs
-        $this->updateStmt = self::$db->prepare('update CaseAchetable set id=?, Titre=?, Prix=?  
-                                                    where id=?');
-        $this->insertStmt = self::$db->prepare("insert into CaseAchetable ( Titre, Prix ) values (?, ?)");
+        $this->updateStmt = self::$db->prepare('UPDATE CaseAction 
+                                                                                        SET ID=?, Nom=?, ActionID=?  
+                                                WHERE ID=?');
+        $this->insertStmt = self::$db->prepare("INSERT INTO CaseAction ( Nom, ActionID ) 
+                                                                                        VALUES (?, ?)");
     }
 
     protected function doCreateObject( array $array) {
         
-        // va chercher de l'information additionnelle dans la table GroupeDeCase
-        $queryTxt = 'SELECT * FROM GroupeDeCase
-                            WHERE id = :id';
-        $query = self::$db->prepare($queryTxt);
-        $query->bindValue(':id', $array['GroupeDeCaseId']);
-        $query->setFetchMode(PDO::FETCH_ASSOC);
-        $query->execute();
-        $array2  = $query->fetch();
-        
-        
         //TODO: créer 3 autres sous-clase de CaseDeJeuAchetable et les appeler CasePropriete, CaseTrain et CaseService et créer la bon selon le type provenant de GroupeDeCase
-        $obj = new CaseDeJeuAchetable( );
-        $obj->setId($array['Id']);
-        $obj->setNom($array['Titre']);
-        $obj->setPrix($array['Prix']);
-
-        // set la couleur d'après l'info de GroupeDeCase
-        //TODO: la couleur devrait aller dans CasePropriete
-        $obj->setCouleur($array2['Couleur']);
-        $obj->setCouleurHTML($array2['CouleurHTML']);
+        $obj = new CaseDeJeuAction();
+        $obj->setId($array['ID']);
+        $obj->setNom($array['Nom']);
+        $obj->setActionID($array['ActionID']);
         
         return $obj;        
     }
@@ -98,10 +85,10 @@ class CaseAchetableDataMapper extends Mapper {
     }
     
     function pourDefinitionPartie($idDefinitionPartie) {
-        // retourne un array contenant toutes les cases achetable du tableau
+        // retourne un array contenant toutes les cases actions du tableau
         
-        // commence par aller chercher la liste des Id dans la table DefinitionPartie_CaseAchetable
-        $queryTxt = 'SELECT * FROM DefinitionPartie_CaseAchetable
+        // commence par aller chercher la liste des Id dans la table DefinitionPartie_CaseAction
+        $queryTxt = 'SELECT * FROM DefinitionPartie_CaseAction
                             WHERE DefinitionPartieId = :id';
         $query = self::$db->prepare($queryTxt);
         $query->bindValue(':id', $idDefinitionPartie);
@@ -111,9 +98,9 @@ class CaseAchetableDataMapper extends Mapper {
         $listeItems = array();
         
         foreach($query as $row) {
-            $unItem = $this->find($row['CaseAchetableId']);
+            $unItem = $this->find($row['CaseActionId']);
             if ($unItem <> null) {
-                //set la position à partir de celle trouvée dans DefinitionPartie_CaseAchetable
+                //set la position à partir de celle trouvée dans DefinitionPartie_CaseAction
                 $unItem->setPosition($row['Position']);
                 $listeItems[] = $unItem;
             }
@@ -122,10 +109,10 @@ class CaseAchetableDataMapper extends Mapper {
     }
     
     function parPositionCase($position, $idDefinitionPartie) {
-            // retourne un array contenant toutes les cases achetable du tableau
+            // retourne un array contenant toutes les cases actions du tableau
     
-            // commence par aller chercher la liste des Id dans la table DefinitionPartie_CaseAchetable
-            $queryTxt = 'SELECT * FROM DefinitionPartie_CaseAchetable
+            // commence par aller chercher la liste des Id dans la table DefinitionPartie_CaseAction
+            $queryTxt = 'SELECT * FROM DefinitionPartie_CaseAction
                             WHERE Position = :position AND DefinitionPartieId = :idDefinitionPartie';
             $query = self::$db->prepare($queryTxt);
             $query->bindValue(':position', $position);
@@ -134,12 +121,12 @@ class CaseAchetableDataMapper extends Mapper {
             $query->execute();
     
             foreach($query as $row) {
-            $item = $this->find($row['CaseAchetableId']);
-            if ($item <> null) {
-                //set la position à partir de celle trouvée dans DefinitionPartie_CaseAchetable
-                $item->setPosition($row['Position']);
+                    $item = $this->find($row['CaseActionId']);
+                    if ($item <> null) {
+                            //set la position à partir de celle trouvée dans DefinitionPartie_CaseAchetable
+                            $item->setPosition($row['Position']);
+                    }
             }
-        }
             return $item;
     }
 }

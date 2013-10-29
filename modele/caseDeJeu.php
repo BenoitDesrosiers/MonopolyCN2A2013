@@ -8,7 +8,7 @@ abstract class CaseDeJeu implements EntreposageDatabase {
     protected $position;
     
     // static Factory
-    static function pourDefinitionPartie($idDefinitionPartie){}
+    //static abstract function pourDefinitionPartie($idDefinitionPartie);
     
     public function getNom() {
         return $this->Nom;
@@ -21,13 +21,13 @@ abstract class CaseDeJeu implements EntreposageDatabase {
         return $this->Id;
     }
     public function setId($value) {
-        $this->Id = $value;
+        (is_numeric($value))?$this->Id = $value:0;
     }
     public function getPosition() {
         return $this->position;
     }
     public function setPosition($value) {
-        $this->position = $value;
+        (is_numeric($value))?$this->position = $value:0;
     }
     public abstract function getType();
     
