@@ -60,6 +60,13 @@ switch ($action) {
 	        // l'usager veut afficher le tableau de jeu
 	        redirect("ctrl_vue/affichageTableau?action=afficher");
 	    }
+	    
+	    //juste pour tester
+	    
+	    elseif (isset($_POST['test']))
+	    {
+	    	redirect("ctrl_vue/test?action=test");
+	    }
 		break;
 }
 ?>
