@@ -7,9 +7,9 @@ class banque extends Usager implements EntreposageDatabase {
 
 	//fonctions pour jouer
 
-	public function vendrePropriete($Joueur, $case) {
-	  	$Joueur->paye(499);
-	  	
+	public function vendrePropriete($joueur, $case) {
+	  	$joueur->paye(452);
+	  	$case->setProprietaire($joueur);
 	}
 
 }

@@ -8,7 +8,7 @@
     <?php include 'vue/enteteCommune.php'; ?>
     		
   <?php $Joueur = new Joueur($_SESSION['usager']->getPassword(), $_SESSION['usager']->getCompte(), $_SESSION['usager']->getNom());
-  	$Joueur->paye(499);
+  	$Joueur->paye(600);
     	?>
 
     <?php include 'vue/piedpage.php'; ?>

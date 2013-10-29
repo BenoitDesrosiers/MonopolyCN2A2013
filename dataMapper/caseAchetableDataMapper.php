@@ -59,7 +59,19 @@ class CaseAchetableDataMapper extends Mapper {
                         $object->getNom(), 
                         $object->getDescription(), 
                         $object->getMaxNbJoueur());
-        $this->updateStmt->execute($values);
+        $this->updateStmt->execute($values);       
+    }
+    
+    function setProprietaire($object ) {
+    	$queryTxt = "insert into JoueurPartie_CaseAchetable ( JoueurPartieUsagerCompte, JoueurPartiePartieEnCoursId, CaseAchetableId, OrdreAffichage, Hypotheque, NombreMaisons, NombreHotels) values (?, ?, ?, ?, ?, ?, ?)";
+    	$values = array ($object->get(),
+    					 $object->get(),
+    					 $object->getId(),
+    					 "1", 
+    					 "0",
+    					 "0",
+    					 "0",);
+    	$this->$queryTxt->execute($values);	
     }
     
     function selectStmt() {

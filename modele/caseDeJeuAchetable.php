@@ -3,11 +3,13 @@
 require_once "modele/caseDeJeu.php";
 require_once "interface/entreposageDatabase.php";
 require_once "dataMapper/caseAchetableDataMapper.php";
+require_once "modele/usager.php";
 
 class CaseDeJeuAchetable extends CaseDeJeu {
     protected $prix;
     protected $couleur;
     protected $couleurHTML;
+    protected $proprietaire;
     
     // static Factory
     static function pourDefinitionPartie($idDefinitionPartie) {
@@ -56,7 +58,16 @@ class CaseDeJeuAchetable extends CaseDeJeu {
     public function setCouleurHTML($value) {
         $this->couleurHTML = $value;
     }
-     
+    public function getProprietaire() {
+    	return $this->proprietaire;
+    }
+    public function setProprietaire($value) {
+    	$this->proprietaire = $value;
+    }
+    public function changerProprietaire($Joueur){
+    	$this->setProprietaire($Joueur->getCompte());
+  		
+    }
     public function getType() {
         return "achetable";
     }
