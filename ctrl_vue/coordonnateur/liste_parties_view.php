@@ -34,6 +34,6 @@
     		<?php endforeach; ?>
     	</table>
     	<br/>
-        </form-->
+        
     </div>
     <?php include 'vue/piedpage.php'; ?>
