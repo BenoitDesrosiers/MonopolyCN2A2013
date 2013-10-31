@@ -77,4 +77,22 @@ class DefinitionPartieDataMapper extends Mapper {
         
     }
     
+    function selectArgent($id){
+    	$queryTxt = 'SELECT * FROM DefinitionPartie_Argent
+    				WHERE DefinitionPartieId = :id';
+    	$query = self::$db->prepare($queryTxt);
+    	$query->bindValue(':id', $id);
+    	$query->setFetchMode(PDO::FETCH_ASSOC);
+    	$query->execute();    	
+
+    	$listeItems = array();
+    	
+    	foreach($query as $row) {
+    		if ($unItem <> null) {
+    			$listeItems[$row['ArgentMontant']] = $row['Quantite'];
+    		}
+    	}
+    	return $listeItems;
+    }
+    
 }

@@ -3,7 +3,6 @@
 require_once "dataMapper/mapper.php";
 require_once "modele/usager.php";
 require_once "modele/coordonnateur.php";
-require_once "modele/joueur.php";
 
 class UsagerDataMapper extends Mapper {
     

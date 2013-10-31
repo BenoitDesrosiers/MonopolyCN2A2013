@@ -22,6 +22,11 @@ switch ($action) {
 		//LISTEPARTIE 1.4.x affiche les parties trouvées
 		include('liste_parties_view.php');
 		break;
+	case 'demarrerPartie' :
+		$idPartie = $_POST['Demarrer'];
+		$partie = Partie::parId($idPartie);
+		$partie->demarrerPartie();
+		break;
 		
 	//LISTEJOUEUR 2 : après avoir ajouter le bouton, vous retournez ici avec une action xyz ... ajouter un case
 	//LISTEJOUEUR 3 : étant donné qu'il n'y a pas d'objet en charge de lister les joueurs (ca viendra...) vous pouvez 

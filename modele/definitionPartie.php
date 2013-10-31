@@ -10,6 +10,7 @@ class DefinitionPartie implements EntreposageDatabase {
     protected $nom;
     protected $description;
     protected $maxNbJoueur;
+    protected $definitionArgent = array();
         
 
     public function __construct() {
@@ -40,6 +41,14 @@ class DefinitionPartie implements EntreposageDatabase {
     }
     public function setId($value) {
         $this->id = $value;
+    }
+    
+    public function getArgent(){
+    	if (count($definitionArgent) == 0){
+    		$datamapper = $this->getDataMapper();
+    		$definitionArgent = $datamapper->selectArgent($this->getId());
+    	}
+    	return $definitionArgent;
     }
     
     public function getNom() {

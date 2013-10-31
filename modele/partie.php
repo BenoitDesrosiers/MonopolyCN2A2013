@@ -22,7 +22,7 @@ class Partie implements EntreposageDatabase {
         
     
     
-    protected $joueurs; // la liste des joueurs (de 1 à 8)
+    protected $joueurs = array(); // la liste des joueurs (de 1 à 8)
     protected $heureDebut; // l'heure de la création de la partie
     protected $tableau; // le tableau sur lequel se déroule la partie
     protected $banque;
@@ -65,6 +65,15 @@ class Partie implements EntreposageDatabase {
         $this->getDataMapper()->insert($this);
     }
     
+    //Fonctions
+    public function demarrerPartie()
+    {
+    	$definition = DefinitionPartie::parId($this->getDefinitionPartieId());
+    
+    	foreach ($this->getJoueurs() as $joueur) :
+    		$joueur->setArgent($definition->getArgent());
+    	endforeach;
+    }
     
     //Getters & Setters
     public function getNom() {
@@ -140,10 +149,9 @@ class Partie implements EntreposageDatabase {
     }
 
     public function getJoueurs() {
-        return $this->joueurs;
+    	return Joueur::pourPartie($this->getId());
     }
     public function setJoueurs($value) {
-        $this->joueurs = $value;
     }
 
     public function getId() {
