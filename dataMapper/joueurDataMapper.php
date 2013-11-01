@@ -30,12 +30,55 @@ class JoueurDataMapper extends Mapper {
         $this->updateStmt->execute($values);
     }
     
+    function selectArgent($joueur){
+    	//Va chercher l'argent pour le joueur dans la db
+    	/*
+    	 * input
+    	 * 		$joueur: un objet joueur
+    	 * output
+    	 * 		$listeArgent: array qui contient l'argent du joueur
+    	 */
+    	
+    	$queryTxt = 'SELECT * FROM joueurPartie_Argent
+    				WHERE JoueurPartieUsagerCompte = :compte';
+    	$query = self::$db->prepare($queryTxt);
+    	$query->bindValue(':compte', $joueur->getUsagerCompte());
+    	$query->setFetchMode(PDO::FETCH_ASSOC);
+    	$query->execute();    	
+
+    	$listeArgent = array();
+    	
+    	foreach($query as $row) {
+    		if ($row <> null) {
+    			$listeArgent[$row['ArgentMontant']] = $row['Quantite'];
+    		}
+    	}
+    	return $listeArgent;
+    }
+    
     function ajoutArgent($joueur) {
-        $ajoutArgentStmt = self::$db->prepare('insert into joueurPartie_Argent ( ArgentMontant, JoueurPartieUsagerCompte, JoueurPartiePartieEnCoursId, Quantite ) values (?, ?)');
+    	//Ajout de l'argent pour les joueurs dans la db
+    	/*
+    	 * input
+    	 * 		$joueur: un objet joueur
+    	 * ouput
+    	 * 		L'argent est ajouté dans la db pour les joueurs
+    	*/
+    	
+        $ajoutArgentStmt = self::$db->prepare('insert into joueurPartie_Argent ( ArgentMontant, JoueurPartieUsagerCompte, JoueurPartiePartieEnCoursId, Quantite ) values (?, ?, ?, ?)');
         
-        foreach ($joueur->joueurArgent as $montant=>$quantite) :
-        	$ajoutArgentStmt->execute($montant, $joueur->getUsagerCompte(), $joueur->getPartieEnCoursId(), $quantite);
+        foreach ($joueur->getArgent() as $montant=>$quantite) :
+        	$ajoutArgentStmt->execute(array($montant, $joueur->getUsagerCompte(), $joueur->getPartieEnCoursId(), $quantite));
     	endforeach;
+    }
+    
+    function deleteArgent($joueur){
+    	$queryTxt = 'DELETE FROM joueurPartie_Argent
+    				WHERE JoueurPartieUsagerCompte = :compte';
+    	$query = self::$db->prepare($queryTxt);
+    	$query->bindValue(':compte', $joueur->getUsagerCompte());
+    	$query->setFetchMode(PDO::FETCH_ASSOC);
+    	$query->execute();    	
     }
     
     function selectStmt() {

@@ -88,7 +88,7 @@ class DefinitionPartieDataMapper extends Mapper {
     	$listeItems = array();
     	
     	foreach($query as $row) {
-    		if ($unItem <> null) {
+    		if ($row <> null) {
     			$listeItems[$row['ArgentMontant']] = $row['Quantite'];
     		}
     	}

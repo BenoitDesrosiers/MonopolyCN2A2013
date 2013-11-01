@@ -26,6 +26,8 @@ switch ($action) {
 		$idPartie = $_POST['Demarrer'];
 		$partie = Partie::parId($idPartie);
 		$partie->demarrerPartie();
+		$titrePage = "Liste joueurs";
+		include('joueurs_partie_view.php');
 		break;
 		
 	//LISTEJOUEUR 2 : après avoir ajouter le bouton, vous retournez ici avec une action xyz ... ajouter un case

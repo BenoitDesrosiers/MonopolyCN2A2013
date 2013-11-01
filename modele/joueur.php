@@ -103,6 +103,11 @@ class Joueur extends Usager implements EntreposageDatabase {
 	}
 	
 	public function getArgent(){
+		if(count($this->argent) == 0)
+		{
+			$dataMapper = new JoueurDataMapper();
+			$this->argent = $dataMapper->selectArgent($this);
+		}
 		return $this->argent;
 	}
 	
@@ -110,6 +115,7 @@ class Joueur extends Usager implements EntreposageDatabase {
 		$this->argent = $array;
 		
 		$dataMapper = new JoueurDataMapper();
+		$dataMapper->deleteArgent($this);
 		return $dataMapper->ajoutArgent($this);
 	}
 	

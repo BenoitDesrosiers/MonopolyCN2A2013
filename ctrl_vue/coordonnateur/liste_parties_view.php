@@ -36,7 +36,7 @@
 	    				<?php endforeach?></p>
     				</td>
     				<td>
-	    					<button type="submit" name="Demarrer" value="<?php $partie->getId()?>">Demarrer la partie</button>
+	    					<button type="submit" name="Demarrer" value="<?php echo $partie->getId()?>">Demarrer la partie</button>
 	    			</td>
     			</tr>
     		<?php endforeach; ?>

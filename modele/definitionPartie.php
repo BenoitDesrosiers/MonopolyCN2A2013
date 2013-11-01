@@ -44,11 +44,11 @@ class DefinitionPartie implements EntreposageDatabase {
     }
     
     public function getArgent(){
-    	if (count($definitionArgent) == 0){
+    	if (count($this->definitionArgent) == 0){
     		$datamapper = $this->getDataMapper();
-    		$definitionArgent = $datamapper->selectArgent($this->getId());
+    		$this->definitionArgent = $datamapper->selectArgent($this->getId());
     	}
-    	return $definitionArgent;
+    	return $this->definitionArgent;
     }
     
     public function getNom() {
