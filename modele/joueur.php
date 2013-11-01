@@ -2,10 +2,9 @@
 require_once "interface/entreposageDatabase.php";
 require_once('modele/usager.php');
 require_once('modele/caseDeJeu.php');
+require_once('dataMapper/joueurDataMapper.php');
 
 class Joueur extends Usager implements EntreposageDatabase {
-    
-	public $argent = array();
 	
     //fonctions pour jouer
 	public function brasseDes() {
@@ -19,11 +18,11 @@ class Joueur extends Usager implements EntreposageDatabase {
 	public function encaisse( $montant) {
 	    
 	}
-	
+	/*vero------*/
 	public function paye($montant) {
 		
-		//Fonction  
-	    $argent['500']= 0;
+		//Fonction   
+	    $argent['500']= 5;
 	    $argent['100']= 2;
 	    $argent['50'] = 1;
 	    $argent['20'] = 4;
@@ -88,15 +87,18 @@ class Joueur extends Usager implements EntreposageDatabase {
 		    	}
 		    }
 		    
-	    }	
+	    }
+	    $this->encaisse($argentRetour);
 	}
-	
+	/*-----vero*/
 	public function getRole() {
 	    return 'joueur';
 	}
-	
+	/*vero---*/
 	public function tenterAchat(CaseDeJeuAchetable $uneCase){
 		return true;
 	}
+	/*---vero*/
+	
 	
 }

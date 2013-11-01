@@ -64,7 +64,15 @@ class Partie implements EntreposageDatabase {
     public function sauvegarde() {
         $this->getDataMapper()->insert($this);
     }
+    /*Vincent*/
+    public function demarrerPartie()
+    {
+    	$definition = DefinitionPartie::parId($this->getDefinitionPartieId());
     
+    	foreach ($this->getJoueurs() as $joueur) :
+    	$joueur->setArgent($definition->getArgent());
+    	endforeach;
+    }/*Vincent*/
     
     //Getters & Setters
     public function getNom() {

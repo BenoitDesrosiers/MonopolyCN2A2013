@@ -17,17 +17,6 @@ class CaseDeJeuAchetable extends CaseDeJeu {
         return $dataMapper->pourDefinitionPartie($idDefinitionPartie);
     }
     
-    public function atterirSur($unJoueur){
-    	 if($this->getType()=="achetable"){
-    	 	if($this->getProprio() != null){
-    	 		
-    	 	}
-    	 	else {
-    	 		$unJoueur->tenterAchat($this);
-    	 		
-    	 	}
-    	 }
-    }
     
     // interface entreposageDatabase
     public function getDataMapper() {
@@ -58,12 +47,24 @@ class CaseDeJeuAchetable extends CaseDeJeu {
     public function setCouleurHTML($value) {
         $this->couleurHTML = $value;
     }
+    /*vero----*/
     public function getProprietaire() {
     	return $this->proprietaire;
     }
     public function setProprietaire($value) {
     	$this->proprietaire = $value;
+    	$this->getDataMapper()->insertProprietaire($value, $this);    	
     }
+    /*----vero*/
+    /// partie de samuel
+    
+    /*public function getProprietaire(){
+    	return $this->JoueurPartieUsagerCompte;
+    }
+    
+    public function setProprietaire($value){
+    	$this->JoueurPartieUsagerCompte = $value;
+    }*/
     public function changerProprietaire($Joueur){
     	$this->setProprietaire($Joueur->getCompte());
   		

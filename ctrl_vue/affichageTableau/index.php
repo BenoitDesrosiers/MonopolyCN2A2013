@@ -9,6 +9,9 @@ require_once('modele/usager.php');
 require_once('modele/coordonnateur.php');
 require_once('modele/partie.php');
 require_once('dataMapper/partieDataMapper.php');
+require_once('modele/banque.php');
+require_once('modele/caseDeJeu.php');
+
 
 // demarre la session, doit être fait après tout les includes
 session_start();
@@ -41,8 +44,12 @@ switch ($action) {
        		$titrePage= "Atterir sur une case non acheté";
        		$partie = Partie::parId('1'); //ceci étant un démo, nous utiliserons la partie #1
        		$tableauDeJeu = $partie->getTableau();
-       		 
        		include('./atterirSur_view.php');
+       		$joueur = new Joueur("pw", "benoit", "Benoit Desrosier");
+       		$case=new CaseAchetableDataMapper();
+       		$case=$case->find(9);
+       		$case->atterirSur($joueur);
+       		
        		break;
     default:
         affiche_erreur("Action inconnue: " . $action);

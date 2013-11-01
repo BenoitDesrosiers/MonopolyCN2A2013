@@ -9,6 +9,24 @@ abstract class CaseDeJeu implements EntreposageDatabase {
     
     // static Factory
     
+    public function atterirSur($unJoueur){
+    	if($this->getType()=="achetable"){
+    		if($this->getProprietaire() != null){
+    			//Etienne
+    		}
+    		else {
+    			/*vero---*/
+    			if($unJoueur->tenterAchat($this)){
+    				banque::vendrePropriete($unJoueur, $this);
+    			}
+    			/*---vero*/
+    		}
+    	}
+    	else{
+    		//tommy
+    	}
+    }
+    
     public function getNom() {
         return $this->Nom;
     }

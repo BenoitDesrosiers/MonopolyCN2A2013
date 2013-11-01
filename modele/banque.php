@@ -1,15 +1,13 @@
 <?php
-require_once "interface/entreposageDatabase.php";
-require_once('modele/usager.php');
 require_once('modele/caseDeJeu.php');
 
-class banque extends Usager implements EntreposageDatabase {
+class banque  {
 
 	//fonctions pour jouer
-
-	public function vendrePropriete($joueur, $case) {
-	  	$joueur->paye(452);
+/*vero----*/
+	static function vendrePropriete($joueur, $case) {
+	  	$joueur->paye($case->getPrix());
 	  	$case->setProprietaire($joueur);
 	}
-
+/*-----vero*/	
 }
