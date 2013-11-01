@@ -64,8 +64,8 @@
 				<tr>
 					<td class="horizontalCase">	
 						<svg width="100px" height="75px" xmlns="http://www.w3.org/2000/svg" version="1.1">
-							<?php if ($tableauDeJeu->getCaseByPosition($currentPosition)->getType() == "action") : ?> 
-								<text x="38px" y="10px" transform="rotate(90 38,38)"> case action
+							<?php if ($tableauDeJeu->getCaseByPosition(50 - $currentPosition)->getType() == "action") : ?> 
+								<text x="38px" y="40px" transform="rotate(90 38,38)"> <?php echo $tableauDeJeu->getCaseByPosition(50 - $currentPosition)->getNom(); ?>
 							<?php else : ?>
 								<?php if ($tableauDeJeu->getCaseByPosition($currentPosition)->getType() == "achetable") : ?>
 								<rect x="70" y="0" width="30" height="75" style="fill: <?php echo $tableauDeJeu->getCaseByPosition(50 - $currentPosition)->getCouleurHTML(); ?>;stroke:rgb(0,0,0);" />
@@ -108,7 +108,7 @@
 					<td class="horizontalCase">	
 						<svg width="100px" height="75px" xmlns="http://www.w3.org/2000/svg" version="1.1">
 							<?php if ($tableauDeJeu->getCaseByPosition($currentPosition)->getType() == "action") : ?> 
-								<text x="38px" y="10px" transform="rotate(270 38,38)"> case action
+								<text x="38px" y="40px" transform="rotate(90 38,38)"> <?php echo $tableauDeJeu->getCaseByPosition($currentPosition)->getNom(); ?>
 							<?php else : ?>
 								<rect x="0" y="0" width="30" height="75" style="fill: <?php echo $tableauDeJeu->getCaseByPosition($currentPosition)->getCouleurHTML(); ?>;stroke:rgb(0,0,0);" />
 								<text x="38px" y="45px" transform="rotate(270 38,38)">
@@ -148,11 +148,11 @@
 						<?php if ($currentPosition == 20 || $currentPosition == 30) : ?>
 							class = "cornerCase">
 							<svg width="100px" height="100px" xmlns="http://www.w3.org/2000/svg" version="1.1">
-								<text x="38px" y="50px"> case action
-						<?php elseif ($tableauDeJeu->getCaseByPosition($currentPosition)->getType() == "action") : ?>
+								<text x="38px" y="40px"> <?php echo $tableauDeJeu->getCaseByPosition(50 - $currentPosition)->getNom(); ?>
+						<?php elseif ($tableauDeJeu->getCaseByPosition(50 - $currentPosition)->getType() == "action") : ?>
 							class = "verticalCase">
 							<svg width="75px" height="100px" xmlns="http://www.w3.org/2000/svg" version="1.1">
-								<text x="38px" y="10px"> case action
+								<text x="38px" y="40px"> <?php echo $tableauDeJeu->getCaseByPosition(50 - $currentPosition)->getNom(); ?>
 						<?php else : ?>
 							class = "verticalCase">
 							<svg width="75px" height="100px" xmlns="http://www.w3.org/2000/svg" version="1.1">

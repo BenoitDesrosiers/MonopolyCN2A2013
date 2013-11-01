@@ -191,6 +191,7 @@ class Partie implements EntreposageDatabase {
 		if (($this->premierDes + $this->deuxiemeDes) >= 2 && ($this->premierDes + $this->deuxiemeDes) <= 12 ) {
 			return ($this->premierDes + $this->deuxiemeDes);
 		}
+		// Sinon, on lance un message d'erreur
 		else {
     		echo "ERREUR: La valeur retournee par les des est trop grande/petite ou NULL.";
     	}

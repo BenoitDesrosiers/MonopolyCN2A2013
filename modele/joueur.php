@@ -9,36 +9,23 @@ class Joueur extends Usager implements EntreposageDatabase {
 	
     //fonctions pour jouer
 	public function brasseDes() {
-		// Création de la partie et set des dés
+		// Crï¿½ation de la partie et set des dï¿½s
 		$partie = Partie::parId(1);
 		$partie->genererValeursDes();
 		
-		// Ajustement de la position du joueur en ajoutant la valeur des dés à la valeur de la position actuelle du joueur.
+		// Ajustement de la position du joueur en ajoutant la valeur des dï¿½s ï¿½ la valeur de la position actuelle du joueur.
+			// ATTENTION : Prï¿½sentement, le setPosition est placï¿½ dans cette classe en attendant que le dataMapper de joueur soit crï¿½ï¿½. (Voir lignes 72 ï¿½ 84)
 		$this->setPosition($this->getPosition() + $partie->valeurDes());
 				
-		// Créer et lancer une case de jeu		
+		// Crï¿½er et lancer une case de jeu		
 		$uneCase = null;
 		
-		foreach (CaseDeJeu)
-		
-		
-		/*
-		// Vérifie si la case est une case achetable
-		foreach (CaseDeJeuAchetable::pourDefinitionPartie(1) as $caseAchetable) :
-			if ($caseAchetable->getPosition() == $this->getPosition()) :
-				$uneCase = CaseDeJeuAchetable::parPositionCase($this->getPosition(), 1);
+		// Vï¿½rifie si la case est une case achetable
+		foreach ($partie->getTableau()->getCases() as $case) :
+			if ($case->getPosition() == $this->getPosition()) :
+				$uneCase = $case;
 			endif;
 		endforeach;
-		
-		// Si la case est null, vérifie si la case est une case action
-		if ($uneCase == null) :
-			foreach (CaseDeJeuAction::pourDefinitionPartie(1) as $caseAction) :
-				if ($caseAction->getPosition() == $this->getPosition()) :
-					$uneCase = CaseDeJeuAction::parPositionCase($this->getPosition(), 1);
-				endif;
-			endforeach;
-		endif;
-		*/
 		
 		// Si la case est null, une erreur est survenue
 		if ($uneCase == null) :
@@ -48,21 +35,15 @@ class Joueur extends Usager implements EntreposageDatabase {
 		$this->avanceSurCase($uneCase);
 		
 		/// Output Tests ///
-		echo "Dice value: ".$partie->getPremierDes().", ".$partie->getDeuxiemeDes();
+		echo "Dice values: ".$partie->getPremierDes().", ".$partie->getDeuxiemeDes();
 		echo "<br/>";
 		echo $uneCase->getNom()." est une ".$uneCase->getType();
-		////////////////////
+		/////////////////////
 		
 	}
 	
 	public function avanceSurCase(CaseDeJeu $uneCase) {
-	     if ($uneCase->getType() == "achetable") :
-	     	$uneCase->atterrirSur($this);
-	     elseif ($uneCase->getType() == "action") :
-	     	$uneCase->atterrirSur($this);
-	     else :
-	     	echo "ATTENTION: Erreur lors de l'identification du type de la case!";
-	     endif;
+		$uneCase->atterrirSur($this);
 	}
 	
 	public function encaisse( $montant) {
@@ -77,7 +58,7 @@ class Joueur extends Usager implements EntreposageDatabase {
 	    return 'joueur';
 	}
 	
-	//TODO: Enlever cette fonction dès que le joueurDataMapper sera créé.
+	//TODO: Enlever cette fonction dï¿½s que le joueurDataMapper sera crï¿½ï¿½.
 	public function setPosition($position) {
 		while ($position > 39) :
 			$position = $position - 40;
@@ -86,7 +67,7 @@ class Joueur extends Usager implements EntreposageDatabase {
 		$this->posJoueur = $position;
 	}
 	
-	//TODO: Enlever cette fonction dès que le joueurDataMapper sera créé.
+	//TODO: Enlever cette fonction dï¿½s que le joueurDataMapper sera crï¿½ï¿½.
 	public function getPosition() {
 		return $this->posJoueur;
 	}
