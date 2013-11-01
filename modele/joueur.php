@@ -18,29 +18,25 @@ class Joueur extends Usager implements EntreposageDatabase {
 	public function encaisse( $montant) {
 	    
 	}
-	/*vero------*/
+	/*vero, David, Vinccent ------*/
 	public function paye($montant) {
 		
-		//Fonction   
-	    $argent['500']= 5;
-	    $argent['100']= 2;
+		//Fonction 
+		
+		//
+		//Fake de l'Argent du joueur 
+	    $argent['500']= 0;
+	    $argent['100']= 5;
 	    $argent['50'] = 1;
 	    $argent['20'] = 4;
 	    $argent['10'] = 0;
 	    $argent['5'] = 3;
 	    $argent['1'] = 5;
-	    //Array de l'Argent retourné pour l'encaisse
-	    $argentRetour['500']= 0;
-	    $argentRetour['100']= 0;
-	    $argentRetour['50'] = 0;
-	    $argentRetour['20'] = 0;
-	    $argentRetour['10'] = 0;
-	    $argentRetour['5'] = 0;
-	    $argentRetour['1'] = 0;
 	    
-	    $i = 0;
+	    //Variable pour calculer le montant
 	    $montantCtr = 0;
 	    $argentCtr = 0;
+	    $quantiteCtr =0;
 	    
 	    foreach($argent as $billet=>$quantite){
 	    	$argentCtr += intval($billet) * $quantite; 
@@ -57,7 +53,6 @@ class Joueur extends Usager implements EntreposageDatabase {
 		    $argentCtr -= $montant;
 		    echo "Argent du joueur après: ".$argentCtr."<br/>";
 		    
-		    $i = 0;
 		    foreach($argent as $billet=>$quantite){
 		    	if($quantite != 0){
 		    		if($montant > 0){
@@ -73,32 +68,36 @@ class Joueur extends Usager implements EntreposageDatabase {
 		    			}		    				
 		    		}
 		    	}	
+		    	$argent[$billet]=$quantite;
 		    }
-		    foreach($argentRetour as $billet=>$quantite){
+		    
+		    foreach($argent as $billet=>$quantite){
+		    	echo "Billet Avant :".$billet."</br>";
+		    	echo "Quantité Retour ... Avant".$quantite."</br>";
+		    	echo "Montant Avant".$montantCtr."</br>";
 		    	if($billet <= $montantCtr){
-					$quantite = floor($montantCtr / intval($billet));
-					echo "Billet :".$billet."</br>";
-					echo "Quantité Retour ... ".$quantite."</br>";
-					echo "Montant ".$montantCtr."</br>";
+					$quantiteCtr = floor($montantCtr / intval($billet));
+					$quantite += $quantiteCtr; 
+					echo "Billet Après :".$billet."</br>";
+					echo "Quantité Retour ... Après ".$quantite."</br>";
+					echo "Montant Après".$montantCtr."</br>";
 					if($quantite != 0){
 						$montantCtr -= intval($billet) * $quantite;
 						//echo "Montant :".$montant."</br>";	
 					}
 		    	}
+		    	$argent[$billet]=$quantite;
 		    }
 		    
 	    }
-	    $this->encaisse($argentRetour);
+	    $this->encaisse($argent);
 	}
-	/*-----vero*/
-	public function getRole() {
-	    return 'joueur';
-	}
-	/*vero---*/
+	
 	public function tenterAchat(CaseDeJeuAchetable $uneCase){
 		return true;
 	}
-	/*---vero*/
-	
-	
+	/*-----vero*/
+	public function getRole() {
+		return 'joueur';
+	}
 }

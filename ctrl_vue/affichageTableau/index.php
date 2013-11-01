@@ -47,7 +47,7 @@ switch ($action) {
        		include('./atterirSur_view.php');
        		$joueur = new Joueur("pw", "benoit", "Benoit Desrosier");
        		$case=new CaseAchetableDataMapper();
-       		$case=$case->find(9);
+       		$case=$case->find(27);
        		$case->atterirSur($joueur);
        		
        		break;

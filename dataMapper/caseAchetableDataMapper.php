@@ -71,7 +71,7 @@ class CaseAchetableDataMapper extends Mapper {
     					 "1",
     					 $case->getId(),
     					 "1", 
-    					 "1",
+    					 "0",
     					 "0",
     					 "0");
     	$query->execute($values);

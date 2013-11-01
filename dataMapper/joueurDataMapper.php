@@ -1,5 +1,5 @@
 <?php
-
+/*Vincent -------*/
 require_once "dataMapper/mapper.php";
 require_once "modele/joueur.php";
 
@@ -71,4 +71,4 @@ class JoueurDataMapper extends Mapper {
             }
             return $listeItems;
     }
-}
+}/*------Vincent*/

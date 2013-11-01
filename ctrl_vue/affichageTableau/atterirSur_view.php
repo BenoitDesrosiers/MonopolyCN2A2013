@@ -7,7 +7,6 @@
 <body>
     <?php include 'vue/enteteCommune.php'; ?>
     		
-  <?php
-    	?>
+  <?php ?>
 
     <?php include 'vue/piedpage.php'; ?>
