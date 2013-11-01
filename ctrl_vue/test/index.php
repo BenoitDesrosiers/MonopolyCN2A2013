@@ -32,19 +32,23 @@ $coordonnateur = $_SESSION['usager'];
 
 switch ($action) {
 	
-    case 'test' :
-    	$titrePage= "affichage du tableau de jeu";
-    	$partie = Partie::parId('1'); //ceci étant un démo, nous utiliserons la partie #1
-    	$tableauDeJeu = $partie->getTableau();
+    case 'test' : //code pour fin de test de la fonction PaiementParBatiment
     	
+    	$partie = Partie::parId('1'); //ceci étant un démo, nous utiliserons la partie #1
+    	$titrePage= "Test de la fonction paiement par batiment, avec jour benoit, partie 1, carte id 15.";
+
     	$joueur = new Joueur("benoit", "benoit", "benoit");
     	$carte = new carte("15");
     	
     	$paiement = new paiementParBatiment;
-    	$test = $paiement->calculPaiementParBatiment($joueur, $carte);
-    	echo $test;
     	
-      	include('./affichageTableau_view.php');
+    	//normalement PaiementParBatiment ne retourne pas de valeur et appelle directement la banque pour faire payer, valeur de retour ici pour voir que le calcul fonctionne.
+    	$test = $paiement->calculPaiementParBatiment($joueur, $carte, $partie);
+    	
+    	echo $titrePage;
+    	echo "</br></br>";
+    	echo $test;
+
        	break;
     default:
         affiche_erreur("Action inconnue: " . $action);

@@ -2,19 +2,19 @@
 require_once('modele/caseDeJeuAchetable.php');
 require_once('modele/tableau.php');
 require_once('modele/partie.php');
+
 //require_once('modele/banque.php');
 
 class paiementParBatiment {
 	
-	protected $totalhotels = 0;
-	protected $totalmaisons = 0;
-	
-	public function calculPaiementParBatiment($joueur, $carte) {
+	public function calculPaiementParBatiment($joueur, $carte, $partie) {
 		 
-	//parcours le tableau de jeu, trouve les cases achetables, regarde si la case achetable appartient a un propriétaire donné
-		$partie = Partie::parId('1'); //ceci étant un démo, nous utiliserons la partie #1
+		$totalhotels = 0;
+		$totalmaisons = 0;
+	
 		$tableauDeJeu = $partie->getTableau();
-		
+
+		//parcours le tableau de jeu, trouve les cases achetables, regarde si la case achetable appartient a un propriétaire donné
 		for($x = 1; $x<40;$x++)
     	{
     		$case = $tableauDeJeu->getCaseParPosition($x);
@@ -31,7 +31,7 @@ class paiementParBatiment {
     	}
 
     
-    //carte de la Caisse Commune ou Chance.
+    //carte de la Caisse Commune ou Chance, "hardcoder" avec leurs ID provenant de la BD.
     		
     if ($carte->getid() == 15)
     {
@@ -43,6 +43,8 @@ class paiementParBatiment {
     	$facture = $totalmaisons * 25 + $totalhotels * 100;
     }
     
+    
+    //return pour fin de test seulement, normalement pas de return, paiement à la banque (code en commentaire plus bas)
     return $facture;
     
     //paiement à la banque a partir du $joueur du montant $facture
