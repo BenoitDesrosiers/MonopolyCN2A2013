@@ -26,6 +26,14 @@ if (isset($_POST['action'])) {
     $action = 'afficher';
 }
 
+
+if (isset($_POST['JouerCoup'])) {
+	$joueurActuel = new Joueur($_SESSION['usager']->getPassword(), $_SESSION['usager']->getCompte(), $_SESSION['usager']->getNom());
+	$joueurActuel->setPosition(0);
+	$joueurActuel->brasseDes();
+}
+
+
 $coordonnateur = $_SESSION['usager'];
 
 switch ($action) {
@@ -34,7 +42,7 @@ switch ($action) {
     	$titrePage= "affichage du tableau de jeu";
     	$partie = Partie::parId('1'); //ceci étant un démo, nous utiliserons la partie #1
     	$tableauDeJeu = $partie->getTableau();
-    	
+    		
       	include('./affichageTableau_view_1149647.php');
        	break;
 	case 'jouerCoup' :

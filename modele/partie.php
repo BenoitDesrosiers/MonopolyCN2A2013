@@ -26,7 +26,8 @@ class Partie implements EntreposageDatabase {
     protected $heureDebut; // l'heure de la crÃ©ation de la partie
     protected $tableau; // le tableau sur lequel se dÃ©roule la partie
     protected $banque;
-    protected $des;
+    protected $premierDes;
+    protected $deuxiemeDes;
     protected $cartesChance;
     protected $cartesCaisseCommune;
     protected $pions;
@@ -116,12 +117,21 @@ class Partie implements EntreposageDatabase {
     public function setCartesChance($value) {
         $this->cartesChance = $value;
     }
-
-    public function getDes() {
-        return $this->des;
+    
+    public function getPremierDes() {
+    	return $this->premierDes;
     }
-    public function setDes($value) {
-        $this->des = $value;
+    
+    public function setPremierDes($value) {
+    	$this->premierDes = $value;
+    }
+    
+    public function getDeuxiemeDes() {
+    	return $this->deuxiemeDes;
+    }
+    
+    public function setDeuxiemeDes($value) {
+    	$this->deuxiemeDes = $value;
     }
 
     public function getBanque() {
@@ -167,6 +177,23 @@ class Partie implements EntreposageDatabase {
 	
 	//Fonctions autres
 	public function jouerCoup($joueur) {
+		
+	}
+	
+	public function genererValeursDes() {
+		// Génère une valeur aléatoire entre 1 et 6 pour les 2 deux dés
+		$this->setPremierDes(rand(1, 6));
+		$this->setDeuxiemeDes(rand(1, 6));
+	}
+	
+	public function valeurDes() {
+		// Retourne la valeur de la somme des dés
+		if (($this->premierDes + $this->deuxiemeDes) >= 2 && ($this->premierDes + $this->deuxiemeDes) <= 12 ) {
+			return ($this->premierDes + $this->deuxiemeDes);
+		}
+		else {
+    		echo "ERREUR: La valeur retournee par les des est trop grande/petite ou NULL.";
+    	}
 	}
 
 }

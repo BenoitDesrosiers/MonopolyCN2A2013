@@ -8,7 +8,7 @@ abstract class CaseDeJeu implements EntreposageDatabase {
     protected $position;
     
     // static Factory
-    // static abstract  function pourDefinitionPartie($idDefinitionPartie);
+    // static function pourDefinitionPartie($idDefinitionPartie);
     
     public function getNom() {
         return $this->Nom;
@@ -32,13 +32,6 @@ abstract class CaseDeJeu implements EntreposageDatabase {
     public abstract function getType();
     
     public function atterrirSur($joueur) {
-    	echo $this->getNom();
-    	echo " est une case de type ";
-    	echo $this->getType();
-    	echo ".";
-    	if ($this->getType() == "achetable") :
-    		
-    	endif;
     }
     
 }

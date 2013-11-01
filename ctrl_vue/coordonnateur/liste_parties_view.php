@@ -12,7 +12,6 @@
     		<input type="hidden" name="action" value="menu"/>
      		<button type="submit" name="Ajout">Créer une nouvelle partie</button>
      		<button type="submit" name="AfficherTableau">Afficher le tableau de jeu</button>
-			<button type="submit" name="JouerCoup">Jouer un coup</button>
      		<?php //LISTEJOUEUR 1 vous pouvez ajouter le bouton pour lister les joueurs ici ?>
      	</form>
     	<h1>Liste des parties disponibles</h1>

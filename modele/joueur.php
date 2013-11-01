@@ -9,22 +9,28 @@ class Joueur extends Usager implements EntreposageDatabase {
 	
     //fonctions pour jouer
 	public function brasseDes() {
-		// Création des dés
-		$des1 = array('ID' => 0, 'Val' => 3);
-		$des2 = array('ID' => 1, 'Val' => 5);
+		// Création de la partie et set des dés
+		$partie = Partie::parId(1);
+		$partie->genererValeursDes();
 		
-		// Ajustement de la position du joueur
-		$this->setPosition($this->getPosition() + $des1['Val'] + $des2['Val']);
+		// Ajustement de la position du joueur en ajoutant la valeur des dés à la valeur de la position actuelle du joueur.
+		$this->setPosition($this->getPosition() + $partie->valeurDes());
 				
 		// Créer et lancer une case de jeu		
 		$uneCase = null;
 		
+		foreach (CaseDeJeu)
+		
+		
+		/*
+		// Vérifie si la case est une case achetable
 		foreach (CaseDeJeuAchetable::pourDefinitionPartie(1) as $caseAchetable) :
 			if ($caseAchetable->getPosition() == $this->getPosition()) :
 				$uneCase = CaseDeJeuAchetable::parPositionCase($this->getPosition(), 1);
 			endif;
 		endforeach;
 		
+		// Si la case est null, vérifie si la case est une case action
 		if ($uneCase == null) :
 			foreach (CaseDeJeuAction::pourDefinitionPartie(1) as $caseAction) :
 				if ($caseAction->getPosition() == $this->getPosition()) :
@@ -32,12 +38,21 @@ class Joueur extends Usager implements EntreposageDatabase {
 				endif;
 			endforeach;
 		endif;
+		*/
 		
+		// Si la case est null, une erreur est survenue
 		if ($uneCase == null) :
 			echo "ATTENTION: Erreur lors de l'attribution de l'objet case achetable/case action par la position";
 		endif;
 		
 		$this->avanceSurCase($uneCase);
+		
+		/// Output Tests ///
+		echo "Dice value: ".$partie->getPremierDes().", ".$partie->getDeuxiemeDes();
+		echo "<br/>";
+		echo $uneCase->getNom()." est une ".$uneCase->getType();
+		////////////////////
+		
 	}
 	
 	public function avanceSurCase(CaseDeJeu $uneCase) {
@@ -64,9 +79,9 @@ class Joueur extends Usager implements EntreposageDatabase {
 	
 	//TODO: Enlever cette fonction dès que le joueurDataMapper sera créé.
 	public function setPosition($position) {
-		if ($position > 39) :
+		while ($position > 39) :
 			$position = $position - 40;
-		endif;
+		endwhile;
 		
 		$this->posJoueur = $position;
 	}

@@ -69,9 +69,11 @@ class DefinitionPartie implements EntreposageDatabase {
     public function getListeCases() {
         // retourne une liste de cases
         $caseAchetables =  CaseDeJeuAchetable::pourDefinitionPartie($this->getId());
-        //TODO:   $caseActions= CaseDeJeuAction::pourDefinitionPartie($this->getId());
+        $caseActions = CaseDeJeuAction::pourDefinitionPartie($this->getId());
         //TODO: concaténer les cases achetables et les caseaction
-        $cases = $caseAchetables;
+        $cases = array_merge($caseAchetables, $caseActions);
+        echo "<br/><br/>Total: ".count($cases)." Achetables: ".count($caseAchetables)." Actions: ".count($caseActions);
+        echo " Case: ".$cases[28]->getNom();
         return $cases;
     }
     
