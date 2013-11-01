@@ -3,12 +3,19 @@
 require_once "modele/caseDeJeu.php";
 require_once "interface/entreposageDatabase.php";
 require_once "dataMapper/caseAchetableDataMapper.php";
+require_once "modele/caseDeJeuPropriete.php";
+require_once "modele/caseDeJeuServicePublic.php";
+require_once "modele/caseDeJeuTrain.php";
 
-class CaseDeJeuAchetable extends CaseDeJeu {
+abstract class CaseDeJeuAchetable extends CaseDeJeu {
     protected $prix;
     protected $couleur;
     protected $couleurHTML;
+    
+    // ------- variable à Véro
+    protected $proprietaire;
       
+    public abstract function calculerLoyer();
     
     
     // static Factory
@@ -52,5 +59,15 @@ class CaseDeJeuAchetable extends CaseDeJeu {
     
     public function getType() {
         return "achetable";
+    }
+    
+    
+    /// ------------  partie à Véro
+    
+	public function getProprietaire() {
+            return $this->proprietaire;
+    }
+    public function setProprietaire($value) {
+            $this->proprietaire = $value;
     }
 }

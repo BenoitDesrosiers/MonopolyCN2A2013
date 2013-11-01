@@ -6,9 +6,23 @@ abstract class CaseDeJeu implements EntreposageDatabase {
     protected $id;
     protected $nom;
     protected $position;
+   
     
-    // static Factory
-    static abstract  function pourDefinitionPartie($idDefinitionPartie);
+    public function atterirSur($joueur){
+    	
+    	if($this->getType()=="achetable"){
+    		
+    		if($this->getProprietaire() != null){
+    			$this->getProprietaire()->chargerLoyerA($joueur, $this->calculerLoyer($this->getProprietaire()));
+    		}
+    		else{
+    			//code a véro
+    		} 
+    	}
+    	else{
+    		//code a tommy
+    	}
+    }
     
     public function getNom() {
         return $this->Nom;

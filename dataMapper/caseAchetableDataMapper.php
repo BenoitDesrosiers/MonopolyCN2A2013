@@ -27,7 +27,13 @@ class CaseAchetableDataMapper extends Mapper {
         
         
         //TODO: créer 3 autres sous-clase de CaseDeJeuAchetable et les appeler CasePropriete, CaseTrain et CaseService et créer la bon selon le type provenant de GroupeDeCase
-        $obj = new CaseDeJeuAchetable( );
+        
+        if($array2['IsCheminDeFer']==1)
+        	$obj = new CaseDeJeuTrain( );
+        elseif($array2['IsServicePublique']==1)
+        	$obj = new CaseDeJeuTrain( );
+        else
+        	$obj = new CaseDeJeuPropriete( );
         $obj->setId($array['Id']);
         $obj->setNom($array['Titre']);
         $obj->setPrix($array['Prix']);
@@ -119,5 +125,34 @@ class CaseAchetableDataMapper extends Mapper {
             }
         }
         return $listeItems;
+    }
+    
+    static function pourLePrix($propriete) {
+    	// retourne un array contenant tout les prix de la propriete
+    
+    	// commence par aller chercher les prix dans la table CaseAchetable
+    	$queryTxt = 'SELECT * FROM CaseAchetable
+                            WHERE Id = :id';
+    	$query = self::$db->prepare($queryTxt);
+    	$query->bindValue(':id', $propriete->getId());
+    	$query->setFetchMode(PDO::FETCH_ASSOC);
+    	$query->execute();
+    
+    	//foreach($query as $row) {
+    	//	$unItem = $row['Id'];
+    	//	if ($unItem == $propriete->getId()) {
+    			
+    			/*$listePrix[`Location`] = $query->fetchColumn(`Location`);
+    			$listePrix[`Location1Maison`] = $query->fetchColumn(`Location1Maison`);
+    			$listePrix[`Location2Maison`] = $query->fetchColumn(`Location2Maison`);
+    			$listePrix[`Location3Maison`] = $query->fetchColumn(`Location3Maison`);
+    			$listePrix[`Location4Maison`] = $query->fetchColumn(`Location4Maison`);
+    			$listePrix[`LocationHotel`] = $query->fetchColumn(`LocationHotel`);*/
+    								
+    			$listePrix = $query->fetch();
+    			
+    	//	}
+    	//}
+    	return $listePrix;
     }
 }
