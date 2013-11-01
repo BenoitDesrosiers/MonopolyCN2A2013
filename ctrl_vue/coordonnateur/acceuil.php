@@ -59,6 +59,8 @@ switch ($action) {
 	    } elseif (isset($_POST['AfficherTableau'])) {
 	        // l'usager veut afficher le tableau de jeu
 	        redirect("ctrl_vue/affichageTableau?action=afficher");
+	    } elseif (isset($_POST['EssaiFonction'])) {
+	    	redirect("ctrl_vue/essaiBouton?action=essai");
 	    }
 		break;
 }
