@@ -36,8 +36,10 @@ class Coordonnateur extends Usager {
         //TODO: à faire
     }
 
-    public function demarrePartie() {
+    public function demarrePartie($id) {
         //TODO: à faire
+        $partieEnCours = Partie::parId($id);
+        $partieEnCours->demarrerPartie($id);
     }
 
     public function arretePartie() {

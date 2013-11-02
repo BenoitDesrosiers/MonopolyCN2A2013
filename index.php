@@ -35,7 +35,7 @@ switch ($usager->getRole()) {
 		break;
 
 	default:
-		display_error("Role inconnue: " . $role);
+		affiche_erreur("Role inconnue: " . $role);
 		break;
 }
 ?>

@@ -15,24 +15,33 @@
      		<?php //LISTEJOUEUR 1 vous pouvez ajouter le bouton pour lister les joueurs ici ?>
      	</form>
     	<h1>Liste des parties disponibles</h1>
+	    <form action="." method="post">
+	    <input type="hidden" value="demarrerPartie" name="action" />
     	<table border="1">
     		<tr>
     			<td>id </td>
     			<td>nom</td>
     			<td>coordonnateur</td>
+    			<td>participants</td>
     		</tr>
     		<?php //LISTPARTIE 1.4.1 affiche toutes les parties pour ce coordonnateur?>
     		<?php  foreach ($parties as $partie) : ?>
-    			
     			<tr>
     				<td><?php echo $partie->getId();?></td>
     				<td><?php echo $partie->getNom(); ?></td>
     				<td><?php echo $partie->getCoordonnateur(); ?></td>
-    				
-    				<td><?php echo "nom participants.... "; ?></td>			
+    				<td>
+	    				<p><?php foreach ($partie->getJoueurs() as $joueur) : //Va chercher les joueurs et les affiche ?>
+	    					<?php echo $joueur->getUsagerCompte();?>
+	    				<?php endforeach?></p>
+    				</td>
+    				<td>
+	    					<button type="submit" name="Demarrer" value="<?php echo $partie->getId()?>">Demarrer la partie</button>
+	    			</td>
     			</tr>
     		<?php endforeach; ?>
     	</table>
+	    </form>
     	<br/>
         </form-->
     </div>

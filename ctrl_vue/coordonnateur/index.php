@@ -32,6 +32,13 @@ switch ($action) {
 		//LISTEPARTIE 1.4.x affiche les parties trouvées
 		include('liste_parties_view.php');
 		break;
+	case 'demarrerPartie' :
+		$idPartie = $_POST['Demarrer'];
+		$partie = Partie::parId($idPartie);
+		$partie->demarrerPartie();
+		$titrePage = "Liste joueurs";
+		include('joueurs_partie_view.php');
+		break;
 		
 	
 	case 'edit' :

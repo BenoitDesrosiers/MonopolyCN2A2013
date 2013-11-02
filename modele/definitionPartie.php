@@ -3,13 +3,15 @@ require_once "interface/entreposageDatabase.php";
 require_once "dataMapper/definitionPartieDataMapper.php";
 require_once "modele/caseDeJeuAchetable.php";
 require_once "modele/pion.php";
+require_once "modele/caseDeJeuAction.php";
 
 class DefinitionPartie implements EntreposageDatabase {
     protected $id;
     protected $nom;
     protected $description;
     protected $maxNbJoueur;
-        
+    protected $definitionArgent = array();
+    
 
     public function __construct() {
         
@@ -41,6 +43,14 @@ class DefinitionPartie implements EntreposageDatabase {
         $this->id = $value;
     }
     
+    public function getArgent(){
+    	if (count($this->definitionArgent) == 0){
+    		$datamapper = $this->getDataMapper();
+    		$this->definitionArgent = $datamapper->selectArgent($this->getId());
+    	}
+    	return $this->definitionArgent;
+    }
+    
     public function getNom() {
         return $this->nom;
     }
@@ -68,9 +78,8 @@ class DefinitionPartie implements EntreposageDatabase {
     public function getListeCases() {
         // retourne une liste de cases
         $caseAchetables =  CaseDeJeuAchetable::pourDefinitionPartie($this->getId());
-        //TODO:   $caseActions= CaseDeJeuAction::pourDefinitionPartie($this->getId());
-        //TODO: concaténer les cases achetables et les caseaction
-        $cases = $caseAchetables;
+        $caseActions = CaseDeJeuAction::pourDefinitionPartie($this->getId());
+        $cases = array_merge($caseActions, $caseAchetables);
         return $cases;
     }
     

@@ -42,6 +42,8 @@ class JoueurDataMapper extends Mapper {
     
     function findPourPartie($partieId) {
         /*
+		 * crée les joueurs associés à une partie 
+		 *
          * input
         *     $partieId: l'id d'une partie
         * output

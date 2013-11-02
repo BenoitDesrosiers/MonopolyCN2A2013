@@ -77,7 +77,7 @@ abstract class Mapper implements Observateur {
          * crée un objet à partir d'un array associatif contenant tous les champs de la bd
         */
         //CONNECTION 1.2.4.3.2.x créé l'usager
-        $obj = $this->doCreateObject( $array);
+        $obj = $this->doCreateObject($array);
         return $obj;
     }
     

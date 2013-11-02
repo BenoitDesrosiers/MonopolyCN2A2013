@@ -23,6 +23,7 @@ class CoupureDataMapper extends Mapper {
     }
     
     public function ajouteCoupuresA(Joueur $joueur) {
+        //FIXME: c'est pas clean 
         /*
          * va chercher les billets associés à un joueur
          * et s'ajoute en tant qu'Observer pour ce joueur. 
@@ -49,15 +50,25 @@ class CoupureDataMapper extends Mapper {
          * le joueur associé a changé  
          * update la table contenant l'argent à partir de l'array de coupures
          */
-             
+
         $coupures = $objet->getArgent();
+        // commence par effacer tout l'argent courrant du joueur
+        // on doit faire ca car si la bd avait un billet de 50$ et que maintenant il n'y a plus de 50$, il restera dans la bd. 
+        $queryTxt = 'DELETE FROM joueurPartie_Argent
+                        WHERE JoueurPartieUsagerCompte = :compte
+                            AND JoueurPartiePartieEnCoursId = :partieId';
+        $query = self::$db->prepare($queryTxt);
+        $query->bindValue(':joueurId', $objet->getCompte());
+        $query->bindValue(':partieId', $objet->getPartieId());
+        $query->setFetchMode(PDO::FETCH_ASSOC);
+        $query->execute();
+        
         if (count($coupures) != 0) {
-            $queryTxt = 'update JoueurPartie_Argent set ArgentMontant = :montant,
-                JoueurPartieUsagerCompte = :joueurId,
-                JoueurPartiePartieEnCoursId = :partieId,
-                Quantite = :qte
-                where JoueurPartieUsagerCompte = :joueurId
-                and JoueurPartiePartieEnCoursId = :partieId';
+            // re-insert tous les billets
+            $queryTxt = 'INSERT INTO JoueurPartie_Argent (ArgentMontant , JoueurPartieUsagerCompte , JoueurPartiePartieEnCoursId , Quantite ) 
+                                    VALUES (:montant, :joueurId, :partieId, :qte) 
+                                    WHERE JoueurPartieUsagerCompte = :joueurId
+                                    AND JoueurPartiePartieEnCoursId = :partieId';
             $query = self::$db->prepare($queryTxt);
             $query->bindValue(':joueurId', $objet->getCompte());
             $query->bindValue(':partieId', $objet->getPartieId());
@@ -67,7 +78,8 @@ class CoupureDataMapper extends Mapper {
                 $query->execute(); //TODO: trapper les erreurs.
             }
         }
-           
+        // se detache du joueur. Tant qu'on aura pas été rechercher ses billets, on a pas besoin d'etre attaché. 
+        $objet->detache($this);  
     }
     
     function selectStmt() {

@@ -54,8 +54,10 @@ class Joueur extends Objet  implements EntreposageDatabase{
     
     public static function nouveauJoueur(array $array) {
         /*
+		 * Ajoute un joueur dans la bd
+         *
          * input
-        *     un array associative contenant le
+        *     un array associative contenant
         *     'UsagerCompte' : le compte usager associé à ce joueur ,
         *     'PartieEnCoursId' : l'id de la partie en cours
         *     'PionId' : l'id du pion
