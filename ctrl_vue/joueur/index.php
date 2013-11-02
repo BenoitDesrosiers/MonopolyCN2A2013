@@ -1,6 +1,6 @@
 <?php
 /* 
- * controlleur pour la page d'acceuil d'un joueur 
+ * controlleur pour la page d'acceuil d'un joueur  
  */
 require_once('../../util/main.php');
 require_once('modele/usager.php');
