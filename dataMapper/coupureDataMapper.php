@@ -19,7 +19,10 @@ class CoupureDataMapper extends Mapper {
     
     protected function doCreateObject( array $array) {
         
-        return new Coupure($array) ;
+        return new Coupure(array('Valeur'=>$array['ArgentMontant'], 
+                                 'Quantite'=>$array['Quantite'],
+                                 'JoueurCompte'=>$array['JoueurPartieUsagerCompte'], 
+                                 'PartieId'=>$array['JoueurPartiePartieEnCoursId'])) ;
     }
     
     public function ajouteCoupuresA(Joueur $joueur) {
@@ -55,7 +58,7 @@ class CoupureDataMapper extends Mapper {
         // commence par effacer tout l'argent courrant du joueur
         // on doit faire ca car si la bd avait un billet de 50$ et que maintenant il n'y a plus de 50$, il restera dans la bd. 
         $queryTxt = 'DELETE FROM joueurPartie_Argent
-                        WHERE JoueurPartieUsagerCompte = :compte
+                        WHERE JoueurPartieUsagerCompte = :joueurId
                             AND JoueurPartiePartieEnCoursId = :partieId';
         $query = self::$db->prepare($queryTxt);
         $query->bindValue(':joueurId', $objet->getCompte());
@@ -66,9 +69,7 @@ class CoupureDataMapper extends Mapper {
         if (count($coupures) != 0) {
             // re-insert tous les billets
             $queryTxt = 'INSERT INTO JoueurPartie_Argent (ArgentMontant , JoueurPartieUsagerCompte , JoueurPartiePartieEnCoursId , Quantite ) 
-                                    VALUES (:montant, :joueurId, :partieId, :qte) 
-                                    WHERE JoueurPartieUsagerCompte = :joueurId
-                                    AND JoueurPartiePartieEnCoursId = :partieId';
+                                    VALUES (:montant, :joueurId, :partieId, :qte)';
             $query = self::$db->prepare($queryTxt);
             $query->bindValue(':joueurId', $objet->getCompte());
             $query->bindValue(':partieId', $objet->getPartieId());

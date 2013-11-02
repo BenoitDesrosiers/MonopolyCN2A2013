@@ -12,6 +12,7 @@ class Coupure  implements EntreposageDatabase {
     protected $quantite;
     protected $joueurId;
     protected $partieId;
+        
     
     function __construct(array $array) {
         /*
@@ -19,13 +20,13 @@ class Coupure  implements EntreposageDatabase {
          *     un array associative contenant
          *     'Valeur' : le montant de la coupure (un $50, un $10...)
          *     'Quantite' : la quantite de ce billet
-         *     'JoueurId' : l'id du joueur à qui appartient ces coupures
+         *     'JoueurCompte' : le compte du joueur à qui appartient ces coupures
          *     'PartieId' : l'id de la partie du joueur  
          *     
          */
         $this->valeur = $array['Valeur'];
         $this->quantite = $array['Quantite'];
-        $this->joueurId = $array['JoueurId'];
+        $this->joueurId = $array['JoueurCompte'];
         $this->partieId = $array['PartieId'];
     }
     
@@ -41,9 +42,9 @@ class Coupure  implements EntreposageDatabase {
         $coupures = $mapper->ajouteCoupuresA($joueur);
         
         //transforme les objet coupures en array
-        $portefeuille = array();
-        foreach($coupures as $uneValeur=>$uneQte) {
-            $portefeuille[$uneValeur] = $uneQte;
+        $porteFeuille = array();
+        foreach($coupures as $coupure) {
+            $porteFeuille[$coupure->getValeur()] = $coupure->getQuantite();
         }
         return $porteFeuille;
     }
@@ -56,6 +57,35 @@ class Coupure  implements EntreposageDatabase {
     public function sauvegarde() {
         // pour l'instant, on sauvegarde pas les coupures, c'est fait dans Joueur
         //$this->getDataMapper->insert($this);
+    }
+    
+    //Getters & Setters
+    public function getPartieId() {
+        return $this->partieId;
+    }
+    public function setPartieId($value) {
+        $this->partieId = $value;
+    }
+    
+    public function getJoueurId() {
+        return $this->joueurId;
+    }
+    public function setJoueurId($value) {
+        $this->joueurId = $value;
+    }
+    
+    public function getQuantite() {
+        return $this->quantite;
+    }
+    public function setQuantite($value) {
+        $this->quantite = $value;
+    }
+    
+    public function getValeur() {
+        return $this->valeur;
+    }
+    public function setValeur($value) {
+        $this->valeur = $value;
     }
     
     

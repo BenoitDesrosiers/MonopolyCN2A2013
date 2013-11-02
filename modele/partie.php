@@ -121,10 +121,11 @@ class Partie implements EntreposageDatabase {
     
     public function demarrerPartie()
     {
-        $definition = DefinitionPartie::parId($this->getDefinitionPartieId());
+        $id = $this->getDefinitionPartieId();
+        $definition = DefinitionPartie::parId($id);
     
         foreach ($this->getJoueurs() as $joueur) :
-        $joueur->setArgent($definition->getArgent());
+            $joueur->encaisse($definition->getArgent());
         endforeach;
     }
     

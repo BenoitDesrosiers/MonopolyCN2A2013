@@ -94,7 +94,7 @@ class CaseActionDataMapper extends Mapper {
         $listeItems = array();
         
         foreach($query as $row) {
-            $unItem = $this->find($row['CaseActionId']);
+            $unItem = $this->find(array($row['CaseActionId']));
             if ($unItem <> null) {
                 //set la position à partir de celle trouvée dans DefinitionPartie_CaseAction
                 $unItem->setPosition($row['Position']);

@@ -32,7 +32,7 @@
     				<td><?php echo $partie->getCoordonnateur(); ?></td>
     				<td>
 	    				<p><?php foreach ($partie->getJoueurs() as $joueur) : //Va chercher les joueurs et les affiche ?>
-	    					<?php echo $joueur->getUsagerCompte();?>
+	    					<?php echo $joueur->getCompte();?>
 	    				<?php endforeach?></p>
     				</td>
     				<td>
