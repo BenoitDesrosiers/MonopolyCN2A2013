@@ -16,7 +16,9 @@ class PartieDataMapper extends Mapper {
 
     protected function doCreateObject( array $array) {
         
-        return new Partie($array );
+        $partie =  new Partie($array );
+        $partie->attache($this);
+        return $partie;
     }
     
     protected function doInsert($object) {
@@ -41,7 +43,8 @@ class PartieDataMapper extends Mapper {
                         $object->getCoordonnateur(), 
                         $object->getDefinitionPartieId(),
                         $object->getJoueurTour(),
-                        $object->getDebutPartie());
+                        $object->getDebutPartie(),
+                        $object->getId());
         $this->updateStmt->execute($values);
     }
     

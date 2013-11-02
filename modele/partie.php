@@ -1,12 +1,13 @@
 <?php
 require_once "interface/entreposageDatabase.php";
+require_once "modele/objet.php";
 require_once "modele/coordonnateur.php";
 require_once "dataMapper/partieDataMapper.php";
 require_once "dataMapper/joueurDataMapper.php";
 require_once "modele/tableau.php";
 require_once "modele/definitionPartie.php";
 
-class Partie implements EntreposageDatabase {
+class Partie extends Objet implements EntreposageDatabase {
     protected $id;
     protected $nom;
     protected $coordonnateur;
@@ -37,8 +38,7 @@ class Partie implements EntreposageDatabase {
         $this->joueurTour = $array["JoueurTour"];
         $this->debutPartie = DateTime::createFromFormat('Y-m-d h:i:s', $array["DebutPartie"]);
         
-        //reset les variables qui sont lazy loaded
-        $this->setTableau(Null);
+        //reset ls variables qui sont lazy loaded
     }
     
     // Static Factory
@@ -127,6 +127,9 @@ class Partie implements EntreposageDatabase {
         foreach ($this->getJoueurs() as $joueur) :
             $joueur->encaisse($definition->getArgent());
         endforeach;
+        
+        // set la date de début de partie au moment présent. 
+        $this->setDebutPartie(date('Y-m-d g:h:i'));
     }
     
     //Getters & Setters
@@ -135,6 +138,7 @@ class Partie implements EntreposageDatabase {
     }
     public function setNom($value) {
         $this->nom = $value;
+        $this->notifie();
     }
     
     public function getCoordonnateur() {
@@ -142,6 +146,7 @@ class Partie implements EntreposageDatabase {
     }
     public function setCoordonnateur($value) {
         $this->coordonnateur = $value;
+        $this->notifie();
     }
     
     public function getHotels() {
@@ -149,13 +154,15 @@ class Partie implements EntreposageDatabase {
     }
     public function setHotels($value) {
         $this->Hotels = $value;
+        $this->notifie();
     }
 
     public function getMaisons() {
         return $this->Maisons;
     }
     public function setMaisons($value) {
-        $this->Maisons = $value;
+        $this->Maisons = $value;        
+        $this->notifie();
     }
 
     public function getPions() {
@@ -163,6 +170,7 @@ class Partie implements EntreposageDatabase {
     }
     public function setPions($value) {
         $this->Pions = $value;
+        $this->notifie();
     }
 
     public function getCartesCaisseCommune() {
@@ -170,6 +178,7 @@ class Partie implements EntreposageDatabase {
     }
     public function setCartesCaisseCommune($value) {
         $this->cartesCaisseCommune = $value;
+        $this->notifie();
     }
 
 
@@ -178,6 +187,7 @@ class Partie implements EntreposageDatabase {
     }
     public function setCartesChance($value) {
         $this->cartesChance = $value;
+        $this->notifie();
     }
 
     public function getDes() {
@@ -185,6 +195,7 @@ class Partie implements EntreposageDatabase {
     }
     public function setDes($value) {
         $this->des = $value;
+        $this->notifie();
     }
 
     public function getBanque() {
@@ -192,6 +203,7 @@ class Partie implements EntreposageDatabase {
     }
     public function setBanque($value) {
         $this->banque = $value;
+        $this->notifie();
     }
 
     
@@ -211,25 +223,27 @@ class Partie implements EntreposageDatabase {
     }
     public function setId($value) {
         $this->id = $value;
+        $this->notifie();
     }
 
     public function getTableau() {
         if ($this->tableau == null) {
             //lazy load
-            $this->setTableau(Tableau::pourDefinition($this->getDefinitionPartieId()));
+            $this->tableau=Tableau::pourDefinition($this->getDefinitionPartieId());
         }    
         return $this->tableau;
     }
 
-    public function setTableau($value) {
-        $this->tableau = $value;
-    }
+    /*
+     *  pas de setTableau puisqu'on va chercher le tableau dans la définition de partie
+     */ 
 
     public function getDebutPartie() {
         return $this->debutPartie;
     }
     public function setDebutPartie($value) {
         $this->debutPartie = $value;
+        $this->notifie();
     }
     
     public function getJoueurTour() {
@@ -237,6 +251,7 @@ class Partie implements EntreposageDatabase {
     }
     public function setJoueurTour($value) {
         $this->joueurTour = $value;
+        $this->notifie();
     }
     
     public function getDefinitionPartieId() {
@@ -244,6 +259,7 @@ class Partie implements EntreposageDatabase {
     }
     public function setDefinitionPartieId($value) {
         $this->definitionPartieId = $value;
+        $this->notifie();
     }
     
     public function definitionPartie() {
