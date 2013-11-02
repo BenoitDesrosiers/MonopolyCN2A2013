@@ -34,10 +34,11 @@ switch ($action) {
 		include('liste_parties_view.php');
 		break;
 	case 'joindrePartie' :
+	    
 	    $partieId = $_POST['joindre']; // l'id de la partie à rejoindre est dans la value du submit 'joindre'
 
-	    $parti = Partie::parId($partieId);
-	    $parti->ajouteJoueur($usager); //fait la demande pour être ajouté à cette partie. 
+	    $partie = Partie::parId($partieId);
+	    $partie->ajouteJoueur($usager); //fait la demande pour être ajouté à cette partie. 
 	    redirect("../../ctrl_vue/joueur/?action=attenteConnectionPartie&partieId=".$partieId); //l'usager est en attente de devenir un joueur, on le redirige à son écran d'acceuil.
         
 	    break;

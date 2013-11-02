@@ -10,7 +10,8 @@
     <div id="main">	
         <p>La partie n'est pas encore commencée... </p>		
     	<form id="menu-Form" action="." method="post">
-    		<input type="hidden" name="action" value="menu"/>
+    		<input type="hidden" name="action" value="attenteConnectionPartie"/>
+    		<input type="hidden" name="partieId" value="<?php echo $partieId?>"/>
      		<button type="submit" name="reessayer">Ré-essayer</button>
      		<button type="submit" name="quitter">Quitter</button>
      	</form>

@@ -2,7 +2,7 @@
 require_once "interface/entreposageDatabase.php";
 require_once "dataMapper/definitionPartieDataMapper.php";
 require_once "modele/caseDeJeuAchetable.php";
-
+require_once "modele/pion.php";
 
 class DefinitionPartie implements EntreposageDatabase {
     protected $id;
@@ -74,6 +74,10 @@ class DefinitionPartie implements EntreposageDatabase {
         return $cases;
     }
     
+    public function getPions() {
+        // retourne les pions définis pour cette partie
+        return Pion::pourDefinitionPartieId($this->getId());
+    }
 }
 
 ?>

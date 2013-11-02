@@ -33,14 +33,13 @@ class Joueur extends Objet  implements EntreposageDatabase{
         *     
         */
         
-        $this->compte = $array['Compte'];
-        $this->partieId = $array['PartieId'];
+        $this->compte = $array['UsagerCompte'];
+        $this->partieId = $array['PartieEnCoursId'];
         $this->pionId = $array['PionId'];
         $this->position = $array['Position'];
         $this->ordreDeJeu = $array['OrdreDeJeu'];
         $this->enPrison = $array['EnPrison'];
         $this->toursRestantEnPrison = $array['ToursRestants_Prison'];
-        $this->argent = $array['Billets'];
 
     }
     
@@ -57,8 +56,8 @@ class Joueur extends Objet  implements EntreposageDatabase{
         /*
          * input
         *     un array associative contenant le
-        *     'Compte' : le compte ,
-        *     'PartieId' : l'id de la partie en cours
+        *     'UsagerCompte' : le compte usager associé à ce joueur ,
+        *     'PartieEnCoursId' : l'id de la partie en cours
         *     'PionId' : l'id du pion
         *     'Position' : la position du joueur
         *     'OrdreDeJeu' : l'ordre de jeu
@@ -132,7 +131,7 @@ class Joueur extends Objet  implements EntreposageDatabase{
 	public function getArgent() {
 	    if (count($this->argent) == 0) {
 	        //lazy load
-	        $ths->argent = Coupure::pourJoueur($this);
+	        $this->argent = Coupure::pourJoueur($this);
 	    }
 	    return $this->argent;
 	}

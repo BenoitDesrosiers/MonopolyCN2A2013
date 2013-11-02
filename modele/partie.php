@@ -4,20 +4,20 @@ require_once "modele/coordonnateur.php";
 require_once "dataMapper/partieDataMapper.php";
 require_once "dataMapper/joueurDataMapper.php";
 require_once "modele/tableau.php";
+require_once "modele/definitionPartie.php";
 
 class Partie implements EntreposageDatabase {
     protected $id;
     protected $nom;
     protected $coordonnateur;
-    protected $definitionPartieId;
+    protected $definitionPartieId; //l'id de la définition de partie
     protected $joueurTour;
-    protected $debutPartie;
-        
+    protected $debutPartie; //la date et heure du début de la partie, en tant qu'objet Date
+     
     
     
     
     protected $joueurs; // la liste des joueurs (de 1 à 8)
-    protected $heureDebut; // l'heure de la création de la partie
     protected $tableau; // le tableau sur lequel se déroule la partie
     protected $banque;
     protected $des;
@@ -27,9 +27,16 @@ class Partie implements EntreposageDatabase {
     protected $maisons;  //TODO: est-ce que ca devrait plutot appartenir à la banque
     protected $hotels;
 
-    public function __construct($nom, $compteCoordonnateur) {
-        $this->setNom($nom);
-        $this->setCoordonnateur($compteCoordonnateur);
+    protected $definitionPartie = null; //l'objet représentant la définition de partie. 
+    
+    public function __construct(array $array) {
+        $this->id = $array["Id"];
+        $this->nom = $array["Nom"];
+        $this->coordonnateur = $array["Coordonnateur"];
+        $this->definitionPartieId = $array["DefinitionPartieId"];
+        $this->joueurTour = $array["JoueurTour"];
+        $this->debutPartie = DateTime::createFromFormat('Y-m-d h:i:s', $array["DebutPartie"]);
+        
         //reset les variables qui sont lazy loaded
         $this->setTableau(Null);
     }
@@ -70,10 +77,11 @@ class Partie implements EntreposageDatabase {
          */
         
         //TODO: ajouter le check si jamais ce joueur est déjà dans la partie
-        $ordre = 1; //TODO: calculer le vrai ordre d'après les joueurs qui sont déjà dans la table
+       
+        $ordre = count($this->getJoueurs())+1; //premier arrivée, premier à jouer
         
-        $joueur = Joueur::nouveauJoueur(array('Compte'=>$usager->getCompte(),
-                                    'PartieId'=>$this->getId(),
+        $joueur = Joueur::nouveauJoueur(array('UsagerCompte'=>$usager->getCompte(),
+                                    'PartieEnCoursId'=>$this->getId(),
                                     'PionId'=>0,
                                     'Position'=>0,
                                     'OrdreDeJeu'=>$ordre,
@@ -88,9 +96,29 @@ class Partie implements EntreposageDatabase {
          * retourne vrai si la partie est démarrée, faux si non
          */
         
-        $heureDebut =$this->getHeureDebut();
+        $heureDebut =$this->heureDebut();
         return  $heureDebut != 0;
     }
+    
+    public function pionsDisponibles() {
+        $pions = $this->definitionPartie()->getPions();
+        foreach($pions as $pion) {
+            $pions2[$pion->getId()]=$pion;
+        }
+        $joueurs = $this->getJoueurs();
+        foreach($joueurs as $joueur) {
+            if (isset($pions2[$joueur->getPionId()])) {
+                unset($pions2[$joueur->getPionId()]); //enlève le pion qu'un joueur a déjà
+            }
+        }
+        return $pions2;
+    }
+    
+    public function heureDebut() {
+    
+        return $this->getDebutPartie()->format('H:i');
+    }
+    
     
     //Getters & Setters
     public function getNom() {
@@ -157,22 +185,18 @@ class Partie implements EntreposageDatabase {
         $this->banque = $value;
     }
 
-    public function getHeureDebut() {
-        return $this->heureDebut;
-    }
-
-    public function setHeureDebut($value) {
-        $this->heureDebut = $value;
-    }
+    
 
     public function getJoueurs() {    
         return Joueur::PourPartie($this->getId());
     }
     
-    public function setJoueurs($value) {
+    /*
+     * on ne set pas les joueurs, on ajouter 1 joueurs à la fois avec ajouteJoueur()
+     * public function setJoueurs($value) {
         $this->joueurs = $value;
     }
-
+    */
     public function getId() {
         return $this->id;
     }
@@ -212,6 +236,14 @@ class Partie implements EntreposageDatabase {
     public function setDefinitionPartieId($value) {
         $this->definitionPartieId = $value;
     }
+    
+    public function definitionPartie() {
+        if (is_null($this->definitionPartie)) {
+           $this->definitionPartie= DefinitionPartie::parId($this->getDefinitionPartieId());
+        }
+        return $this->definitionPartie;
+    }
+    // pas de setter car la definition est chargée à partir du Id
     
 }
 

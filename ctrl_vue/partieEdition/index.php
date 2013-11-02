@@ -37,11 +37,13 @@ switch ($action) {
         break;
     case 'ajouter' :
     	$titrePage= "Création d'une partie";
-    	$partie = new Partie('', $coordonnateur->getCompte());
+    	$partie = new Partie(array('coordonnateur'=>$coordonnateur->getCompte()));
+    	//TODO: ajouter les autres champs pour la création
       	include('./creationPartie_view.php');
        	break;
     case 'validerEtContinuer' :
-        $partie = new Partie($_POST['nomPartie'], $coordonnateur->getCompte());
+        //TODO: pour l'instant je met des valeurs dummy
+        $partie = new Partie(array('Nom'=>$_POST['nomPartie'], 'Coordonnateur'=>$coordonnateur->getCompte(), 'DefinitionPartieId'=>"1",'JoueurTour'=>1,'DebutPartie'=>"2050-01-01 12:12:12"));
         try {
             $partie->sauvegarde();
         }

@@ -16,7 +16,9 @@ class JoueurDataMapper extends Mapper {
     }
     
     protected function doCreateObject( array $array) {
-        return new Joueur($array) ;
+        $joueur = new Joueur($array) ;
+        $joueur->attache($this);
+        return $joueur;
     }
     
     
@@ -30,27 +32,9 @@ class JoueurDataMapper extends Mapper {
         $values= array ($objet->getCompte(), $objet->getPartieId(), $objet->getPionId(), $objet->getPosition(),$objet->getOrdreDeJeu(), $objet->getEnPrison(), $objet->getToursRestantEnPrison(),
                         $objet->getCompte(), $objet->getPartieId());
         $this->updateStmt->execute($values);        
-        $this->updateArgent($objet);
     }
     
-    private function updateArgent($objet) {
-        // update la table contenant l'argent à partir de l'array de coupures 
-        $coupures = $objet->getArgent();
-        $queryTxt = 'update JoueurPartie_Argent set ArgentMontant = :montant, 
-                                                    JoueurPartieUsagerCompte = :joueurId, 
-                                                    JoueurPartiePartieEnCoursId = :partieId,
-                                                    Quantite = :qte  
-                                                    where JoueurPartieUsagerCompte = :joueurId 
-                                                      and JoueurPartiePartieEnCoursId = :partieId';
-        $query = self::$db->prepare($queryTxt);
-        $query->bindValue(':joueurId', $objet->getCompte());
-        $query->bindValue(':partieId', $objet->getPartieId());
-        foreach($coupures as $valeur=>$qte) {
-            $query->bindValue(':montant', $valeur);
-            $query->bindValue(':qte', $qte);
-            $query->execute(); //TODO: trapper les erreurs. 
-        }
-    }
+    
     
     function selectStmt() {
         return $this->selectStmt;
@@ -66,22 +50,11 @@ class JoueurDataMapper extends Mapper {
         *
         */
         
-        $queryTxt = 'SELECT * FROM JoeurPartie
+        $queryTxt = 'SELECT * FROM JoueurPartie
                         WHERE  partieencoursid = :partieId';
         $query = self::$db->prepare($queryTxt);
         $query->bindValue(':partieId', $partieId);
-        $query->setFetchMode(PDO::FETCH_ASSOC);
-        $query->execute();
-        
-        $listeItems = array();
-        
-        foreach($query as $row) {
-            $unItem = $this->createObject($row);
-            if ($unItem <> null) {
-                $listeItems[] = $unItem;
-            }
-        }
-        return $listeItems;
+        return $this->findAll($query);
     } 
         
   

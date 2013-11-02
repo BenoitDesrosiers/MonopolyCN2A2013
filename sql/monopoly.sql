@@ -627,7 +627,7 @@ INSERT INTO `JoueurPartie_CaseAchetable` (`JoueurPartieUsagerCompte`, `JoueurPar
 --
 
 CREATE TABLE IF NOT EXISTS `PartieEnCours` (
-  `Id` int(10) NOT NULL,
+  `Id` int(10) NOT NULL AUTO_INCREMENT,
   `Coordonnateur` varchar(40) COLLATE utf8_bin NOT NULL,
   `DefinitionPartieId` int(10) NOT NULL,
   `Nom` varchar(40) COLLATE utf8_bin NOT NULL,
@@ -737,6 +737,7 @@ CREATE TABLE IF NOT EXISTS `Pion` (
 --
 
 INSERT INTO `Pion` (`Id`, `Nom`, `ImageUrl`) VALUES
+(0, 'dummy', 'imgDummy'),
 (1, 'voiture de course', 'ImgPionVoiture.png'),
 (2, 'brouette', 'ImgPionBrouette.png'),
 (3, 'fer à repasser', 'ImgPionFer.png'),

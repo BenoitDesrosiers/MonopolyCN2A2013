@@ -1,6 +1,6 @@
 <?php
 require_once "interface/entreposageDatabase.php";
-require_once 'modele/usager.php';
+require_once 'modele/joueur.php';
 require_once 'dataMapper/coupureDataMapper.php';
 /*
  * représente l'argent d'un joueur, découpé en coupure et quantité
@@ -37,8 +37,8 @@ class Coupure  implements EntreposageDatabase {
          * important: ca ne retourne pas des coupures ... seulement les quantité et valeurs. 
          * Cette fonction sera probablement obsolete quand on introduira les vraies objets billets. 
          */
-        $mapper = new PortefeuilleDataMapper();
-        $coupures = $mapper->findCoupuresPour(array($joueur->compte, $joueur->partieId));
+        $mapper = new CoupureDataMapper();
+        $coupures = $mapper->ajouteCoupuresA($joueur);
         
         //transforme les objet coupures en array
         $portefeuille = array();
