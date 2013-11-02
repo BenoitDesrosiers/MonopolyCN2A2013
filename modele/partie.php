@@ -38,7 +38,6 @@ class Partie extends Objet implements EntreposageDatabase {
         $this->joueurTour = $array["JoueurTour"];
         $this->debutPartie = DateTime::createFromFormat('Y-m-d h:i:s', $array["DebutPartie"]);
         
-        //reset ls variables qui sont lazy loaded
     }
     
     // Static Factory
