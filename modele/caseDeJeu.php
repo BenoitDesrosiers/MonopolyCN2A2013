@@ -8,7 +8,26 @@ abstract class CaseDeJeu implements EntreposageDatabase {
     protected $position;
     
     // static Factory
-    //static abstract function pourDefinitionPartie($idDefinitionPartie);
+    
+    public function atterirSur($unJoueur){
+    	if($this->getType()=="achetable"){
+    		if($this->getProprietaire() != null){
+    			//Etienne
+    		}
+    		else {
+    			/*vero---*/
+    			if($unJoueur->tenterAchat($this)){
+    				banque::vendrePropriete($unJoueur, $this);
+    			}
+    			/*---vero*/
+    		}
+    	}
+    	else{
+    		/*Tommy---*/
+    		$this->execute_action($unJoueur);
+    		/*---Tommy*/
+    	}
+    }
     
     public function getNom() {
         return $this->Nom;
@@ -21,13 +40,13 @@ abstract class CaseDeJeu implements EntreposageDatabase {
         return $this->Id;
     }
     public function setId($value) {
-        (is_numeric($value))?$this->Id = $value:0;
+        $this->Id = $value;
     }
     public function getPosition() {
         return $this->position;
     }
     public function setPosition($value) {
-        (is_numeric($value))?$this->position = $value:0;
+        $this->position = $value;
     }
     public abstract function getType();
     

@@ -25,4 +25,6 @@ class CarteCC extends Carte{
     public function sauvegarde() {
         $this->getDataMapper()->insert($this);
     }
+    
+    public function execute($joueur){}
 }

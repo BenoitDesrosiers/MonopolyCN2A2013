@@ -11,6 +11,7 @@ require_once('modele/partie.php');
 require_once('dataMapper/partieDataMapper.php');
 require_once "modele/carteCC.php";
 require_once "modele/carteChance.php";
+require_once "modele/caseDeJeuAction.php";
 
 // demarre la session, doit être fait après tout les includes
 session_start();
@@ -72,6 +73,10 @@ switch ($action) {
     	
       	include('./affichageTableau_view.php');
        	break;
+    case 'fonction':
+        $titrePage= "Execution de la fonction";
+        include('./fonction.php');
+        break;
     default:
         affiche_erreur("Action inconnue: " . $action);
         break;

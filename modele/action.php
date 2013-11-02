@@ -1,9 +1,9 @@
 <?php
-
+// Par Tommy Teasdale
 require_once "interface/entreposageDatabase.php";
 
-class Action implements EntreposageDatabase {
-    private $id;
+abstract class Action{
+    protected $id;
     private $description;
     
     function getId(){
@@ -11,7 +11,7 @@ class Action implements EntreposageDatabase {
     }
     
     function setId($valeur){
-        (is_numeric($valeur))?$this->id=$valeur:0;
+        $this->id=$valeur;
     }
     
     function getDescription(){
@@ -22,5 +22,5 @@ class Action implements EntreposageDatabase {
         (!empty($valeur))?$this->description=$valeur:0;
     }
     
-    abstract function execute();
+    public abstract function execute($unJoueur);
 }

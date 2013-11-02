@@ -9,9 +9,6 @@ abstract class Carte implements EntreposageDatabase {
     private $description;
     private $position;
     
-    // static Factory
-    //public static function pourDefinitionPartie($idDefinitionPartie){}
-    
     public function getDescription() {
         return $this->description;
     }
@@ -48,5 +45,7 @@ abstract class Carte implements EntreposageDatabase {
     public function getPositon(){
         return $this->position;
     }
+    
+    public abstract function execute($joueur);
     
 }

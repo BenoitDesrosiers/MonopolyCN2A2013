@@ -88,15 +88,10 @@
             }
     	    ?>
     	</div>
-    	<br/>
-    	<?php
-    	    $carte=CarteCC::parPositionCarte(11,1);
-        ?>
-        <p><?php print $carte->getDescription();?></p>
-        <?php
-            $carteCh=CarteChance::pourDefinitionPartie(1);
-        ?>
-        <p><?php foreach($carteCh as $ch){ print $ch->getDescription()."<br>";}?></p>
+    	<form method="get">
+    	    <input type="hidden" name="action" value="fonction"/>
+    	    <input type="submit" value="Atterir sur une case action et payer 50$ aux autres joueurs"/>
+        </form>
     	<br/>
     </div>
     <?php include 'vue/piedpage.php'; ?>

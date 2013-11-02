@@ -1,6 +1,7 @@
 <?php 
 
 require_once "modele/carte.php";
+require_once "modele/paiementAuxJoueurs.php";
 require_once "interface/entreposageDatabase.php";
 require_once "dataMapper/carteChanceDataMapper.php";
 
@@ -24,5 +25,14 @@ class CarteChance extends Carte{
     
     public function sauvegarde() {
         $this->getDataMapper()->insert($this);
+    }
+    
+    public function execute($joueur){
+        switch($this->getActionID()){
+            case 29:
+                (new PaiementAuxJoueurs())->execute($joueur, 50);
+                break;
+            // Ajouter les autres actions des cartes chances
+        }
     }
 }

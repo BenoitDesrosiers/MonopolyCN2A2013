@@ -3,9 +3,11 @@
 require_once "modele/caseDeJeu.php";
 require_once "interface/entreposageDatabase.php";
 require_once "dataMapper/caseActionDataMapper.php";
+require_once "modele/actionCarte.php";
 
 class CaseDeJeuAction extends CaseDeJeu {
-    protected $actionId;    
+    protected $actionId;
+    protected $partieId; // Tommy    
     
     // static Factory
     static function pourDefinitionPartie($idDefinitionPartie) {
@@ -40,9 +42,19 @@ class CaseDeJeuAction extends CaseDeJeu {
         (is_numeric($value))?$this->actionId = $value:0;
     }
     
+    /*Tommy---*/
+    
     // Actions
-    public function execute_action(){
-        //$actionMapper = new ActionDataMapper();
-        //switch($actionMapper->parActionId($this->ationId, $idDefinitionPartie)->)
+    public function execute_action(Joueur $joueur){
+        switch($this->actionId){
+            case 42:
+            case 43:
+                (new ActionCarte($this->actionId))->execute($joueur);
+                break;
+            default:    // Remplacer ceci pour d'autre type d'action
+                return 0;
+        }
     }
+    
+    /*---Tommy*/
 }

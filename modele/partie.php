@@ -3,6 +3,9 @@ require_once "interface/entreposageDatabase.php";
 require_once "modele/coordonnateur.php";
 require_once "dataMapper/partieDataMapper.php";
 require_once "modele/tableau.php";
+require_once "modele/carteChance.php";
+require_once "modele/carteCC.php";
+
 class Partie implements EntreposageDatabase {
     protected $id;
     protected $nom;
@@ -164,6 +167,44 @@ class Partie implements EntreposageDatabase {
     public function setTableau($value) {
         $this->tableau = $value;
     }
+    
+    /*Tommy--*/
+    
+    public function getProchaireCarteCC(){
+        $cartes=CarteCC::pourDefinitionPartie($this->id);
+        $prochaireCarte=CarteCC::pourPositionCarte(1,$this->id);  // Carte au sommet de la pile
+        
+        if(!$prochaineCarte->getType=="CCg"){
+            foreach($cartes as $carte){
+                if($carte->getPosition()==1)
+                    $carte->setPostion(count($cartes));
+                else
+                    $carte->setPostion($carte->getPosition()-1);
+                $carte->sauvegarder();
+            }
+        }
+        
+        return $prochaireCarte;
+    }
+    
+    public function getProchaireCarteChance(){
+        $cartes=CarteChance::pourDefinitionPartie($this->id);
+        $prochaireCarte=CarteChance::parPositionCarte(14,$this->id);// Pour les besoins de la fonction en cours de développement,
+                                                                    // La carte pigée est la carte à la position 14
+        /*foreach($cartes as $carte){                               // Les cartes ne sont pas déplacées.
+            foreach($cartes as $carte){
+                if($carte->getPosition()==count($cartes))
+                    $carte->setPostion(1);
+                else
+                    $carte->setPostion($carte->getPosition()+1);
+                $carte->sauvegarder();
+            }    
+        }*/
+        
+        return $prochaireCarte;
+    }
+    
+    /*---Tommy*/
 
 }
 
