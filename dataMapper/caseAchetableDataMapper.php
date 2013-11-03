@@ -2,6 +2,7 @@
 
 require_once "dataMapper/mapper.php";
 require_once "modele/caseDeJeuAchetable.php";
+require_once "modele/joueur.php";
 
 class CaseAchetableDataMapper extends Mapper {
     
@@ -50,9 +51,23 @@ class CaseAchetableDataMapper extends Mapper {
                         $object->getNom(), 
                         $object->getDescription(), 
                         $object->getMaxNbJoueur());
-        $this->updateStmt->execute($values);
+        $this->updateStmt->execute($values);       
     }
-    
+    /*vero----*/
+    function insertProprietaire($object, $case) {
+    	
+    	$queryTxt2 = "insert into JoueurPartie_CaseAchetable ( JoueurPartieUsagerCompte, JoueurPartiePartieEnCoursId, CaseAchetableId, OrdreAffichage, Hypotheque, NombreMaisons, NombreHotels) values (?, ?, ?, ?, ?, ?, ?)";
+    	$query = self::$db->prepare($queryTxt2);
+    	$values = array ($object->getCompte(),
+    					 "1",
+    					 $case->getId(),
+    					 "1", 
+    					 "0",
+    					 "0",
+    					 "0");
+    	$query->execute($values);
+    }
+    /*-----vero*/
     function selectStmt() {
         return $this->selectStmt;
     }

@@ -49,4 +49,8 @@ class CaseDeJeuAction extends CaseDeJeu {
     public function setActionID($value) {
         $this->actionId = $value;
     }
+    
+
+
 }
+

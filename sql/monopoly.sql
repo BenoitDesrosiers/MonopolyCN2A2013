@@ -204,7 +204,7 @@ INSERT INTO `CaseAchetable` (`Id`, `Titre`, `GroupeDeCaseId`, `Prix`, `Location`
 (24, 'Avenue Illinois', 5, 240, 20, 100, 300, 750, 925, 1100, 120, 150, 150, 'propriete1.png'),
 (25, 'Chemin de fer B. & O.', 8, 200, 25, 50, 100, 200, 0, 0, 100, 0, 0, 'propriete2.png'),
 (26, 'Avenue Atlantique', 6, 260, 22, 110, 330, 800, 975, 1150, 130, 150, 150, 'propriete1.png'),
-(27, 'Avenue Ventnor', 1, 260, 22, 110, 330, 800, 975, 1150, 130, 150, 150, 'propriete1.png'),
+(27, 'Avenue Ventnor', 6, 260, 22, 110, 330, 800, 975, 1150, 130, 150, 150, 'propriete1.png'),
 (28, 'Aqueduc', 10, 150, 0, 4, 10, 0, 0, 0, 75, 0, 0, 'propriete3.png'),
 (29, 'Jardins Marvin', 6, 280, 24, 120, 360, 850, 1025, 1200, 140, 150, 150, 'propriete1.png'),
 (31, 'Ave du Pacifique', 9, 300, 26, 130, 390, 900, 1100, 1275, 150, 200, 200, 'propriete1.png'),

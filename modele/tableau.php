@@ -41,7 +41,7 @@ class Tableau {  //implements EntreposageDatabase {
         return $this->cases;
     }
 	
-	public function getCaseByPosition($position) {
+	public function getCasesParPosition($position) {
 	    //TODO: changer pour une array associative
 		$i = 0;
 		$stop = false;
@@ -65,6 +65,7 @@ class Tableau {  //implements EntreposageDatabase {
 		}
 	}
 	
+
     public function setCases($value) {
         $this->cases = $value;
     }

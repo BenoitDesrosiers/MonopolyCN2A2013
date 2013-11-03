@@ -12,13 +12,23 @@ abstract class CaseDeJeu implements EntreposageDatabase {
     
     // fonctions de jeu
     public function atterrirSur($joueur) {
-        echo $this->getNom();
-        echo " est une case de type ";
-        echo $this->getType();
-        echo ".";
-        if ($this->getType() == "achetable") :
-    
-        endif;
+        
+    //TODO: atterir sur devrait etre dans les sous-classes
+    if($this->getType()=="achetable"){
+    		if($this->getProprietaire() != null){
+    			//Etienne
+    		}
+    		else {
+    			/*vero---*/
+    			if($joueur->tenterAchat($this)){
+    				banque::vendrePropriete($joueur, $this);
+    			}
+    			/*---vero*/
+    		}
+    	}
+    	else{
+    		//tommy
+    	}
     }
     
     // Getter & Setter
@@ -45,6 +55,9 @@ abstract class CaseDeJeu implements EntreposageDatabase {
     
     public function getCouleurHTML() {
         return "#FFFFFF"; //TODO: hack pour faire marcher le tableau d'affichage. 
+    }
+    public function getCouleur() {
+        return "blanc"; //TODO: hack pour faire fonctionner le tableau
     }
     public function getPrix() {
         return 0; //TODO: hack pour faire marcher le tableau d'affichage

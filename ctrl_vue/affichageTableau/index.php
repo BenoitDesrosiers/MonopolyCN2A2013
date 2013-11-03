@@ -9,6 +9,9 @@ require_once('modele/usager.php');
 require_once('modele/coordonnateur.php');
 require_once('modele/partie.php');
 require_once('dataMapper/partieDataMapper.php');
+require_once('modele/banque.php');
+require_once('modele/caseDeJeu.php');
+
 
 // demarre la session, doit etre fait apres tout les includes
 session_start();
@@ -35,7 +38,7 @@ switch ($action) {
     	$partie = Partie::parId('1'); //ceci etant un demo, nous utiliserons la partie #1
     	$tableauDeJeu = $partie->getTableau();
     	
-      	include('./affichageTableau_view_1149647.php');
+      	include('./affichageTableau_view_0822113.php');
        	break;
 	case 'jouerCoup' :
 		$titrePage= "Jouer un coup";
@@ -44,6 +47,17 @@ switch ($action) {
 		
 		include('./boutonTableau_controleur.php');
 		break;
+	case 'atterir' :
+		$titrePage= "Atterrir sur une case non achete";
+		$partie = Partie::parId('1'); //ceci etant un demo, nous utiliserons la partie #1
+		$tableauDeJeu = $partie->getTableau();
+		include('./atterirSur_view.php');
+		$joueur = Joueur::parComptePartie("benoit", "1");
+		$caseDM=new CaseAchetableDataMapper();
+		$case=$caseDM->find(array("27"));
+		$case->atterrirSur($joueur);
+		     
+	    break;
     default:
         affiche_erreur("Action inconnue: " . $action);
         break;

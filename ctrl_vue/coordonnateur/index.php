@@ -59,7 +59,10 @@ switch ($action) {
 	        redirect('../../ctrl_vue/affichageTableau/?action=afficher');
 	    } elseif (isset($_POST['JouerCoup'])) {
 			redirect("../../ctrl_vue/affichageTableau?action=jouerCoup");
-		}
+		}elseif (isset($_POST['AtterirSur'])) {
+	        // l'usager veut afficher le tableau de jeu
+	        redirect("../../ctrl_vue/affichageTableau?action=atterir");
+	    }
 		break;
 }
 ?>

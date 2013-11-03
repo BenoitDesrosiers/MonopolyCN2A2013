@@ -1,4 +1,4 @@
-<?php
+<?php 
 require_once "interface/entreposageDatabase.php";
 require_once "modele/objet.php";
 require_once "modele/coordonnateur.php";
