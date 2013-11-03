@@ -11,7 +11,9 @@
     	<form id="menu-Form" action="." method="post">
     		<input type="hidden" name="action" value="menu"/>
      		<button type="submit" name="Ajout">Créer une nouvelle partie</button>
-     		<button type="submit" name="AfficherTableau">Afficher le tableau de jeu</button>
+     		<button type="submit" name="AfficherTableauTommy">Afficher le tableau de jeu de Tommy</button>
+     		<button type="submit" name="AfficherTableauVero">Afficher le tableau de jeu de Vero</button>
+     		
 			<button type="submit" name="JouerCoup">Jouer un coup</button>
 			<button type="submit" name="AtterirSur">Atterir sur une case non Acheté</button>
 			

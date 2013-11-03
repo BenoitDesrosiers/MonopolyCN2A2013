@@ -6,6 +6,8 @@ require_once "dataMapper/partieDataMapper.php";
 require_once "dataMapper/joueurDataMapper.php";
 require_once "modele/tableau.php";
 require_once "modele/definitionPartie.php";
+require_once "modele/carteChance.php";
+require_once "modele/carteCC.php";
 
 class Partie extends Objet implements EntreposageDatabase {
     protected $id;
@@ -37,7 +39,7 @@ class Partie extends Objet implements EntreposageDatabase {
         $this->definitionPartieId = $array["DefinitionPartieId"];
         $this->joueurTour = $array["JoueurTour"];
         $this->debutPartie = DateTime::createFromFormat('Y-m-d h:i:s', $array["DebutPartie"]);
-        
+        //TODO: ajouter dans la BD la position de la carte chance et CC pr�sentement sur le top
     }
     
     // Static Factory
@@ -188,8 +190,10 @@ class Partie extends Objet implements EntreposageDatabase {
 
     public function getCartesCaisseCommune() {
         return $this->cartesCaisseCommune;
+        //TODO: lazy load a partir de PartieEnCours_CarteCC
     }
     public function setCartesCaisseCommune($value) {
+        //TODO: je crois pas qu'on doit avoir un set puisque que c'est load�
         $this->cartesCaisseCommune = $value;
         $this->notifie();
     }
@@ -208,7 +212,7 @@ class Partie extends Objet implements EntreposageDatabase {
     }
     public function setDes($value) {
         $this->des = $value;
-        $this->notifie();
+        //pas de notifie() parce que ca va pas dans la bd
     }
 
     public function getBanque() {
@@ -252,6 +256,40 @@ class Partie extends Objet implements EntreposageDatabase {
      */ 
 	
 	//Fonctions autres
+    public function getProchaineCarteCC(){
+        $cartes=CarteCC::pourDefinitionPartie($this->id);
+        $prochaineCarte=CarteCC::pourPositionCarte(1,$this->id);  // Carte au sommet de la pile
+    
+        if(!$prochaineCarte->getType=="CCg"){
+            foreach($cartes as $carte){
+                if($carte->getPosition()==1)
+                    $carte->setPosition(count($cartes));
+                else
+                    $carte->setPosition($carte->getPosition()-1);
+                $carte->sauvegarder();
+            }
+        }
+    
+        return $prochaineCarte;
+    }
+    
+    public function getProchaineCarteChance(){
+        $cartes=CarteChance::pourDefinitionPartie($this->id);
+        $prochaineCarte=CarteChance::parPositionCarte(14,$this->id);// Pour les besoins de la fonction en cours de développement,
+        // La carte pigée est la carte à la position 14
+        /*foreach($cartes as $carte){                               // Les cartes ne sont pas déplacées.
+         foreach($cartes as $carte){
+        if($carte->getPosition()==count($cartes))
+            $carte->setPosition(1);
+        else
+            $carte->setPosition($carte->getPosition()+1);
+        $carte->sauvegarder();
+        }
+        }*/
+    
+        return $prochaineCarte;
+    }
+  
 	public function jouerCoup($joueur) {
 	}
 
@@ -287,6 +325,6 @@ class Partie extends Objet implements EntreposageDatabase {
     }
     // pas de setter car la definition est charge a partir du Id
     
-}
 
+}
 ?>

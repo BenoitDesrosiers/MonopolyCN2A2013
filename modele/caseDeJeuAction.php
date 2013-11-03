@@ -3,6 +3,7 @@
 require_once "modele/caseDeJeu.php";
 require_once "interface/entreposageDatabase.php";
 require_once "dataMapper/caseActionDataMapper.php";
+require_once "modele/actionCarte.php";
 
 class CaseDeJeuAction extends CaseDeJeu {
     protected $image;
@@ -47,10 +48,22 @@ class CaseDeJeuAction extends CaseDeJeu {
         return $this->actionId;
     }
     public function setActionID($value) {
-        $this->actionId = $value;
+        (is_numeric($value))?$this->actionId = $value:0;
+        //TODO: devrait pas mettre 0, devrait generer une erreur
     }
     
-
+    // Actions
+    public function execute_action(Joueur $joueur){
+        switch($this->actionId){
+            case 42:
+            case 43:
+                $xyz = new ActionCarte($this->actionId);
+                $xyz->execute($joueur);
+                break;
+            default:    // Remplacer ceci pour d'autre type d'action
+                return 0;
+        }
+    }
 
 }
 

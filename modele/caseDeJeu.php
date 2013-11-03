@@ -11,23 +11,23 @@ abstract class CaseDeJeu implements EntreposageDatabase {
     //static abstract  function pourDefinitionPartie($idDefinitionPartie);
     
     // fonctions de jeu
-    public function atterrirSur($joueur) {
-        
-    //TODO: atterir sur devrait etre dans les sous-classes
-    if($this->getType()=="achetable"){
+	public function atterrirSur($unJoueur) {
+    	if($this->getType()=="achetable"){
     		if($this->getProprietaire() != null){
     			//Etienne
     		}
     		else {
     			/*vero---*/
-    			if($joueur->tenterAchat($this)){
-    				banque::vendrePropriete($joueur, $this);
+    			if($unJoueur->tenterAchat($this)){
+    				banque::vendrePropriete($unJoueur, $this);
     			}
     			/*---vero*/
     		}
     	}
     	else{
-    		//tommy
+    		/*Tommy---*/
+    		$this->execute_action($unJoueur);
+    		/*---Tommy*/
     	}
     }
     

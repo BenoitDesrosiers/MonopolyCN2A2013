@@ -53,7 +53,7 @@ class CaseAchetableDataMapper extends Mapper {
                         $object->getMaxNbJoueur());
         $this->updateStmt->execute($values);       
     }
-    /*vero----*/
+
     function insertProprietaire($object, $case) {
     	
     	$queryTxt2 = "insert into JoueurPartie_CaseAchetable ( JoueurPartieUsagerCompte, JoueurPartiePartieEnCoursId, CaseAchetableId, OrdreAffichage, Hypotheque, NombreMaisons, NombreHotels) values (?, ?, ?, ?, ?, ?, ?)";
@@ -67,7 +67,7 @@ class CaseAchetableDataMapper extends Mapper {
     					 "0");
     	$query->execute($values);
     }
-    /*-----vero*/
+
     function selectStmt() {
         return $this->selectStmt;
     }
@@ -76,7 +76,7 @@ class CaseAchetableDataMapper extends Mapper {
      * fonctions specific a ce datamapper
      */
     
-    
+
     
     function pourDefinitionPartie($idDefinitionPartie) {
         // retourne un array contenant toutes les cases achetable du tableau
@@ -88,6 +88,8 @@ class CaseAchetableDataMapper extends Mapper {
         $query->bindValue(':id', $idDefinitionPartie);
         $query->setFetchMode(PDO::FETCH_ASSOC);
         $query->execute();
+        
+        $listeItems = array();
         
         $listeItems = array();
         

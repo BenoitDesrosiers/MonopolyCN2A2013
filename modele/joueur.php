@@ -148,9 +148,8 @@ class Joueur extends Objet  implements EntreposageDatabase{
         }	    
         $this->setArgent($monArgent);
 	}
-	/*vero, David, Vinccent ------*/
+
 	public function paye($montant) {
-		
 	
 	    $argent = $this->getArgent();
 	    
