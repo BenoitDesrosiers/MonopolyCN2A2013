@@ -38,7 +38,8 @@
                     			    <td><?php echo $partie->getCoordonnateur(); ?></td>
                     				<td><?php echo $partie->getId();?></td>
                     				<td><?php echo $partie->getNom(); ?></td>
-                    				<td><button type="submit" name="joindre" value="<?php echo $partie->getId() ?>">joindre</button></td>
+                    				<td><button type="submit" name="joindre" value="<?php echo $partie->getId() ?>">
+                    				              <?php if($partie->joueurPresent($usager)) {echo "re";}?>joindre</button></td>
                     		    </tr>
                     		<?php endforeach; //parties ?>
                     		<tr></tr> <!-- une ligne vide pour séparer les coordonnateur -->
