@@ -22,7 +22,7 @@ class CarteChanceDataMapper extends Mapper {
     }
     
     protected function doCreateObject( array $array){
-        $obj = new CarteChance();
+        $obj = new CarteChance(); //TODO: changer pour passer un array
         $obj->setId($array['Id']);
         $obj->setDescription($array['Description']);
         $obj->setActionID($array['ActionId']);

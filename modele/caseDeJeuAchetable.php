@@ -71,6 +71,35 @@ class CaseDeJeuAchetable extends CaseDeJeu {
     	$this->setProprietaire($Joueur->getCompte());
     }
     public function getType() {
-        return "achetable";
+        return $this->achetable;
     }
+    
+    /// partie de samuel
+    
+    public function getProprietaire(){
+    	return $this->JoueurPartieUsagerCompte;
+    }
+    
+    public function setProprietaire($value){
+    	$this->JoueurPartieUsagerCompte = $value;
+    }
+    
+    public function getNombreMaison(){
+    	return $this->NombreMaisons;
+    }
+    
+    public function setNombreMaison($value){
+    	$this->NombreMaisons = $value;
+    }
+    
+    public function getNombreHotel(){
+    	return $this->NombreHotels;
+    }
+    
+    public function setNombreHotel($value){
+    	$this->NombreHotels = $value;
+    }
+    
+    
+    
 }

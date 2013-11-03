@@ -9,6 +9,8 @@ abstract class Carte implements EntreposageDatabase {
     private $description;
     private $position;
     
+    //TODO: ajouter une factory par Id de carte
+    
     public function getDescription() {
         return $this->description;
     }

@@ -26,6 +26,13 @@ class CaseAchetableDataMapper extends Mapper {
         $query->execute();
         $array2  = $query->fetch();
         
+        // va chercher de l'information additionelle de la table joueurpartie_caseachetable
+        $queryTxt = 'SELECT * FROM joueurpartie_caseachetable where CaseAchetableId= :id and JoueurPartiePartieEnCoursId=1 ';  //TODO: besoin du id de partie
+        $query = self::$db->prepare($queryTxt);
+        $query->bindValue(':id', $array['Id']);
+        $query->setFetchMode(PDO::FETCH_ASSOC);
+        $query->execute();
+        $array3  = $query->fetch();
         
         //TODO: creer 3 autres sous-clase de CaseDeJeuAchetable et les appeler CasePropriete, CaseTrain et CaseService et créer la bon selon le type provenant de GroupeDeCase
         $obj = new CaseDeJeuAchetable( ); //TODO: a refaire en passant un array
@@ -37,6 +44,11 @@ class CaseAchetableDataMapper extends Mapper {
         //TODO: la couleur devrait aller dans CasePropriete
         $obj->setCouleur($array2['Couleur']);
         $obj->setCouleurHTML($array2['CouleurHTML']);
+        
+        //set le propriétaire et ses propriétés si applicable
+        $obj->setProprietaire($array3['JoueurPartieUsagerCompte']);
+        $obj->setNombreMaison($array3['NombreMaisons']);
+        $obj->setNombreHotel($array3['NombreHotels']);
         
         return $obj;        
     }

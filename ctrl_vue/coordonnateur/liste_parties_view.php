@@ -13,10 +13,12 @@
      		<button type="submit" name="Ajout">Créer une nouvelle partie</button>
      		<button type="submit" name="AfficherTableauTommy">Afficher le tableau de jeu de Tommy</button>
      		<button type="submit" name="AfficherTableauVero">Afficher le tableau de jeu de Vero</button>
+     		<button type="submit" name="AfficherTableauSam">Afficher le tableau de jeu de Sam</button>
      		
 			<button type="submit" name="JouerCoup">Jouer un coup</button>
-			<button type="submit" name="AtterirSur">Atterir sur une case non Acheté</button>
+			<button type="submit" name="AtterirSur">Atterir sur une case non Achete</button>
 			
+     		<button type="submit" name="PaiementParBatiment">Tester Paiement Par Batiment</button>
      		<?php //LISTEJOUEUR 1 vous pouvez ajouter le bouton pour lister les joueurs ici ?>
      	</form>
     	<h1>Liste des parties disponibles</h1>

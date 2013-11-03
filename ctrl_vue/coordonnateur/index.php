@@ -60,11 +60,17 @@ switch ($action) {
 	    } elseif (isset($_POST['AfficherTableauVero'])) {
 	        // l'usager veut afficher le tableau de jeu
 	        redirect('../../ctrl_vue/affichageTableau/?action=afficherVero');
+	    } elseif (isset($_POST['AfficherTableauSam'])) {
+	        // l'usager veut afficher le tableau de jeu
+	        redirect('../../ctrl_vue/affichageTableau/?action=afficherSam');
 	    } elseif (isset($_POST['JouerCoup'])) {
 			redirect("../../ctrl_vue/affichageTableau?action=jouerCoup");
-		}elseif (isset($_POST['AtterirSur'])) {
+		} elseif (isset($_POST['AtterirSur'])) {
 	        // l'usager veut afficher le tableau de jeu
 	        redirect("../../ctrl_vue/affichageTableau?action=atterir");
+	    } elseif (isset($_POST['PaiementParBatiment'])) {
+	        // l'usager veut afficher le tableau de jeu
+	        redirect("../../ctrl_vue/paiementParBatimentTest?action=test");
 	    }
 		break;
 }
