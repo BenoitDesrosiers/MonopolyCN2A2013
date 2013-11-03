@@ -57,15 +57,15 @@ switch ($action) {
 	    
 	    $disponible = false;
 	    foreach ($pions as $pion) {    
-	        //fait le tour des pions disponible pour voir si celui demandé l'est encore
+	        //fait le tour des pions disponible pour voir si celui demande l'est encore
 	        if ($pion->getId() == $pionDemande) {
 	            $disponible = true;
 	        }
 	    }
 	    if (!$disponible) {
-	        // le pion a été pris par quelqu'un d'autre, on recommence
+	        // le pion a ete pris par quelqu'un d'autre, on recommence
 	        $titrePage = "Choix du pion";
-	        $msg = "Votre pion a été pris, choississez un autre pion";
+	        $msg = "Votre pion a �t� pris, choississez un autre pion";
 	        include('demandePion_view.php');
 	    } else {
 	        $joueur->setPionId($pionDemande);

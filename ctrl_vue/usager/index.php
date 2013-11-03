@@ -39,6 +39,7 @@ switch ($action) {
 
 	    $partie = Partie::parId($partieId);
 	    if ($partie->joueurPresent($usager) ) {
+	        $_SESSION["partieId"]=$partieId;
 	        redirect("../../ctrl_vue/partieEnCours");
 	    } else {
 	        $partie->ajouteJoueur($usager); //fait la demande pour etre ajoute a cette partie. 
