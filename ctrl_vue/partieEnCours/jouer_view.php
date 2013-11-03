@@ -15,9 +15,12 @@
     <?php include 'vue/enteteCommune.php'; ?>
     
     <div id="main">			
-    	
+    	<form id="menu-Form" action="." method="post">
+    		<input type="hidden" name="action" value="menu"/>
+     		<button type="submit" name="JouerCoup">Jouer un coup</button>
+     	</form>
     	<h1>Tableau de jeu</h1>
-    	<
+    	
     	
     		<?php  foreach ($tableauDeJeu->getCases() as $case) : ?>
     			<p>

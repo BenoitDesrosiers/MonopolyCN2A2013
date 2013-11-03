@@ -10,6 +10,18 @@ abstract class CaseDeJeu implements EntreposageDatabase {
     // static Factory
     //static abstract  function pourDefinitionPartie($idDefinitionPartie);
     
+    // fonctions de jeu
+    public function atterrirSur($joueur) {
+        echo $this->getNom();
+        echo " est une case de type ";
+        echo $this->getType();
+        echo ".";
+        if ($this->getType() == "achetable") :
+    
+        endif;
+    }
+    
+    // Getter & Setter
     public function getNom() {
         return $this->Nom;
     }
@@ -31,4 +43,10 @@ abstract class CaseDeJeu implements EntreposageDatabase {
     }
     public abstract function getType();
     
+    public function getCouleurHTML() {
+        return "#FFFFFF"; //TODO: hack pour faire marcher le tableau d'affichage. 
+    }
+    public function getPrix() {
+        return 0; //TODO: hack pour faire marcher le tableau d'affichage
+    }
 }

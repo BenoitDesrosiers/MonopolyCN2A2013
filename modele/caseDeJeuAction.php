@@ -6,13 +6,18 @@ require_once "dataMapper/caseActionDataMapper.php";
 
 class CaseDeJeuAction extends CaseDeJeu {
     protected $image;
-      
-    
+    protected $actionId;
+
     
     // static Factory
     static function pourDefinitionPartie($idDefinitionPartie) {
         $dataMapper = new CaseActionDataMapper();
         return $dataMapper->pourDefinitionPartie($idDefinitionPartie);
+    }
+    
+    static function parPositionCase($positionCase, $idDefinitionPartie) {
+        $dataMapper = new CaseActionDataMapper();
+        return $dataMapper->parPositionCase($positionCase, $idDefinitionPartie);
     }
     
     // interface entreposageDatabase
@@ -26,6 +31,11 @@ class CaseDeJeuAction extends CaseDeJeu {
     
     
     //Getters & Setters
+    
+    public function getType() {
+        return "action";
+    }
+    
     public function getImage() {
         return $this->Image;
     }
@@ -33,8 +43,10 @@ class CaseDeJeuAction extends CaseDeJeu {
         $this->Image = $value;
     }
      
-    
-    public function getType() {
-        return "action";
+    public function getActionID() {
+        return $this->actionId;
+    }
+    public function setActionID($value) {
+        $this->actionId = $value;
     }
 }

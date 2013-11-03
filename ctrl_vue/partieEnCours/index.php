@@ -1,6 +1,6 @@
 <?php
 /* 
- * controlleur pour la page permettant de jouer   
+ * controlleur pour la page permettant a un joueur de jouer   
  */
 require_once('../../util/main.php');
 require_once('modele/usager.php');
@@ -30,7 +30,13 @@ switch ($action) {
 		$tableauDeJeu = $partie->getTableau();
 		include('./jouer_view.php');
 	    break;
-	
+	case 'menu' :
+	    if (isset($_POST['JouerCoup'])) {
+	        $titrePage= "Jouer un coup";
+	        $tableauDeJeu = $partie->getTableau();
+	        include('./boutonTableau_controleur.php');
+	        break;
+	    }
 
 }
 ?>

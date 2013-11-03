@@ -11,24 +11,24 @@ class Partie extends Objet implements EntreposageDatabase {
     protected $id;
     protected $nom;
     protected $coordonnateur;
-    protected $definitionPartieId; //l'id de la définition de partie
+    protected $definitionPartieId; //l'id de la definition de partie
     protected $joueurTour;
-    protected $debutPartie; //la date et heure du début de la partie, en tant qu'objet Date
+    protected $debutPartie; //la date et heure du debut de la partie, en tant qu'objet Date
      
     
     
     
-    protected $joueurs; // la liste des joueurs (de 1 à 8)
-    protected $tableau; // le tableau sur lequel se déroule la partie
+    protected $joueurs; // la liste des joueurs (de 1 � 8)
+    protected $tableau; // le tableau sur lequel se deroule la partie
     protected $banque;
     protected $des;
     protected $cartesChance;
     protected $cartesCaisseCommune;
     protected $pions;
-    protected $maisons;  //TODO: est-ce que ca devrait plutot appartenir à la banque
+    protected $maisons;  //TODO: est-ce que ca devrait plutot appartenir a la banque
     protected $hotels;
 
-    protected $definitionPartie = null; //l'objet représentant la définition de partie. 
+    protected $definitionPartie = null; //l'objet representant la definition de partie. 
     
     public function __construct(array $array) {
         $this->id = $array["Id"];
@@ -49,7 +49,7 @@ class Partie extends Objet implements EntreposageDatabase {
     
     public static function pourCoordonnateur(Coordonnateur $coordonnateur) {
         /*
-         * retourne la liste des parties associées à un coordonnateur
+         * retourne la liste des parties associees a un coordonnateur
          */
         $partieMapper = new PartieDataMapper();
         //LISTEPARTIES 1.3.1.1.x : cette fonction est une factory. Utilise un datamapper pour extraire la liste des parties pour un coordonnateur.
@@ -69,15 +69,15 @@ class Partie extends Objet implements EntreposageDatabase {
     
     public function ajouteJoueur($usager) {
         /*
-         * ajoute un usager à la partie
+         * ajoute un usager a la partie
          * l'usager devient donc un joueur
          * 
          * 
          */
         
-        //TODO: ajouter le check si jamais ce joueur est déjà dans la partie
+        //TODO: ajouter le check si jamais ce joueur est deja dans la partie
        
-        $ordre = count($this->getJoueurs())+1; //premier arrivée, premier à jouer
+        $ordre = count($this->getJoueurs())+1; //premier arrivee, premier a jouer
         
         $joueur = Joueur::nouveauJoueur(array('UsagerCompte'=>$usager->getCompte(),
                                     'PartieEnCoursId'=>$this->getId(),
@@ -86,13 +86,13 @@ class Partie extends Objet implements EntreposageDatabase {
                                     'OrdreDeJeu'=>$ordre,
                                     'EnPrison'=>0,
                                     'ToursRestants_Prison'=>0,
-                                    'Billets'=>array())); //les billets seront ajoutés quand la partie sera vraiment démarrée
+                                    'Billets'=>array())); //les billets seront ajoutes quand la partie sera vraiment demarree
         
     }
     
     public function estDemarre() {
         /*
-         * retourne vrai si la partie est démarrée, faux si non
+         * retourne vrai si la partie est demarree, faux si non
          */
         
         $heureDebut =$this->heureDebut();
@@ -107,7 +107,7 @@ class Partie extends Objet implements EntreposageDatabase {
         $joueurs = $this->getJoueurs();
         foreach($joueurs as $joueur) {
             if (isset($pions2[$joueur->getPionId()])) {
-                unset($pions2[$joueur->getPionId()]); //enlève le pion qu'un joueur a déjà
+                unset($pions2[$joueur->getPionId()]); //enleve le pion qu'un joueur a deja pris
             }
         }
         return $pions2;
@@ -127,8 +127,22 @@ class Partie extends Objet implements EntreposageDatabase {
             $joueur->encaisse($definition->getArgent());
         endforeach;
         
-        // set la date de début de partie au moment présent. 
+        // set la date de debut de partie au moment present. 
         $this->setDebutPartie(date('Y-m-d g:h:i'));
+    }
+    
+    public function joueurPresent(Usager $usager) {
+        /*
+         * verifie si un joueur est d�j� dans cette partie
+         */
+        $joueurs = $this->getJoueurs();
+        $present = false;
+        foreach ($joueurs as $joueur) {
+            if ($joueur->getCompte() == $usager->getCompte()) {
+                $present = true;
+            }
+        }
+        return $present;
     }
     
     //Getters & Setters
@@ -212,7 +226,7 @@ class Partie extends Objet implements EntreposageDatabase {
     }
     
     /*
-     * on ne set pas les joueurs, on ajouter 1 joueurs à la fois avec ajouteJoueur()
+     * on ne set pas les joueurs, on ajouter 1 joueurs a la fois avec ajouteJoueur()
      * public function setJoueurs($value) {
         $this->joueurs = $value;
     }
@@ -234,8 +248,12 @@ class Partie extends Objet implements EntreposageDatabase {
     }
 
     /*
-     *  pas de setTableau puisqu'on va chercher le tableau dans la définition de partie
+     *  pas de setTableau puisqu'on va chercher le tableau dans la definition de partie
      */ 
+	
+	//Fonctions autres
+	public function jouerCoup($joueur) {
+	}
 
     public function getDebutPartie() {
         return $this->debutPartie;
@@ -267,7 +285,7 @@ class Partie extends Objet implements EntreposageDatabase {
         }
         return $this->definitionPartie;
     }
-    // pas de setter car la definition est chargée à partir du Id
+    // pas de setter car la definition est charge a partir du Id
     
 }
 

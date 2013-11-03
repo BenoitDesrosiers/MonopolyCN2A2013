@@ -52,12 +52,14 @@ switch ($action) {
 		break;
 	case 'menu' :
 	    if (isset($_POST['Ajout'])) {
-		    // l'usager veut ajouter un test
+		    // l'usager veut ajouter une partie
 			redirect("../../ctrl_vue/partieEdition?action=ajouter");
 	    } elseif (isset($_POST['AfficherTableau'])) {
 	        // l'usager veut afficher le tableau de jeu
 	        redirect('../../ctrl_vue/affichageTableau/?action=afficher');
-	    }
+	    } elseif (isset($_POST['JouerCoup'])) {
+			redirect("../../ctrl_vue/affichageTableau?action=jouerCoup");
+		}
 		break;
 }
 ?>

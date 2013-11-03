@@ -73,7 +73,7 @@ class DefinitionPartie implements EntreposageDatabase {
         $this->description = $value;
     }
     
-    // données provenant d'autres tables
+    // donnees provenant d'autres tables
   
     public function getListeCases() {
         // retourne une liste de cases

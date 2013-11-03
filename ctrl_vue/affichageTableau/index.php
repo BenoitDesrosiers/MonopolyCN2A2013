@@ -10,10 +10,10 @@ require_once('modele/coordonnateur.php');
 require_once('modele/partie.php');
 require_once('dataMapper/partieDataMapper.php');
 
-// demarre la session, doit être fait après tout les includes
+// demarre la session, doit etre fait apres tout les includes
 session_start();
 
-//verifie si un usager est connecté
+//verifie si un usager est connecte
 include "util/login.php";
 
 if (isset($_POST['action'])) {
@@ -32,11 +32,18 @@ switch ($action) {
 	
     case 'afficher' :
     	$titrePage= "affichage du tableau de jeu";
-    	$partie = Partie::parId('1'); //ceci étant un démo, nous utiliserons la partie #1
+    	$partie = Partie::parId('1'); //ceci etant un demo, nous utiliserons la partie #1
     	$tableauDeJeu = $partie->getTableau();
     	
-      	include('./affichageTableau_view.php');
+      	include('./affichageTableau_view_1149647.php');
        	break;
+	case 'jouerCoup' :
+		$titrePage= "Jouer un coup";
+		$partie = Partie::parId('1');
+		$tableauDeJeu = $partie->getTableau();
+		
+		include('./boutonTableau_controleur.php');
+		break;
     default:
         affiche_erreur("Action inconnue: " . $action);
         break;

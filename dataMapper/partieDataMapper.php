@@ -77,6 +77,34 @@ class PartieDataMapper extends Mapper {
             return false;
         }
         
+     function positionJoueur($idPartieEnCours, $compteUsager) {
+     	// Retourne la position du $compteUsager dans la partie $idPartieEnCours.
+     	
+     	/*
+     	 * Input:
+     	 * 		$idPartieEnCours: L'id de la partie en cours
+     	 * 		$compteUsager: Nom de compte de l'usager 
+     	 * Output:
+     	 * 		Position du joueur du compte dans la partie actuelle
+     	 * 
+     	 */
+     	
+     	$queryTxt = 'SELECT Position FROM PartieEnCoursId 
+     					WHERE UsagerCompte = :usagerCompte
+     					AND PartieEnCoursId = :partieEnCoursId';
+     	$query = self::$db->prepare($queryTxt);
+     	$query->bindValue(':usagerCompte', $compteUsager, PDO::PARAM_STR);
+     	$query->bindValue(':partieEnCoursId', $idPartieEnCours, PDO::PARAM_INT);
+     	$query->setFetchMode(PDO::FETCH_ASSOC);
+     	$query->execute();
+     	
+     	foreach($query as $row) {
+     		$item = $this->createObject($row);
+     	}
+     	
+     	return $item;
+     }
+        
     }
     function findPourCoordonnateur( $idCoordonnateur) {
         //TODO: remplacer par un call a findAll en mettant selectAllStmt = au select. ??? est ce que ca fit dans le modele ou ca va mélanger le selectAllStmt, on saura pas lequel est pour etre appelé 

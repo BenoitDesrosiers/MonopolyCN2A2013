@@ -35,11 +35,12 @@ class JoueurDataMapper extends Mapper {
     }
     
     
-    
+
     function selectStmt() {
         return $this->selectStmt;
     }
     
+
     function findPourPartie($partieId) {
         /*
 		 * crée les joueurs associés à une partie 
@@ -58,6 +59,5 @@ class JoueurDataMapper extends Mapper {
         $query->bindValue(':partieId', $partieId);
         return $this->findAll($query);
     } 
-        
-  
+       
 }
