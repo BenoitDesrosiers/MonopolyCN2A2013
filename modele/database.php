@@ -2,7 +2,7 @@
 class Database {
 	private static $dsn = 'mysql:host=localhost;dbname=monopoly';
 	private static $username = 'root';
-	private static $password = 'ymmot1726';
+	private static $password = '';
 	private static $db;
 	private static $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, 
 									PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"); // pour que la bd soit lu en utf-8

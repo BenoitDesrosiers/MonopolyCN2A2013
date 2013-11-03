@@ -49,7 +49,8 @@ class CaseDeJeuAction extends CaseDeJeu {
         switch($this->actionId){
             case 42:
             case 43:
-                (new ActionCarte($this->actionId))->execute($joueur);
+                $xyz = new ActionCarte($this->actionId);
+                $xyz->execute($joueur);
                 break;
             default:    // Remplacer ceci pour d'autre type d'action
                 return 0;

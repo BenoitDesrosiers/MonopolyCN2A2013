@@ -30,7 +30,8 @@ class CarteChance extends Carte{
     public function execute($joueur){
         switch($this->getActionID()){
             case 29:
-                (new PaiementAuxJoueurs())->execute($joueur, 50);
+                $xyz = new PaiementAuxJoueurs();
+                $xyz->execute($joueur, 50);
                 break;
             // Ajouter les autres actions des cartes chances
         }
