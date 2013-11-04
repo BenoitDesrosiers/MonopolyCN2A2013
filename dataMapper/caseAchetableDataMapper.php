@@ -115,16 +115,16 @@ class CaseAchetableDataMapper extends Mapper {
         return $this->fetchInfoPropriete($caseId, $partieId, 'JoueurPartieUsagerCompte'); 
     }
     
-    function getNombreMaisonPourPartieId(CaseAchetable $case, $partieId) {
+    function getNombreMaisonPourPartieId($caseId, $partieId) {
         return $this->fetchInfoPropriete($caseId, $partieId, 'NombreMaisons');
     }
-    function getNombreHotelPourPartieId(CaseAchetable $case, $partieId) {
+    function getNombreHotelPourPartieId($caseId, $partieId) {
         return $this->fetchInfoPropriete($caseId, $partieId, 'NombreHotels');
     }
-    function getOrdreAffichagePourPartieId(CaseAchetable $case, $partieId) {
+    function getOrdreAffichagePourPartieId($caseId, $partieId) {
         return $this->fetchInfoPropriete($caseId, $partieId, 'OrdreAffichage');
     }
-    function getHypothequePourPartieId(CaseAchetable $case, $partieId) {
+    function getHypothequePourPartieId($caseId, $partieId) {
         return $this->fetchInfoPropriete($caseId, $partieId, 'Hypotheque');
     }
     

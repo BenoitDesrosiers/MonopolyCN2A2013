@@ -19,7 +19,7 @@ abstract class Carte implements EntreposageDatabase {
     }
     
     public function getId() {
-        return $this->Id;
+        return $this->id;
     }
     public function setId($value) {
         (is_numeric($value))?$this->id = $value:0;

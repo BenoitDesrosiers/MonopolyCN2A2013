@@ -2,8 +2,9 @@
 
 require_once "interface/entreposageDatabase.php";
 require_once "modele/joueur.php";
+require_once "modele/banque.php";
 
-abstract class CaseDeJeu implements EntreposageDatabase {
+abstract class CaseDeJeu { // implements EntreposageDatabase {
     protected $id;
     protected $nom;
     protected $position;
@@ -20,7 +21,8 @@ abstract class CaseDeJeu implements EntreposageDatabase {
     		else {
     			/*vero---*/
     			if($unJoueur->tenterAchat($this)){
-    				banque::vendrePropriete($unJoueur, $this);
+    			    $banque = new banque;
+    				$banque->vendrePropriete($unJoueur, $this);
     			}
     			/*---vero*/
     		}

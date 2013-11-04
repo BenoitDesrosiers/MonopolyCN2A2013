@@ -165,7 +165,7 @@ class Joueur extends Objet  implements EntreposageDatabase{
 	    
 	    if($argentCtr < $montant){
 	    	echo "Le joueur n'a pas assez d'argent. ".($montant-$argentCtr)."$ de plus sont nécéssaire.";
-	    	//TODO: mettre ca dans une view
+	    	//TODO: mettre ca dans une view, ou faire suivre a la logique pour trouver de l'argent (hypotheque, vente terrain, ... )
 	    }
 	    else{
 		    echo "Argent du joueur avant : ".$argentCtr."<br/>";

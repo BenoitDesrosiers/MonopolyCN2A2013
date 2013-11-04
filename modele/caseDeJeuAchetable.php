@@ -1,9 +1,9 @@
 <?php
 
-require_once "modele/caseDeJeu.php";
 require_once "interface/entreposageDatabase.php";
 require_once "dataMapper/caseAchetableDataMapper.php";
 require_once "modele/joueur.php";
+require_once "modele/caseDeJeu.php";
 
 class CaseDeJeuAchetable extends CaseDeJeu {
     protected $prix;
@@ -53,6 +53,13 @@ class CaseDeJeuAchetable extends CaseDeJeu {
     }
 
     public function getProprietairePourPartieId($partieId) {
+        /*
+         * retourne le propriŽtaire de la case pour une $partieId
+         * input
+         *     $partieId : l'id de la partie pour laquelle on veut trouver le propriŽtaire de cette case
+         * output
+         *     un objet joueur. 
+         */
         $compte = $this->getDataMapper()->getCompteProprietairePourPartieId($this->getId(), $partieId);
         return Joueur::parComptePartie($compte, $partieId);
     }
@@ -87,7 +94,7 @@ class CaseDeJeuAchetable extends CaseDeJeu {
     */
     
     public function getNombreHotelPourPartieId($partieId){
-        return $this->getDataMapper()->getNombreHotelPourPartieId($this, $partieId);
+        return $this->getDataMapper()->getNombreHotelPourPartieId($this->getId(), $partieId);
     }
     
     /*TODO: faut ajouter le numero de partie
