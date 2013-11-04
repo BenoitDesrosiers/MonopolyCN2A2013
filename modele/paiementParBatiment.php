@@ -24,11 +24,12 @@ class paiementParBatiment {
     			if( $case != null)
     			{
     				$array[$x-1]=$case;
-    				
-    				if ($array[$x-1]->getProprietairePourPartie($joueur->getPartieId()) == $joueur->getNom())
-    				{
-    					$totalmaisons += $array[$x-1]->getNombreMaisonPourPartieId($joueur->getPartieId());
-    					$totalhotels += $array[$x-1]->getNombreHotelPourPartieId($joueur->getPartieId());
+    				if ($array[$x-1]->getType()=="achetable") {
+        				if ($array[$x-1]->getProprietairePourPartieId($joueur->getPartieId()) == $joueur->getCompte())
+        				{
+    	    				$totalmaisons += $array[$x-1]->getNombreMaisonPourPartieId($joueur->getPartieId());
+    		    			$totalhotels += $array[$x-1]->getNombreHotelPourPartieId($joueur->getPartieId());
+    			    	}
     				}
     			}
     	}

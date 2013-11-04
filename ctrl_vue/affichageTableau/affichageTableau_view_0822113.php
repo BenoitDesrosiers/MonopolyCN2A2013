@@ -16,7 +16,7 @@
 				<tr>
 	    		<?php $i =0;
 	    			 while($i != 11) :
-	    		 		$case = $tableauDeJeu->getCasesParPosition($i);
+	    		 		$case = $tableauDeJeu->getCaseParPosition($i);
 	    			 	$LongueurMax = 12;
 	    			 	if($i == 0 || $i == 10) :?>
 	    			 		 <td class="caseCoin">
@@ -96,7 +96,7 @@
 	    		</tr>
 	    		<?php while($i != 20) :?>
 	    			<tr>
-	    			<?php $case = $tableauDeJeu->getCasesParPosition(50-$i);
+	    			<?php $case = $tableauDeJeu->getCaseParPosition(50-$i);
 	    			if ($case == null) :?>
 		    				<td class="caseCote">
 								<svg width="100px" height="75px" xmlns="http://www.w3.org/2000/svg" version="1.1">
@@ -175,7 +175,7 @@
 								</svg> 
 							</td>
 						<?php endif;?>
-						<?php $case = $tableauDeJeu->getCasesParPosition($i);
+						<?php $case = $tableauDeJeu->getCaseParPosition($i);
 	    		
 	    					if ($case == null) :?>
 			    				<td class="caseCote">
@@ -246,7 +246,7 @@
 						</tr>
 	    			<?php endwhile;?>
 	    			<?php while($i <= 30) :
-	    		 		$case = $tableauDeJeu->getCasesParPosition(20+(30-$i)); 
+	    		 		$case = $tableauDeJeu->getCaseParPosition(20+(30-$i)); 
 	    				if ($i == 20 || $i == 30) :?>
 	    			   		<td class="caseCoin">
 	    			  	 		<svg width="100px" height="100px" xmlns="http://www.w3.org/2000/svg" version="1.1">

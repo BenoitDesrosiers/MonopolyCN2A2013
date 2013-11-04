@@ -8,6 +8,7 @@ class banque  {
 		//Vendre une propriété non acheté a un joueur.
 	  	$joueur->paye($case->getPrix());
 	  	$case->setProprietaire($joueur);
-	  	echo $case->getProprietairePourPartieId($joueur->getPartieId())->getCompte();
+	  	$nouveauProprietaire = $case->getProprietairePourPartieId($joueur->getPartieId());
+	  	echo $nouveauProprietaire->getCompte();
 	}
 }

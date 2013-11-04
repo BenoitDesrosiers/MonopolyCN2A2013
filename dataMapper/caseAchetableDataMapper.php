@@ -62,7 +62,7 @@ class CaseAchetableDataMapper extends Mapper {
     }
 
     function insertProprietaire(Joueur $joueur, CaseDeJeuAchetable $case) {
-    	/*
+    	/*TODO: le changer pour faire un set en faisant un delete si necessaire avant le insert. Faudrait transferer l'info existante
     	 * ajoute une entre dans la table JoueurPartie_CaseAchetable pour indiquer que 
     	 * la $case appartient au $joueur 
     	 * 
@@ -73,7 +73,7 @@ class CaseAchetableDataMapper extends Mapper {
     	 */
     	$queryTxt2 = "insert into JoueurPartie_CaseAchetable ( JoueurPartieUsagerCompte, JoueurPartiePartieEnCoursId, CaseAchetableId, OrdreAffichage, Hypotheque, NombreMaisons, NombreHotels) values (?, ?, ?, ?, ?, ?, ?)";
     	$query = self::$db->prepare($queryTxt2);
-    	$values = array ($object->getCompte(),
+    	$values = array ($joueur->getCompte(),
     					 "1",
     					 $case->getId(),
     					 "1", 
@@ -83,31 +83,49 @@ class CaseAchetableDataMapper extends Mapper {
     	$query->execute($values);
     }
     
-    function getProprietairePourPartieId(CaseAchetable $case, int $partieId) {
+    //Fonctions pour aller chercher les infos qui sont particulires ˆ une instance de partie de cette case
+    private function fetchInfoPropriete($caseId, $partieId, $nomColonneInfo) {
         /*
-         * retourne le proprietaire de cette case pour cette partie
-         * input
-         *     $partieId : un id de partie
-         * output
-         *     le joueur a qui appartient cette case dans cette partie
-         *     Null si la case appartient ˆ personne dans cette partie
-         *
-         */
-        // va chercher de l'information additionelle de la table joueurpartie_caseachetable
+         * retourne une colonne $nomColonneInfo provenant de la table JoueurPartie_CaseAchetable
+         * pour une $caseId pour une $partieId
+        * input
+        *     $caseId : un id de case
+        *     $partieId : un id de partie
+        *     $nomColonneInfo : le nom d'une colonne de la table JoueurPartie_CaseAchetable
+        * output
+        *     la valeur de la colonne demandee si une entre existe pour cette case et partie. 
+        *     Null si la case appartient ˆ personne dans cette partie
+        *
+        */
         $queryTxt = 'SELECT * FROM joueurpartie_caseachetable where CaseAchetableId= :id and JoueurPartiePartieEnCoursId= :partieId ';  //TODO: besoin du id de partie
         $query = self::$db->prepare($queryTxt);
-        $query->bindValue(':id', $case->getId());
+        $query->bindValue(':id', $caseId);
         $query->bindValue(':partieId', $partieId);
         $query->setFetchMode(PDO::FETCH_ASSOC);
         $query->execute();
         $row  = $query->fetch();
         if (!is_array($row)){// le query a rien retourne, il n'y a donc pas de proprietaire pour cette partie
-            $proprietaire = null;
+            $info = null;
         } else {
-            $proprietaire = Joueur::parComptePartie($row['JoueurPartieUsagerCompte'], $partieId);
+            $info = $row[$nomColonneInfo];
         }
-        return $proprietaire;
-        
+        return $info;    }
+    
+    function getCompteProprietairePourPartieId($caseId, $partieId) {
+        return $this->fetchInfoPropriete($caseId, $partieId, 'JoueurPartieUsagerCompte'); 
+    }
+    
+    function getNombreMaisonPourPartieId(CaseAchetable $case, $partieId) {
+        return $this->fetchInfoPropriete($caseId, $partieId, 'NombreMaisons');
+    }
+    function getNombreHotelPourPartieId(CaseAchetable $case, $partieId) {
+        return $this->fetchInfoPropriete($caseId, $partieId, 'NombreHotels');
+    }
+    function getOrdreAffichagePourPartieId(CaseAchetable $case, $partieId) {
+        return $this->fetchInfoPropriete($caseId, $partieId, 'OrdreAffichage');
+    }
+    function getHypothequePourPartieId(CaseAchetable $case, $partieId) {
+        return $this->fetchInfoPropriete($caseId, $partieId, 'Hypotheque');
     }
     
     function selectStmt() {

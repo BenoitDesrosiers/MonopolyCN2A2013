@@ -79,6 +79,12 @@ switch ($action) {
     	$tableauDeJeu = $partie->getTableau();
 	    include('./affichageTableau_view_0822113.php');
 	    break;
+    case 'afficherSam' :
+        $titrePage= "affichage du tableau de jeu";
+        $partie = Partie::parId('1'); //ceci etant un demo, nous utiliserons la partie #1
+        $tableauDeJeu = $partie->getTableau();
+        include('./affichageTableau_view_Sam.php');
+        break;
 	case 'jouerCoup' :
 		$titrePage= "Jouer un coup";
 		$partie = Partie::parId('1');

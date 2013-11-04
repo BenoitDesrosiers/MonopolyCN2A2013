@@ -19,7 +19,7 @@
                 <div class="<?php echo $lignes[$i]['type'];?>">
                 <?php
                 for($j=$lignes[$i]['start'];($lignes[$i]['compare']($j,$lignes[$i]['end']));$j=$lignes[$i]['inc']($j)){
-                    $case=$tableauDeJeu->getCasesParPosition($j);
+                    $case=$tableauDeJeu->getCaseParPosition($j);
                     
                     if(($lignes[$i]['coin'])&&($j==$lignes[$i]['start']||$j==$lignes[$i]['dec']($lignes[$i]['end']))){
                         ?>
