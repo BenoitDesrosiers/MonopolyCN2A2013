@@ -1,6 +1,7 @@
 <?php
 
 require_once "interface/entreposageDatabase.php";
+require_once "modele/joueur.php";
 
 abstract class CaseDeJeu implements EntreposageDatabase {
     protected $id;
@@ -11,9 +12,9 @@ abstract class CaseDeJeu implements EntreposageDatabase {
     //static abstract  function pourDefinitionPartie($idDefinitionPartie);
     
     // fonctions de jeu
-	public function atterrirSur($unJoueur) {
+	public function atterrirSur(Joueur $unJoueur) { //TODO: a deplacer dans les sous-classes
     	if($this->getType()=="achetable"){
-    		if($this->getProprietaire() != null){
+    		if($this->getProprietairePourPartieId($unJoueur->getPartieId()) != null){
     			//Etienne
     		}
     		else {

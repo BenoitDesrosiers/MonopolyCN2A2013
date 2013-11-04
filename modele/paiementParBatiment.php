@@ -2,12 +2,14 @@
 require_once('modele/caseDeJeuAchetable.php');
 require_once('modele/tableau.php');
 require_once('modele/partie.php');
+require_once('modele/joueur.php');
+require_once('modele/carte.php');
 
 //require_once('modele/banque.php');
 
 class paiementParBatiment {
 	
-	public function calculPaiementParBatiment($joueur, $carte, $partie) {
+	public function calculPaiementParBatiment(Joueur $joueur, Carte $carte, Partie $partie) {
 		 
 		$totalhotels = 0;
 		$totalmaisons = 0;
@@ -23,10 +25,10 @@ class paiementParBatiment {
     			{
     				$array[$x-1]=$case;
     				
-    				if ($array[$x-1]->getProprietaire() == $joueur->getNom())
+    				if ($array[$x-1]->getProprietairePourPartie($joueur->getPartieId()) == $joueur->getNom())
     				{
-    					$totalmaisons += $array[$x-1]->getNombreMaison();
-    					$totalhotels += $array[$x-1]->getNombreHotel();
+    					$totalmaisons += $array[$x-1]->getNombreMaisonPourPartieId($joueur->getPartieId());
+    					$totalhotels += $array[$x-1]->getNombreHotelPourPartieId($joueur->getPartieId());
     				}
     			}
     	}

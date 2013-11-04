@@ -56,13 +56,13 @@ class CaseDeJeuAchetable extends CaseDeJeu {
         $this->couleurHTML = $value;
     }
 
-    public function getProprietaire() {
-    	return $this->proprietaire;
+    public function getProprietairePourPartieId($partieId) {
+        return $this->getDataMapper()->getProprietairePourPartieId($this, $partieId);
     }
     
-    public function setProprietaire($value) {
-    	$this->proprietaire = $value;
-    	$this->getDataMapper()->insertProprietaire($value, $this);    	
+    public function setProprietaire(Joueur $joueur) {
+    	$this->proprietaire = $joueur;
+    	$this->getDataMapper()->insertProprietaire($joueur, $this);    	
     }
    
     
@@ -76,13 +76,6 @@ class CaseDeJeuAchetable extends CaseDeJeu {
     
     /// partie de samuel
     
-    public function getProprietaire(){
-    	return $this->JoueurPartieUsagerCompte;
-    }
-    
-    public function setProprietaire($value){
-    	$this->JoueurPartieUsagerCompte = $value;
-    }
     
     public function getNombreMaison(){
     	return $this->NombreMaisons;

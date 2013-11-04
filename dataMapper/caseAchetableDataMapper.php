@@ -26,13 +26,7 @@ class CaseAchetableDataMapper extends Mapper {
         $query->execute();
         $array2  = $query->fetch();
         
-        // va chercher de l'information additionelle de la table joueurpartie_caseachetable
-        $queryTxt = 'SELECT * FROM joueurpartie_caseachetable where CaseAchetableId= :id and JoueurPartiePartieEnCoursId=1 ';  //TODO: besoin du id de partie
-        $query = self::$db->prepare($queryTxt);
-        $query->bindValue(':id', $array['Id']);
-        $query->setFetchMode(PDO::FETCH_ASSOC);
-        $query->execute();
-        $array3  = $query->fetch();
+        
         
         //TODO: creer 3 autres sous-clase de CaseDeJeuAchetable et les appeler CasePropriete, CaseTrain et CaseService et créer la bon selon le type provenant de GroupeDeCase
         $obj = new CaseDeJeuAchetable( ); //TODO: a refaire en passant un array
@@ -45,11 +39,12 @@ class CaseAchetableDataMapper extends Mapper {
         $obj->setCouleur($array2['Couleur']);
         $obj->setCouleurHTML($array2['CouleurHTML']);
         
+        // on le fait pas ici car ces champs viennent d'une autre table et faire le set engendrerait un notify 
         //set le propriétaire et ses propriétés si applicable
-        $obj->setProprietaire($array3['JoueurPartieUsagerCompte']);
+        /*$obj->setProprietaire($array3['JoueurPartieUsagerCompte']);
         $obj->setNombreMaison($array3['NombreMaisons']);
         $obj->setNombreHotel($array3['NombreHotels']);
-        
+        */
         return $obj;        
     }
     
@@ -66,8 +61,16 @@ class CaseAchetableDataMapper extends Mapper {
         $this->updateStmt->execute($values);       
     }
 
-    function insertProprietaire($object, $case) {
-    	
+    function insertProprietaire(Joueur $joueur, CaseDeJeuAchetable $case) {
+    	/*
+    	 * ajoute une entre dans la table JoueurPartie_CaseAchetable pour indiquer que 
+    	 * la $case appartient au $joueur 
+    	 * 
+    	 * input 
+    	 *     $joueur : le joueur a qui cette case sera assignee
+    	 *     $case : la case a ajouter au joueur
+    	 *     
+    	 */
     	$queryTxt2 = "insert into JoueurPartie_CaseAchetable ( JoueurPartieUsagerCompte, JoueurPartiePartieEnCoursId, CaseAchetableId, OrdreAffichage, Hypotheque, NombreMaisons, NombreHotels) values (?, ?, ?, ?, ?, ?, ?)";
     	$query = self::$db->prepare($queryTxt2);
     	$values = array ($object->getCompte(),
@@ -79,7 +82,34 @@ class CaseAchetableDataMapper extends Mapper {
     					 "0");
     	$query->execute($values);
     }
-
+    
+    function getProprietairePourPartieId(CaseAchetable $case, int $partieId) {
+        /*
+         * retourne le proprietaire de cette case pour cette partie
+         * input
+         *     $partieId : un id de partie
+         * output
+         *     le joueur a qui appartient cette case dans cette partie
+         *     Null si la case appartient � personne dans cette partie
+         *
+         */
+        // va chercher de l'information additionelle de la table joueurpartie_caseachetable
+        $queryTxt = 'SELECT * FROM joueurpartie_caseachetable where CaseAchetableId= :id and JoueurPartiePartieEnCoursId= :partieId ';  //TODO: besoin du id de partie
+        $query = self::$db->prepare($queryTxt);
+        $query->bindValue(':id', $case->getId());
+        $query->bindValue(':partieId', $partieId);
+        $query->setFetchMode(PDO::FETCH_ASSOC);
+        $query->execute();
+        $row  = $query->fetch();
+        if (!is_array($row)){// le query a rien retourne, il n'y a donc pas de proprietaire pour cette partie
+            $proprietaire = null;
+        } else {
+            $proprietaire = Joueur::parComptePartie($row['JoueurPartieUsagerCompte'], $partieId);
+        }
+        return $proprietaire;
+        
+    }
+    
     function selectStmt() {
         return $this->selectStmt;
     }
