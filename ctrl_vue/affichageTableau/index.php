@@ -91,6 +91,12 @@ switch ($action) {
         $tableauDeJeu = $partie->getTableau();
         include('./affichageTableau_view_David.php');
         break;
+    case 'afficherEtienne' :
+        $titrePage= "affichage du tableau de jeu";
+        $partie = Partie::parId('1'); //ceci etant un demo, nous utiliserons la partie #1
+        $tableauDeJeu = $partie->getTableau();
+        include('./affichageTableau_view_Etienne.php');
+        break;
 	case 'jouerCoup' :
 		$titrePage= "Jouer un coup";
 		$partie = Partie::parId('1');

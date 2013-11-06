@@ -1,8 +1,11 @@
 <?php
 
 require_once "dataMapper/mapper.php";
-require_once "modele/caseDeJeuAchetable.php";
 require_once "modele/joueur.php";
+require_once "modele/caseDeJeuAchetable.php";
+require_once "modele/caseDeJeuPropriete.php";
+require_once "modele/caseDeJeuServicePublic.php";
+require_once "modele/caseDeJeuTrain.php";
 
 class CaseAchetableDataMapper extends Mapper {
 	
@@ -32,7 +35,7 @@ class CaseAchetableDataMapper extends Mapper {
        if($array2['IsCheminDeFer']==1)
         	$obj = new CaseDeJeuTrain( );
         elseif($array2['IsServicePublique']==1)
-        	$obj = new CaseDeJeuService( );
+        	$obj = new CaseDeJeuServicePublic( );
         else
         	$obj = new CaseDeJeuPropriete( ); //TODO: a refaire en passant un array
        

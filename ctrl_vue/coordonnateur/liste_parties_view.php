@@ -15,6 +15,7 @@
      		<button type="submit" name="AfficherTableauVero">Afficher le tableau de jeu de Vero</button>
      		<button type="submit" name="AfficherTableauSam">Afficher le tableau de jeu de Sam</button>
      		<button type="submit" name="AfficherTableauDavid">Afficher le tableau de jeu de David</button>
+     		<button type="submit" name="AfficherTableauEtienne">Afficher le tableau de jeu d'Etienne</button>
      		
 			<button type="submit" name="JouerCoup">Jouer un coup</button>
 			<button type="submit" name="AtterirSur">Atterir sur une case non Achete</button>

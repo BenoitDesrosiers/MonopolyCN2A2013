@@ -62,6 +62,8 @@ switch ($action) {
 	        redirect('../../ctrl_vue/affichageTableau/?action=afficherSam');
 	    } elseif (isset($_POST['AfficherTableauDavid'])) {
 	        redirect('../../ctrl_vue/affichageTableau/?action=afficherDavid');
+	    } elseif (isset($_POST['AfficherTableauEtienne'])) {
+	        redirect('../../ctrl_vue/affichageTableau/?action=afficherEtienne');
 	    } elseif (isset($_POST['JouerCoup'])) {
 			redirect("../../ctrl_vue/affichageTableau?action=jouerCoup");
 		} elseif (isset($_POST['AtterirSur'])) {
