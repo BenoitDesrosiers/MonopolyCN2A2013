@@ -231,7 +231,7 @@ class Joueur extends Objet  implements EntreposageDatabase{
                 
         }
         //appel la fonction encaisse pour mettre a jour l'argent du joueur.
-        $this->encaisse($argent);
+        $this->setArgent($argent);
         return $argent;
     }
 

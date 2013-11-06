@@ -69,7 +69,9 @@ switch ($action) {
 	        redirect("../../ctrl_vue/affichageTableau?action=atterir");
 	    } elseif (isset($_POST['PaiementParBatiment'])) {
 	        // l'usager veut afficher le tableau de jeu
-	        redirect("../../ctrl_vue/paiementParBatimentTest?action=test");
+	        redirect("../../ctrl_vue/testPaiementParBatiment?action=test");
+	    } elseif (isset($_POST['FairePayerJoueur'])) {
+	    	redirect("../../ctrl_vue/testFairePayerJoueur?action=essai");
 	    }
 		break;
 }

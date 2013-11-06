@@ -9,7 +9,7 @@ class paiementALaBanque {
  public static function  fairePayer($joueur, $montant)    
  {
  	$banque = new banque();
- 	$billet=$banque->paye($joueur, $montant);
+ 	$billet=$banque->fairePayer($joueur, $montant);
  	return $billet;
  } 
  

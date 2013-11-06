@@ -34,10 +34,8 @@ switch ($action) {
 	
     case 'essai' :
     	$montant = 350;
-    	$password = "aaa";
-    	$compte = "benoit";
-    	$nom = "bob";
-    	$mike = new Joueur($password, $compte, $nom);
+    	
+    	$mike = Joueur::parComptePartie("benoit", "1");
     	$mrCash = new paiementALaBanque();
     	$billet = $mrCash->fairePayer($mike, $montant);
     	

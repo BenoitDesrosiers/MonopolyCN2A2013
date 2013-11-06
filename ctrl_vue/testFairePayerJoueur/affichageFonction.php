@@ -11,8 +11,8 @@
     	
     	<h1>essai</h1>
     	<?php
-    	echo "le joueur est ".$mike->getNom()."</br>";
-    	foreach ($billet as $montant=>$quantite)
+    	echo "le joueur est ".$mike->getCompte()."</br>";
+    	foreach ($mike->getArgent() as $montant=>$quantite)
     	{
     		echo $quantite. " billet de ".$montant."</br>";
     	}
