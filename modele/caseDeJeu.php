@@ -16,15 +16,14 @@ abstract class CaseDeJeu { // implements EntreposageDatabase {
 	public function atterrirSur(Joueur $unJoueur) { //TODO: a deplacer dans les sous-classes
     	if($this->getType()=="achetable"){
     		if($this->getProprietairePourPartieId($unJoueur->getPartieId()) != null){
-    			//Etienne
+    		    $proprio = $this->getProprietairePourPartieId($unJoueur->getPartieId());
+    		    $proprio->chargerLoyerA($joueur, $this->calculerLoyer()); 
     		}
     		else {
-    			/*vero---*/
     			if($unJoueur->tenterAchat($this)){
     			    $banque = new banque;
     				$banque->vendrePropriete($unJoueur, $this);
     			}
-    			/*---vero*/
     		}
     	}
     	else{

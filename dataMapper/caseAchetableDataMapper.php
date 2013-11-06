@@ -29,7 +29,13 @@ class CaseAchetableDataMapper extends Mapper {
         
         
         //TODO: creer 3 autres sous-clase de CaseDeJeuAchetable et les appeler CasePropriete, CaseTrain et CaseService et créer la bon selon le type provenant de GroupeDeCase
-        $obj = new CaseDeJeuAchetable( ); //TODO: a refaire en passant un array
+       if($array2['IsCheminDeFer']==1)
+        	$obj = new CaseDeJeuTrain( );
+        elseif($array2['IsServicePublique']==1)
+        	$obj = new CaseDeJeuService( );
+        else
+        	$obj = new CaseDeJeuPropriete( ); //TODO: a refaire en passant un array
+       
         $obj->setId($array['Id']);
         $obj->setNom($array['Titre']);
         $obj->setPrix($array['Prix']);
@@ -184,5 +190,21 @@ class CaseAchetableDataMapper extends Mapper {
             }
         }
     	return $item;
+    }
+    
+    static function loadPrix($proprieteId) {
+        // retourne un array contenant tout les prix de la propriete
+    
+        // commence par aller chercher les prix dans la table CaseAchetable
+        $queryTxt = 'SELECT * FROM CaseAchetable
+        				WHERE Id = :id';
+        $query = self::$db->prepare($queryTxt);
+        $query->bindValue(':id', $proprieteId);
+        $query->setFetchMode(PDO::FETCH_ASSOC);
+        $query->execute();
+    
+        $listePrix = $query->fetch();
+       
+        return $listePrix;
     }
 }

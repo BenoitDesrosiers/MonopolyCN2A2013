@@ -1,0 +1,16 @@
+table
+{
+	background-color: green;
+}
+
+rect
+{
+	stroke-width:1;
+	stroke:black; 
+	fill:white;
+}
+
+text.nom
+{
+	font-size:10;
+}

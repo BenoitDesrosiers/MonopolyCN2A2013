@@ -23,4 +23,5 @@
     	<?php endif; ?>
 		
 	</div>
+</div>
 <!-- la div page est fermée dans piedPage.php  -->

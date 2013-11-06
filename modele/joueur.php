@@ -238,6 +238,12 @@ class Joueur extends Objet  implements EntreposageDatabase{
 	public function tenterAchat(CaseDeJeuAchetable $uneCase){
 	    return true;
 	}
+	
+	public function chargerLoyerA($locataire, $loyer){
+	    $this->encaisse($locataire->paye($loyer));
+	    $this->encaisse($loyer);
+	}
+	
 
 	// Getter & Setter
 	

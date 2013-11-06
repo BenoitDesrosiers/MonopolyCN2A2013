@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*
  * le pied de page commun à toutes les views
  * 

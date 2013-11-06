@@ -4,12 +4,18 @@ require_once "interface/entreposageDatabase.php";
 require_once "dataMapper/caseAchetableDataMapper.php";
 require_once "modele/joueur.php";
 require_once "modele/caseDeJeu.php";
+require_once "modele/caseDeJeuPropriete.php";
+require_once "modele/caseDeJeuServicePublic.php";
+require_once "modele/caseDeJeuTrain.php";
 
-class CaseDeJeuAchetable extends CaseDeJeu {
+abstract class CaseDeJeuAchetable extends CaseDeJeu {
     protected $prix;
     protected $couleur;
     protected $couleurHTML;
     protected $proprietaire;
+      
+    public abstract function calculerLoyer();
+    
     
     // static Factory
     static function pourDefinitionPartie($idDefinitionPartie) {
@@ -78,9 +84,7 @@ class CaseDeJeuAchetable extends CaseDeJeu {
     public function getType() {
         return "achetable";
     }
-    
-    /// partie de samuel
-    
+        
     
     public function getNombreMaisonPourPartieId($partieId){
         return $this->getDataMapper()->getNombreMaisonPourPartieId($this->getId(), $partieId);
