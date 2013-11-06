@@ -11,7 +11,7 @@ class UsagerDataMapper extends Mapper {
         parent::__construct(); // "parent" veut dire "cette méthode de ma superclasse. 
         $this->selectStmt = self::$db->prepare("SELECT * FROM Usager where compte=?");
         $this->updateStmt = self::$db->prepare('update Usager set compte=?, password=?, nom=?, role=?,  where compte=?');
-        $this->insertStmt = self::$db->prepare("insert into Usager ( compte, password, nom, role ) values (?, ?)");
+        $this->insertStmt = self::$db->prepare("insert into Usager ( compte, password, nom, role ) values (?, ?, ?, ?)");
         
     }
 

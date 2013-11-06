@@ -55,14 +55,13 @@ switch ($action) {
 		    // l'usager veut ajouter une partie
 			redirect("../../ctrl_vue/partieEdition?action=ajouter");
 	    } elseif (isset($_POST['AfficherTableauTommy'])) {
-	        // l'usager veut afficher le tableau de jeu
 	        redirect('../../ctrl_vue/affichageTableau/?action=afficherTommy');
 	    } elseif (isset($_POST['AfficherTableauVero'])) {
-	        // l'usager veut afficher le tableau de jeu
 	        redirect('../../ctrl_vue/affichageTableau/?action=afficherVero');
 	    } elseif (isset($_POST['AfficherTableauSam'])) {
-	        // l'usager veut afficher le tableau de jeu
 	        redirect('../../ctrl_vue/affichageTableau/?action=afficherSam');
+	    } elseif (isset($_POST['AfficherTableauDavid'])) {
+	        redirect('../../ctrl_vue/affichageTableau/?action=afficherDavid');
 	    } elseif (isset($_POST['JouerCoup'])) {
 			redirect("../../ctrl_vue/affichageTableau?action=jouerCoup");
 		} elseif (isset($_POST['AtterirSur'])) {

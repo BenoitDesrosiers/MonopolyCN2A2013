@@ -144,75 +144,96 @@ class Joueur extends Objet  implements EntreposageDatabase{
 	     */ 
 	    $monArgent = $this->getArgent();
         foreach ($billets as $valeur => $qte) {
-            $monArgent[$valeur] += $qte;
+            $monArgent[$valeur] += $qte; //TODO: verifier que les qte sont positives, ou accepter les n�gatives mais planter si y'en a pas assez. La fonction ferait donc un encaisse et un d�caisse
         }	    
         $this->setArgent($monArgent);
 	}
 
-	public function paye($montant) {
-	
-	    $argent = $this->getArgent();
-	    
-	    //Variable pour calculer le montant
-	    $montantCtr = 0;
-	    $argentCtr = 0;
-	    $quantiteCtr =0;
-	    
-	    foreach($argent as $billet=>$quantite){
-	    	$argentCtr += intval($billet) * $quantite; 
-	    }
-	    echo $argentCtr;
-	    
-	    if($argentCtr < $montant){
-	    	echo "Le joueur n'a pas assez d'argent. ".($montant-$argentCtr)."$ de plus sont nécéssaire.";
-	    	//TODO: mettre ca dans une view, ou faire suivre a la logique pour trouver de l'argent (hypotheque, vente terrain, ... )
-	    }
-	    else{
-		    echo "Argent du joueur avant : ".$argentCtr."<br/>";
-		    echo "Montant à payer: ".$montant."<br/>";
-		    
-		    $argentCtr -= $montant;
-		    echo "Argent du joueur après: ".$argentCtr."<br/>";
-		    
-		    foreach($argent as $billet=>$quantite){
-		    	if($quantite != 0){
-		    		if($montant > 0){
-		    			echo "Montant : ".$montant."</br>";
-		    			$montant -=  intval($billet);
-		    			echo "Montant : ".$montant."</br>";
-		    			$montantCtr = $montant;
-		    			echo "MontantCtr : ".$montantCtr."</br>";
-		    			$quantite--; 
-		    			if($montantCtr < 0){
-		    				$montantCtr *= -1;
-		    				echo "MontantCtr : ".$montantCtr."</br>";
-		    			}		    				
-		    		}
-		    	}	
-		    	$argent[$billet]=$quantite;
-		    }
-		    
-		    foreach($argent as $billet=>$quantite){
-		    	echo "Billet Avant :".$billet."</br>";
-		    	echo "Quantité Retour ... Avant".$quantite."</br>";
-		    	echo "Montant Avant".$montantCtr."</br>";
-		    	if($billet <= $montantCtr){
-					$quantiteCtr = floor($montantCtr / intval($billet));
-					$quantite += $quantiteCtr; 
-					echo "Billet Après :".$billet."</br>";
-					echo "Quantité Retour ... Après ".$quantite."</br>";
-					echo "Montant Après".$montantCtr."</br>";
-					if($quantite != 0){
-						$montantCtr -= intval($billet) * $quantite;
-						//echo "Montant :".$montant."</br>";	
-					}
-		    	}
-		    	$argent[$billet]=$quantite;
-		    }
-		    
-	    }
-	    $this->setArgent($argent);
-	}
+    public function paye($montant) {
+                
+		//Fonction aller chercher argent dans la database
+		$argent = $this->getArgent();
+
+        $montantCtr = 0;
+        $argentCtr = 0;
+        
+        //verification argent
+        //si le joueur a assez d'argent pour payer 
+        foreach($argent as $billet=>$quantite){
+                $argentCtr += intval($billet) * $quantite; 
+        }
+        echo "Le joueur à ".$argentCtr."$ et doit payer ".$montant."$";
+        echo "</br>";
+        
+        if($argentCtr < $montant){
+                echo "Le joueur n'a pas assez d'argent. ".($montant-$argentCtr)."$ de plus sont nécéssaire.";
+        }
+        else{
+                echo "Argent du joueur avant : ".$argentCtr."<br/>";
+                echo "Montant à payer: ".$montant."<br/>";
+                
+                $argentCtr -= $montant;
+                echo "Argent du joueur après: ".$argentCtr."<br/>";
+                
+                //creation de l'array de paiement exemple le joueur doit payer 350, il paye avec un 500
+                // montantCtr = valeur que le joueur recupere
+                // quantiteCtr = quantite de billet utilisé
+                foreach($argent as $billet=>$quantite){
+                        if($quantite != 0){
+                                if($montant > 0){
+                                        //echo "Montant : ".$montant."</br>";
+                                		$quantiteCtr = ceil($montant / intval($billet));
+                                		if($quantiteCtr > $quantite)
+                                			$quantiteCtr = $quantite;
+                                        $montant -=  $quantiteCtr *intval($billet);
+                                        //echo "Montant : ".$montant."</br>";
+                                        $montantCtr = $montant;
+                                        //echo "MontantCtr : ".$montantCtr."</br>";
+                                        $quantite -= $quantiteCtr ; 
+                                        if($montantCtr < 0){
+                                                $montantCtr *= -1;
+                                                //echo "MontantCtr : ".$montantCtr."</br>";
+                                        }               
+                                	//echo "Billet actuel : " . $billet . "</br>";
+                                	//echo "quantite actuel : " . $quantiteCtr . "</br>";   
+                                	//echo "montantctr : " . $montantCtr . "</br>";                                     
+                                }
+                                
+                        } 
+                 
+                        $argent[$billet]=$quantite;     
+                        
+                }
+                
+                //creation de l'array que le joueur doit encaisser apres avoir payer
+                //exemple il a payer 350 avec un billet de 500 donc il doit encaisser 150
+                //update l'array d'argent total du joueur
+                //montantCtr = valeur que le joueur recupere
+                // quantiteCtr = quantite de billet recuperé
+                foreach($argent as $billet=>$quantite){
+                	//echo "montantctr retour: ". $montantCtr . "</br>";
+                        if($billet <= $montantCtr){
+                                    $quantiteCtr = floor($montantCtr / intval($billet));
+                                    $quantite += $quantiteCtr;
+                                    
+                                    //echo "Billet retour :".$billet."</br>";
+                                    //echo "Quantité Retour : ".$quantiteCtr."</br>";
+                                    
+                                    if($quantiteCtr != 0){
+                                            $montantCtr -= intval($billet) * $quantiteCtr;
+                                            //echo "Montant Retour ".$montantCtr."</br>";
+                                    }
+                           
+                               
+                        }
+                        $argent[$billet]=$quantite;
+                }
+                
+        }
+        //appel la fonction encaisse pour mettre a jour l'argent du joueur.
+        $this->encaisse($argent);
+        return $argent;
+    }
 
 	public function tenterAchat(CaseDeJeuAchetable $uneCase){
 	    return true;
