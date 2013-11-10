@@ -9,7 +9,10 @@
 <html>
 <head>
     <?php include 'vue/headCommun.php'; ?>
-    
+    <link rel="stylesheet" type="text/css" href="<?php echo $GLOBALS['app_path'].'css/Structure.css'?>">
+	<link rel="stylesheet" type="text/css" href="<?php echo $GLOBALS['app_path'].'css//Menu.css'?>">
+	<link rel="stylesheet" type="text/css" href="<?php echo $GLOBALS['app_path'].'css/Button.css'?>">
+	    
 <script type='text/javascript'>
     var xhr = null; 
     function getXhr()
@@ -50,24 +53,40 @@
 </head>
 
 <body>
+
     <?php include 'vue/enteteCommune.php'; ?>
     
     <?php //TODO ajouter une section pour le menu, l'interaction , pour les cartes, pour l'info du joueur, ... ?>
     
-    <div id="main">                        
-            <form id="menu-Form" action="." method="post">
-                    <input type="hidden" name="action" value="menu"/>
-                     <button type="submit" name="JouerCoup">Jouer un coup</button> <?php //TODO verifier si c'est au tour de ce joueur de jouer un coup. Si non, afficher un piton refresh au lieu de jouer?>
-                     
-                     <button type="button" name="TestAJAX" onClick="DemoAjax()">Demo AJAX</button> 
-             </form>
-             <div id="demoAjax">
-             </div>
-            <h1>Tableau de jeu</h1>            
-                    <?php include 'tableauDeJeu_view.php' ?>
-            </table>
-            <br/>
-        </form-->
-    </div>
+	<div id="enveloppe">
+	<div id="contenu">
+	    
+        <div id="divTableau">
+                 <div id="demoAjax">
+                 </div>
+                
+                <?php include 'tableauDeJeu_view.php' ?>
+        </div>
+    </div> <!-- contenu -->
+    </div> <!-- enveloppe -->
+    <div id="navigation">
+			<!--les boutons pour jouer: refresh, brasser, acheter Maison/hotel, quitter -->
+			<ul id="choixNavigation" class="menuAvecBouton">
+				<li><a href="."><b>Rafraichir</b></a></li>
+	            <li><a href=".?action=JouerCoup"><b>Jouer</b></a></li> <!--//TODO verifier si c'est au tour de ce joueur de jouer un coup. Si non, afficher un piton refresh au lieu de jouer -->
+				<li><a href="#nogo" onClick="DemoAjax()"><b>demo Ajax</b></a></li>
+	            <li><a href="#nogo"><b>Achat Maison</b></a></li>
+				<li><a href="#nogo"><b>Achat Hotel</b></a></li>
+				<li><a href="#nogo"><b>Quitter</b></a></li>
+			</ul>
+	</div> <!-- navigation -->
+
+	<div id="argent">
+		<!-- afficher l'argent du joueur ici -->
+	</div> <!-- argent -->
+
+	<div id="propriete">
+        <!-- afficher les proprietes du joueur ici -->  
+    </div> <!-- propriete -->
+	<?php include 'vue/piedpage.php'; ?>
     
-    <?php include 'vue/piedpage.php'; ?>
