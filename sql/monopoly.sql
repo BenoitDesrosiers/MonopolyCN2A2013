@@ -633,6 +633,8 @@ CREATE TABLE IF NOT EXISTS `PartieEnCours` (
   `Nom` varchar(40) COLLATE utf8_bin NOT NULL,
   `JoueurTour` int(10) NOT NULL,
   `DebutPartie` datetime NOT NULL,
+  `InteractionId` int(10) NOT NULL,
+
   PRIMARY KEY (`Id`),
   KEY `Coordonnateur` (`Coordonnateur`),
   KEY `DefinitionPartieId` (`DefinitionPartieId`)
@@ -642,11 +644,11 @@ CREATE TABLE IF NOT EXISTS `PartieEnCours` (
 -- Contenu de la table `PartieEnCours`
 --
 
-INSERT INTO `PartieEnCours` (`Id`, `Coordonnateur`, `DefinitionPartieId`, `Nom`, `JoueurTour`, `DebutPartie`) VALUES
-(1, 'benoit', 1, 'Partie1', 1, '0000-00-00 00:00:00'),
-(2, 'benoit', 2, 'Partie2', 2, '0000-00-00 00:00:00'),
-(3, 'benoit', 1, 'Partie3', 1, '0000-00-00 00:00:00'),
-(4, 'benoit', 1, 'Partie4', 1, '0000-00-00 00:00:00');
+INSERT INTO `PartieEnCours` (`Id`, `Coordonnateur`, `DefinitionPartieId`, `Nom`, `JoueurTour`, `DebutPartie`, `InteractionId`) VALUES
+(1, 'benoit', 1, 'Partie1', 1, '0000-00-00 00:00:00', 0),
+(2, 'benoit', 2, 'Partie2', 2, '0000-00-00 00:00:00', 0),
+(3, 'benoit', 1, 'Partie3', 1, '0000-00-00 00:00:00', 0),
+(4, 'benoit', 1, 'Partie4', 1, '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 

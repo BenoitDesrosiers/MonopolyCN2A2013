@@ -31,7 +31,9 @@ class Partie extends Objet implements EntreposageDatabase {
     protected $hotels;
 
     protected $definitionPartie = null; //l'objet representant la definition de partie. 
+    protected $interactionId; //l'id de l'interation qui est prŽsentement en cours. 
     
+   
     public function __construct(array $array) {
         $this->id = $array["Id"];
         $this->nom = $array["Nom"];
@@ -39,6 +41,7 @@ class Partie extends Objet implements EntreposageDatabase {
         $this->definitionPartieId = $array["DefinitionPartieId"];
         $this->joueurTour = $array["JoueurTour"];
         $this->debutPartie = DateTime::createFromFormat('Y-m-d h:i:s', $array["DebutPartie"]);
+        $this->interactionId = $array["InteractionId"];
         //TODO: ajouter dans la BD la position de la carte chance et CC prŽsentement sur le top
     }
     
@@ -325,6 +328,13 @@ class Partie extends Objet implements EntreposageDatabase {
     }
     // pas de setter car la definition est charge a partir du Id
     
-
+    public function setInteractionId($value) {
+        $this->interactionId = $value;
+        $this->notifie();
+    }
+    
+    public function getInteractionId() {
+        return $this->interactionId;
+    }
 }
 ?>

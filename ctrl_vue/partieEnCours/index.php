@@ -17,7 +17,7 @@ if (isset($_POST['action'])) {
 	$action = 'afficheTableau';
 }
 
-$usager = $_SESSION['usager']; //TODO: ne pas mettre l'usager dans la session, mettre son id et le recrÃ©Ã© chaque fois.
+$usager = $_SESSION['usager']; //TODO: ne pas mettre l'usager dans la session, mettre son id et le recreer chaque fois.
 $partieId = $_SESSION['partieId'];
 $partie = Partie::parId($partieId);
 $usager = $_SESSION['usager'];
@@ -34,7 +34,10 @@ switch ($action) {
 	    if (isset($_POST['JouerCoup'])) {
 	        $titrePage= "Jouer un coup";
 	        $tableauDeJeu = $partie->getTableau();
-	        include('./boutonTableau_controleur.php');
+	        //TODO: verifier que c'est ˆ ce joueur de jouer. 
+	        //TODO: ca devrait tre la partie qui dŽmarre le coup ??? 
+		    $joueur->setPosition(1); //FIXME: ˆ enlever une fois les tests termines
+		    $joueur->brasseDes();
 	        break;
 	    }
 

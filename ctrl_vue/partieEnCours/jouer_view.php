@@ -14,23 +14,15 @@
 <body>
     <?php include 'vue/enteteCommune.php'; ?>
     
+    <?php //TODO ajouter une section pour le menu, l'interaction , pour les cartes, pour l'info du joueur, ... ?>
+    
     <div id="main">                        
             <form id="menu-Form" action="." method="post">
                     <input type="hidden" name="action" value="menu"/>
-                     <button type="submit" name="JouerCoup">Jouer un coup</button>
+                     <button type="submit" name="JouerCoup">Jouer un coup</button> <?php //TODO verifier si c'est au tour de ce joueur de jouer un coup. Si non, afficher un piton refresh au lieu de jouer?>
              </form>
-            <h1>Tableau de jeu</h1>
-            
-            
-                    <?php  foreach ($tableauDeJeu->getCases() as $case) : ?>
-                            <p>
-                            <?php echo $case->getId();?>
-                            <?php echo $case->getPosition();?>
-                            <?php echo $case->getNom();?>
-                            
-                            </p>
-                            
-                    <?php endforeach; ?>
+            <h1>Tableau de jeu</h1>            
+                    <?php include 'tableauDeJeu_view.php' ?>
             </table>
             <br/>
         </form-->

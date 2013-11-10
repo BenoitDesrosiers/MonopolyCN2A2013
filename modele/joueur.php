@@ -97,16 +97,21 @@ class Joueur extends Objet  implements EntreposageDatabase{
     
     //fonctions pour jouer
 	public function brasseDes() {
+	    //TODO: je crois que ca devrait tre ˆ la partie de brasser les dŽs. 
+	    
 		// Creation des des
-		$des1 = array('ID' => 0, 'Val' => 3);
-		$des2 = array('ID' => 1, 'Val' => 5);
+		//FIXME: faire la vrai crŽation des dŽs
+		$des1 = array('ID' => 0, 'Val' => 1);
+		$des2 = array('ID' => 1, 'Val' => 1);
 		
+		//FIXME: on fait quoi quand y'a un double? faudrait mettre la partie dans un Žtat permettant ˆ ce joueur de rejouer
 		// Ajustement de la position du joueur
 		$this->setPosition($this->getPosition() + $des1['Val'] + $des2['Val']);
 				
 		// Creer et lancer une case de jeu		
 		$uneCase = null;
 		
+		//FIXME: c'est au tableau de retourner une case ˆ une position. 
 		foreach (CaseDeJeuAchetable::pourDefinitionPartie($this->getPartieId()) as $caseAchetable) :
 			if ($caseAchetable->getPosition() == $this->getPosition()) :
 				$uneCase = CaseDeJeuAchetable::parPositionCase($this->getPosition(), 1);
@@ -122,6 +127,7 @@ class Joueur extends Objet  implements EntreposageDatabase{
 		endif;
 		
 		if ($uneCase == null) :
+		    //TODO: changer pour afficher_erreur 
 			echo "ATTENTION: Erreur lors de l'attribution de l'objet case achetable/case action par la position";
 		endif;
 		
