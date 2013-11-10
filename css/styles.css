@@ -1,0 +1,105 @@
+@charset "utf-8";
+/* CSS Document */
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	color: grey;
+	padding:0px;
+	margin:0px;
+	outline: 0;
+}
+#page{
+	width:1000px;
+	margin:auto;
+}
+#entete{
+	width:1000px;;
+	margin:auto;
+	
+}
+table td tr{
+	margin:auto;
+	padding:0px;
+	border-spacing: 0;
+	
+}
+svg{
+	display:block;
+	padding:0px;
+	margin:0px;
+}
+text{
+	text-anchor:middle;	
+}
+.header{
+	margin: auto;
+}
+#centre{
+	width:675px;
+	height:675px;
+}
+#logo
+{
+	height:10%;
+	margin:auto;
+	padding-left:190px;
+	padding-bottom:50px;
+	padding-top:30px;
+}
+.Jeu{
+	text-align:center;
+	width:1000px;
+	margin:auto;
+	padding:0px;
+	margin:0px;
+}
+#plateau{
+	background-color:RGB(203,233,225);
+	cellspacing:0px;
+	border:0px;
+	
+}
+.titreP{
+	width:70px;
+	height:70px;
+	font-size:10px;
+}
+.montant{
+	width:50px;
+	height:50px;
+	font-size:12px;
+}
+.CaseAction{
+	border-style:solid;
+	border-width:2px;
+	border-color:black;
+	padding:0px;
+	margin:0px;
+}
+.caseH{
+	width:75px;
+	height:100px;
+	border-style:solid;
+	border-width:2px;
+	border-color:black;
+	padding:0px;
+	margin:0px;
+}
+.caseCote{
+	width:100px;
+	height:75px;
+	border-style:solid;
+	border-width:2px;
+	border-color:black;
+	padding:0px;
+	margin:0px;
+}
+.caseCoin{
+	width:100px;
+	height:100px;
+	border-style:solid;
+	border-width:2px;
+	border-color:black;
+	padding:0px;
+	margin:0px;
+}

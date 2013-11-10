@@ -40,6 +40,32 @@ class Tableau {  //implements EntreposageDatabase {
     public function getCases() {
         return $this->cases;
     }
+	
+	public function getCaseParPosition($position) {
+	    //TODO: changer pour une array associative
+		$i = 0;
+		$stop = false;
+		
+		while ($stop != true)
+		{
+			if ($i > (count($this->cases) - 1))
+				$stop = true;			
+			else if ($position == $this->cases[$i]->getPosition())
+				$stop = true;				
+			$i++;
+		}
+		
+		if ($i > count($this->cases))
+		{
+			return null;
+		}
+		else
+		{
+			return $this->cases[$i - 1];
+		}
+	}
+	
+
     public function setCases($value) {
         $this->cases = $value;
     }

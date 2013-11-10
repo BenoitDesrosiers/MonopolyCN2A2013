@@ -2,14 +2,16 @@
 require_once "interface/entreposageDatabase.php";
 require_once "dataMapper/definitionPartieDataMapper.php";
 require_once "modele/caseDeJeuAchetable.php";
-
+require_once "modele/pion.php";
+require_once "modele/caseDeJeuAction.php";
 
 class DefinitionPartie implements EntreposageDatabase {
     protected $id;
     protected $nom;
     protected $description;
     protected $maxNbJoueur;
-        
+    protected $definitionArgent = array();
+    
 
     public function __construct() {
         
@@ -19,7 +21,7 @@ class DefinitionPartie implements EntreposageDatabase {
     
     public static function parId($id) {
         $definitionPartieMapper = new DefinitionPartieDataMapper();
-        return $definitionPartieMapper->find($id);
+        return $definitionPartieMapper->find(array($id));
     }
     
    
@@ -39,6 +41,14 @@ class DefinitionPartie implements EntreposageDatabase {
     }
     public function setId($value) {
         $this->id = $value;
+    }
+    
+    public function getArgent(){
+    	if (count($this->definitionArgent) == 0){
+    		$datamapper = $this->getDataMapper();
+    		$this->definitionArgent = $datamapper->selectArgent($this->getId());
+    	}
+    	return $this->definitionArgent;
     }
     
     public function getNom() {
@@ -63,17 +73,20 @@ class DefinitionPartie implements EntreposageDatabase {
         $this->description = $value;
     }
     
-    // données provenant d'autres tables
+    // donnees provenant d'autres tables
   
     public function getListeCases() {
         // retourne une liste de cases
         $caseAchetables =  CaseDeJeuAchetable::pourDefinitionPartie($this->getId());
-        //TODO:   $caseActions= CaseDeJeuAction::pourDefinitionPartie($this->getId());
-        //TODO: concaténer les cases achetables et les caseaction
-        $cases = $caseAchetables;
+        $caseActions = CaseDeJeuAction::pourDefinitionPartie($this->getId());
+        $cases = array_merge($caseActions, $caseAchetables);
         return $cases;
     }
     
+    public function getPions() {
+        // retourne les pions définis pour cette partie
+        return Pion::pourDefinitionPartieId($this->getId());
+    }
 }
 
 ?>

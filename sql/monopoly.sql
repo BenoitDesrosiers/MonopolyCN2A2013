@@ -204,7 +204,7 @@ INSERT INTO `CaseAchetable` (`Id`, `Titre`, `GroupeDeCaseId`, `Prix`, `Location`
 (24, 'Avenue Illinois', 5, 240, 20, 100, 300, 750, 925, 1100, 120, 150, 150, 'propriete1.png'),
 (25, 'Chemin de fer B. & O.', 8, 200, 25, 50, 100, 200, 0, 0, 100, 0, 0, 'propriete2.png'),
 (26, 'Avenue Atlantique', 6, 260, 22, 110, 330, 800, 975, 1150, 130, 150, 150, 'propriete1.png'),
-(27, 'Avenue Ventnor', 1, 260, 22, 110, 330, 800, 975, 1150, 130, 150, 150, 'propriete1.png'),
+(27, 'Avenue Ventnor', 6, 260, 22, 110, 330, 800, 975, 1150, 130, 150, 150, 'propriete1.png'),
 (28, 'Aqueduc', 10, 150, 0, 4, 10, 0, 0, 0, 75, 0, 0, 'propriete3.png'),
 (29, 'Jardins Marvin', 6, 280, 24, 120, 360, 850, 1025, 1200, 140, 150, 150, 'propriete1.png'),
 (31, 'Ave du Pacifique', 9, 300, 26, 130, 390, 900, 1100, 1275, 150, 200, 200, 'propriete1.png'),
@@ -627,12 +627,14 @@ INSERT INTO `JoueurPartie_CaseAchetable` (`JoueurPartieUsagerCompte`, `JoueurPar
 --
 
 CREATE TABLE IF NOT EXISTS `PartieEnCours` (
-  `Id` int(10) NOT NULL,
+  `Id` int(10) NOT NULL AUTO_INCREMENT,
   `Coordonnateur` varchar(40) COLLATE utf8_bin NOT NULL,
   `DefinitionPartieId` int(10) NOT NULL,
   `Nom` varchar(40) COLLATE utf8_bin NOT NULL,
   `JoueurTour` int(10) NOT NULL,
   `DebutPartie` datetime NOT NULL,
+  `InteractionId` int(10) NOT NULL,
+
   PRIMARY KEY (`Id`),
   KEY `Coordonnateur` (`Coordonnateur`),
   KEY `DefinitionPartieId` (`DefinitionPartieId`)
@@ -642,11 +644,11 @@ CREATE TABLE IF NOT EXISTS `PartieEnCours` (
 -- Contenu de la table `PartieEnCours`
 --
 
-INSERT INTO `PartieEnCours` (`Id`, `Coordonnateur`, `DefinitionPartieId`, `Nom`, `JoueurTour`, `DebutPartie`) VALUES
-(1, 'benoit', 1, 'Partie1', 1, '0000-00-00 00:00:00'),
-(2, 'benoit', 2, 'Partie2', 2, '0000-00-00 00:00:00'),
-(3, 'benoit', 1, 'Partie3', 1, '0000-00-00 00:00:00'),
-(4, 'benoit', 1, 'Partie4', 1, '0000-00-00 00:00:00');
+INSERT INTO `PartieEnCours` (`Id`, `Coordonnateur`, `DefinitionPartieId`, `Nom`, `JoueurTour`, `DebutPartie`, `InteractionId`) VALUES
+(1, 'benoit', 1, 'Partie1', 1, '0000-00-00 00:00:00', 0),
+(2, 'benoit', 2, 'Partie2', 2, '0000-00-00 00:00:00', 0),
+(3, 'benoit', 1, 'Partie3', 1, '0000-00-00 00:00:00', 0),
+(4, 'benoit', 1, 'Partie4', 1, '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -737,6 +739,7 @@ CREATE TABLE IF NOT EXISTS `Pion` (
 --
 
 INSERT INTO `Pion` (`Id`, `Nom`, `ImageUrl`) VALUES
+(0, 'dummy', 'imgDummy'),
 (1, 'voiture de course', 'ImgPionVoiture.png'),
 (2, 'brouette', 'ImgPionBrouette.png'),
 (3, 'fer à repasser', 'ImgPionFer.png'),
@@ -770,9 +773,9 @@ CREATE TABLE IF NOT EXISTS `Usager` (
 
 INSERT INTO `Usager` (`Compte`, `Nom`, `MotDePasse`, `Role`) VALUES
 ('benoit', 'Benoit Desrosiers', '1a91d62f7ca67399625a4368a6ab5d4a3baa6073', 'coordonnateur'),
-('marc', 'Marc-André', '', 'joueur'),
-('tom', 'Tommy', '', 'joueur'),
-('vero', 'Veronique', '', 'coordonnateur');
+('marc', 'Marc-André', '1a91d62f7ca67399625a4368a6ab5d4a3baa6073', 'joueur'),
+('tom', 'Tommy', '1a91d62f7ca67399625a4368a6ab5d4a3baa6073', 'joueur'),
+('vero', 'Veronique', '1a91d62f7ca67399625a4368a6ab5d4a3baa6073', 'coordonnateur');
 
 --
 -- Contraintes pour les tables exportées
@@ -843,8 +846,7 @@ ALTER TABLE `JoueurPartie`
 -- Contraintes pour la table `JoueurPartie_Argent`
 --
 ALTER TABLE `JoueurPartie_Argent`
-  ADD CONSTRAINT `fk2_JoueurPartieargent` FOREIGN KEY (`JoueurPartieUsagerCompte`) REFERENCES `joueurpartie` (`UsagerCompte`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk3_JoueurPartieargent` FOREIGN KEY (`JoueurPartiePartieEnCoursId`) REFERENCES `joueurpartie` (`PartieEnCoursId`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk4_JoueurPartieargent` FOREIGN KEY (`JoueurPartieUsagerCompte`,`JoueurPartiePartieEnCoursId`) REFERENCES `joueurpartie` (`UsagerCompte`,`PartieEnCoursId`) ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_JoueurPartieargent` FOREIGN KEY (`ArgentMontant`) REFERENCES `argent` (`Montant`) ON UPDATE CASCADE;
 
 --

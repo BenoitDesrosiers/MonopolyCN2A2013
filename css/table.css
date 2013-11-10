@@ -1,0 +1,60 @@
+svg{display: block;}
+/* Table de jeu */
+.title{text-align:center}
+
+.tableau {
+    width: 985px;
+    background: #DFA;
+    border: 5px solid black;
+    border-radius:5px;
+    padding:0;
+    margin: auto;
+}
+
+/* Cases du tableau */
+.coin, .carte, .carte-couchee {
+    margin: 2px;
+    border: 1px solid black;
+    display: inline-block;
+    background: #FEFFEF;
+}
+
+.coin {
+    width: 100px;
+    height: 100px;
+}
+
+.carte{
+    width: 75px;
+    height: 100px;
+}
+
+.carte-couchee {
+    width: 100px;
+    height: 75px;
+}
+
+.ligne {clear: both;}
+
+.droite {
+    float:right;
+    width: 110px;
+}
+
+.gauche {
+    float: left;
+    width: 110px;
+}
+
+
+/* SVG */
+text{
+    font-size: 8pt;
+    text-anchor: middle;
+}
+
+
+/* Mozilla hack */
+@-moz-document url-prefix(){
+    .coin, .carte, .carte-couchee {margin: 1.5px !important;}
+}

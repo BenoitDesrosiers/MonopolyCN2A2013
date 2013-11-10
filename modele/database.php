@@ -1,6 +1,6 @@
 <?php
 class Database {
-	private static $dsn = 'mysql:host=localhost;dbname=Monopoly';
+	private static $dsn = 'mysql:host=localhost;dbname=monopoly';
 	private static $username = 'root';
 	private static $password = '';
 	private static $db;

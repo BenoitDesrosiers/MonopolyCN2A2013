@@ -77,4 +77,31 @@ class DefinitionPartieDataMapper extends Mapper {
         
     }
     
+    function selectArgent($id){
+        /*
+         * genere les billets de départ d'une partie 
+         * 
+         * input
+         *     l'id d'une définition de partie
+         * output
+         *     un array associatif, la clé étant le montant du billet (ex: 50 pour un 50$), la valeur étant la quantité de ce billet
+         *     
+         */
+    	$queryTxt = 'SELECT * FROM DefinitionPartie_Argent
+    				WHERE DefinitionPartieId = :id';
+    	$query = self::$db->prepare($queryTxt);
+    	$query->bindValue(':id', $id);
+    	$query->setFetchMode(PDO::FETCH_ASSOC);
+    	$query->execute();    	
+
+    	$listeItems = array();
+    	
+    	foreach($query as $row) {
+    		if ($row <> null) {
+    			$listeItems[$row['ArgentMontant']] = $row['Quantite'];
+    		}
+    	}
+    	return $listeItems;
+    }
+    
 }

@@ -3,17 +3,31 @@
 //require_once "interface/entreposageDatabase.php";
 //FIXME: si je mets l'interface, ca ne fonctionnne pas
 require_once 'dataMapper/usagerDataMapper.php';
+require_once 'dataMapper/joueurDataMapper.php';
+require_once 'dataMapper/coordonnateurDataMapper.php';
+
 require_once 'modele/partie.php';
 
-abstract class Usager {  //implements EntreposageDatabase {
+class Usager {  //implements EntreposageDatabase {
     protected $nom;
     protected $compte;
     protected $password;
+    protected $role;
+    
 
-    function __construct($password, $compte, $nom) {
-        $this->setPassword($password);
-        $this->setCompte($compte);
-        $this->setNom($nom);
+    function __construct(array $array) {
+        /*
+         * input
+         *     un array associative contenant le 
+         *     mot de passe 'MotDePasse', 
+         *     le compte 'Compte', 
+         *     le nom 'Nom', 
+         *     et le role 'Role' de l'usager à créer
+         */
+        $this->setPassword($array['MotDePasse']);
+        $this->setCompte($array['Compte']);
+        $this->setNom($array['Nom']);
+        $this->setRole($array['Role']);
     }
 
     // Static Factory
@@ -22,7 +36,14 @@ abstract class Usager {  //implements EntreposageDatabase {
         //CONNECTION 1.2.4.2.x : un data mapper sert à faire l'interface avec la bd. 
         $usagerMapper = new UsagerDataMapper();
         //CONNECTION 1.2.4.3.x : cherche l'usager avec ce compte dans la bd
-        return $usagerMapper->find($compte);
+        $usager = $usagerMapper->find(array($compte));
+        //recrée l'usager selon son type. 
+        If ($usager->getRole() == 'coordonnateur') {
+                $mapper = new CoordonnateurDataMapper();
+        } else {
+            $mapper = new UsagerDataMapper();
+        }
+        return $mapper->find(array($compte));
     }
     
     public static function parComptePW($compte, $password) {
@@ -46,8 +67,12 @@ abstract class Usager {  //implements EntreposageDatabase {
         return new UsagerDataMapper();
     }
     
-    public function sauvegarde() {
+    public function sauvegarde() { 
         $this->getDataMapper->insert($this);
+    }
+    
+    public function update() {
+        $this->getDatamapper->update($this);
     }
     
     //Getters & Setters
@@ -85,7 +110,12 @@ abstract class Usager {  //implements EntreposageDatabase {
     }
 
     
-    abstract public function getRole();
+    public function getRole() {
+        return $this->role;
+    }
+    public function setRole($value) {
+        $this->role = $value;
+    }
 
     // function de Jeu
 

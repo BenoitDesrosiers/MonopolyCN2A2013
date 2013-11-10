@@ -8,25 +8,22 @@ class PartieDataMapper extends Mapper {
     function __construct() {
         parent::__construct();
         $this->selectStmt = self::$db->prepare("SELECT * FROM PartieEnCours where id=?");
-        $this->updateStmt = self::$db->prepare('update PartieEnCours set id=?, nom=?, coordonnateur=?, DefinitionPartieId = ?, JoueurTour =?, DebutPartie = ?  
+        $this->updateStmt = self::$db->prepare('update PartieEnCours set id=?, nom=?, coordonnateur=?, DefinitionPartieId = ?, JoueurTour =?, DebutPartie = ?, InteractionId =? 
                                                     where id=?');
-        $this->insertStmt = self::$db->prepare("insert into PartieEnCours ( nom, coordonnateur, DefinitionPartieId, JoueurTour, DebutPartie ) values (?, ?, ?, ?, ?)");
+        $this->insertStmt = self::$db->prepare("insert into PartieEnCours ( nom, coordonnateur, DefinitionPartieId, JoueurTour, DebutPartie, InteractionId ) values (?, ?, ?, ?, ?)");
         
     }
 
     protected function doCreateObject( array $array) {
         
-        $obj = new Partie($array['Nom'],$array['Coordonnateur'] );
-        $obj->setId($array['Id']);
-        $obj->setDefinitionPartieId($array['DefinitionPartieId']);
-        $obj->setJoueurTour($array['JoueurTour']);
-        $obj->setDebutPartie($array['DebutPartie']);
-        return $obj;        
+        $partie =  new Partie($array );
+        $partie->attache($this);
+        return $partie;
     }
     
     protected function doInsert($object) {
         if (!$this->nomLibre($object->getNom())) {
-            //Verifie si il n'y a pas déjà une partie avec le même nom.
+            //Verifie si il n'y a pas deja une partie avec le meme nom.
             throw new Exception('nom déjà utilisé');
         }
         //TODO ajouter un check si le coordonnateur n'est pas null ou inexistant
@@ -34,7 +31,8 @@ class PartieDataMapper extends Mapper {
                         $object->getCoordonnateur(), 
                         $object->getDefinitionPartieId(),
                         $object->getJoueurTour(),
-                        $object->getDebutPartie());
+                        $object->getDebutPartie()->format('Y-m-d h:i:s'),
+                        $object->getInteractionId());
         $this->insertStmt->execute($values);
         $id = self::$db->lastInsertId();
         $object->setId($id);
@@ -46,7 +44,9 @@ class PartieDataMapper extends Mapper {
                         $object->getCoordonnateur(), 
                         $object->getDefinitionPartieId(),
                         $object->getJoueurTour(),
-                        $object->getDebutPartie());
+                        $object->getDebutPartie(),
+                        $objetc->getInteractionId(),
+                        $object->getId());
         $this->updateStmt->execute($values);
     }
     
@@ -55,16 +55,16 @@ class PartieDataMapper extends Mapper {
     }
     
     /*
-     * fonctions spécific à ce datamapper
+     * fonctions specific a ce datamapper
      */
     
     function nomLibre($nom) {
         /*
-         * vérifie si ce $nom est déjà utilisé pour une autre partie
+         * verifie si ce $nom est deja utilise pour une autre partie
          * 
          * Retour
-         *     true: le nom n'est pas utilisé
-         *     false: une partie a déjà ce nom
+         *     true: le nom n'est pas utilise
+         *     false: une partie a deja ce nom
          */
         $queryTxt = 'SELECT * FROM PartieEnCours
                 WHERE nom = :nom';
@@ -79,8 +79,37 @@ class PartieDataMapper extends Mapper {
             return false;
         }
         
+     function positionJoueur($idPartieEnCours, $compteUsager) {
+     	// Retourne la position du $compteUsager dans la partie $idPartieEnCours.
+     	
+     	/*
+     	 * Input:
+     	 * 		$idPartieEnCours: L'id de la partie en cours
+     	 * 		$compteUsager: Nom de compte de l'usager 
+     	 * Output:
+     	 * 		Position du joueur du compte dans la partie actuelle
+     	 * 
+     	 */
+     	
+     	$queryTxt = 'SELECT Position FROM PartieEnCoursId 
+     					WHERE UsagerCompte = :usagerCompte
+     					AND PartieEnCoursId = :partieEnCoursId';
+     	$query = self::$db->prepare($queryTxt);
+     	$query->bindValue(':usagerCompte', $compteUsager, PDO::PARAM_STR);
+     	$query->bindValue(':partieEnCoursId', $idPartieEnCours, PDO::PARAM_INT);
+     	$query->setFetchMode(PDO::FETCH_ASSOC);
+     	$query->execute();
+     	
+     	foreach($query as $row) {
+     		$item = $this->createObject($row);
+     	}
+     	
+     	return $item;
+     }
+        
     }
     function findPourCoordonnateur( $idCoordonnateur) {
+        //TODO: remplacer par un call a findAll en mettant selectAllStmt = au select. ??? est ce que ca fit dans le modele ou ca va mélanger le selectAllStmt, on saura pas lequel est pour etre appelé 
         // crée les parties associées à un coordonnateur a partir de la db
         
         /*
@@ -96,17 +125,7 @@ class PartieDataMapper extends Mapper {
                         WHERE coordonnateur = :coordonnateur';
         $query = self::$db->prepare($queryTxt);
         $query->bindValue(':coordonnateur', $idCoordonnateur);
-        $query->setFetchMode(PDO::FETCH_ASSOC);
-        $query->execute();
-        
-        $listeItems = array();
-        
-        foreach($query as $row) {
-            $unItem = $this->createObject($row);
-            if ($unItem <> null) {
-                $listeItems[] = $unItem;
-            }
-        }
-        return $listeItems;
+        return $this->findAll($query);
+       
     }
 }

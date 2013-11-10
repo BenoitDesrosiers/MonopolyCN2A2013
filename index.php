@@ -21,20 +21,21 @@ include "util/login.php";
 
 
 // affiche la page d'acceuil selon le type d'usager
-$usager = $_SESSION['usager'];
+$usager = $_SESSION['usager']; //TODO: ne pas mettre l'usager dans la session, mettre son id et le recréé chaque fois. 
 
 switch ($usager->getRole()) {
 	case 'coordonnateur' :
 	    //CONNECTION 1.2.5.1 : une fois qu'on s'est connecté, on revient ici
 	    //LISTEPARTIE 1.x : après CONNECTION 1.2.5.1 on affiche la page d'acceuil du coordonnateur.
-		include('ctrl_vue/coordonnateur/acceuil.php');
+		redirect('ctrl_vue/coordonnateur/');
 		break;
 	case 'joueur' :
-		
+	    //bien que cet usager soit un joueur, il n'a pas rejoins une partie encore. Il est donc un usager.
+	    redirect('ctrl_vue/usager/');
 		break;
 
 	default:
-		display_error("Role inconnue: " . $role);
+		affiche_erreur("Role inconnue: " . $role);
 		break;
 }
 ?>

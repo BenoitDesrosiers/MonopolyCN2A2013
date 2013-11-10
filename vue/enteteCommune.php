@@ -8,7 +8,7 @@
 ?>
 <div id="page">
 	<div id="entete">
-		<h1>Monopoly</h1>
+		<img id="logo" src="<?php echo $GLOBALS['app_path'].'images/Monopoly_logo.png'?>"/>
 		
 		<?php
 				$usager_url = $GLOBALS['app_path'] .'/connectionUsager';
@@ -23,4 +23,5 @@
     	<?php endif; ?>
 		
 	</div>
+</div>
 <!-- la div page est fermée dans piedPage.php  -->
