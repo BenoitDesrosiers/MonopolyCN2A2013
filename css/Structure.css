@@ -1,0 +1,183 @@
+/* cette structure est base sur http://blog.html.it/layoutgala/ modele #24 -> nav et extra fixed width, contenu liquid. J'ai ajouté body min-width */
+ 
+html,body
+{
+	margin:0;
+	padding:0
+}
+
+body
+{
+	font: 76% arial,sans-serif;
+}
+
+p
+{
+	margin:0 10px 10px
+}
+
+svg
+{
+	display: block;
+}
+
+div#entete h1
+{
+	height:80px;
+	line-height:80px;
+	margin:0;
+  	padding-left:10px;
+  	background: #EEE;
+  	color: #79B30B
+ }
+
+#logoCegep
+{
+	padding: 5px;
+	border: 1px solid #aaa;
+	
+}
+
+#logoJeu
+{
+	height:100px; 
+	margin-left: 240px;
+	margin-top: -87px;
+}
+div#contenu p
+{
+	line-height:1.4;
+}
+
+div#navigation
+{
+	background: white;
+}
+
+div#extra
+{
+	background:#FF8539;
+}
+
+div#piedpage
+{
+	background: #333;
+	color: #FFF;
+	text-align: center;
+}
+
+div#piedpage p
+{
+	margin:0;
+	padding:5px 10px;
+}
+
+div#enveloppe
+{
+	float:right;
+	width:100%;
+	margin-left:-240px;
+}
+
+div#contenu
+{
+	margin-left:240px;
+}
+
+div#navigation
+{
+	float:left;
+	width:240px;
+}
+div#argent
+{
+    float:left;
+    width:240px;
+}
+
+div#propriete
+{
+    float:left;
+    width:240px;
+}
+div#extra
+{
+	float:left;
+	clear:left;
+	width:240px;
+}
+
+div#piedpage
+{
+	clear:both;
+	width:100%;
+	
+}
+
+div#divTableau
+{
+	clear:both;
+	margin-left:40px;
+	margin-top:1px; 
+	
+}
+
+.case
+{
+	width:75px;
+	height:100px;
+	border-style: outset;
+	border-width: 2px;
+	border-color: black;
+}
+
+.caseCote
+{
+	width:100px;
+    height:75px;
+	border-style: outset;
+    border-width: 2px;
+    border-color: black;
+}
+
+
+.milieuDuJeu
+{
+	border-style: solid;
+}
+
+#leMilieu
+{
+    border-style: solid;
+    height:740px;
+    width:740px;
+}
+
+
+.svgTextCentre
+{
+	text-anchor: middle;
+	x:50%;
+}
+
+#divTableau
+{
+	margin-top: -95px;
+}
+
+#listeCartes
+{
+	margin-top: 20px;
+}
+
+.divListeCartes
+{
+	clear: both;
+}
+.imageListeCartes
+{
+	float: left;
+	border-style: outset;
+    border-width: 2px;
+    border-color: black;
+}

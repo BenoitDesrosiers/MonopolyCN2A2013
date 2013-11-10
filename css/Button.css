@@ -1,0 +1,17 @@
+/*Cet exemple est basé sur http://www.cssplay.co.uk/menus/neon_menu_two.html */
+ /* remove the margin and bullets, set the padding and margin for this demo only*/
+.menuAvecBouton {margin:50px auto 50px auto; padding:25px; list-style:none; background:#FFF; background-repeat:no-repeat;  width:150px;}
+
+ /* display the list items inline with a right margin to space the buttons. Use this to pre-load the hover image */
+.menuAvecBouton li {background:url(../Images/boutonON.png);background-repeat:no-repeat; margin:10px 0; width:150px;}
+
+/* style the links and place the background image to start from left edge */
+.menuAvecBouton li a {display:block; height:38px; width:150px; background:url(../Images/boutonOFF.png); background-repeat:no-repeat; text-decoration:none; font-size:10px; font-family:arial, sans-serif; letter-spacing:1px; line-height:35px;}
+
+/* style the b element to position it to the right by 20 pixels and even out the text with 20 pixel right padding ON*/
+.menuAvecBouton li a b {margin:0 0 0 40px; display:inline; width:100px; float:left; height:38px; background:url(../Images/boutonOFF.png) right top; background-repeat:no-repeat; padding:0 40px 0 0; color:#666; text-align:center;}
+
+/* style the link hover and the link hover b to replace the background image - border:0 needed for IE6 to work */
+.menuAvecBouton li a:hover, .menuAvecBouton li a:hover b {border:0; background-image:url(../Images/boutonON.png); background-repeat:no-repeat; cursor:pointer; color:#000;}
+
+.menuAvecBouton li a.current, .menuAvecBouton li a.current b, .menuAvecBouton li a.current:hover , .menuAvecBouton li a.current:hover b {background-image:url(../Images/boutonON.png); background-repeat:no-repeat; color:#000; cursor:default;}

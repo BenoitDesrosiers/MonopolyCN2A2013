@@ -30,16 +30,14 @@ switch ($action) {
 		$tableauDeJeu = $partie->getTableau();
 		include('./jouer_view.php');
 	    break;
-	case 'menu' :
-	    if (isset($_POST['JouerCoup'])) {
-	        $titrePage= "Jouer un coup";
-	        $tableauDeJeu = $partie->getTableau();
-	        //TODO: verifier que c'est ˆ ce joueur de jouer. 
-	        //TODO: ca devrait tre la partie qui dŽmarre le coup ??? 
-		    $joueur->setPosition(4); //FIXME: ˆ enlever une fois les tests termines
-		    $joueur->brasseDes();
-	        break;
-	    }
+	case 'JouerCoup' : 
+        $titrePage= "Jouer un coup";
+        $tableauDeJeu = $partie->getTableau();
+        //TODO: verifier que c'est ˆ ce joueur de jouer. 
+        //TODO: ca devrait tre la partie qui dŽmarre le coup ??? 
+	    $joueur->setPosition(4); //FIXME: ˆ enlever une fois les tests termines
+	    $joueur->brasseDes();
+	    break;
 
 }
 ?>

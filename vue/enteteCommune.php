@@ -1,15 +1,17 @@
 <?php 
 /*
- * l'entête commune à toutes les views
+ * l'entete commune a toutes les views
  * 
- * ENTRÉS
+ * input
  *     $_SESSION['usager']: un objet de la classe Usager
  */
 ?>
-<div id="page">
-	<div id="entete">
-		<img id="logo" src="<?php echo $GLOBALS['app_path'].'images/Monopoly_logo.png'?>"/>
-		
+<div id="conteneur">
+    <div id="entete">
+	       <img id="logoCegep" src="<?php echo $GLOBALS['app_path']."/images/logoCegep.jpg"?>" alt="logoCegep"><br/>
+	       <img id="logoJeu" src="<?php echo $GLOBALS['app_path']."/images/monopoly_logo.png"?>" alt="Banniere">    
+	</div> <!-- entete -->
+	
 		<?php
 				$usager_url = $GLOBALS['app_path'] .'/connectionUsager';
 				$deconnection_url = $usager_url . '?action=deconnection';
@@ -22,6 +24,4 @@
         	</ul>
     	<?php endif; ?>
 		
-	</div>
-</div>
-<!-- la div page est fermée dans piedPage.php  -->
+<!-- la div conteneur est fermee dans piedPage.php  -->

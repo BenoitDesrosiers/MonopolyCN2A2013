@@ -14,6 +14,6 @@
 				&copy; <?php echo date("Y"); ?> Cegep de Drummondville.
 			</p>
 		</div>
-	</div> <!-- fin de la div page  -->
+	</div> <!-- fin de la div conteneur  -->
 </body>
 </html>
