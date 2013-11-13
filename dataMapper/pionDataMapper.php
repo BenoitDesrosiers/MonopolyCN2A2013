@@ -26,7 +26,7 @@ class PionDataMapper extends Mapper {
         $this->insertStmt->execute($values);
     }
     
-    function update($objet) {
+    function update($objet, $sujet) {
         $values= array ($objet->getId(), $objet->getNom(), $objet->getImageUrl(),
                         $objet->getId());
         $this->updateStmt->execute($values);        

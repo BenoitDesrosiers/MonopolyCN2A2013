@@ -26,7 +26,7 @@ class UsagerDataMapper extends Mapper {
         $this->insertStmt->execute($values);
     }
     
-    function update($object) {
+    function update($object, $sujet) {
         $values= array ($object->getCompte(), $object->getPassword(), $object->getNom(), $object->getRole());
         $this->updateStmt->execute($values);
     }

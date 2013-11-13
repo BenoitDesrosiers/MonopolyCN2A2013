@@ -13,7 +13,7 @@ class CarteCCDataMapper extends Mapper {
         $this->insertStmt = self::$db->prepare("insert into Carte ( ActionId, TypeCarte, Description ) values (?, ?, ?)");
     }
     
-    function update ($object){
+    function update ($object, $sujet) {
         $values= array ($object->getId(), 
                         $object->getActionID(), 
                         $object->getTypeCarte(), 

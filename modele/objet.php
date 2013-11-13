@@ -1,6 +1,6 @@
 <?php
 /*
- * la première classe dans la hierarchie des modèles
+ * la premiere classe dans la hierarchie des modeles
  * 
  */
 require_once 'interface/observateur.php';
@@ -20,10 +20,10 @@ class Objet {
         }
     }
     
-    public function notifie()
+    public function notifie($sujet)
     {
         foreach ($this->observateurs as $observateur) {
-            $observateur->update($this);
+            $observateur->update($this,$sujet);
         }
     }
     

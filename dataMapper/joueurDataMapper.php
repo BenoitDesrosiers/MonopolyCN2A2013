@@ -1,6 +1,7 @@
 <?php
 
 require_once "dataMapper/mapper.php";
+require_once "dataMapper/coupureDataMapper.php";
 require_once "modele/joueur.php";
 
 class JoueurDataMapper extends Mapper {
@@ -18,6 +19,13 @@ class JoueurDataMapper extends Mapper {
     protected function doCreateObject( array $array) {
         $joueur = new Joueur($array) ;
         $joueur->attache($this);
+        //$coupureDM= new CoupureDataMapper();
+        //$joueur->attache($coupureDM); // attache un dm de coupure afin de mettre ˆ jour l'argent. 
+        //TODO: en attachant un dm de coupure, on va mettre a jouer la table d'argent au moindre changement dans le joueur. 
+        //TODO: faudrait trouver une facon de changer l'argent juste quand elle change vraiment. 
+        //      soit qu'on appele coupureDM directement au moment du setArgent --> cree une dependance entre joueur et coupureDM
+        //      soit qu'on a un flag pour indique que c'est l'argent qui a change. 
+
         return $joueur;
     }
     
@@ -28,10 +36,18 @@ class JoueurDataMapper extends Mapper {
         $this->insertStmt->execute($values);
     }
     
-    function update($objet) {
-        $values= array ($objet->getCompte(), $objet->getPartieId(), $objet->getPionId(), $objet->getPosition(),$objet->getOrdreDeJeu(), $objet->getEnPrison(), $objet->getToursRestantEnPrison(),
-                        $objet->getCompte(), $objet->getPartieId());
-        $this->updateStmt->execute($values);        
+    function update($objet, $sujet) {
+        if ($sujet == "argent") {
+            // update la table d'argent quand c'est l'argent qui est changee.
+            $coupureDM = new CoupureDataMapper();
+            $coupureDM->update($objet, $sujet);
+        } else {
+            // update la table principale du joueur
+            $values= array ($objet->getCompte(), $objet->getPartieId(), $objet->getPionId(), $objet->getPosition(),$objet->getOrdreDeJeu(), $objet->getEnPrison(), $objet->getToursRestantEnPrison(),
+                    $objet->getCompte(), $objet->getPartieId());
+            $this->updateStmt->execute($values);
+        }
+
     }
     
     

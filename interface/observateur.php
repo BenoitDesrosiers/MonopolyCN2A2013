@@ -4,6 +4,6 @@
  */
 
 interface Observateur {
-    public function update($objet);   
+    public function update($objet, $sujet);   
     
 }

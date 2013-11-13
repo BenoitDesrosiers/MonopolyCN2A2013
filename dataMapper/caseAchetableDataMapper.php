@@ -61,7 +61,7 @@ class CaseAchetableDataMapper extends Mapper {
         //TODO: a faire
     }
     
-    function update($object) {
+    function update($object, $sujet) {
         //TODO: a faire
         $values= array ($object->getId(), 
                         $object->getNom(), 
@@ -83,7 +83,7 @@ class CaseAchetableDataMapper extends Mapper {
     	$queryTxt2 = "insert into JoueurPartie_CaseAchetable ( JoueurPartieUsagerCompte, JoueurPartiePartieEnCoursId, CaseAchetableId, OrdreAffichage, Hypotheque, NombreMaisons, NombreHotels) values (?, ?, ?, ?, ?, ?, ?)";
     	$query = self::$db->prepare($queryTxt2);
     	$values = array ($joueur->getCompte(),
-    					 "1",
+    					 $joueur->getPartieId(),
     					 $case->getId(),
     					 "1", 
     					 "0",

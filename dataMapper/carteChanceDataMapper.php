@@ -13,7 +13,7 @@ class CarteChanceDataMapper extends Mapper {
         $this->insertStmt = self::$db->prepare("insert into Carte ( ActionId, TypeCarte, Description ) values (?, ?, ?)");
     }
     
-    function update ($object){
+    function update ($object, $sujet){
         $values= array ($object->getId(), 
                         $object->getActionID(), 
                         $object->getTypeCarte(), 
@@ -49,32 +49,7 @@ class CarteChanceDataMapper extends Mapper {
         return $this->selectStmt;
     }
     
-    function nomLibre($nom) {
-        /*
-         * vérifie si ce $nom est déjà utilisé pour une autre partie
-         * 
-         * Retour
-         *     true: le nom n'est pas utilisé
-         *     false: une partie a déjà ce nom
-         */
-        $queryTxt = 'SELECT * FROM DefinitionPartie
-                WHERE nom = :nom';
-        $query = self::$db->prepare($queryTxt);
-        $query->bindValue(':nom', $nom);
-        $query->setFetchMode(PDO::FETCH_ASSOC);
-        $query->execute();
-        
-        $listeItems = array();
-        
-        foreach($query as $row) {
-            $unItem = $this->createObject($row);
-            if ($unItem <> null) {
-                $listeItems[] = $unItem;
-            }
-        }
-        return $listeItems;
-        
-    }
+    
     
     function pourDefinitionPartie($idDefinitionPartie) {
         // retourne un array contenant toutes les cases actions du tableau

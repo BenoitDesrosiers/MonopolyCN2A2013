@@ -74,9 +74,9 @@ abstract class Mapper implements Observateur {
     
     function createObject($array) {
         /*
-         * crée un objet à partir d'un array associatif contenant tous les champs de la bd
+         * cree un objet a partir d'un array associatif contenant tous les champs de la bd
         */
-        //CONNECTION 1.2.4.3.2.x créé l'usager
+        //CONNECTION 1.2.4.3.2.x cree l'usager
         $obj = $this->doCreateObject($array);
         return $obj;
     }
@@ -88,9 +88,9 @@ abstract class Mapper implements Observateur {
         $this->doInsert($obj);
     }
     
-    //Ces functions doivent être créée dans les sous-classes
-    public function update ($objet) {
-        //devrait être abstract, mais ca marche pas a cause de l'interface Observateur; 
+    //Ces functions doivent etre cree dans les sous-classes
+    public function update ($objet, $sujet) {
+        //devrait etre abstract, mais ca marche pas a cause de l'interface Observateur; 
     }
     protected abstract function doCreateObject( array $array);
     protected abstract function doInsert( $object);

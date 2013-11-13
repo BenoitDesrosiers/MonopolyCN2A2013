@@ -3,6 +3,8 @@ require_once 'interface/entreposageDatabase.php';
 require_once 'modele/objet.php';
 require_once 'modele/caseDeJeu.php';
 require_once 'modele/coupure.php';
+require_once 'modele/partie.php';
+require_once 'modele/tableau.php';
 /*
  * un joueur n'est pas un usager, un usager est identifié par son compte, un joueur est identifié par son compte et une partie. 
  * un joueur a un usager d'associé
@@ -111,38 +113,18 @@ class Joueur extends Objet  implements EntreposageDatabase{
 		// Creer et lancer une case de jeu		
 		$uneCase = null;
 		
-		//FIXME: c'est au tableau de retourner une case � une position. 
-		foreach (CaseDeJeuAchetable::pourDefinitionPartie($this->getPartieId()) as $caseAchetable) :
-			if ($caseAchetable->getPosition() == $this->getPosition()) :
-				$uneCase = CaseDeJeuAchetable::parPositionCase($this->getPosition(), 1);
-			endif;
-		endforeach;
-		
-		if ($uneCase == null) :
-			foreach (CaseDeJeuAction::pourDefinitionPartie($this->getPartieId()) as $caseAction) :
-				if ($caseAction->getPosition() == $this->getPosition()) :
-					$uneCase = CaseDeJeuAction::parPositionCase($this->getPosition(), 1);
-				endif;
-			endforeach;
-		endif;
+		$partie = Partie::parId($this->getPartieId());
+		$tableau = $partie->getTableau();
+		$uneCase = $tableau->getCaseParPosition($this->getPosition());
 		
 		if ($uneCase == null) :
 		    //TODO: changer pour afficher_erreur 
 			echo "ATTENTION: Erreur lors de l'attribution de l'objet case achetable/case action par la position";
 		endif;
-		
-		$this->avanceSurCase($uneCase);
+		$uneCase->atterrirSur($this);
 	}
 	
-	public function avanceSurCase(CaseDeJeu $uneCase) {
-	     if ($uneCase->getType() == "achetable") :
-	     	$uneCase->atterrirSur($this);
-	     elseif ($uneCase->getType() == "action") :
-	     	$uneCase->atterrirSur($this);
-	     else :
-	     	echo "ATTENTION: Erreur lors de l'identification du type de la case!";
-	     endif;
-	}
+	
 	
 	public function encaisse( $billets) {
 	    /*input
@@ -258,7 +240,7 @@ class Joueur extends Objet  implements EntreposageDatabase{
 	}
 	public function setCompte($value) {
 	    $this->compte = $value;
-	    $this->notifie();
+	    $this->notifie("compte");
 	}
 	
 	public function getArgent() {
@@ -271,7 +253,7 @@ class Joueur extends Objet  implements EntreposageDatabase{
 	
 	public function setArgent($value) {
 	    $this->argent = $value;
-	    $this->notifie();
+	    $this->notifie("argent");
 	}
 	
 	public function getToursRestantEnPrison() {
@@ -279,7 +261,7 @@ class Joueur extends Objet  implements EntreposageDatabase{
 	}
 	public function setToursRestantEnPrison($value) {
 	    $this->toursRestantEnPrison = $value;
-	    $this->notifie();
+	    $this->notifie("toursRestantEnPrison");
 	}
 	
 	public function getEnPrison() {
@@ -287,7 +269,7 @@ class Joueur extends Objet  implements EntreposageDatabase{
 	}
 	public function setEnPrison($value) {
 	    $this->enPrison = $value;
-	    $this->notifie();
+	    $this->notifie("enPrison");
 	}
 
 	public function getOrdreDeJeu() {
@@ -295,7 +277,7 @@ class Joueur extends Objet  implements EntreposageDatabase{
 	}
 	public function setOrdreDeJeu($value) {
 	    $this->ordreDeJeu = $value;
-	    $this->notifie();
+	    $this->notifie("ordreDeJeu");
 	}
 	
 	public function getPosition() {
@@ -304,7 +286,7 @@ class Joueur extends Objet  implements EntreposageDatabase{
 	public function setPosition($value) {
 	    $value = $value % 40; //TODO: remplacer 40 par le nombre de case du jeu
 	    $this->position = $value;
-	    $this->notifie();
+	    $this->notifie("position");
 	}
 	
 	public function getPionId() {
@@ -312,7 +294,7 @@ class Joueur extends Objet  implements EntreposageDatabase{
 	}
 	public function setPionId($value) {
 	    $this->pionId = $value;
-	    $this->notifie();
+	    $this->notifie("pionId");
 	}
 	
 	public function getPartieId() {
@@ -320,7 +302,7 @@ class Joueur extends Objet  implements EntreposageDatabase{
 	}
 	public function setPartieId($value) {
 	    $this->partieId = $value;
-	    $this->notifie();
+	    $this->notifie("partieId");
 	}
 	
 }

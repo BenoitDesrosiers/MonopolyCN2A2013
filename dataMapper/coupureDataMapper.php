@@ -28,13 +28,10 @@ class CoupureDataMapper extends Mapper {
     public function ajouteCoupuresA(Joueur $joueur) {
         //FIXME: c'est pas clean 
         /*
-         * va chercher les billets associés à un joueur
-         * et s'ajoute en tant qu'Observer pour ce joueur. 
+         * va chercher les billets associes a un joueur
          *
          */
-        
-        $joueur->attache($this);
-        
+                
         $queryTxt = "SELECT * FROM JoueurPartie_Argent WHERE JoueurPartieUsagerCompte = :joueurId AND JoueurPartiePartieEnCoursId = :partieId";
         $query = self::$db->prepare($queryTxt);
         $query->bindValue(':joueurId', $joueur->getCompte());
@@ -48,14 +45,14 @@ class CoupureDataMapper extends Mapper {
         $this->insertStmt->execute($values);
     }
     
-    function update($objet) {
+    function update($objet, $sujet) {
         /*
-         * le joueur associé a changé  
-         * update la table contenant l'argent à partir de l'array de coupures
+         * le joueur associe a change  
+         * update la table contenant l'argent a partir de l'array de coupures
          */
 
         $coupures = $objet->getArgent();
-        // commence par effacer tout l'argent courrant du joueur
+        // commence par effacer tout l'argent courant du joueur
         // on doit faire ca car si la bd avait un billet de 50$ et que maintenant il n'y a plus de 50$, il restera dans la bd. 
         $queryTxt = 'DELETE FROM joueurPartie_Argent
                         WHERE JoueurPartieUsagerCompte = :joueurId
@@ -79,8 +76,7 @@ class CoupureDataMapper extends Mapper {
                 $query->execute(); //TODO: trapper les erreurs.
             }
         }
-        // se detache du joueur. Tant qu'on aura pas été rechercher ses billets, on a pas besoin d'etre attaché. 
-        $objet->detache($this);  
+         
     }
     
     function selectStmt() {

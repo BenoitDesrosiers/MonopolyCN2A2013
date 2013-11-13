@@ -129,7 +129,7 @@ class Partie extends Objet implements EntreposageDatabase {
         $definition = DefinitionPartie::parId($id);
     
         foreach ($this->getJoueurs() as $joueur) :
-            $joueur->encaisse($definition->getArgent());
+            $joueur->setArgent($definition->getArgent());
         endforeach;
         
         // set la date de debut de partie au moment present. 
@@ -156,7 +156,7 @@ class Partie extends Objet implements EntreposageDatabase {
     }
     public function setNom($value) {
         $this->nom = $value;
-        $this->notifie();
+        $this->notifie("nom");
     }
     
     public function getCoordonnateur() {
@@ -164,31 +164,31 @@ class Partie extends Objet implements EntreposageDatabase {
     }
     public function setCoordonnateur($value) {
         $this->coordonnateur = $value;
-        $this->notifie();
+        $this->notifie("coordonnateur");
     }
     
     public function getHotels() {
-        return $this->Hotels;
+        return $this->hotels;
     }
     public function setHotels($value) {
-        $this->Hotels = $value;
-        $this->notifie();
+        $this->hotels = $value;
+        $this->notifie("hotels");
     }
 
     public function getMaisons() {
-        return $this->Maisons;
+        return $this->maisons;
     }
     public function setMaisons($value) {
-        $this->Maisons = $value;        
-        $this->notifie();
+        $this->maisons = $value;        
+        $this->notifie("maisons");
     }
 
     public function getPions() {
-        return $this->Pions;
+        return $this->pions;
     }
     public function setPions($value) {
-        $this->Pions = $value;
-        $this->notifie();
+        $this->pions = $value;
+        $this->notifie("pions");
     }
 
     public function getCartesCaisseCommune() {
@@ -198,7 +198,7 @@ class Partie extends Objet implements EntreposageDatabase {
     public function setCartesCaisseCommune($value) {
         //TODO: je crois pas qu'on doit avoir un set puisque que c'est loadŽ
         $this->cartesCaisseCommune = $value;
-        $this->notifie();
+        $this->notifie("cartesCaisseCommune");
     }
 
 
@@ -207,7 +207,7 @@ class Partie extends Objet implements EntreposageDatabase {
     }
     public function setCartesChance($value) {
         $this->cartesChance = $value;
-        $this->notifie();
+        $this->notifie("cartesChance");
     }
 
     public function getDes() {
@@ -223,7 +223,7 @@ class Partie extends Objet implements EntreposageDatabase {
     }
     public function setBanque($value) {
         $this->banque = $value;
-        $this->notifie();
+        $this->notifie("banque");
     }
 
     
@@ -243,7 +243,7 @@ class Partie extends Objet implements EntreposageDatabase {
     }
     public function setId($value) {
         $this->id = $value;
-        $this->notifie();
+        $this->notifie("id");
     }
 
     public function getTableau() {
@@ -301,7 +301,7 @@ class Partie extends Objet implements EntreposageDatabase {
     }
     public function setDebutPartie($value) {
         $this->debutPartie = $value;
-        $this->notifie();
+        $this->notifie("debutPartie");
     }
     
     public function getJoueurTour() {
@@ -309,7 +309,7 @@ class Partie extends Objet implements EntreposageDatabase {
     }
     public function setJoueurTour($value) {
         $this->joueurTour = $value;
-        $this->notifie();
+        $this->notifie("joueurTour");
     }
     
     public function getDefinitionPartieId() {
@@ -317,7 +317,7 @@ class Partie extends Objet implements EntreposageDatabase {
     }
     public function setDefinitionPartieId($value) {
         $this->definitionPartieId = $value;
-        $this->notifie();
+        $this->notifie("definitionPartieId");
     }
     
     public function definitionPartie() {
@@ -330,7 +330,7 @@ class Partie extends Objet implements EntreposageDatabase {
     
     public function setInteractionId($value) {
         $this->interactionId = $value;
-        $this->notifie();
+        $this->notifie("interactionId");
     }
     
     public function getInteractionId() {

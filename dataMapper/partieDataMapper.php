@@ -38,14 +38,14 @@ class PartieDataMapper extends Mapper {
         $object->setId($id);
     }
     
-    function update($object) {
+    function update($object, $sujet) {
         $values= array ($object->getId(), 
                         $object->getNom(), 
                         $object->getCoordonnateur(), 
                         $object->getDefinitionPartieId(),
                         $object->getJoueurTour(),
                         $object->getDebutPartie(),
-                        $objetc->getInteractionId(),
+                        $object->getInteractionId(),
                         $object->getId());
         $this->updateStmt->execute($values);
     }

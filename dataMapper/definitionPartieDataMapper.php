@@ -38,7 +38,7 @@ class DefinitionPartieDataMapper extends Mapper {
         $object->setId($id);
     }
     
-    function update($object) {
+    function update($object, $sujet) {
         $values= array ($object->getId(), 
                         $object->getNom(), 
                         $object->getDescription(), 
