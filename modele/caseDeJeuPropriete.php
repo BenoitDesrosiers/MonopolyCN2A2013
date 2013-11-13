@@ -1,12 +1,15 @@
 <?php
 require_once "modele/caseDeJeuAchetable.php";
 require_once "dataMapper/caseAchetableDataMapper.php";
+require_once "modele/cartePropriete.php";
 
 class CaseDeJeuPropriete extends CaseDeJeuAchetable {
 	protected $nbrMaison;
 	protected $nbrHotel;
 	
-	public function setNbrMaison($nombre){
+	/* 
+	 * obsolete remplacee par cartePropriete
+	 *public function setNbrMaison($nombre){
 		$this->nbrMaison = $nombre;
 	}
 	public function getNbrMaison(){
@@ -18,8 +21,9 @@ class CaseDeJeuPropriete extends CaseDeJeuAchetable {
 	public function getNbrHotel(){
 		return $this->nbrHotel;
 	}
+	*/
 	
-	public function calculerLoyer(){
+	public function calculerLoyer(cartePropriete $propriete){
 		//array avec lenght pis un if, c pas clean mais ca va marcher
 		//comment faire pour les groupes de 2?
 		//faut getter le proprio des autres couleurs pareilles
@@ -32,9 +36,10 @@ class CaseDeJeuPropriete extends CaseDeJeuAchetable {
 				$query[`Location4Maison`],
 				$query[`LocationHotel`]);*/
 		
-		$prix = $this->getDataMapper()->loadPrix($this->getId());
-		echo count($prix) . '----------';
-		if($this->nbrHotel == 1)
+		// pourquoi??? $prix = $this->getDataMapper()->loadPrix($this->getId());
+	    switch ($propriete->getNombreMaisons())
+	    case "1"
+	    if($this->nbrHotel == 1)
 			$montant = $prix['LocationHotel'];
 		elseif ($this->nbrMaison == 4)
 			$montant = $prix['Location4Maison'];

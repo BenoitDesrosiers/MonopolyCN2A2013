@@ -7,6 +7,7 @@ require_once "modele/caseDeJeu.php";
 require_once "modele/caseDeJeuPropriete.php";
 require_once "modele/caseDeJeuServicePublic.php";
 require_once "modele/caseDeJeuTrain.php";
+require_once "modele/cartePropriete.php";
 
 abstract class CaseDeJeuAchetable extends CaseDeJeu {
     protected $prix;
@@ -18,6 +19,10 @@ abstract class CaseDeJeuAchetable extends CaseDeJeu {
     
     
     // static Factory
+    static function parId($id) {
+        $dataMapper = new CaseAchetableDataMapper();
+        return $dataMapper->find(array($id));
+    }
     static function pourDefinitionPartie($idDefinitionPartie) {
         $dataMapper = new CaseAchetableDataMapper();
         return $dataMapper->pourDefinitionPartie($idDefinitionPartie);
@@ -57,55 +62,24 @@ abstract class CaseDeJeuAchetable extends CaseDeJeu {
     public function setCouleurHTML($value) {
         $this->couleurHTML = $value;
     }
-
-    public function getProprietairePourPartieId($partieId) {
-        /*
-         * retourne le propriŽtaire de la case pour une $partieId
-         * input
-         *     $partieId : l'id de la partie pour laquelle on veut trouver le propriŽtaire de cette case
-         * output
-         *     un objet joueur. 
-         */
-        $compte = $this->getDataMapper()->getCompteProprietairePourPartieId($this->getId(), $partieId);
-        return Joueur::parComptePartie($compte, $partieId);
-    }
     
-    public function setProprietaire(Joueur $joueur) {
-    	$this->proprietaire = $joueur;
-    	$this->getDataMapper()->insertProprietaire($joueur, $this);    	
+    public function atterrirSur(Joueur $unJoueur) {
+        $carte = cartePropriete::pourCasePartie($this->getId(), $unJoueur->getPartieId() );
+        if($carte->getProprietaire() != null){ //deja un proprietaire = doit payer le loyer 
+            $proprio = $this->getProprietairePourPartieId($unJoueur->getPartieId());
+            $proprio->chargerLoyerA($joueur, $carte->calculerLoyer());
+        } else { //pas de proprietaire = essayer de vendre la propriete
+            if($unJoueur->tenterAchat($carte)){
+                $banque = new banque;
+                $banque->vendrePropriete($unJoueur, $carte);
+            }
+        }
     }
-
-   /*TODO: obsolete 
-    * public function changerProprietaire($Joueur){
-    	$this->setProprietaire($Joueur->getCompte());
-    }
-    */
-    
+  
+   
     public function getType() {
         return "achetable";
     }
         
-    
-    public function getNombreMaisonPourPartieId($partieId){
-        return $this->getDataMapper()->getNombreMaisonPourPartieId($this->getId(), $partieId);
-    }
-    
-    /*TODO: faut ajouter le numero de partie
-     * 
-     public function setNombreMaison($value){
-    	$this->NombreMaisons = $value;
-    }
-    */
-    
-    public function getNombreHotelPourPartieId($partieId){
-        return $this->getDataMapper()->getNombreHotelPourPartieId($this->getId(), $partieId);
-    }
-    
-    /*TODO: faut ajouter le numero de partie
-    public function setNombreHotel($value){
-    	$this->NombreHotels = $value;
-    }
-    */
-    
     
 }
