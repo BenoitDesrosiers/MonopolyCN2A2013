@@ -17,7 +17,7 @@ class paiementParBatiment {
 	
 		$tableauDeJeu = $partie->getTableau();
 
-		//parcours le tableau de jeu, trouve les cases achetables, regarde si la case achetable appartient a un propriétaire donné
+		//parcours le tableau de jeu, trouve les cases achetables, regarde si la case achetable appartient a un proprietaire donne
 		for($x = 1; $x<40;$x++)
     	{
     		$case = $tableauDeJeu->getCaseParPosition($x); //TODO: ca devrait simplement demander au joueur ses cases achet�es (de JoueurPartie_CaseAchetable)

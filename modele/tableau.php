@@ -19,7 +19,7 @@ class Tableau {  //implements EntreposageDatabase {
     // Static Factory
     
     public static function pourDefinition($idDefinition) {
-        //retourne un tableau basé sur une définition de partie
+        //retourne un tableau base sur une definition de partie
         $definition = DefinitionPartie::parId($idDefinition);
         $tableau = new Tableau();
         //TODO: j'ai juste les cases achetable pour l'instant

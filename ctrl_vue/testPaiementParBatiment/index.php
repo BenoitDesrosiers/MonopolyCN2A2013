@@ -15,7 +15,7 @@ require_once('dataMapper/partieDataMapper.php');
 // demarre la session, doit être fait après tout les includes
 session_start();
 
-//verifie si un usager est connecté
+//verifie si un usager est connecte
 include "util/login.php";
 
 if (isset($_POST['action'])) {
@@ -36,7 +36,7 @@ switch ($action) {
 	
     case 'test' : //code pour fin de test de la fonction PaiementParBatiment
     	
-    	$partie = Partie::parId('1'); //ceci étant un démo, nous utiliserons la partie #1
+    	$partie = Partie::parId('1'); //ceci etant un demo, nous utiliserons la partie #1
     	$titrePage= "Test de la fonction paiement par batiment, avec jour benoit, partie 1, carte id 15.";
 
     	$carte = new carteCC(); //TODO: ajouter une factory a carte pour les g�n�rer par id

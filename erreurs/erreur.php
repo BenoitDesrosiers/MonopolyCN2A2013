@@ -3,7 +3,7 @@
 /* affiche un message d'erreur
  * 
  * ENTRÉES:
- * $msg_erreur: le message à afficher.  
+ * $msg_erreur: le message a afficher.  
  */
  
 ?>

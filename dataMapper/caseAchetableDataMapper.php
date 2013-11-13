@@ -31,7 +31,7 @@ class CaseAchetableDataMapper extends Mapper {
         
         
         
-        //TODO: creer 3 autres sous-clase de CaseDeJeuAchetable et les appeler CasePropriete, CaseTrain et CaseService et créer la bon selon le type provenant de GroupeDeCase
+        //TODO: creer 3 autres sous-clase de CaseDeJeuAchetable et les appeler CasePropriete, CaseTrain et CaseService et creer la bon selon le type provenant de GroupeDeCase
        if($array2['IsCheminDeFer']==1)
         	$obj = new CaseDeJeuTrain( );
         elseif($array2['IsServicePublique']==1)
@@ -49,7 +49,7 @@ class CaseAchetableDataMapper extends Mapper {
         $obj->setCouleurHTML($array2['CouleurHTML']);
         
         // on le fait pas ici car ces champs viennent d'une autre table et faire le set engendrerait un notify 
-        //set le propriétaire et ses propriétés si applicable
+        //set le proprietaire et ses proprietes si applicable
         /*$obj->setProprietaire($array3['JoueurPartieUsagerCompte']);
         $obj->setNombreMaison($array3['NombreMaisons']);
         $obj->setNombreHotel($array3['NombreHotels']);

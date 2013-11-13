@@ -33,8 +33,8 @@ class CarteCCDataMapper extends Mapper {
     
     protected function doInsert( $object){
         if (!$this->nomLibre($object->getNom())) {
-            //Verifie si il n'y a pas déjà une partie avec le même nom.
-            throw new Exception('nom déjà utilisé');
+            //Verifie si il n'y a pas deja une partie avec le même nom.
+            throw new Exception('nom deja utilise');
         }
         //TODO ajouter un check si le coordonnateur n'est pas null ou inexistant
         $values = array($object->getActionID(), 
@@ -51,11 +51,11 @@ class CarteCCDataMapper extends Mapper {
     
     function nomLibre($nom) {
         /*
-         * vérifie si ce $nom est déjà utilisé pour une autre partie
+         * verifie si ce $nom est deja utilise pour une autre partie
          * 
          * Retour
-         *     true: le nom n'est pas utilisé
-         *     false: une partie a déjà ce nom
+         *     true: le nom n'est pas utilise
+         *     false: une partie a deja ce nom
          */
         $queryTxt = 'SELECT * FROM DefinitionPartie
                 WHERE nom = :nom';
@@ -92,7 +92,7 @@ class CarteCCDataMapper extends Mapper {
         foreach($query as $row) {
             $unItem = $this->find($row['CarteId']);
             if ($unItem <> null) {
-                //set la position à partir de celle trouvée dans PartienEnCours_CarteCC
+                //set la position a partir de celle trouvee dans PartienEnCours_CarteCC
                 $unItem->setPosition($row['Position']);
                 $listeItems[] = $unItem;
             }
@@ -115,7 +115,7 @@ class CarteCCDataMapper extends Mapper {
             foreach($query as $row) {
                     $item = $this->find($row['CarteId']);
                     if ($item <> null) {
-                            //set la position à partir de celle trouvée dans PartienEnCours_CarteCC
+                            //set la position a partir de celle trouvee dans PartienEnCours_CarteCC
                             $item->setPosition($row['Position']);
                     }
             }

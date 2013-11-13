@@ -1,6 +1,6 @@
 <?php
-/* Cette interface définit les functions nécessaire pour un objet qui 
- * s'enregistre dans une base de donné SQL
+/* Cette interface definit les functions necessaire pour un objet qui 
+ * s'enregistre dans une base de donne SQL
  */
 
 interface EntreposageDatabase {

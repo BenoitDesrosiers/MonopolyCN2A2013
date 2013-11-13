@@ -6,8 +6,8 @@ require_once 'modele/coupure.php';
 require_once 'modele/partie.php';
 require_once 'modele/tableau.php';
 /*
- * un joueur n'est pas un usager, un usager est identifié par son compte, un joueur est identifié par son compte et une partie. 
- * un joueur a un usager d'associé
+ * un joueur n'est pas un usager, un usager est identifie par son compte, un joueur est identifie par son compte et une partie. 
+ * un joueur a un usager d'associe
  */
 class Joueur extends Objet  implements EntreposageDatabase{
     
@@ -30,7 +30,7 @@ class Joueur extends Objet  implements EntreposageDatabase{
         *     'Position' : la position du joueur 
         *     'OrdreDeJeu' : l'ordre de jeu 
         *     'EnPrison' : un flag indiquant si le joueur est en prison 
-        *     'ToursRestants_Prison' : le nombre de tours restant au joueur à passer en prison   
+        *     'ToursRestants_Prison' : le nombre de tours restant au joueur a passer en prison   
         *     'Billets' : une liste de billets 
         *     
         */
@@ -60,13 +60,13 @@ class Joueur extends Objet  implements EntreposageDatabase{
          *
          * input
         *     un array associative contenant
-        *     'UsagerCompte' : le compte usager associé à ce joueur ,
+        *     'UsagerCompte' : le compte usager associe a ce joueur ,
         *     'PartieEnCoursId' : l'id de la partie en cours
         *     'PionId' : l'id du pion
         *     'Position' : la position du joueur
         *     'OrdreDeJeu' : l'ordre de jeu
         *     'EnPrison' : un flag indiquant si le joueur est en prison
-        *     'ToursRestants_Prison' : le nombre de tours restant au joueur à passer en prison
+        *     'ToursRestants_Prison' : le nombre de tours restant au joueur a passer en prison
         *     'Billets' : une liste de billets
         *
         */
@@ -150,22 +150,22 @@ class Joueur extends Objet  implements EntreposageDatabase{
         foreach($argent as $billet=>$quantite){
                 $argentCtr += intval($billet) * $quantite; 
         }
-        echo "Le joueur à ".$argentCtr."$ et doit payer ".$montant."$";
+        echo "Le joueur a ".$argentCtr."$ et doit payer ".$montant."$";
         echo "</br>";
         
         if($argentCtr < $montant){
-                echo "Le joueur n'a pas assez d'argent. ".($montant-$argentCtr)."$ de plus sont nécéssaire.";
+                echo "Le joueur n'a pas assez d'argent. ".($montant-$argentCtr)."$ de plus sont necessaire.";
         }
         else{
                 echo "Argent du joueur avant : ".$argentCtr."<br/>";
-                echo "Montant à payer: ".$montant."<br/>";
+                echo "Montant a payer: ".$montant."<br/>";
                 
                 $argentCtr -= $montant;
                 echo "Argent du joueur après: ".$argentCtr."<br/>";
                 
                 //creation de l'array de paiement exemple le joueur doit payer 350, il paye avec un 500
                 // montantCtr = valeur que le joueur recupere
-                // quantiteCtr = quantite de billet utilisé
+                // quantiteCtr = quantite de billet utilise
                 foreach($argent as $billet=>$quantite){
                         if($quantite != 0){
                                 if($montant > 0){
@@ -197,7 +197,7 @@ class Joueur extends Objet  implements EntreposageDatabase{
                 //exemple il a payer 350 avec un billet de 500 donc il doit encaisser 150
                 //update l'array d'argent total du joueur
                 //montantCtr = valeur que le joueur recupere
-                // quantiteCtr = quantite de billet recuperé
+                // quantiteCtr = quantite de billet recupere
                 foreach($argent as $billet=>$quantite){
                 	//echo "montantctr retour: ". $montantCtr . "</br>";
                         if($billet <= $montantCtr){
@@ -205,7 +205,7 @@ class Joueur extends Objet  implements EntreposageDatabase{
                                     $quantite += $quantiteCtr;
                                     
                                     //echo "Billet retour :".$billet."</br>";
-                                    //echo "Quantité Retour : ".$quantiteCtr."</br>";
+                                    //echo "Quantite Retour : ".$quantiteCtr."</br>";
                                     
                                     if($quantiteCtr != 0){
                                             $montantCtr -= intval($billet) * $quantiteCtr;

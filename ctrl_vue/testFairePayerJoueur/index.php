@@ -15,7 +15,7 @@ require_once('dataMapper/partieDataMapper.php');
 // demarre la session, doit être fait après tout les includes
 session_start();
 
-//verifie si un usager est connecté
+//verifie si un usager est connecte
 include "util/login.php";
 
 if (isset($_POST['action'])) {

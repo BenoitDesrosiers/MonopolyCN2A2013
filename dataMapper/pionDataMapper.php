@@ -21,7 +21,7 @@ class PionDataMapper extends Mapper {
     
     
     protected function doInsert( $objet) {
-        //TODO: ajouter le check si l'objet est déjà dans la BD. 
+        //TODO: ajouter le check si l'objet est deja dans la BD. 
         $values = array($objet->getId(), $objet->getNom(), $objet->getImageUrl());
         $this->insertStmt->execute($values);
     }
@@ -41,10 +41,10 @@ class PionDataMapper extends Mapper {
     function findPourDefinitionPartie($definitionPartieId) {
         /*
          * input
-        *     $definitionPartieId: l'id d'une définition de partie
+        *     $definitionPartieId: l'id d'une definition de partie
         * output
-        *     un array contenant les pions associées à la partie.
-        *     un array vide si aucun pions n'est trouvé
+        *     un array contenant les pions associees a la partie.
+        *     un array vide si aucun pions n'est trouve
         *
         */
         
@@ -56,7 +56,7 @@ class PionDataMapper extends Mapper {
         $query->setFetchMode(PDO::FETCH_ASSOC);
         $query->execute();
         $listeItems = array();
-        // $query contient les id des pions à créer
+        // $query contient les id des pions a creer
         foreach($query as $row) {
              $unItem = $this->find(array($row['PionId']));
              if ($unItem <> null) {

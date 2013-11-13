@@ -22,7 +22,7 @@ class Usager {  //implements EntreposageDatabase {
          *     mot de passe 'MotDePasse', 
          *     le compte 'Compte', 
          *     le nom 'Nom', 
-         *     et le role 'Role' de l'usager à créer
+         *     et le role 'Role' de l'usager a creer
          */
         $this->setPassword($array['MotDePasse']);
         $this->setCompte($array['Compte']);
@@ -33,11 +33,11 @@ class Usager {  //implements EntreposageDatabase {
     // Static Factory
     
     public static function parCompte($compte) {
-        //CONNECTION 1.2.4.2.x : un data mapper sert à faire l'interface avec la bd. 
+        //CONNECTION 1.2.4.2.x : un data mapper sert a faire l'interface avec la bd. 
         $usagerMapper = new UsagerDataMapper();
         //CONNECTION 1.2.4.3.x : cherche l'usager avec ce compte dans la bd
         $usager = $usagerMapper->find(array($compte));
-        //recrée l'usager selon son type. 
+        //recree l'usager selon son type. 
         If ($usager->getRole() == 'coordonnateur') {
                 $mapper = new CoordonnateurDataMapper();
         } else {
@@ -47,10 +47,10 @@ class Usager {  //implements EntreposageDatabase {
     }
     
     public static function parComptePW($compte, $password) {
-        // crée l'usager associer à un numéro de compte en verifiant si le mot de passe est le bon
-        // si aucun usager n'est associé ou si le pw est mauvais, null sera retourné
+        // cree l'usager associer a un numero de compte en verifiant si le mot de passe est le bon
+        // si aucun usager n'est associe ou si le pw est mauvais, null sera retourne
         
-        //CONNECTION 1.2.4.1 : appelé à partir de connectionUsager/index.php. 
+        //CONNECTION 1.2.4.1 : appele a partir de connectionUsager/index.php. 
         $usager = null;
         $usager1 = self::parCompte($compte);
         if ($usager1 <> null) {

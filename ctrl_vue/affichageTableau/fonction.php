@@ -13,7 +13,7 @@
                     
             // Execution
                         
-            // Dans l'execution de la fonction, la carte 31 sera pigée
+            // Dans l'execution de la fonction, la carte 31 sera pigee
             $joueur=new Joueur(array("UsagerCompte" => "benoit", "PartieEnCoursId" => 1));
             $case=CaseDeJeuAction::parPositionCase(7,1);
             $case->atterirSur($joueur);

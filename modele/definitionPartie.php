@@ -84,7 +84,7 @@ class DefinitionPartie implements EntreposageDatabase {
     }
     
     public function getPions() {
-        // retourne les pions définis pour cette partie
+        // retourne les pions definis pour cette partie
         return Pion::pourDefinitionPartieId($this->getId());
     }
 }

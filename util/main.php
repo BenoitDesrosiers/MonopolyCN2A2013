@@ -6,7 +6,7 @@ $doc_root =  $_SERVER['DOCUMENT_ROOT'];
 // le chemin vers le projet
 $uri = $_SERVER['REQUEST_URI'];
 $dirs = explode('/', $uri);
-// app_path doit contenir le nombre de dirs nécessaire selon le path du dir de l'application à partir de DOCUMENT_ROOT
+// app_path doit contenir le nombre de dirs necessaire selon le path du dir de l'application a partir de DOCUMENT_ROOT
 $app_path = '/' . $dirs[1] . '/'; // . $dirs[2] . '/';
 
 

@@ -18,7 +18,7 @@ class CaseActionDataMapper extends Mapper {
 
     protected function doCreateObject( array $array) {
         
-        //TODO: créer 3 autres sous-clase de CaseDeJeuAchetable et les appeler CasePropriete, CaseTrain et CaseService et créer la bon selon le type provenant de GroupeDeCase
+        //TODO: creer 3 autres sous-clase de CaseDeJeuAchetable et les appeler CasePropriete, CaseTrain et CaseService et creer la bon selon le type provenant de GroupeDeCase
         $obj = new CaseDeJeuAction();
         $obj->setId($array['ID']);
         $obj->setNom($array['Nom']);
@@ -29,8 +29,8 @@ class CaseActionDataMapper extends Mapper {
     
     protected function doInsert($object) {
         if (!$this->nomLibre($object->getNom())) {
-            //Verifie si il n'y a pas déjà une partie avec le même nom.
-            throw new Exception('nom déjà utilisé');
+            //Verifie si il n'y a pas deja une partie avec le même nom.
+            throw new Exception('nom deja utilise');
         }
         //TODO ajouter un check si le coordonnateur n'est pas null ou inexistant
         $values = array($object->getNom(), 
@@ -54,16 +54,16 @@ class CaseActionDataMapper extends Mapper {
     }
     
     /*
-     * fonctions spécific à ce datamapper
+     * fonctions specific a ce datamapper
      */
     
     function nomLibre($nom) {
         /*
-         * vérifie si ce $nom est déjà utilisé pour une autre partie
+         * verifie si ce $nom est deja utilise pour une autre partie
          * 
          * Retour
-         *     true: le nom n'est pas utilisé
-         *     false: une partie a déjà ce nom
+         *     true: le nom n'est pas utilise
+         *     false: une partie a deja ce nom
          */
         $queryTxt = 'SELECT * FROM DefinitionPartie
                 WHERE nom = :nom';

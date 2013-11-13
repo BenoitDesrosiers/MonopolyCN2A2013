@@ -278,9 +278,9 @@ class Partie extends Objet implements EntreposageDatabase {
     
     public function getProchaineCarteChance(){
         $cartes=CarteChance::pourDefinitionPartie($this->id);
-        $prochaineCarte=CarteChance::parPositionCarte(14,$this->id);// Pour les besoins de la fonction en cours de développement,
-        // La carte pigée est la carte à la position 14
-        /*foreach($cartes as $carte){                               // Les cartes ne sont pas déplacées.
+        $prochaineCarte=CarteChance::parPositionCarte(14,$this->id);// Pour les besoins de la fonction en cours de developpement,
+        // La carte pigee est la carte a la position 14
+        /*foreach($cartes as $carte){                               // Les cartes ne sont pas deplacees.
          foreach($cartes as $carte){
         if($carte->getPosition()==count($cartes))
             $carte->setPosition(1);

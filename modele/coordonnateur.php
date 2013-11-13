@@ -4,7 +4,7 @@ require_once 'modele/partie.php';
 require_once 'dataMapper/coordonnateurDataMapper.php';
 
 class Coordonnateur extends Usager {
-    protected $partiesEnCours = array(); // les parties appartenant à ce coordonnateur
+    protected $partiesEnCours = array(); // les parties appartenant a ce coordonnateur
 
     // Static Factory
     
@@ -14,13 +14,13 @@ class Coordonnateur extends Usager {
          */
         $mapper = new CoordonnateurDataMapper();
         $coordonnateurs = $mapper->findAllCoordonnateur();
-        //recrée l'usager selon son type.
+        //recree l'usager selon son type.
         return $coordonnateurs;
     }
    
     // Setter et Getter
     public function getPartiesEnCours() {
-        // les parties appartenant à ce coordonnateur
+        // les parties appartenant a ce coordonnateur
         //LISTEPARTIE 1.3.1.x : on utilise une factory de parties
 
         //lazy load 
@@ -33,17 +33,17 @@ class Coordonnateur extends Usager {
     }
 
     public function creerPartie() {
-        //TODO: à faire
+        //TODO: a faire
     }
 
     public function demarrePartie($id) {
-        //TODO: à faire
+        //TODO: a faire
         $partieEnCours = Partie::parId($id);
         $partieEnCours->demarrerPartie($id);
     }
 
     public function arretePartie() {
-        //TODO: à faire
+        //TODO: a faire
     }
 
     public function accepteJoueur() {

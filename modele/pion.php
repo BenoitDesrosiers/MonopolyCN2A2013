@@ -20,7 +20,7 @@ class Pion implements EntreposageDatabase {
     // Static Factory
     
     public static function pourDefinitionPartieId($definitionId) {
-        //retourne les pions associés à une définition de partie
+        //retourne les pions associes a une definition de partie
         $mapper = new PionDataMapper();
         return $mapper->findPourDefinitionPartie($definitionId);
     }

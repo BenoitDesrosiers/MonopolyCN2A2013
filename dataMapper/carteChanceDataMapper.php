@@ -33,8 +33,8 @@ class CarteChanceDataMapper extends Mapper {
     
     protected function doInsert( $object){
         if (!$this->nomLibre($object->getNom())) {
-            //Verifie si il n'y a pas déjà une partie avec le même nom.
-            throw new Exception('nom déjà utilisé');
+            //Verifie si il n'y a pas deja une partie avec le même nom.
+            throw new Exception('nom deja utilise');
         }
         //TODO ajouter un check si le coordonnateur n'est pas null ou inexistant
         $values = array($object->getActionID(), 
@@ -67,7 +67,7 @@ class CarteChanceDataMapper extends Mapper {
         foreach($query as $row) {
             $unItem = $this->find($row['CarteId']);
             if ($unItem <> null) {
-                //set la position à partir de celle trouvée dans PartienEnCours_CarteCC
+                //set la position a partir de celle trouvee dans PartienEnCours_CarteCC
                 $unItem->setPosition($row['Position']);
                 $listeItems[] = $unItem;
             }
@@ -90,7 +90,7 @@ class CarteChanceDataMapper extends Mapper {
             foreach($query as $row) {
                     $item = $this->find($row['CarteId']);
                     if ($item <> null) {
-                            //set la position à partir de celle trouvée dans PartienEnCours_CarteCC
+                            //set la position a partir de celle trouvee dans PartienEnCours_CarteCC
                             $item->setPosition($row['Position']);
                     }
             }

@@ -2,7 +2,7 @@
 require_once('modele/database.php');
 require_once('interface/observateur.php');
 /*
- * cette classe est tirée du livre PHP objects patterns and practice, 3rd edition (p227)
+ * cette classe est tiree du livre PHP objects patterns and practice, 3rd edition (p227)
  */
 
 /*
@@ -15,32 +15,32 @@ abstract class Mapper implements Observateur {
     protected static $db;
     
     function __construct() {
-        //TODO: le mapper devrait être un singleton pour chaque sous-classe, il devrait donc s'enregistrer et avoir une factory sinon le pattern observateur peut faire qu'on fera plusieur écritures
+        //TODO: le mapper devrait être un singleton pour chaque sous-classe, il devrait donc s'enregistrer et avoir une factory sinon le pattern observateur peut faire qu'on fera plusieur ecritures
         
         self::$db = Database::getDB(); 
     }
     
     function find( array $cle) {
         /*
-         * find est la méthode "générique" pour trouver un objet avec la clé égale à $id
+         * find est la methode "generique" pour trouver un objet avec la cle egale a $id
          * trouve l'objet qui a cet $id dans la bd
-         * le selectStmt de la sous-classe doit sélectionner selon cette clé
+         * le selectStmt de la sous-classe doit selectionner selon cette cle
          */
         //TODO: garder les items dans un Registry pour eviter la duplication d'instance
-        //TODO: trouver un moyen pour les cas ou la clé est composée (au lieu de id, prendre un array. Devra matcher dans le selectStmt 
+        //TODO: trouver un moyen pour les cas ou la cle est composee (au lieu de id, prendre un array. Devra matcher dans le selectStmt 
         $this->selectStmt()->execute( $cle);
         $array = $this->selectStmt()->fetch();
-        //$this->selectStmt()->closeCursor(); // appel optionnel non nécessaire pour mysql
+        //$this->selectStmt()->closeCursor(); // appel optionnel non necessaire pour mysql
         if (!is_array($array)){return null;} // aucune row de retourner, donc l'objet n'existe pas dans la bd. 
-        //if (!isset($array['id'])) {return null;}   //TODO: a quoi sert ce check? je l'ai enleve parce que le clés ne sont pas toujours ID
-        //CONNECTION 1.2.4.3.1 créé l'usager
+        //if (!isset($array['id'])) {return null;}   //TODO: a quoi sert ce check? je l'ai enleve parce que le cles ne sont pas toujours ID
+        //CONNECTION 1.2.4.3.1 cree l'usager
         $object = $this->createObject($array);
         return $object;
     }
     
     function findAll($pdoSelect) {
         /*
-         * retourne tous les objects correspondant au query pdo passé en paramètre 
+         * retourne tous les objects correspondant au query pdo passe en paramètre 
          */
         $pdoSelect->setFetchMode(PDO::FETCH_ASSOC);
         $pdoSelect->execute();
@@ -57,7 +57,7 @@ abstract class Mapper implements Observateur {
         
      //   function findAll(array $array) {
             /*
-             * retourne tous les objects correspondant aux critères passés dans $array
+             * retourne tous les objects correspondant aux critères passes dans $array
             */
      /*      $this->selectAllStmt()->execute($array);
             $listeItems = array();

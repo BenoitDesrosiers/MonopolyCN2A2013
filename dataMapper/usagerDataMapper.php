@@ -8,7 +8,7 @@ class UsagerDataMapper extends Mapper {
     
     function __construct() {
         //CONNECTION 1.2.4.2.1 : batit le datamapper. Faire un 'new' appele "__construct"
-        parent::__construct(); // "parent" veut dire "cette méthode de ma superclasse. 
+        parent::__construct(); // "parent" veut dire "cette methode de ma superclasse. 
         $this->selectStmt = self::$db->prepare("SELECT * FROM Usager where compte=?");
         $this->updateStmt = self::$db->prepare('update Usager set compte=?, password=?, nom=?, role=?,  where compte=?');
         $this->insertStmt = self::$db->prepare("insert into Usager ( compte, password, nom, role ) values (?, ?, ?, ?)");
@@ -16,12 +16,12 @@ class UsagerDataMapper extends Mapper {
     }
 
     protected function doCreateObject( array $array) {
-        //CONNECTION 1.2.4.3.2.1 crée l'usager
+        //CONNECTION 1.2.4.3.2.1 cree l'usager
         return new Usager($array) ;        
     }
     
     protected function doInsert( $object) {
-        //TODO: ajouter une exception si le compte est déja utilisé
+        //TODO: ajouter une exception si le compte est deja utilise
         $values = array($object->getCompte(), $object->getPassword(), $object->getNom(), $object->getRole());
         $this->insertStmt->execute($values);
     }

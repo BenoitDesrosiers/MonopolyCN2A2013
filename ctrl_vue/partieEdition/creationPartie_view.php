@@ -1,6 +1,6 @@
 <?php 
 // ENTRÉES:
-// $partie: la partie à afficher. Peut-être vide pour une création, ou une partie existante pour une modification  
+// $partie: la partie a afficher. Peut-être vide pour une creation, ou une partie existante pour une modification  
 ?>
 <!DOCTYPE html>
 <html>

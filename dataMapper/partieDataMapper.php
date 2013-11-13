@@ -24,7 +24,7 @@ class PartieDataMapper extends Mapper {
     protected function doInsert($object) {
         if (!$this->nomLibre($object->getNom())) {
             //Verifie si il n'y a pas deja une partie avec le meme nom.
-            throw new Exception('nom déjà utilisé');
+            throw new Exception('nom deja utilise');
         }
         //TODO ajouter un check si le coordonnateur n'est pas null ou inexistant
         $values = array($object->getNom(), 
@@ -109,15 +109,15 @@ class PartieDataMapper extends Mapper {
         
     }
     function findPourCoordonnateur( $idCoordonnateur) {
-        //TODO: remplacer par un call a findAll en mettant selectAllStmt = au select. ??? est ce que ca fit dans le modele ou ca va mélanger le selectAllStmt, on saura pas lequel est pour etre appelé 
-        // crée les parties associées à un coordonnateur a partir de la db
+        //TODO: remplacer par un call a findAll en mettant selectAllStmt = au select. ??? est ce que ca fit dans le modele ou ca va melanger le selectAllStmt, on saura pas lequel est pour etre appele 
+        // cree les parties associees a un coordonnateur a partir de la db
         
         /*
          * input
         *     $idCoordonnateur: l'id du coordonnateur
         * output
-        *     un array contenant les parties associées au coordonnateur.
-        *     un array vide si aucune partie n'est associée au coordonnateur
+        *     un array contenant les parties associees au coordonnateur.
+        *     un array vide si aucune partie n'est associee au coordonnateur
         *
         */
         //LISTEPARTIE 1.3.1.1.1 extrait la liste des parties pour un coordonnateur. 

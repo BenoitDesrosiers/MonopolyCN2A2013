@@ -8,25 +8,25 @@ if (isset($_POST['action'])) {
 } else if (isset($_GET['action'])) {
 	$action=$_GET['action'];
 } else {
-    //LISTEPARTIE 1.1 par défaut, on affiche les parties
+    //LISTEPARTIE 1.1 par defaut, on affiche les parties
 	$action = 'liste_parties';
 }
 
 switch ($action) {
 	case 'liste_parties' :
-		// liste toutes les parties appartenant au coordonnateur présentement connecté
-		$coordonnateur = $_SESSION['usager']; //LISTEPARTIE 1.2 l'usager a été entreposé dans connectionUsager/index.php à l'étape CONNECTION 1.2.5a
+		// liste toutes les parties appartenant au coordonnateur presentement connecte
+		$coordonnateur = $_SESSION['usager']; //LISTEPARTIE 1.2 l'usager a ete entrepose dans connectionUsager/index.php a l'etape CONNECTION 1.2.5a
 		//LISTEPARTIE 1.3.x on va chercher les parties de ce coordonnateur
 		$parties = $coordonnateur->getPartiesEnCours();
 		$titrePage = "Accueil Coordonnateur";
-		//LISTEPARTIE 1.4.x affiche les parties trouvées
+		//LISTEPARTIE 1.4.x affiche les parties trouvees
 		include('liste_parties_view.php');
 		break;
 		
 	//LISTEJOUEUR 2 : après avoir ajouter le bouton, vous retournez ici avec une action xyz ... ajouter un case
-	//LISTEJOUEUR 3 : étant donné qu'il n'y a pas d'objet en charge de lister les joueurs (ca viendra...) vous pouvez 
-	//                simplement mettre le SQL nécessaire à la création (fournit-ci bas) de cette liste directement ici. 
-	//                et ensuite ouvrir un page similaire à liste_parties_view.php.
+	//LISTEJOUEUR 3 : etant donne qu'il n'y a pas d'objet en charge de lister les joueurs (ca viendra...) vous pouvez 
+	//                simplement mettre le SQL necessaire a la creation (fournit-ci bas) de cette liste directement ici. 
+	//                et ensuite ouvrir un page similaire a liste_parties_view.php.
 	/*
 	    $queryTxt = 'SELECT * FROM Usagers';
 	    $db = Database::getDB(); //Je vous laisse trouver quel include utiliser pour faire fonctionner cette ligne

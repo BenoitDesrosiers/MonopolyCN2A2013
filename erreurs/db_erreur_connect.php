@@ -1,9 +1,9 @@
 <?php 
 
-/* affiche un message d'erreur lors de la connection à la bd
+/* affiche un message d'erreur lors de la connection a la bd
  *
 * ENTRÉES:
-* $msg_erreur: le message à afficher.
+* $msg_erreur: le message a afficher.
 */
 
 ?>
@@ -19,8 +19,8 @@
     <?php include 'vue/enteteCommune.php'; ?>
 
     <div id="contenue">
-        <h1>Erreur de connection à la base de données</h1>
-        <p>Une erreur s'est produite lors de la connection à la BD.</p>
+        <h1>Erreur de connection a la base de donnees</h1>
+        <p>Une erreur s'est produite lors de la connection a la BD.</p>
         <p>Message: <?php echo $msg_erreur; ?></p> 
         <p>&nbsp;</p>
     </div>

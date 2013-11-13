@@ -1,6 +1,6 @@
 <?php 
 /*
- * la section head commune à toutes les vues
+ * la section head commune a toutes les vues
  * ENTRÉES
  *     $titrePage: le title de la page html 
  */

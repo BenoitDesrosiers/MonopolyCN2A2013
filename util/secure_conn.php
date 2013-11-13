@@ -1,6 +1,6 @@
 <?php
-    // s'assure que la connection est sécurisé
-	// TODO: remettre SSL quand j'aurai une connection sécurisée
+    // s'assure que la connection est securise
+	// TODO: remettre SSL quand j'aurai une connection securisee
 	/*
      
     if (!isset($_SERVER['HTTPS'])) {

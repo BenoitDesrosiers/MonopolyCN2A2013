@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
-    /* l'écran d'acceuil d'un usager
-     * cet écran lui présente la liste des parties qu'il peut rejoindre.
+    /* l'ecran d'acceuil d'un usager
+     * cet ecran lui presente la liste des parties qu'il peut rejoindre.
      * 
      * input:
      *     $usager : l'usager affichant cette page. classe Usager
@@ -32,7 +32,7 @@
         			<td>joindre</td>
         		</tr>
         		<?php  foreach ($coordonnateurs as $coordonnateur) : 
-        		            $parties = $coordonnateur->getPartiesEnCours();  //TODO: generer, dans le ctrl,  un array de celle ou l'usager est déjà afin de ne pas permettre de joindre un partie ou il est déjà. 
+        		            $parties = $coordonnateur->getPartiesEnCours();  //TODO: generer, dans le ctrl,  un array de celle ou l'usager est deja afin de ne pas permettre de joindre un partie ou il est deja. 
         		            foreach ($parties as $partie) :?>
                                 <tr>
                     			    <td><?php echo $partie->getCoordonnateur(); ?></td>
@@ -42,7 +42,7 @@
                     				              <?php if($partie->joueurPresent($usager)) {echo "re";}?>joindre</button></td>
                     		    </tr>
                     		<?php endforeach; //parties ?>
-                    		<tr></tr> <!-- une ligne vide pour séparer les coordonnateur -->
+                    		<tr></tr> <!-- une ligne vide pour separer les coordonnateur -->
         		<?php endforeach; //coordonnateur ?>
         	</table>
     	</form>

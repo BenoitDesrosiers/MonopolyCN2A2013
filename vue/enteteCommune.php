@@ -20,7 +20,7 @@
 		 	<p>Bienvenue <?php echo $_SESSION['usager']->getNom()?></p>
 		 	<ul>
         		<li><a href="<?php echo $usager_url; ?>">Mon compte</a></li>
-        		<li><a href="<?php echo $deconnection_url; ?>">Déconnection</a></li>
+        		<li><a href="<?php echo $deconnection_url; ?>">Deconnection</a></li>
         	</ul>
     	<?php endif; ?>
 		

@@ -40,7 +40,7 @@ class CoupureDataMapper extends Mapper {
     }
     
     protected function doInsert( $objet) {
-        //TODO: ajouter le check si l'objet est déjà dans la BD. 
+        //TODO: ajouter le check si l'objet est deja dans la BD. 
         //$values = array($objet->getCompte(), $objet->getPartieId(), $objet->getPionId(), $objet->getPosition(),$objet->getOrdreDeJeu(), $objet->getEnPrison(), $objet->getToursRestantEnPrison() );
         $this->insertStmt->execute($values);
     }

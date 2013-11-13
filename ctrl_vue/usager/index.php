@@ -43,7 +43,7 @@ switch ($action) {
 	        redirect("../../ctrl_vue/partieEnCours");
 	    } else {
 	        $partie->ajouteJoueur($usager); //fait la demande pour etre ajoute a cette partie. 
-	        redirect("../../ctrl_vue/joueur/?action=attenteConnectionPartie&partieId=".$partieId); //l'usager est en attente de devenir un joueur, on le redirige à son écran d'acceuil.
+	        redirect("../../ctrl_vue/joueur/?action=attenteConnectionPartie&partieId=".$partieId); //l'usager est en attente de devenir un joueur, on le redirige a son ecran d'acceuil.
 	    }
 	    break;
 }

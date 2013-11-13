@@ -3,7 +3,7 @@
 /* affiche l'info sur une partie existante
  * 
  * ENTRÉES:
- * $partie: la partie à afficher.  
+ * $partie: la partie a afficher.  
  */
  
 ?>

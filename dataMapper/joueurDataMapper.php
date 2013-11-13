@@ -31,7 +31,7 @@ class JoueurDataMapper extends Mapper {
     
     
     protected function doInsert( $objet) {
-        //TODO: ajouter le check si l'objet est déjà dans la BD. 
+        //TODO: ajouter le check si l'objet est deja dans la BD. 
         $values = array($objet->getCompte(), $objet->getPartieId(), $objet->getPionId(), $objet->getPosition(),$objet->getOrdreDeJeu(), $objet->getEnPrison(), $objet->getToursRestantEnPrison() );
         $this->insertStmt->execute($values);
     }
@@ -59,13 +59,13 @@ class JoueurDataMapper extends Mapper {
 
     function findPourPartie($partieId) {
         /*
-		 * crée les joueurs associés à une partie 
+		 * cree les joueurs associes a une partie 
 		 *
          * input
         *     $partieId: l'id d'une partie
         * output
-        *     un array contenant les joueurs associées à la partie.
-        *     un array vide si aucun joueur n'est trouvé
+        *     un array contenant les joueurs associees a la partie.
+        *     un array vide si aucun joueur n'est trouve
         *
         */
         

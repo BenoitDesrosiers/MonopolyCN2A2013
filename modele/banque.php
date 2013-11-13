@@ -6,7 +6,7 @@ class banque  {
 
 	//fonctions pour jouer
 	public function vendrePropriete(Joueur $joueur, CaseDeJeuAchetable $case) {
-		//Vendre une propriété non acheté a un joueur.
+		//Vendre une propriete non achete a un joueur.
 	  	$joueur->paye($case->getPrix());
 	  	$case->setProprietaire($joueur);
 	  	

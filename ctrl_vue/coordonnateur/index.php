@@ -10,7 +10,7 @@ require_once('modele/partie.php');
 
 session_start();
 
-//verifie si un usager est connecté
+//verifie si un usager est connecte
 include "util/login.php";
 
 if (isset($_POST['action'])) {
@@ -18,18 +18,18 @@ if (isset($_POST['action'])) {
 } else if (isset($_GET['action'])) {
 	$action=$_GET['action'];
 } else {
-    //LISTEPARTIE 1.1 par défaut, on affiche les parties
+    //LISTEPARTIE 1.1 par defaut, on affiche les parties
 	$action = 'liste_parties';
 }
 
 switch ($action) {
 	case 'liste_parties' :
-		// liste toutes les parties appartenant au coordonnateur présentement connecté
-		$coordonnateur = $_SESSION['usager']; //LISTEPARTIE 1.2 l'usager a été entreposé dans connectionUsager/index.php à l'étape CONNECTION 1.2.5a
+		// liste toutes les parties appartenant au coordonnateur presentement connecte
+		$coordonnateur = $_SESSION['usager']; //LISTEPARTIE 1.2 l'usager a ete entrepose dans connectionUsager/index.php a l'etape CONNECTION 1.2.5a
 		//LISTEPARTIE 1.3.x on va chercher les parties de ce coordonnateur
 		$parties = $coordonnateur->getPartiesEnCours();
 		$titrePage = "Accueil Coordonnateur";
-		//LISTEPARTIE 1.4.x affiche les parties trouvées
+		//LISTEPARTIE 1.4.x affiche les parties trouvees
 		include('liste_parties_view.php');
 		break;
 	case 'demarrerPartie' :

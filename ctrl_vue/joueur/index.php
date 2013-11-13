@@ -17,7 +17,7 @@ if (isset($_POST['action'])) {
 	$action = 'attenteConnectionPartie';
 }
 
-$usager = $_SESSION['usager']; //TODO: ne pas mettre l'usager dans la session, mettre son id et le recréé chaque fois.
+$usager = $_SESSION['usager']; //TODO: ne pas mettre l'usager dans la session, mettre son id et le recree chaque fois.
 
 if (isset($_POST['partieId'])) {
     $partieId=$_POST['partieId'];
@@ -28,22 +28,22 @@ if (isset($_POST['partieId'])) {
 switch ($action) {
 	
 	case 'attenteConnectionPartie' :
-	    // attente du démarrage de la partie
+	    // attente du demarrage de la partie
 	   
 	    $partie = Partie::parId($partieId);
 	    if ($_POST['quitter']) {
 	        //TODO: quitter la partie veut dire enlever le joueur de la liste des joueurs
 	    } else {
             if ($partie->estDemarre()) {
-                /* la partie est démarrée, on doit donc commencer par choisir les pions. */
+                /* la partie est demarree, on doit donc commencer par choisir les pions. */
                 $joueur = Joueur::parComptePartie($usager->getCompte(), $partie->getId());
                 $pions = $partie->pionsDisponibles();
                 $titrePage = "Choix du pion";
                 $msg = "Choississez un pion";
                 include('demandePion_view.php');
             } else {
-    	        /* la partie n'est pas démarrée, on doit donc attendre */
-                $titrePage = "Attente démarrage de la partie";
+    	        /* la partie n'est pas demarree, on doit donc attendre */
+                $titrePage = "Attente demarrage de la partie";
                 include('attenteDemarragePartie_view.php');
             }
 	    }

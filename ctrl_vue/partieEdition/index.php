@@ -12,7 +12,7 @@ require_once('dataMapper/partieDataMapper.php');
 // demarre la session, doit être fait après tout les includes
 session_start();
 
-//verifie si un usager est connecté
+//verifie si un usager est connecte
 include "util/login.php";
 
 if (isset($_POST['action'])) {
@@ -33,12 +33,12 @@ switch ($action) {
 		$titrePage = "Édition d'une partie";
 		$partieFactory = Partie_Factory::singleton();
 		$partie = $partieFactory->parId($_GET['partieId']);
-		include('./creationPartie_view.php'); // éditer, c'est comme créé avec une partie déjà existante
+		include('./creationPartie_view.php'); // editer, c'est comme cree avec une partie deja existante
         break;
     case 'ajouter' :
-    	$titrePage= "Création d'une partie";
+    	$titrePage= "Creation d'une partie";
     	$partie = new Partie(array('coordonnateur'=>$coordonnateur->getCompte()));
-    	//TODO: ajouter les autres champs pour la création
+    	//TODO: ajouter les autres champs pour la creation
       	include('./creationPartie_view.php');
        	break;
     case 'validerEtContinuer' :

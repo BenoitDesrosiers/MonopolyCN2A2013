@@ -26,8 +26,8 @@ class DefinitionPartieDataMapper extends Mapper {
     
     protected function doInsert($object) {
         if (!$this->nomLibre($object->getNom())) {
-            //Verifie si il n'y a pas déjà une partie avec le même nom.
-            throw new Exception('nom déjà utilisé');
+            //Verifie si il n'y a pas deja une partie avec le même nom.
+            throw new Exception('nom deja utilise');
         }
         //TODO ajouter un check si le coordonnateur n'est pas null ou inexistant
         $values = array($object->getNom(), 
@@ -51,16 +51,16 @@ class DefinitionPartieDataMapper extends Mapper {
     }
     
     /*
-     * fonctions spécific à ce datamapper
+     * fonctions specific a ce datamapper
      */
     
     function nomLibre($nom) {
         /*
-         * vérifie si ce $nom est déjà utilisé pour une autre partie
+         * verifie si ce $nom est deja utilise pour une autre partie
          * 
          * Retour
-         *     true: le nom n'est pas utilisé
-         *     false: une partie a déjà ce nom
+         *     true: le nom n'est pas utilise
+         *     false: une partie a deja ce nom
          */
         $queryTxt = 'SELECT * FROM DefinitionPartie
                 WHERE nom = :nom';
@@ -79,12 +79,12 @@ class DefinitionPartieDataMapper extends Mapper {
     
     function selectArgent($id){
         /*
-         * genere les billets de départ d'une partie 
+         * genere les billets de depart d'une partie 
          * 
          * input
-         *     l'id d'une définition de partie
+         *     l'id d'une definition de partie
          * output
-         *     un array associatif, la clé étant le montant du billet (ex: 50 pour un 50$), la valeur étant la quantité de ce billet
+         *     un array associatif, la cle etant le montant du billet (ex: 50 pour un 50$), la valeur etant la quantite de ce billet
          *     
          */
     	$queryTxt = 'SELECT * FROM DefinitionPartie_Argent
