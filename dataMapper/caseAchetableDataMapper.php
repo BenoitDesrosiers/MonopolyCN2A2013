@@ -55,6 +55,10 @@ class CaseAchetableDataMapper extends Mapper {
         $this->updateStmt->execute($values);       
     }
 
+    function selectStmt() {
+        return $this->selectStmt;
+    }
+    
     function insertProprietaire(Joueur $joueur, CaseDeJeuAchetable $case) {
     	/*TODO: le changer pour faire un set en faisant un delete si necessaire avant le insert. Faudrait transferer l'info existante
     	 * ajoute une entre dans la table JoueurPartie_CaseAchetable pour indiquer que 
@@ -77,54 +81,7 @@ class CaseAchetableDataMapper extends Mapper {
     	$query->execute($values);
     }
     
-    //Fonctions pour aller chercher les infos qui sont particulires ˆ une instance de partie de cette case
-    private function fetchInfoPropriete($caseId, $partieId, $nomColonneInfo) {
-        /*
-         * retourne une colonne $nomColonneInfo provenant de la table JoueurPartie_CaseAchetable
-         * pour une $caseId pour une $partieId
-        * input
-        *     $caseId : un id de case
-        *     $partieId : un id de partie
-        *     $nomColonneInfo : le nom d'une colonne de la table JoueurPartie_CaseAchetable
-        * output
-        *     la valeur de la colonne demandee si une entre existe pour cette case et partie. 
-        *     Null si la case appartient ˆ personne dans cette partie
-        *
-        */
-        $queryTxt = 'SELECT * FROM joueurpartie_caseachetable where CaseAchetableId= :id and JoueurPartiePartieEnCoursId= :partieId ';  //TODO: besoin du id de partie
-        $query = self::$db->prepare($queryTxt);
-        $query->bindValue(':id', $caseId);
-        $query->bindValue(':partieId', $partieId);
-        $query->setFetchMode(PDO::FETCH_ASSOC);
-        $query->execute();
-        $row  = $query->fetch();
-        if (!is_array($row)){// le query a rien retourne, il n'y a donc pas de proprietaire pour cette partie
-            $info = null;
-        } else {
-            $info = $row[$nomColonneInfo];
-        }
-        return $info;    }
     
-    function getCompteProprietairePourPartieId($caseId, $partieId) {
-        return $this->fetchInfoPropriete($caseId, $partieId, 'JoueurPartieUsagerCompte'); 
-    }
-    
-    function getNombreMaisonPourPartieId($caseId, $partieId) {
-        return $this->fetchInfoPropriete($caseId, $partieId, 'NombreMaisons');
-    }
-    function getNombreHotelPourPartieId($caseId, $partieId) {
-        return $this->fetchInfoPropriete($caseId, $partieId, 'NombreHotels');
-    }
-    function getOrdreAffichagePourPartieId($caseId, $partieId) {
-        return $this->fetchInfoPropriete($caseId, $partieId, 'OrdreAffichage');
-    }
-    function getHypothequePourPartieId($caseId, $partieId) {
-        return $this->fetchInfoPropriete($caseId, $partieId, 'Hypotheque');
-    }
-    
-    function selectStmt() {
-        return $this->selectStmt;
-    }
     
     /*
      * fonctions specific a ce datamapper
@@ -180,7 +137,8 @@ class CaseAchetableDataMapper extends Mapper {
     	return $item;
     }
     
-    static function loadPrix($proprieteId) {
+   /* obsolete
+    *  static function loadPrix($proprieteId) {
         // retourne un array contenant tout les prix de la propriete
     
         // commence par aller chercher les prix dans la table CaseAchetable
@@ -195,4 +153,5 @@ class CaseAchetableDataMapper extends Mapper {
        
         return $listePrix;
     }
+    */
 }

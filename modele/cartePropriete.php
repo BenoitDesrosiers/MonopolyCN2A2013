@@ -48,11 +48,7 @@ abstract class CartePropriete extends objet {
         return $dataMapper->pourCasePartie($caseId, $partieId);
     }
     
-    static function cartesDuGroupePourPartie($groupeId, $partieId) {
-        //trouve toute les cartes d'un groupe pour cette partie
-        $dataMapper = new CarteProprieteDataMapper();
-        return $dataMapper->cartesDuGroupePourPartie($groupeId, $partieId);
-    }
+ 
  
     // interface entreposageDatabase
     public function getDataMapper() {

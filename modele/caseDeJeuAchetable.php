@@ -54,7 +54,7 @@ abstract class CaseDeJeuAchetable extends CaseDeJeu {
     }
     
       
-    public abstract function calculerLoyer();
+    public abstract function calculerLoyer(CartePropriete $propriete);
     
     
     // static Factory
@@ -95,10 +95,27 @@ abstract class CaseDeJeuAchetable extends CaseDeJeu {
         }
     }
     
+    
+    protected function nombreCartesMemeProprio(CartePropriete $propriete) {
+        $partie = Partie::parId($propriete->getPartieId());
+        $casesDuGroupe = $partie->casesDuGroupe($this->getGroupeDeCaseId());
+        $proprietaire = $propriete->getProprietaire();
+        $partieId= $propriete->getPartieId();
+        $memeProprio = 0;
+        foreach ($casesDuGroupe as $case) {
+            $carte= CartePropriete::pourCasePartie($case->getId(),$partieId);
+            if ($carte->getProprietaire() == $proprietaire) {
+                $memeProprio++; //compte le nombre de carte ayant le meme proprio
+            }
+        }
+        return $memeProprio;
+    }
+    
     //Getters & Setters
     public function getCouleur() {
         return $this->Couleur;
     }
+    
     public function setCouleur($value) {
         $this->Couleur = $value;
     }
