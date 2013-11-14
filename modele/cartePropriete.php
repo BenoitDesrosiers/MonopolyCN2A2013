@@ -9,7 +9,7 @@ require_once "interface/entreposageDatabase.php";
 require_once "dataMapper/carteProprieteDataMapper.php";
 
 
-abstract class cartePropriete extends objet {
+abstract class CartePropriete extends objet {
     protected $proprietaire;
     protected $nombreMaisons;
     protected $nombreHotels;
@@ -48,7 +48,11 @@ abstract class cartePropriete extends objet {
         return $dataMapper->pourCasePartie($caseId, $partieId);
     }
     
-    
+    static function cartesDuGroupePourPartie($groupeId, $partieId) {
+        //trouve toute les cartes d'un groupe pour cette partie
+        $dataMapper = new CarteProprieteDataMapper();
+        return $dataMapper->cartesDuGroupePourPartie($groupeId, $partieId);
+    }
  
     // interface entreposageDatabase
     public function getDataMapper() {

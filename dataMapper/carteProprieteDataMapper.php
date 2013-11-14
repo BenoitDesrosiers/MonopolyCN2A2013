@@ -67,6 +67,16 @@ class CarteProprieteDataMapper extends Mapper {
      * fonctions specific a ce datamapper
      */
     
+    function cartesDuGroupePourPartie($groupeId, $partieId) {
+         //retourne toutes les cartes d'un groupe pour cette partie
+         $queryTxt = 'SELECT * FROM CaseAchetable 
+                         WHERE GroupeDeCaseId = :groupeID 
+                         AND   '
+
+                         >>>> faut crer le tableau bas sur la partieId et lui demander de retourner 
+                         les cases d'un certain type '
+                         ?? commment je fais pour setter la position d'une caseDeJeu sans passer par le tableau'
+    }
 
     
     

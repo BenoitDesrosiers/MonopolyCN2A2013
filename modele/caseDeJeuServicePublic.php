@@ -1,11 +1,13 @@
 <?php
 require_once "modele/caseDeJeuAchetable.php";
+require_once "modele/casePropriete.php";
+require_once "modele/cartePropriete.php";
 
 class CaseDeJeuServicePublic extends CaseDeJeuAchetable {
-	public function calculerLoyer(){
-		//a modifier plus tard
-		//[1]==avec un terain
-		//[2]==avec le second
+	public function calculerLoyer(CartePropriete $propriete) {
+        //verifie si le proprietaire de cette carte a l'autre carte de service
+        $carteService = CartePropriete::cartesDuGroupePourPartie($this->getGroupeDeCaseId(), $propriete->getPartieId());
+        
 		$compteur = 0;
 		foreach ($tableauDeJeu->getCases() as $case) :
 			if($case->getCouleur == "service")

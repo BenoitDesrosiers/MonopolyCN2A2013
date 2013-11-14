@@ -28,27 +28,17 @@ class CaseAchetableDataMapper extends Mapper {
         $query->setFetchMode(PDO::FETCH_ASSOC);
         $query->execute();
         $array2  = $query->fetch();
-        
-        
-        
-        //TODO: creer 3 autres sous-clase de CaseDeJeuAchetable et les appeler CasePropriete, CaseTrain et CaseService et creer la bon selon le type provenant de GroupeDeCase
+     
        if($array2['IsCheminDeFer']==1)
-        	$obj = new CaseDeJeuTrain( );
+        	$obj = new CaseDeJeuTrain($array );
         elseif($array2['IsServicePublique']==1)
-        	$obj = new CaseDeJeuServicePublic( );
-        else
-        	$obj = new CaseDeJeuPropriete( ); //TODO: a refaire en passant un array
-       
-        $obj->setId($array['Id']);
-        $obj->setNom($array['Titre']);
-        $obj->setPrix($array['Prix']);
-
-        // set la couleur d'aprs l'info de GroupeDeCase
-        //TODO: la couleur devrait aller dans CasePropriete
-        $obj->setCouleur($array2['Couleur']);
-        $obj->setCouleurHTML($array2['CouleurHTML']);
-        
-       
+        	$obj = new CaseDeJeuServicePublic($array);
+        else {
+            $array["GroupeDeCaseId"] = $array2["Id"];
+            $array["Couleur"] = $array2["Couleur"];
+            $array["CouleurHTML"] = $array2["CouleurHTML"];
+        	$obj = new CaseDeJeuPropriete($array); 
+        }
         return $obj;        
     }
     

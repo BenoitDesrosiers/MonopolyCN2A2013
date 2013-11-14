@@ -9,6 +9,12 @@ abstract class CaseDeJeu { // implements EntreposageDatabase {
     protected $nom;
     protected $position;
     
+    
+    function __construct(array $array) {
+  
+        //$this->setPosition($array["Position"]);
+    }
+    
     // static Factory
     //static abstract  function pourDefinitionPartie($idDefinitionPartie);
     
