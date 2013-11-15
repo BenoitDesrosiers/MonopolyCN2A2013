@@ -2,6 +2,7 @@
 
 require_once "dataMapper/mapper.php";
 require_once "modele/cartePropriete.php";
+require_once "modele/joueur.php";
 
 class CarteProprieteDataMapper extends Mapper {
 	
@@ -31,13 +32,13 @@ class CarteProprieteDataMapper extends Mapper {
         return $obj;
     }
     protected function doCreateObject( array $array) {
-       $array2 = array("Proprietaire"=>$array("JoueurPartieUsagerCompte"),
-               "PartieId"=>$array("JoueurPartiePartieEnCoursId"),
-               "CaseId"=>$array("CaseAchetableId"),
-               "OrdreAffichage"=>$array("OrdreAffichage"),
-               "Hypotheque"=>$array("Hypotheque"),
-               "NombreMaisons"=>$array("NombreMaisons"),
-               "NombreHotels"=>$array("NombreHotels")
+       $array2 = array("CompteProprietaire"=>$array["JoueurPartieUsagerCompte"],
+               "PartieId"=>$array["JoueurPartiePartieEnCoursId"],
+               "CaseId"=>$array["CaseAchetableId"],
+               "OrdreAffichage"=>$array["OrdreAffichage"],
+               "Hypotheque"=>$array["Hypotheque"],
+               "NombreMaisons"=>$array["NombreMaisons"],
+               "NombreHotels"=>$array["NombreHotels"]
                );
        $obj = new CartePropriete($array2);
        $obj->attache($this);
@@ -49,13 +50,15 @@ class CarteProprieteDataMapper extends Mapper {
     }
     
     function update( $objet, $sujet) {
-        $values= array ($objet->getProprietaire(), 
+        $values= array ($objet->getCompteProprietaire(), 
                         $objet->getPartieId(), 
                         $objet->getCaseId(), 
                         $objet->getOrdreAffichage(),
                         $objet->getHypotheque(),
                         $objet->getNombreMaisons(),
-                        $objet->getNombreHotels());
+                        $objet->getNombreHotels(),
+                        $objet->getCaseId(),
+                        $objet->getPartieId());
         $this->updateStmt->execute($values);       
     }
 
@@ -67,6 +70,13 @@ class CarteProprieteDataMapper extends Mapper {
      * fonctions specific a ce datamapper
      */
 
-    
+    function pourJoueur(Joueur $joueur) {
+        $queryTxt = 'SELECT * FROM JoueurPartie_CaseAchetable
+                        WHERE JoueurPartieUsagerCompte = :joueurId AND JoueurPartiePartieEnCoursId = :partieId';
+        $query = self::$db->prepare($queryTxt);
+        $query->bindValue(':joueurId', $joueur->getCompte());
+        $query->bindValue(':partieId', $joueur->getPartieId());
+        return $this->findAll($query);
+    }
     
 }

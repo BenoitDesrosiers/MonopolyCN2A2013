@@ -40,7 +40,7 @@ abstract class Mapper implements Observateur {
     
     function findAll($pdoSelect) {
         /*
-         * retourne tous les objects correspondant au query pdo passe en paramètre 
+         * retourne tous les objects correspondant au query pdo passe en parametre 
          */
         $pdoSelect->setFetchMode(PDO::FETCH_ASSOC);
         $pdoSelect->execute();

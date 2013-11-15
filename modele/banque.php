@@ -8,11 +8,11 @@ class banque  {
 	public function vendrePropriete(Joueur $joueur, CartePropriete $carte) {
 		//Vendre une propriete non achete a un joueur.
 	  	$joueur->paye($carte->getCaseAssociee()->getPrix());
-	  	$carte->setProprietaire($joueur);
+	  	$carte->setCompteProprietaire($joueur->getCompte());
 	  	
 	  	//TODO: enlever, c'est pour du testing
-	  	$nouveauProprietaire = $carte->getProprietaire();
-	  	echo $nouveauProprietaire->getCompte();
+	  	$nouveauProprietaire = $carte->getCompteProprietaire();
+	  	echo $nouveauProprietaire;
 	}
 	
 	public function fairePayer(Joueur $joueur, $montant) {

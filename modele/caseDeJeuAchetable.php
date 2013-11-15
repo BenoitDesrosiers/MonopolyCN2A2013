@@ -1,13 +1,10 @@
 <?php
 
 require_once "interface/entreposageDatabase.php";
-require_once "dataMapper/caseAchetableDataMapper.php";
 require_once "modele/joueur.php";
 require_once "modele/caseDeJeu.php";
-require_once "modele/caseDeJeuPropriete.php";
-require_once "modele/caseDeJeuServicePublic.php";
-require_once "modele/caseDeJeuTrain.php";
 require_once "modele/cartePropriete.php";
+require_once "dataMapper/caseAchetableDataMapper.php";
 
 abstract class CaseDeJeuAchetable extends CaseDeJeu {
     protected $prix;
@@ -37,8 +34,8 @@ abstract class CaseDeJeuAchetable extends CaseDeJeu {
         $this->setNom($array["Titre"]);
         $this->setPrix($array["Prix"]);
         $this->setNom($array["Titre"]);
-        $this->setCouleur($array[""]);
-        $this->setCouleurHTML($array[""]);
+        $this->setCouleur($array["Couleur"]);
+        $this->setCouleurHTML($array["CouleurHTML"]);
         $this->setGroupeDeCaseId($array[""]);
         $this->setLocation($array["Location"]);
         $this->setLocation1($array["Location1Maison"]);
@@ -83,10 +80,10 @@ abstract class CaseDeJeuAchetable extends CaseDeJeu {
     
     //Fonctions pour jouer
     public function atterrirSur(Joueur $unJoueur) {
-        $carte = cartePropriete::pourCasePartie($this->getId(), $unJoueur->getPartieId() );
-        if($carte->getProprietaire() != null){ //deja un proprietaire = doit payer le loyer
-            $proprio = $this->getProprietairePourPartieId($unJoueur->getPartieId());
-            $proprio->chargerLoyerA($joueur, $carte->calculerLoyer());
+        $carte = CartePropriete::pourCasePartie($this->getId(), $unJoueur->getPartieId() );
+        if($carte->getCompteProprietaire() != null){ //deja un proprietaire = doit payer le loyer
+            $proprio = Joueur::parComptePartie($carte->getCompteProprietaire(), $unJoueur->getPartieId());
+            $proprio->chargerLoyerA($unJoueur, $this->calculerLoyer($carte));
         } else { //pas de proprietaire = essayer de vendre la propriete
             if($unJoueur->tenterAchat($carte)){
                 $banque = new banque;
@@ -96,15 +93,16 @@ abstract class CaseDeJeuAchetable extends CaseDeJeu {
     }
     
     
-    protected function nombreCartesMemeProprio(CartePropriete $propriete) {
+    protected function nombreCartesMemeGroupeEtProprio(CartePropriete $propriete) {
+        // retourne le nombre de carte d'un meme groupe appartenant au meme joueur
         $partie = Partie::parId($propriete->getPartieId());
         $casesDuGroupe = $partie->casesDuGroupe($this->getGroupeDeCaseId());
-        $proprietaire = $propriete->getProprietaire();
+        $proprietaire = $propriete->getCompteProprietaire();
         $partieId= $propriete->getPartieId();
         $memeProprio = 0;
         foreach ($casesDuGroupe as $case) {
             $carte= CartePropriete::pourCasePartie($case->getId(),$partieId);
-            if ($carte->getProprietaire() == $proprietaire) {
+            if ($carte->getCompteProprietaire() == $proprietaire) {
                 $memeProprio++; //compte le nombre de carte ayant le meme proprio
             }
         }

@@ -6,7 +6,7 @@ require_once "modele/partie.php";
 class CaseDeJeuServicePublic extends CaseDeJeuAchetable {
 	public function calculerLoyer(CartePropriete $propriete) {
         //verifie si le proprietaire de cette carte a l'autre carte de service
-        $nombreCartesMemeProprio = $this->nombreCartesMemeProprio($propriete);
+        $nombreCartesMemeProprio = $this->nombreCartesMemeGroupeEtProprio($propriete);
         
 		if($memeProprio == 2){
 			return (10*Joueur::brasseDes());

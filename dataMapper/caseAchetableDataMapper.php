@@ -2,7 +2,6 @@
 
 require_once "dataMapper/mapper.php";
 require_once "modele/joueur.php";
-require_once "modele/caseDeJeuAchetable.php";
 require_once "modele/caseDeJeuPropriete.php";
 require_once "modele/caseDeJeuServicePublic.php";
 require_once "modele/caseDeJeuTrain.php";

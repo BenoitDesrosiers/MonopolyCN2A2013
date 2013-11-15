@@ -7,23 +7,25 @@
  */
 require_once "interface/entreposageDatabase.php";
 require_once "dataMapper/carteProprieteDataMapper.php";
+require_once "modele/joueur.php";
 
 
-abstract class CartePropriete extends objet {
-    protected $proprietaire;
+
+class CartePropriete extends objet {
+    protected $compteProprietaire;
     protected $nombreMaisons;
     protected $nombreHotels;
     protected $hypotheque;
     protected $partieId;
     protected $caseId;
     protected $ordreAffichage;
-    protected $caseAssociee; //la caseDeJeuAchetable associŽ a cette carte (hack afin de simplifier les requetes pour les prix associes ˆ cette carte)
+    protected $caseAssociee = null; //la caseDeJeuAchetable associŽ a cette carte (hack afin de simplifier les requetes pour les prix associes ˆ cette carte)
  
     function __construct(array $array) {
         /*
          * input
          *     une array associative 
-         *     'Proprietaire' : le compte du proprietaire
+         *     'CompteProprietaire' : le compte du proprietaire
          *     'PartieId' : l'id de la partie a laquelle cette carte est associee
          *     'CaseId' : l'id de la case associŽe
          *     'OrdreAffichage' : l'ordre dans laquelle cette carte est affichee dans la liste pour le joueur
@@ -32,7 +34,7 @@ abstract class CartePropriete extends objet {
          *     'NombreHotels' : le nombre d'hotels sur cette propriete
          */
         
-        $this->setProprietaire($array['Proprietaire']);
+        $this->setCompteProprietaire($array['CompteProprietaire']);
         $this->setPartieId($array['PartieId']);
         $this->setCaseId($array['CaseId']);
         $this->setOrdreAffichage($array['OrdreAffichage']);
@@ -44,11 +46,16 @@ abstract class CartePropriete extends objet {
     
     // static Factory
     static function pourCasePartie($caseId, $partieId) {
+        //retourn la carte de la propriete associee a cette case pour cette partie
+        
         $dataMapper = new CarteProprieteDataMapper();
-        return $dataMapper->pourCasePartie($caseId, $partieId);
+        return $dataMapper->find(array($caseId, $partieId));
     }
     
- 
+    static function pourJoueurs(Joueur $joueur) {
+        $dataMapper = new CarteProprieteDataMapper();
+        return $dataMapper->pourJoueur($joueur);
+    }
  
     // interface entreposageDatabase
     public function getDataMapper() {
@@ -61,10 +68,7 @@ abstract class CartePropriete extends objet {
     
     //Fonctions pour jouer
     
-    public function calculerLoyer() {
-        return $this->getCarteAssociee()->calculerLoyerPour($this);
-    }
-    
+   
     
     //Getters & Setters
     public function getHypotheque() {
@@ -94,12 +98,12 @@ abstract class CartePropriete extends objet {
     }
     
     
-    public function getProprietaire() {
-        return $this->proprietaire;
+    public function getCompteProprietaire() {
+        return $this->compteProprietaire;
     }
-    public function setProprietaire($value) {
-        $this->proprietaire = $value;
-        $this->notifie('proprietaire');
+    public function setCompteProprietaire($value) {
+        $this->compteProprietaire = $value;
+        $this->notifie('compteProprietaire');
     }
     
     public function getPartieId() {
@@ -121,8 +125,8 @@ abstract class CartePropriete extends objet {
     public function getCaseAssociee() {
         //cette function est un hack afin de permettre d'accedee a la caseDeJeu associee a cette carte
         //sinon, il faudrait dupliquer toutes les fonctionnalites de caseDeJeu
-        if ($this->$caseAssociee == null) {
-            $this->$caseAssociee = CaseDeJeuAchetable::parId($this->getCaseId());
+        if (is_null($this->caseAssociee)) {
+            $this->caseAssociee = CaseDeJeuAchetable::parId($this->getCaseId());
         }
         return $this->caseAssociee;
     }

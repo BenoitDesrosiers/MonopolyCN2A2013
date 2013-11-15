@@ -1,7 +1,7 @@
 <?php
-require_once "modele/caseDeJeuAchetable.php";
 require_once "dataMapper/caseAchetableDataMapper.php";
 require_once "modele/cartePropriete.php";
+require_once "modele/caseDeJeuAchetable.php";
 
 class CaseDeJeuPropriete extends CaseDeJeuAchetable {
 	
