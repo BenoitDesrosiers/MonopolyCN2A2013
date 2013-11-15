@@ -37,6 +37,7 @@ switch ($action) {
         //TODO: ca devrait tre la partie qui dŽmarre le coup ??? 
 	    $joueur->setPosition(6); //FIXME: ˆ enlever une fois les tests termines
 	    $joueur->brasseDes();
+	    include('./jouer_view.php');
 	    break;
 
 }

@@ -83,7 +83,10 @@ abstract class CaseDeJeuAchetable extends CaseDeJeu {
         $carte = CartePropriete::pourCasePartie($this->getId(), $unJoueur->getPartieId() );
         if($carte->getCompteProprietaire() != null){ //deja un proprietaire = doit payer le loyer
             $proprio = Joueur::parComptePartie($carte->getCompteProprietaire(), $unJoueur->getPartieId());
-            $proprio->chargerLoyerA($unJoueur, $this->calculerLoyer($carte));
+            if ($proprio->getCompte() != $unJoueur->getCompte()) {
+                //le joueur a atterit sur une case qui ne lui appartient pas 
+                $proprio->chargerLoyerA($unJoueur, $this->calculerLoyer($carte));
+            }
         } else { //pas de proprietaire = essayer de vendre la propriete
             if($unJoueur->tenterAchat($carte)){
                 $banque = new banque;
