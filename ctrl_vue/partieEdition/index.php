@@ -43,7 +43,7 @@ switch ($action) {
        	break;
     case 'validerEtContinuer' :
         //TODO: pour l'instant je met des valeurs dummy
-        $partie = new Partie(array('Nom'=>$_POST['nomPartie'], 'Coordonnateur'=>$coordonnateur->getCompte(), 'DefinitionPartieId'=>"1",'JoueurTour'=>1,'DebutPartie'=>"2050-01-01 12:12:12"));
+        $partie = new Partie(array('Nom'=>$_POST['nomPartie'], 'Coordonnateur'=>$coordonnateur->getCompte(), 'DefinitionPartieId'=>"1",'JoueurTour'=>1,'DebutPartie'=>"2050-01-01 12:12:12", 'InteractionId'=>'0'));
         try {
             $partie->sauvegarde();
         }

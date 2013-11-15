@@ -9,13 +9,21 @@ abstract class CaseDeJeu { // implements EntreposageDatabase {
     protected $nom;
     protected $position;
     
+    
+    function __construct(array $array) {
+  
+        //$this->setPosition($array["Position"]);
+    }
+    
     // static Factory
     //static abstract  function pourDefinitionPartie($idDefinitionPartie);
     
     // fonctions de jeu
 	public function atterrirSur(Joueur $unJoueur) { //TODO: a deplacer dans les sous-classes
     	if($this->getType()=="achetable"){
-    		if($this->getProprietairePourPartieId($unJoueur->getPartieId()) != null){
+    		/* obsolete 
+    		 * 
+    		 *if($this->getProprietairePourPartieId($unJoueur->getPartieId()) != null){
     		    $proprio = $this->getProprietairePourPartieId($unJoueur->getPartieId());
     		    $proprio->chargerLoyerA($joueur, $this->calculerLoyer()); 
     		}
@@ -25,6 +33,7 @@ abstract class CaseDeJeu { // implements EntreposageDatabase {
     				$banque->vendrePropriete($unJoueur, $this);
     			}
     		}
+    		*/
     	}
     	else{
     		/*Tommy---*/

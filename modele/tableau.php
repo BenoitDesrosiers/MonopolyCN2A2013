@@ -6,7 +6,7 @@ require_once "modele/definitionPartie.php";
 //require_once "interface/entreposageDatabase.php";
 //FIXME: si je mets l'interface, ca ne fonctionnne pas
 
-class Tableau {  //implements EntreposageDatabase {
+class Tableau {  
 
     protected $cases;
     
@@ -27,15 +27,6 @@ class Tableau {  //implements EntreposageDatabase {
         return $tableau;
     }
    
-    // interface entreposageDatabase
-    public function getDataMapper() {
-        return new TableauDataMapper();
-    }
-    
-    public function sauvegarde() {
-        $this->getDataMapper->insert($this);
-    }
-    
     //Getters & Setters
     public function getCases() {
         return $this->cases;

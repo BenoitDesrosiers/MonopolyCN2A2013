@@ -293,6 +293,22 @@ class Partie extends Objet implements EntreposageDatabase {
         return $prochaineCarte;
     }
   
+    public function casesDuGroupe($groupeDeCarteId) {
+        //retourne les cases de jeu d'un groupe (train, service, couleur)
+        //ATTENTION: les cases retournees ne sont pas positionnees sur le tableau. 
+        
+        //c'est juste les cases achetables qui font partie d'un groupe
+        $casesAchetables =  CaseDeJeuAchetable::pourDefinitionPartie($this->getId()); 
+        $casesDuGroupe = array();
+        foreach ($casesAchetables as $case) {
+            if ($case->getGroupeDeCaseId() == $groupeDeCarteId) {
+                $casesDuGroupe[] = $case;
+            }
+        }
+        
+        return $casesDuGroupe;
+    }
+    
 	public function jouerCoup($joueur) {
 	}
 

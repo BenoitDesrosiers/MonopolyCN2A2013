@@ -35,7 +35,7 @@ switch ($action) {
         $tableauDeJeu = $partie->getTableau();
         //TODO: verifier que c'est ˆ ce joueur de jouer. 
         //TODO: ca devrait tre la partie qui dŽmarre le coup ??? 
-	    $joueur->setPosition(4); //FIXME: ˆ enlever une fois les tests termines
+	    $joueur->setPosition(6); //FIXME: ˆ enlever une fois les tests termines
 	    $joueur->brasseDes();
 	    break;
 
