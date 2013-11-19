@@ -19,11 +19,8 @@ class CaseActionDataMapper extends Mapper {
     protected function doCreateObject( array $array) {
         
         //TODO: creer 3 autres sous-clase de CaseDeJeuAchetable et les appeler CasePropriete, CaseTrain et CaseService et creer la bon selon le type provenant de GroupeDeCase
-        $obj = new CaseDeJeuAction();
-        $obj->setId($array['ID']);
-        $obj->setNom($array['Nom']);
-        $obj->setActionID($array['ActionID']);
-        
+        $obj = new CaseDeJeuAction($array);
+
         return $obj;        
     }
     

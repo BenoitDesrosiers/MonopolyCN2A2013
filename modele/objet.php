@@ -22,8 +22,10 @@ class Objet {
     
     public function notifie($sujet)
     {
-        foreach ($this->observateurs as $observateur) {
-            $observateur->update($this,$sujet);
+        if ($this->observateurs != null) {
+            foreach ($this->observateurs as $observateur) {
+                $observateur->update($this,$sujet);
+            }
         }
     }
     

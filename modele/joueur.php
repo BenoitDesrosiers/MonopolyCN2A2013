@@ -5,6 +5,7 @@ require_once 'modele/caseDeJeu.php';
 require_once 'modele/coupure.php';
 require_once 'modele/partie.php';
 require_once 'modele/tableau.php';
+require_once 'modele/cartePropriete.php';
 /*
  * un joueur n'est pas un usager, un usager est identifie par son compte, un joueur est identifie par son compte et une partie. 
  * un joueur a un usager d'associe
@@ -124,12 +125,48 @@ class Joueur extends Objet  implements EntreposageDatabase{
 		$uneCase->atterrirSur($this);
 	}
 	
+	public function convertirMontantEnBillets( $montant ) {
+	    /* converti un montant d'argent en le transformant en array de billets
+	     * input
+	     *     $montant : un entier representant le montant a encaisser
+	     * output
+	     *     un array contenant les billets optimaux pour representer le montant    
+	     */
+         //FIXME: la vraie facon de faire serait d'aller chercher une definition des billets disponibles pour cette definition de partie
+         //       mais ca n'existe pas pour l'instant, donc on prend 1,5,10,20,50,100,500 
+         //FIXME: cette conversion ne devrait pas etre fait par Joueur, ca devrait tre une fonction gŽnŽrique a laquelle on passerait l'array $coupuresDisponibles
+         
+	     $coupuresDisponibles =  array('1'=>1, '5'=>5, '10'=>10, '20'=>20, '50'=>50, '100'=>100, '500'=>500);
+	     $clesCoupures = array('500', '100', '50', '20', '10', '5', '1'); //on commence par le plus gros billets
+	     $coupuresFinales = array();
+	     $i = 0;
+	     while ($montant != 0) { //vue que le plus petit billet est un 1, c'est certain qu'on va arreter. 
+	         $montantCoupure = $coupuresDisponibles[$clesCoupures[$i]]; //la valeur du billet a la position $i
+	         
+	         if ($montant >= $montantCoupure) { //y'a assez d'argent pour ce montant de billet
+	             $qte = intval($montant/$montantCoupure); //combien de billets on peu generer
+	             $coupuresFinales[$clesCoupures[$i]] = $qte;
+	             $montant -= $qte * $montantCoupure; //on enleve la valeur des billets au montant. 
+	         }
+	         $i++;
+	     }
+	     
+	     return $coupuresFinales;
+	    
+	}
 	
-	
-	public function encaisse( $billets) {
+	public function encaisse( $argent) {
 	    /*input
-	     * $billets: un array de billets   coupures et qte
+	     * $billets: soit un array de billets (valeur et qte)
+	     *           soit un int qui sera convertit en array de billets
 	     */ 
+	    if (is_array($argent)) {
+	        //la fonction a recu un array (montant et qte)
+	        $billets = $argent;
+	    } else {
+	        //la fonction a recu un int, on le convertit
+	        $billets = $this->convertirMontantEnBillets($argent);
+	    }
 	    $monArgent = $this->getArgent();
         foreach ($billets as $valeur => $qte) {
             $monArgent[$valeur] += $qte; //TODO: verifier que les qte sont positives, ou accepter les nŽgatives mais planter si y'en a pas assez. La fonction ferait donc un encaisse et un dŽcaisse
@@ -220,15 +257,15 @@ class Joueur extends Objet  implements EntreposageDatabase{
         }
         //appel la fonction encaisse pour mettre a jour l'argent du joueur.
         $this->setArgent($argent);
-        return $argent;
+        //return $argent; //TODO: devrait retourner l'argent utilisŽe pour payer. 
     }
 
-	public function tenterAchat(CaseDeJeuAchetable $uneCase){
+	public function tenterAchat(CartePropriete $carte){
 	    return true;
 	}
 	
 	public function chargerLoyerA($locataire, $loyer){
-	    $this->encaisse($locataire->paye($loyer));
+	    $locataire->paye($loyer);
 	    $this->encaisse($loyer);
 	}
 	
@@ -303,6 +340,10 @@ class Joueur extends Objet  implements EntreposageDatabase{
 	public function setPartieId($value) {
 	    $this->partieId = $value;
 	    $this->notifie("partieId");
+	}
+	
+	public function getProprietes() {
+	    return CartePropriete::pourJoueurs($this);
 	}
 	
 }
