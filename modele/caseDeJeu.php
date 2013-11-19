@@ -17,7 +17,7 @@ abstract class CaseDeJeu { // implements EntreposageDatabase {
     	if($this->getType()=="achetable"){
     		if($this->getProprietairePourPartieId($unJoueur->getPartieId()) != null){
     		    $proprio = $this->getProprietairePourPartieId($unJoueur->getPartieId());
-    		    $proprio->chargerLoyerA($joueur, $this->calculerLoyer()); 
+    		    $proprio->chargerLoyerA($unJoueur, $this->calculerLoyer($unJoueur)); 
     		}
     		else {
     			if($unJoueur->tenterAchat($this)){

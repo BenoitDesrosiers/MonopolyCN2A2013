@@ -2,14 +2,11 @@
 require_once "modele/caseDeJeuAchetable.php";
 
 class CaseDeJeuServicePublic extends CaseDeJeuAchetable {
-	public function calculerLoyer(){
-		//a modifier plus tard
-		//[1]==avec un terain
-		//[2]==avec le second
+	public function calculerLoyer($joueur){
 		$compteur = 0;
-		foreach ($tableauDeJeu->getCases() as $case) :
-			if($case->getCouleur == "service")
-				if($this->getProprio == $case->getProprio)
+		foreach ($this->getDataMapper()->pourDefinitionPartie($joueur->getPartieId()) as $case) :
+			if($case->getCouleur() == "service")
+				if($this->getProprietairePourPartieId($joueur->getPartieId()) == $case->getProprietairePourPartieId($joueur->getPartieId()))
 					$compteur++;
 		endforeach;
 		if($compteur == 2){

@@ -84,28 +84,4 @@ abstract class CaseDeJeuAchetable extends CaseDeJeu {
     public function getType() {
         return "achetable";
     }
-        
-    
-    public function getNombreMaisonPourPartieId($partieId){
-        return $this->getDataMapper()->getNombreMaisonPourPartieId($this->getId(), $partieId);
-    }
-    
-    /*TODO: faut ajouter le numero de partie
-     * 
-     public function setNombreMaison($value){
-    	$this->NombreMaisons = $value;
-    }
-    */
-    
-    public function getNombreHotelPourPartieId($partieId){
-        return $this->getDataMapper()->getNombreHotelPourPartieId($this->getId(), $partieId);
-    }
-    
-    /*TODO: faut ajouter le numero de partie
-    public function setNombreHotel($value){
-    	$this->NombreHotels = $value;
-    }
-    */
-    
-    
 }
