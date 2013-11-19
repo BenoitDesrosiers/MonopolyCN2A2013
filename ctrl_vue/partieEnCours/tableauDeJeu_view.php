@@ -250,8 +250,8 @@ $LongueurMax = 12;
 							</td> 
 	    			
 	    				<?php else : 
-	    					if($case->getCouleur() == "service" || $case->getCouleur() =="train") :?>
-		    					<td class="caseH">
+	    					if($case->getType() == "servicePublic" || $case->getType() =="train") :?>
+	  		    					<td class="caseH">
 			    					<svg width="75px" height="100px" xmlns="http://www.w3.org/2000/svg" version="1.1">
 										<text class="titreP" x="38px" y="40px">
 											<?php $nomCase = $case->getNom();
