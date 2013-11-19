@@ -74,6 +74,23 @@ abstract class CaseDeJeuAchetable extends CaseDeJeu {
     	$this->proprietaire = $joueur;
     	$this->getDataMapper()->insertProprietaire($joueur, $this);    	
     }
+    
+    public function atterrirSur(Joueur $unJoueur) {
+    	//Fonction d'attérir sur une case achetable.
+    	//On regarde si la case a un propriétaire si oui,
+    	// on va chercher le propriétaire de la case de jeu et on charge le loyer.
+    	// Sinon on demande au joueur s'il veut acheter la case. 
+    	if($this->getProprietairePourPartieId($unJoueur->getPartieId()) != null){
+    		$proprio = $this->getProprietairePourPartieId($unJoueur->getPartieId());
+    		$proprio->chargerLoyerA($joueur, $this->calculerLoyer());
+   		}
+   		else {
+   			if($unJoueur->tenterAchat($this)){
+   				$banque = new banque;
+   				$banque->vendrePropriete($unJoueur, $this);
+   			}
+   		}
+    }
 
    /*TODO: obsolete 
     * public function changerProprietaire($Joueur){

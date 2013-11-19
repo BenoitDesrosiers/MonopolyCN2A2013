@@ -8,8 +8,8 @@ $LongueurMax = 12;
 	    			 	if($i == 0 || $i == 10) :?>
 	    			 		 <td class="caseCoin">
 	    			 		 	<svg width="100px" height="100px" xmlns="http://www.w3.org/2000/svg" version="1.1">
-									<text class="titreP" x="35px" y="50px" transform="rotate(180 50,50)">
-										COIN</text>
+									<text class="titreP" x="45px" y="40px" transform="rotate(180 50,50)">
+										<?php echo $case->getNom();?></text>
 								</svg>
 	    			 		 </td>
 	    				<?php elseif ($case == null) :?>
@@ -238,7 +238,7 @@ $LongueurMax = 12;
 	    			   		<td class="caseCoin">
 	    			  	 		<svg width="100px" height="100px" xmlns="http://www.w3.org/2000/svg" version="1.1">
 									<text class="titreP" x="35px" y="40px" >
-										COIN</text>
+										<?php echo $case->getNom();?></text>
 								</svg>
 	    			    	</td>
 	    				<?php elseif($case == null) :?>
