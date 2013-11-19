@@ -15,4 +15,9 @@ class CaseDeJeuServicePublic extends CaseDeJeuAchetable {
 			return (4*Joueur::brasseDes());
 		}
 	}
+	
+	public function getType() {
+	    return "servicePublic";
+	}
+	 
 }

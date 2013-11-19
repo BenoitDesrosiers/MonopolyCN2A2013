@@ -34,9 +34,7 @@ abstract class CaseDeJeuAchetable extends CaseDeJeu {
         $this->setNom($array["Titre"]);
         $this->setPrix($array["Prix"]);
         $this->setNom($array["Titre"]);
-        $this->setCouleur($array["Couleur"]);
-        $this->setCouleurHTML($array["CouleurHTML"]);
-        $this->setGroupeDeCaseId($array[""]);
+        $this->setGroupeDeCaseId($array["GroupeDeCaseId"]);
         $this->setLocation($array["Location"]);
         $this->setLocation1($array["Location1Maison"]);
         $this->setLocation2($array["Location2Maison"]);
@@ -46,7 +44,7 @@ abstract class CaseDeJeuAchetable extends CaseDeJeu {
         $this->setCoutHotel($array["CoutHotel"]);
         $this->setCoutMaison($array["CoutMaison"]);
         $this->setHypotheque($array["Hypotheque"]);
-        $this->setURLLogo($array["URLLogo"]);
+        $this->setURLLogo($array["URLlogo"]);
          
     }
     
@@ -113,13 +111,7 @@ abstract class CaseDeJeuAchetable extends CaseDeJeu {
     }
     
     //Getters & Setters
-    public function getCouleur() {
-        return $this->Couleur;
-    }
-    
-    public function setCouleur($value) {
-        $this->Couleur = $value;
-    }
+   
     
     public function getPrix() {
         return $this->prix;
@@ -127,12 +119,7 @@ abstract class CaseDeJeuAchetable extends CaseDeJeu {
     public function setPrix($value) {
         $this->prix = $value;
     }
-    public function getCouleurHTML() {
-        return $this->couleurHTML;
-    }
-    public function setCouleurHTML($value) {
-        $this->couleurHTML = $value;
-    }
+    
     
     public function getURLLogo() {
         return $this->URLLogo;
@@ -215,9 +202,6 @@ abstract class CaseDeJeuAchetable extends CaseDeJeu {
     
     
    
-    public function getType() {
-        return "achetable";
-    }
-        
+     
     
 }

@@ -28,17 +28,19 @@ class CaseAchetableDataMapper extends Mapper {
         $query->execute();
         $array2  = $query->fetch();
      
-       if($array2['IsCheminDeFer']==1)
-        	$obj = new CaseDeJeuTrain($array );
-        elseif($array2['IsServicePublique']==1)
-        	$obj = new CaseDeJeuServicePublic($array);
-        else {
-            $array["GroupeDeCaseId"] = $array2["Id"];
+        $array["GroupeDeCaseId"] = $array2["Id"];
+        
+       if($array2['IsCheminDeFer']=="1") {
+               $obj = new CaseDeJeuTrain($array );
+       }
+       elseif($array2['IsServicePublique']=="1") {
+            $obj = new CaseDeJeuServicePublic($array);
+       } else {
             $array["Couleur"] = $array2["Couleur"];
             $array["CouleurHTML"] = $array2["CouleurHTML"];
-        	$obj = new CaseDeJeuPropriete($array); 
-        }
-        return $obj;        
+        	$obj = new CaseDeJeuPropriete($array);  
+       }
+       return $obj;        
     }
     
     protected function doInsert($object) {
