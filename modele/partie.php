@@ -23,7 +23,8 @@ class Partie extends Objet implements EntreposageDatabase {
     protected $joueurs; // la liste des joueurs (de 1 ˆ 8)
     protected $tableau; // le tableau sur lequel se deroule la partie
     protected $banque;
-    protected $des;
+    protected $premierDes;
+    protected $deuxiemeDes;
     protected $cartesChance;
     protected $cartesCaisseCommune;
     protected $pions;
@@ -210,13 +211,7 @@ class Partie extends Objet implements EntreposageDatabase {
         $this->notifie("cartesChance");
     }
 
-    public function getDes() {
-        return $this->des;
-    }
-    public function setDes($value) {
-        $this->des = $value;
-        //pas de notifie() parce que ca va pas dans la bd
-    }
+    
 
     public function getBanque() {
         return $this->banque;
@@ -226,7 +221,21 @@ class Partie extends Objet implements EntreposageDatabase {
         $this->notifie("banque");
     }
 
+    public function getPremierDes() {
+    	return $this->premierDes;
+    }
     
+    public function setPremierDes($value) {
+    	$this->premierDes = $value;
+    }
+    
+    public function getDeuxiemeDes() {
+    	return $this->deuxiemeDes;
+    }
+    
+    public function setDeuxiemeDes($value) {
+    	$this->deuxiemeDes = $value;
+    }
 
     public function getJoueurs() {    
         return Joueur::PourPartie($this->getId());
@@ -351,6 +360,33 @@ class Partie extends Objet implements EntreposageDatabase {
     
     public function getInteractionId() {
         return $this->interactionId;
+    }
+    
+    public function genererValeursDes() {
+    // Génère une valeur aléatoire entre 1 et 6 pour les 2 deux dés
+    	$this->premierDes(rand(1, 6));
+    	$this->deuxiemeDes(rand(1, 6));
+    }
+    
+    public function valeurDes() {
+    // Retourne la valeur de la somme des dés
+    	if (($this->premierDes + $this->deuxiemeDes) >= 2 && ($this->premierDes + $this->deuxiemeDes) <= 12 ) {
+    		return ($this->premierDes + $this->deuxiemeDes);
+    	}
+    	// Sinon, on lance un message d'erreur
+    	else {
+    		affiche_erreur("ERREUR: La valeur retournee par les des est trop grande/petite ou NULL.");
+    	}
+    }
+    
+    public function desValeursIdentiques () {
+    // Retourne un bool dépendamment si les valeurs des dés sont identiques
+    	if ($this->premierDes == $this->deuxiemeDes) {
+    		return true;
+    	}
+    	else {
+    		return false;
+    	}
     }
 }
 ?>

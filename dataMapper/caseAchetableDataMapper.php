@@ -28,10 +28,12 @@ class CaseAchetableDataMapper extends Mapper {
         $query->execute();
         $array2  = $query->fetch();
      
-       if($array2['IsCheminDeFer']==1)
+		if($array2['IsCheminDeFer']==1) {
         	$obj = new CaseDeJeuTrain($array );
-        elseif($array2['IsServicePublique']==1)
-        	$obj = new CaseDeJeuServicePublic($array);
+		}
+        elseif($array2['IsServicePublique']==1) {
+        	$obj = new CaseDeJeuServicePublic($array);	
+        }
         else {
             $array["GroupeDeCaseId"] = $array2["Id"];
             $array["Couleur"] = $array2["Couleur"];
@@ -115,7 +117,7 @@ class CaseAchetableDataMapper extends Mapper {
     }
     
     function parPositionCase($position, $idDefinitionPartie) {
-    	// retourne un array contenant toutes les cases achetable du tableau
+    	// retourne une case achetable du tableau à une position spécifique
     
     	// commence par aller chercher la liste des Id dans la table DefinitionPartie_CaseAchetable
     	$queryTxt = 'SELECT * FROM DefinitionPartie_CaseAchetable

@@ -100,28 +100,43 @@ class Joueur extends Objet  implements EntreposageDatabase{
     
     //fonctions pour jouer
 	public function brasseDes() {
-	    //TODO: je crois que ca devrait tre ˆ la partie de brasser les ds. 
-	    
-		// Creation des des
-		//FIXME: faire la vrai cration des ds
-		$des1 = array('ID' => 0, 'Val' => 1);
-		$des2 = array('ID' => 1, 'Val' => 1);
+	    // CrÃ©ation de la partie et set des dÃ©s
+		$partie = Partie::parId(1);
+		$partie->genererValeursDes();
 		
-		//FIXME: on fait quoi quand y'a un double? faudrait mettre la partie dans un tat permettant ˆ ce joueur de rejouer
-		// Ajustement de la position du joueur
-		$this->setPosition($this->getPosition() + $des1['Val'] + $des2['Val']);
-				
-		// Creer et lancer une case de jeu		
+		// FIXME: GÃ©rer un double
+		if ($partie->desValeursIdentiques()) {
+		// Si les valeurs des dÃ©s sont identiques...
+			echo "Meme valeurs";
+		}
+	}
+	
+	public function avanceSurCase(CaseDeJeu $uneCase) {
+		// Ajustement de la position du joueur en ajoutant la valeur des dï¿½s ï¿½ la valeur de la position actuelle du joueur.
+			// ATTENTION : Prï¿½sentement, le setPosition est placï¿½ dans cette classe en attendant que le dataMapper de joueur soit crï¿½ï¿½. (Voir lignes 72 ï¿½ 84)
+		$this->setPosition($this->getPosition() + $partie->valeurDes());
+		
+		// Crï¿½er et lancer une case de jeu
 		$uneCase = null;
 		
-		$partie = Partie::parId($this->getPartieId());
-		$tableau = $partie->getTableau();
-		$uneCase = $tableau->getCaseParPosition($this->getPosition());
+		// VÃ©rifie si la case existe
+		foreach ($partie->getTableau()->getCases() as $case) :
+			if ($case->getPosition() == $this->getPosition()) :
+				$uneCase = $case;
+			endif;
+		endforeach;
 		
+		// Si la case est null, lancer un message d'erreur
 		if ($uneCase == null) :
-		    //TODO: changer pour afficher_erreur 
-			echo "ATTENTION: Erreur lors de l'attribution de l'objet case achetable/case action par la position";
+			affiche_erreur("ATTENTION: Erreur lors de l'attribution de l'objet case achetable/case action par la position");
 		endif;
+		
+		/// Output Tests ///
+		echo "Dice values: ".$partie->getPremierDes().", ".$partie->getDeuxiemeDes();
+		echo "<br/>";
+		echo $uneCase->getNom()." est une ".$uneCase->getType();
+		/////////////////////
+		
 		$uneCase->atterrirSur($this);
 	}
 	
@@ -134,7 +149,7 @@ class Joueur extends Objet  implements EntreposageDatabase{
 	     */
          //FIXME: la vraie facon de faire serait d'aller chercher une definition des billets disponibles pour cette definition de partie
          //       mais ca n'existe pas pour l'instant, donc on prend 1,5,10,20,50,100,500 
-         //FIXME: cette conversion ne devrait pas etre fait par Joueur, ca devrait tre une fonction gnrique a laquelle on passerait l'array $coupuresDisponibles
+         //FIXME: cette conversion ne devrait pas etre fait par Joueur, ca devrait ï¿½tre une fonction gÅ½nÅ½rique a laquelle on passerait l'array $coupuresDisponibles
          
 	     $coupuresDisponibles =  array('1'=>1, '5'=>5, '10'=>10, '20'=>20, '50'=>50, '100'=>100, '500'=>500);
 	     $clesCoupures = array('500', '100', '50', '20', '10', '5', '1'); //on commence par le plus gros billets
@@ -169,7 +184,7 @@ class Joueur extends Objet  implements EntreposageDatabase{
 	    }
 	    $monArgent = $this->getArgent();
         foreach ($billets as $valeur => $qte) {
-            $monArgent[$valeur] += $qte; //TODO: verifier que les qte sont positives, ou accepter les ngatives mais planter si y'en a pas assez. La fonction ferait donc un encaisse et un dcaisse
+            $monArgent[$valeur] += $qte; //TODO: verifier que les qte sont positives, ou accepter les nÅ½gatives mais planter si y'en a pas assez. La fonction ferait donc un encaisse et un dÅ½caisse
         }	    
         $this->setArgent($monArgent);
 	}
@@ -198,7 +213,7 @@ class Joueur extends Objet  implements EntreposageDatabase{
                 echo "Montant a payer: ".$montant."<br/>";
                 
                 $argentCtr -= $montant;
-                echo "Argent du joueur aprÃ¨s: ".$argentCtr."<br/>";
+                echo "Argent du joueur aprÃƒÂ¨s: ".$argentCtr."<br/>";
                 
                 //creation de l'array de paiement exemple le joueur doit payer 350, il paye avec un 500
                 // montantCtr = valeur que le joueur recupere
@@ -257,7 +272,7 @@ class Joueur extends Objet  implements EntreposageDatabase{
         }
         //appel la fonction encaisse pour mettre a jour l'argent du joueur.
         $this->setArgent($argent);
-        //return $argent; //TODO: devrait retourner l'argent utilise pour payer. 
+        //return $argent; //TODO: devrait retourner l'argent utilisÅ½e pour payer. 
     }
 
 	public function tenterAchat(CartePropriete $carte){

@@ -16,7 +16,7 @@ class CarteProprieteDataMapper extends Mapper {
                                                         CaseAchetableId, OrdreAffichage, Hypotheque, NombreMaisons, NombreHotels) values (?,?,?,?,?,?,?)");
     }
 
-    function find($cle) {
+    function find(array $cle) {
         $obj = parent::find($cle);
         if ($obj == null) { //la carte n'est pas dans la bd encore, on cree une carte dummy sans proprietaire
             $array = array("JoueurPartieUsagerCompte"=>"",

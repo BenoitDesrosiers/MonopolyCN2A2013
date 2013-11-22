@@ -36,7 +36,7 @@ abstract class CaseDeJeuAchetable extends CaseDeJeu {
         $this->setNom($array["Titre"]);
         $this->setCouleur($array["Couleur"]);
         $this->setCouleurHTML($array["CouleurHTML"]);
-        $this->setGroupeDeCaseId($array[""]);
+        $this->setGroupeDeCaseId($array["GroupeDeCaseId"]);
         $this->setLocation($array["Location"]);
         $this->setLocation1($array["Location1Maison"]);
         $this->setLocation2($array["Location2Maison"]);
@@ -46,7 +46,7 @@ abstract class CaseDeJeuAchetable extends CaseDeJeu {
         $this->setCoutHotel($array["CoutHotel"]);
         $this->setCoutMaison($array["CoutMaison"]);
         $this->setHypotheque($array["Hypotheque"]);
-        $this->setURLLogo($array["URLLogo"]);
+        $this->setURLLogo($array["URLlogo"]);
          
     }
     
