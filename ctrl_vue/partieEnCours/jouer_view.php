@@ -66,6 +66,7 @@
                  </div>
                 
                 <?php include 'tableauDeJeu_view.php' ?>
+                
         </div>
     </div> <!-- contenu -->
     </div> <!-- enveloppe -->

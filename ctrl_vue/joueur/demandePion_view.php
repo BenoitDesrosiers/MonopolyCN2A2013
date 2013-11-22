@@ -1,3 +1,4 @@
+
 <?php 
 /*
  * Page permettant au joueur de choisir son pion. 

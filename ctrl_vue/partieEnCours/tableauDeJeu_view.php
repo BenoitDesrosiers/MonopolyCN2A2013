@@ -303,6 +303,7 @@ $LongueurMax = 12;
 												 <?php echo $case->getNom();
 												 endif;?></text>
 									<text class="montant" x="38px" y="80px"><?php echo $case->getPrix();?> $</text>
+									<?php $?>
 								</svg>
 							</td>
 						<?php endif;?>
