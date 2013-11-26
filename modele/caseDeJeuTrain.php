@@ -8,4 +8,9 @@ class CaseDeJeuTrain extends CaseDeJeuAchetable {
 	    
 		return (50*$nombreCartesMemeProprio);
 	}
+	
+	public function getType() {
+	    return "train";
+	}
+	 
 }

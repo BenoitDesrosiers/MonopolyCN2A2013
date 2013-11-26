@@ -27,7 +27,7 @@ class CaseAchetableDataMapper extends Mapper {
         $query->setFetchMode(PDO::FETCH_ASSOC);
         $query->execute();
         $array2  = $query->fetch();
-     
+
         if($array2['IsCheminDeFer']==1){
         	$obj = new CaseDeJeuTrain($array );
         }
@@ -38,9 +38,9 @@ class CaseAchetableDataMapper extends Mapper {
             $array["GroupeDeCaseId"] = $array2["Id"];
             $array["Couleur"] = $array2["Couleur"];
             $array["CouleurHTML"] = $array2["CouleurHTML"];
-        	$obj = new CaseDeJeuPropriete($array); 
-        }
-        return $obj;        
+        	$obj = new CaseDeJeuPropriete($array);  
+       }
+       return $obj;        
     }
     
     protected function doInsert($object) {

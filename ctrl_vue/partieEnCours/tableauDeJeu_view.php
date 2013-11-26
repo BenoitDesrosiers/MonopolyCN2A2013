@@ -21,7 +21,7 @@ $LongueurMax = 12;
 							</td> 
 	    				
 	    				<?php else : 
-	    					if($case->getCouleur() == "service" || $case->getCouleur() =="train") :?>
+	    					if($case->getType() == "servicePublic" || $case->getType() =="train") :?>
 	    						<td class="caseH">
 			    					<svg width="75px" height="100px" xmlns="http://www.w3.org/2000/svg" version="1.1">
 										<text class="titreP" x="38px" y="15px" transform="rotate(180 38,35)">
@@ -92,8 +92,8 @@ $LongueurMax = 12;
 								</svg>
 							</td> 
 	    				<?php else :
-	    					if($case->getCouleur() == "service" || $case->getCouleur() =="train") :?> 
-	    					<td class="caseCote">
+	    					if($case->getType() == "servicePublic" || $case->getType() =="train") :?>
+	   	    					<td class="caseCote">
 		    					<svg width="100px" height="75px" xmlns="http://www.w3.org/2000/svg" version="1.1">
 									<text class="titreP" x="38px" y="15px" transform="rotate(90 38,35)">
 										<?php $nomCase = $case->getNom();
@@ -171,8 +171,8 @@ $LongueurMax = 12;
 										Case action</text>
 								</svg>
 								</td> 
-	    					<?php else : ?>
-	    						<?php if($case->getCouleur() == "service" || $case->getCouleur() == "train") :?>
+	    					<?php else :
+	    					if($case->getType() == "servicePublic" || $case->getType() =="train") :?>
 		    						<td class="caseCote">
 				    					<svg width="100px" height="75px" xmlns="http://www.w3.org/2000/svg" version="1.1">
 											<text class="titreP" x="38px" y="40px" transform="rotate(270 38,35)">
@@ -250,8 +250,8 @@ $LongueurMax = 12;
 							</td> 
 	    			
 	    				<?php else : 
-	    					if($case->getCouleur() == "service" || $case->getCouleur() =="train") :?>
-		    					<td class="caseH">
+	    					if($case->getType() == "servicePublic" || $case->getType() =="train") :?>
+	  		    					<td class="caseH">
 			    					<svg width="75px" height="100px" xmlns="http://www.w3.org/2000/svg" version="1.1">
 										<text class="titreP" x="38px" y="40px">
 											<?php $nomCase = $case->getNom();

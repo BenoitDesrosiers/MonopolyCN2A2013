@@ -41,7 +41,7 @@ abstract class CaseDeJeu { // implements EntreposageDatabase {
     public abstract function getType();
     
     public function getCouleurHTML() {
-        return "#FFFFFF"; //TODO: hack pour faire marcher le tableau d'affichage. 
+        return "#ffffff"; //TODO: hack pour faire marcher le tableau d'affichage. 
     }
     public function getCouleur() {
         return "blanc"; //TODO: hack pour faire fonctionner le tableau

@@ -9,10 +9,31 @@ class CaseDeJeuPropriete extends CaseDeJeuAchetable {
 		return $this->getDataMapper()->getNombreMaisonPourPartieId($this->getId(), $partieId);
 	}	
 	
-	public function getNombreHotelPourPartieId($partieId){
-		return $this->getDataMapper()->getNombreHotelPourPartieId($this->getId(), $partieId);
-	}	
-	
+	/* 
+	 * obsolete remplacee par cartePropriete
+	 *public function setNbrMaison($nombre){
+		$this->nbrMaison = $nombre;
+	}
+	public function getNbrMaison(){
+		return $this->nbrMaison;
+	}
+	public function setNbrHotel($nombre){
+		$this->nbrHotel = $nombre;
+	}
+	public function getNbrHotel(){
+		return $this->nbrHotel;
+	}
+	*/
+     function __construct(array $array) {
+            /*
+             * input
+            *     un array associative 
+            */
+            parent::__construct($array);    
+            $this->setCouleur($array["Couleur"]);
+            $this->setCouleurHTML($array["CouleurHTML"]);
+     }
+     
 	public function calculerLoyer(CartePropriete $propriete){
 	
 	    switch ($propriete->getNombreMaisons()) {
@@ -37,4 +58,24 @@ class CaseDeJeuPropriete extends CaseDeJeuAchetable {
 	    }      
 		return $montant;
 	}
+	
+	//Getter & Setter
+	public function getCouleur() {
+	    return $this->Couleur;
+	}
+	
+	public function setCouleur($value) {
+	    $this->Couleur = $value;
+	}
+	public function getCouleurHTML() {
+	    return $this->couleurHTML;
+	}
+	public function setCouleurHTML($value) {
+	    $this->couleurHTML = $value;
+	}
+	
+	public function getType() {
+	    return "propriete";
+	}
+	 
 }

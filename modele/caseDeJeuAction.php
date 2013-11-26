@@ -20,7 +20,7 @@ class CaseDeJeuAction extends CaseDeJeu {
         $this->setId($array["ID"]);
         $this->setNom($array["Nom"]);
         $this->setImage($array["Image"]);
-        $this->setActionID($array["ActionId"]);
+        $this->setActionID($array["ActionID"]);
     }
     
     // static Factory
