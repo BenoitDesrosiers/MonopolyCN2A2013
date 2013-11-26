@@ -33,10 +33,20 @@ switch ($action) {
 	case 'JouerCoup' : 
         $titrePage= "Jouer un coup";
         $tableauDeJeu = $partie->getTableau();
-        //TODO: verifier que c'est ˆ ce joueur de jouer. 
-        //TODO: ca devrait tre la partie qui dŽmarre le coup ??? 
-	    $joueur->setPosition(4); //FIXME: ˆ enlever une fois les tests termines
+        
+        switch ($partie->getInteractionId()){
+        	case 74 :
+        		//mon include
+        		echo "affichage de la question";
+        		break;
+        }
+        
+        //TODO: verifier que c'est ï¿½ ce joueur de jouer. 
+        //TODO: ca devrait ï¿½tre la partie qui dï¿½marre le coup ??? 
+	    $joueur->setPosition(10); //FIXME: ï¿½ enlever une fois les tests termines
+	    $joueur->setToursRestantEnPrison(2); //FIXME: ï¿½ enlever une fois les tests termines
 	    $joueur->brasseDes();
+	    include('./jouer_view.php');
 	    break;
 
 }

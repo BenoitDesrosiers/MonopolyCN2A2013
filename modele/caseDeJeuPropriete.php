@@ -1,47 +1,40 @@
 <?php
-require_once "modele/caseDeJeuAchetable.php";
 require_once "dataMapper/caseAchetableDataMapper.php";
+require_once "modele/cartePropriete.php";
+require_once "modele/caseDeJeuAchetable.php";
 
 class CaseDeJeuPropriete extends CaseDeJeuAchetable {
 
 	public function getNombreMaisonPourPartieId($partieId){
 		return $this->getDataMapper()->getNombreMaisonPourPartieId($this->getId(), $partieId);
-	}
-	
-	/*TODO: faut ajouter le numero de partie
-	 
-	public function setNombreMaison($value){
-		$this->NombreMaisons = $value;
-	}*/
-	
+	}	
 	
 	public function getNombreHotelPourPartieId($partieId){
 		return $this->getDataMapper()->getNombreHotelPourPartieId($this->getId(), $partieId);
-	}
+	}	
 	
-	/*TODO: faut ajouter le numero de partie
-	 public function setNombreHotel($value){
-	$this->NombreHotels = $value;
-	}
-	*/
+	public function calculerLoyer(CartePropriete $propriete){
 	
-	public function calculerLoyer($joueur){
-		
-		$prix = $this->getDataMapper()->loadPrix($this->getId());
-		
-		if($this->nbrHotel == 1)
-			$montant = $prix['LocationHotel'];
-		elseif ($this->getNombreHotelPourPartieId($joueur->getPartieId()) == 4)
-			$montant = $prix['Location4Maison'];
-		elseif ($this->getNombreMaisonPourPartieId($joueur->getPartieId()) == 3)
-			$montant = $prix['Location3Maison'];
-		elseif ($this->getNombreMaisonPourPartieId($joueur->getPartieId()) == 2)
-			$montant = $prix['Location2Maison'];
-		elseif ($this->getNombreMaisonPourPartieId($joueur->getPartieId()) == 1)
-			$montant = $prix['Location1Maison'];
-		else 
-			$montant = $prix['Location'];
-		
+	    switch ($propriete->getNombreMaisons()) {
+	        case '0' :
+	            $montant = $this->getLocation();
+	            break;
+	        case "1" :
+	            $montant = $this->getLocation1();
+	            break;	            
+	        case "2" :
+	            $montant = $this->getLocation2();
+	            break;	            
+	        case "3" :
+	            $montant = $this->getLocation3();
+	            break;	            
+	        case "4" :
+	            $montant = $this->getLocation4();
+	            break;	            
+	        default: // un hotel = 5 maisons
+	            $montant = $this->getLocation5();
+	            break;	            
+	    }      
 		return $montant;
 	}
 }

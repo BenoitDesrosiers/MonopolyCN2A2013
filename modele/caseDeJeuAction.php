@@ -9,6 +9,19 @@ class CaseDeJeuAction extends CaseDeJeu {
     protected $image;
     protected $actionId;
 
+    function __construct(array $array) {
+        /*
+         * input
+        *     un array associative contenant le
+        *     'Id' : le compte ,
+        *     'Titre' : le nom de la case
+        */
+        parent::__construct($array);
+        $this->setId($array["ID"]);
+        $this->setNom($array["Nom"]);
+        $this->setImage($array["Image"]);
+        $this->setActionID($array["ActionId"]);
+    }
     
     // static Factory
     static function pourDefinitionPartie($idDefinitionPartie) {
@@ -20,6 +33,8 @@ class CaseDeJeuAction extends CaseDeJeu {
         $dataMapper = new CaseActionDataMapper();
         return $dataMapper->parPositionCase($positionCase, $idDefinitionPartie);
     }
+    
+    public function atterrirSur(Joueur $unJoueur){}//TODO: implementer la fonction
     
     // interface entreposageDatabase
     public function getDataMapper() {
