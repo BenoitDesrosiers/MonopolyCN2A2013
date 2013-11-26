@@ -310,3 +310,6 @@ $LongueurMax = 12;
 						<?php $i++;?>
 	    		<?php endwhile;?>
 	    		</table>
+	    		
+	    		
+	    		

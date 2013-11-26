@@ -86,7 +86,24 @@
 	</div> <!-- argent -->
 
 	<div id="propriete">
-        <!-- afficher les proprietes du joueur ici -->  
+	<?php 
+			$carte = $joueur->getProprietes();
+			?>
+			<table>
+			<?php
+			foreach ( $carte as $propriete )
+			{
+				?>
+				
+				<?php
+				//echo $propriete->getCaseId();
+				$case = $propriete->getCaseAssociee();
+				include './proprieteView.php';
+			}
+			
+			?>
+			</table>
+        
     </div> <!-- propriete -->
 	<?php include 'vue/piedpage.php'; ?>
     

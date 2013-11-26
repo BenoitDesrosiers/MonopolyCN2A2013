@@ -15,6 +15,7 @@ if (isset($_POST['action'])) {
 	$action=$_GET['action'];
 } else {
 	$action = 'afficheTableau';
+	$action = 'affichePropriete';
 }
 
 $usager = $_SESSION['usager']; //TODO: ne pas mettre l'usager dans la session, mettre son id et le recreer chaque fois.
@@ -30,12 +31,20 @@ switch ($action) {
 		$tableauDeJeu = $partie->getTableau();
 		include('./jouer_view.php');
 	    break;
+	    
+	case 'affichePropriete' :
+		$titrePage= $partie->getNom();
+		$tableauDeJeu = $partie->getTableau();
+		
+		include('./jouer_view.php');
+		break;
+		
 	case 'JouerCoup' : 
         $titrePage= "Jouer un coup";
         $tableauDeJeu = $partie->getTableau();
-        //TODO: verifier que c'est ˆ ce joueur de jouer. 
-        //TODO: ca devrait tre la partie qui dŽmarre le coup ??? 
-	    $joueur->setPosition(6); //FIXME: ˆ enlever une fois les tests termines
+        //TODO: verifier que c'est Ë† ce joueur de jouer. 
+        //TODO: ca devrait ï¿½tre la partie qui dÅ½marre le coup ??? 
+	    $joueur->setPosition(6); //FIXME: Ë† enlever une fois les tests termines
 	    $joueur->brasseDes();
 	    include('./jouer_view.php');
 	    break;
