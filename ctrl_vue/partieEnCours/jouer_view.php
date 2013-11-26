@@ -1,6 +1,6 @@
 <?php 
 /*
- * la partie est dŽmarrŽe. 
+ * la partie est dï¿½marrï¿½e. 
  * Affiche le tableau et l'info des joueurs. 
  * 
  */?>
