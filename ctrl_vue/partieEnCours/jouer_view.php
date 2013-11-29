@@ -77,6 +77,7 @@
 				<li><a href="#nogo" onClick="DemoAjax()"><b>demo Ajax</b></a></li>
 	            <li><a href="#nogo"><b>Achat Maison</b></a></li>
 				<li><a href="#nogo"><b>Achat Hotel</b></a></li>
+				<li><a href=".?action=questionVtPropriete"><b>Ventre Propriété</b></a></li>
 				<li><a href="#nogo"><b>Quitter</b></a></li>
 			</ul>
 	</div> <!-- navigation -->
