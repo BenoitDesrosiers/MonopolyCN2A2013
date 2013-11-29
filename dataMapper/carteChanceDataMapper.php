@@ -33,7 +33,7 @@ class CarteChanceDataMapper extends Mapper {
     
     protected function doInsert( $object){
         if (!$this->nomLibre($object->getNom())) {
-            //Verifie si il n'y a pas deja une partie avec le même nom.
+            //Verifie si il n'y a pas deja une partie avec le meme nom.
             throw new Exception('nom deja utilise');
         }
         //TODO ajouter un check si le coordonnateur n'est pas null ou inexistant

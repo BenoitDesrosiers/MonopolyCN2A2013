@@ -15,7 +15,7 @@ if (!isset($_SESSION['usager'])) {
     <body>
     <?php
     //CONNECTION 1.2a : certain navigateur ne supporte pas la redirection. On affiche ce message et l'usager peut faire la redirection manuellement.
-    echo "Vous allez être redirige sur la page d'identification. <br>";
+    echo "Vous allez etre redirige sur la page d'identification. <br>";
     echo "(si votre navigateur ne supporte pas cette fonctionnalite," . "<a href =\"$app_path./connectionUsager/index.php?redirect=$redirect\">cliquez ici</a><br>";
     die();
 }

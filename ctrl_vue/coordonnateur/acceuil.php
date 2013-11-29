@@ -23,7 +23,7 @@ switch ($action) {
 		include('liste_parties_view.php');
 		break;
 		
-	//LISTEJOUEUR 2 : après avoir ajouter le bouton, vous retournez ici avec une action xyz ... ajouter un case
+	//LISTEJOUEUR 2 : apres avoir ajouter le bouton, vous retournez ici avec une action xyz ... ajouter un case
 	//LISTEJOUEUR 3 : etant donne qu'il n'y a pas d'objet en charge de lister les joueurs (ca viendra...) vous pouvez 
 	//                simplement mettre le SQL necessaire a la creation (fournit-ci bas) de cette liste directement ici. 
 	//                et ensuite ouvrir un page similaire a liste_parties_view.php.

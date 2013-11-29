@@ -7,7 +7,7 @@
 require_once('util/main.php'); 
 require_once('modele/usager.php');
 
-//NOTE: demarre la session, doit être fait après tout les includes
+//NOTE: demarre la session, doit etre fait apres tout les includes
 session_start();
 
 //Pour suivre le cheminement, vous n'avez qu'a suivre les commentaires numerotes commencant par
@@ -26,11 +26,11 @@ $usager = $_SESSION['usager']; //TODO: ne pas mettre l'usager dans la session, m
 switch ($usager->getRole()) {
 	case 'coordonnateur' :
 	    //CONNECTION 1.2.5.1 : une fois qu'on s'est connecte, on revient ici
-	    //LISTEPARTIE 1.x : après CONNECTION 1.2.5.1 on affiche la page d'acceuil du coordonnateur.
+	    //LISTEPARTIE 1.x : apres CONNECTION 1.2.5.1 on affiche la page d'acceuil du coordonnateur.
 		redirect('ctrl_vue/coordonnateur/');
 		break;
 	case 'joueur' :
-	    //bien que cet usager soit un joueur, il n'a pas rejoins une partie encore. Il est donc un usager.
+	    //bien que cet usager soit un joueur, il n'a pas rejoint une partie encore. Il est donc un usager.
 	    redirect('ctrl_vue/usager/');
 		break;
 

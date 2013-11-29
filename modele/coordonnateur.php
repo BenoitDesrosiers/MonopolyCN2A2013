@@ -10,7 +10,7 @@ class Coordonnateur extends Usager {
     
     public static function tous() {    
         /*
-         * retourne tous les coordonnateurs existant dans le système
+         * retourne tous les coordonnateurs existant dans le systeme
          */
         $mapper = new CoordonnateurDataMapper();
         $coordonnateurs = $mapper->findAllCoordonnateur();

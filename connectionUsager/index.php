@@ -9,7 +9,7 @@ require_once('modele/usager.php');
 session_start();
 
 if (isset($_POST['action'])) {
-    //CONNECTION 1.2.3 : on revient ici après que le formulaire ait ete remplie. L'action etant mise a "connection"
+    //CONNECTION 1.2.3 : on revient ici apres que le formulaire ait ete remplie. L'action etant mise a "connection"
     $action = $_POST['action'];
 } elseif (isset($_GET['action'])) {
     $action = $_GET['action'];
@@ -42,6 +42,9 @@ switch ($action) {
         unset($_SESSION['usager']);
         //CONNECTION 1.2.4.x : cette methode essaye de creer un usager a partir de la bd 
         $usager = Usager::parComptePW($compte, $password);
+        $usager = Usager::parComptePW($compte, $password);
+        $usager = Usager::parComptePW($compte, $password);
+        
         if ($usager <> null) {
             $_SESSION['usager'] = $usager; //CONNECTION 1.2.5a : on entrepose l'usager dans la session pour le recuperer a l'etape LISTEPARTIE 1.2
             redirect($redirect); //CONNECTION 1.2.5.x : l'usager a ete cree correctement, on retourne a la page qui nous a appele (mise dans $redirect)

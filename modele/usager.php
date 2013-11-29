@@ -5,7 +5,7 @@
 require_once 'dataMapper/usagerDataMapper.php';
 require_once 'dataMapper/joueurDataMapper.php';
 require_once 'dataMapper/coordonnateurDataMapper.php';
-
+require_once 'util/gestionInstance.php';
 require_once 'modele/partie.php';
 
 class Usager {  //implements EntreposageDatabase {
@@ -18,11 +18,11 @@ class Usager {  //implements EntreposageDatabase {
     function __construct(array $array) {
         /*
          * input
-         *     un array associative contenant le 
-         *     mot de passe 'MotDePasse', 
-         *     le compte 'Compte', 
-         *     le nom 'Nom', 
-         *     et le role 'Role' de l'usager a creer
+         *     un array associative contenant 
+         *     'MotDePasse' : le mot de passe , 
+         *     'Compte' : l'id de l'usager, 
+         *     'Nom' : son nom, 
+         *     'Role' : son role, utilise pour selectionner quelle sous-classe instancier
          */
         $this->setPassword($array['MotDePasse']);
         $this->setCompte($array['Compte']);
@@ -35,8 +35,9 @@ class Usager {  //implements EntreposageDatabase {
     public static function parCompte($compte) {
         //CONNECTION 1.2.4.2.x : un data mapper sert a faire l'interface avec la bd. 
         $usagerMapper = new UsagerDataMapper();
+        $usager = GestionInstance::enregistre(__CLASS__, array($compte), $usagerMapper);
         //CONNECTION 1.2.4.3.x : cherche l'usager avec ce compte dans la bd
-        $usager = $usagerMapper->find(array($compte));
+        //$usager = $usagerMapper->find(array($compte));
         //recree l'usager selon son type. 
         If ($usager->getRole() == 'coordonnateur') {
                 $mapper = new CoordonnateurDataMapper();

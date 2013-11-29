@@ -15,7 +15,7 @@ abstract class Mapper implements Observateur {
     protected static $db;
     
     function __construct() {
-        //TODO: le mapper devrait être un singleton pour chaque sous-classe, il devrait donc s'enregistrer et avoir une factory sinon le pattern observateur peut faire qu'on fera plusieur ecritures
+        //TODO: le mapper devrait etre un singleton pour chaque sous-classe, il devrait donc s'enregistrer et avoir une factory sinon le pattern observateur peut faire qu'on fera plusieur ecritures
         
         self::$db = Database::getDB(); 
     }
@@ -57,7 +57,7 @@ abstract class Mapper implements Observateur {
         
      //   function findAll(array $array) {
             /*
-             * retourne tous les objects correspondant aux critères passes dans $array
+             * retourne tous les objects correspondant aux criteres passes dans $array
             */
      /*      $this->selectAllStmt()->execute($array);
             $listeItems = array();

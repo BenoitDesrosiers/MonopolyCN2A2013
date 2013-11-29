@@ -198,7 +198,7 @@ class Joueur extends Objet  implements EntreposageDatabase{
                 echo "Montant a payer: ".$montant."<br/>";
                 
                 $argentCtr -= $montant;
-                echo "Argent du joueur après: ".$argentCtr."<br/>";
+                echo "Argent du joueur apres: ".$argentCtr."<br/>";
                 
                 //creation de l'array de paiement exemple le joueur doit payer 350, il paye avec un 500
                 // montantCtr = valeur que le joueur recupere
