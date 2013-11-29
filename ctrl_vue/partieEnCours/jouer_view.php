@@ -12,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo $GLOBALS['app_path'].'css/Structure.css'?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo $GLOBALS['app_path'].'css//Menu.css'?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo $GLOBALS['app_path'].'css/Button.css'?>">
+	<link rel="stylesheet" type="text/css" href="<?php echo $GLOBALS['app_path'].'css/table.css'?>">
 	    
 <script type='text/javascript'>
     var xhr = null; 
@@ -89,19 +90,31 @@
 	<?php 
 			$carte = $joueur->getProprietes();
 			?>
-			<table>
+			<table border=1>
+			<tr>
 			<?php
-			foreach ( $carte as $propriete )
-			{
+			foreach ( $carte as $propriete ) :
 				?>
-				
+				<td class="carte2" >
 				<?php
 				//echo $propriete->getCaseId();
 				$case = $propriete->getCaseAssociee();
+				$Id = $propriete->getCaseId();
 				include './proprieteView.php';
-			}
+				//echo $Id;
+				?>
+				<ul>
+				<li><a href=".?action=hypothequer&carteId=<?php echo $Id?>"><b>Hypothèquer</b></a></li>
+	            <li><a href="#nogo" onClick=""><b>Informations</b></a></li>
+	            </ul>>
+				</td>
+				
+				<?php
+				
+			endforeach;
 			
 			?>
+			</tr>
 			</table>
         
     </div> <!-- propriete -->

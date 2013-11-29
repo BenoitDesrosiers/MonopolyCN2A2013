@@ -28,6 +28,10 @@ svg{display: block;}
     width: 75px;
     height: 100px;
 }
+.carte2{
+    width: 75px;
+    height:250px;
+}
 
 .carte-couchee {
     width: 100px;

@@ -1,4 +1,4 @@
-<td>
+
 <svg width="75px" height="100px" xmlns="http://www.w3.org/2000/svg" version="1.1">
 	<rect x="0px" y="0px" width="75px" height="30px" style="fill:<?php echo $case->getCouleurHTML();?>;"/>
 	<text class="titreP" x="38px" y="40px">
@@ -24,4 +24,3 @@
 					endif;?></text>
 	<text class="montant" x="38px" y="90px"><?php echo $case->getPrix();?> $</text>
 </svg>
-</td>

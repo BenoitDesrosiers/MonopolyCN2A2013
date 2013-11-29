@@ -13,6 +13,7 @@ if (isset($_POST['action'])) {
 	$action=$_POST['action'];
 } else if (isset($_GET['action'])) {
 	$action=$_GET['action'];
+	$carteId=$_GET['carteId'];
 } else {
 	$action = 'afficheTableau';
 	$action = 'affichePropriete';
@@ -47,6 +48,22 @@ switch ($action) {
 	    $joueur->setPosition(6); //FIXME: ˆ enlever une fois les tests termines
 	    $joueur->brasseDes();
 	    include('./jouer_view.php');
+	    break;
+	case 'hypothequer':
+		$titrePage= "Hypothequer";
+		$tableauDeJeu = $partie->getTableau();
+		$carte = CartePropriete::pourCasePartie($carteId, $partieId);
+		$carte->setHypotheque($value);
+		
+		//RENDU A CHECKER VALUE POUR HYPOTHEQUER SI LA CARTE EST DEJA HYPOTHEQUER QUOI FAIRE
+		
+		
+		
+		//TODO: verifier que c'est ˆ ce joueur de jouer.
+		//TODO: ca devrait �tre la partie qui dŽmarre le coup ???
+		
+		include('./jouer_view.php');
+		//echo $carteId;
 	    break;
 
 }
