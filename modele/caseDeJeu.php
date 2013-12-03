@@ -64,7 +64,6 @@ abstract class CaseDeJeu { // implements EntreposageDatabase {
     }
     public abstract function getType();
     
-<<<<<<< HEAD
     public function getCouleurHTML() {
         return "#ffffff"; //TODO: hack pour faire marcher le tableau d'affichage. 
     }
@@ -73,8 +72,5 @@ abstract class CaseDeJeu { // implements EntreposageDatabase {
     }
     public function getPrix() {
         return 0; //TODO: hack pour faire marcher le tableau d'affichage
-=======
-    public function atterrirSur($joueur) {
->>>>>>> a01a99c6dc3a7f75034acbb89a431960605fe47d
     }
 }
