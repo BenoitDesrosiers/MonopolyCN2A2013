@@ -1,6 +1,6 @@
 <?php 
 /*
- * la partie est dŽmarrŽe. 
+ * la partie est démarrée. 
  * Affiche le tableau et l'info des joueurs. 
  * 
  */?>
@@ -85,8 +85,27 @@
 		<!-- afficher l'argent du joueur ici -->
 	</div> <!-- argent -->
 
+	<?php if ($partie->getInteractionId() != 777778) { ?>
 	<div id="propriete">
-        <!-- afficher les proprietes du joueur ici -->  
-    </div> <!-- propriete -->
+          // code normal david
+    </div> 
+	<?php }
+	else { ?>
+		<div id="proprietePourAchatMaison">
+		
+		<?php 
+		
+		$mike = $joueur->getProprietes(); //TODO: propriétées -achetable-
+		
+		foreach ($mike){
+
+		}
+		
+		?>
+		  
+		</div> 
+	<?php 	}
+		?>
+    
 	<?php include 'vue/piedpage.php'; ?>
     
