@@ -175,7 +175,6 @@ class Joueur extends Objet  implements EntreposageDatabase{
 	     }
 	     
 	     return $coupuresFinales;
-	    
 	}
 	
 	public function encaisse( $argent) {

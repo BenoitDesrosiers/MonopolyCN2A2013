@@ -22,7 +22,6 @@ class Tableau {
         //retourne un tableau base sur une definition de partie
         $definition = DefinitionPartie::parId($idDefinition);
         $tableau = new Tableau();
-        //TODO: j'ai juste les cases achetable pour l'instant
         $tableau->setCases($definition->getListeCases());
         return $tableau;
     }
@@ -39,17 +38,21 @@ class Tableau {
 		
 		while ($stop != true)
 		{
+			// Si $i dépasse le nombre d'entrées, il sort de la boucle.
 			if ($i > (count($this->cases) - 1))
-				$stop = true;			
+				$stop = true;
+			// Si $position est égal à la position d'une case, il sort de la boucle.
 			else if ($position == $this->cases[$i]->getPosition())
 				$stop = true;				
 			$i++;
 		}
 		
+		// Si notre sortie de boucle a été causée par l'atteinte de la fin du tableau, on retourne null.
 		if ($i > count($this->cases))
 		{
 			return null;
 		}
+		// Si notre sortie de boucle a été causée car la case a été trouvée, on retourne la case.
 		else
 		{
 			return $this->cases[$i - 1];

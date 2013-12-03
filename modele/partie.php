@@ -20,7 +20,7 @@ class Partie extends Objet implements EntreposageDatabase {
     
     
     
-    protected $joueurs; // la liste des joueurs (de 1 ˆ 8)
+    protected $joueurs; // la liste des joueurs (de 1 ï¿½ 8)
     protected $tableau; // le tableau sur lequel se deroule la partie
     protected $banque;
     protected $premierDes;
@@ -32,7 +32,7 @@ class Partie extends Objet implements EntreposageDatabase {
     protected $hotels;
 
     protected $definitionPartie = null; //l'objet representant la definition de partie. 
-    protected $interactionId; //l'id de l'interation qui est prŽsentement en cours. 
+    protected $interactionId; //l'id de l'interation qui est prï¿½sentement en cours. 
     
    
     public function __construct(array $array) {
@@ -43,7 +43,7 @@ class Partie extends Objet implements EntreposageDatabase {
         $this->joueurTour = $array["JoueurTour"];
         $this->debutPartie = DateTime::createFromFormat('Y-m-d h:i:s', $array["DebutPartie"]);
         $this->interactionId = $array["InteractionId"];
-        //TODO: ajouter dans la BD la position de la carte chance et CC prŽsentement sur le top
+        //TODO: ajouter dans la BD la position de la carte chance et CC prï¿½sentement sur le top
     }
     
     // Static Factory
@@ -139,7 +139,7 @@ class Partie extends Objet implements EntreposageDatabase {
     
     public function joueurPresent(Usager $usager) {
         /*
-         * verifie si un joueur est dŽjˆ dans cette partie
+         * verifie si un joueur est dï¿½jï¿½ dans cette partie
          */
         $joueurs = $this->getJoueurs();
         $present = false;
@@ -197,7 +197,7 @@ class Partie extends Objet implements EntreposageDatabase {
         //TODO: lazy load a partir de PartieEnCours_CarteCC
     }
     public function setCartesCaisseCommune($value) {
-        //TODO: je crois pas qu'on doit avoir un set puisque que c'est loadŽ
+        //TODO: je crois pas qu'on doit avoir un set puisque que c'est loadï¿½
         $this->cartesCaisseCommune = $value;
         $this->notifie("cartesCaisseCommune");
     }
@@ -210,8 +210,6 @@ class Partie extends Objet implements EntreposageDatabase {
         $this->cartesChance = $value;
         $this->notifie("cartesChance");
     }
-
-    
 
     public function getBanque() {
         return $this->banque;
@@ -364,7 +362,7 @@ class Partie extends Objet implements EntreposageDatabase {
     }
     
     public function genererValeursDes() {
-    // Génère une valeur aléatoire entre 1 et 6 pour les 2 deux dés
+    // Gï¿½nï¿½re une valeur alï¿½atoire entre 1 et 6 pour les 2 deux dï¿½s
     	$this->premierDes = rand(1, 6);
     	echo "Premier des : " . $this->premierDes . "<br/>";
     	$this->deuxiemeDes = rand(1, 6);
@@ -372,7 +370,7 @@ class Partie extends Objet implements EntreposageDatabase {
     }
     
     public function valeurDes() {
-    // Retourne la valeur de la somme des dés
+    // Retourne la valeur de la somme des dï¿½s
     	if (($this->premierDes + $this->deuxiemeDes) >= 2 && ($this->premierDes + $this->deuxiemeDes) <= 12 ) {
     		return ($this->premierDes + $this->deuxiemeDes);
     	}
@@ -386,7 +384,7 @@ class Partie extends Objet implements EntreposageDatabase {
     }
     
     public function desValeursIdentiques () {
-    // Retourne un bool dépendamment si les valeurs des dés sont identiques
+    // Retourne un bool dï¿½pendamment si les valeurs des dï¿½s sont identiques
     	if ($this->premierDes == $this->deuxiemeDes) {
     		return true;
     	}
