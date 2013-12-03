@@ -20,7 +20,15 @@ class CaseDeJeuPropriete extends CaseDeJeuAchetable {
 		return $this->nbrHotel;
 	}
 	*/
-	
+     function __construct(array $array) {
+            /*
+             * input
+            *     un array associative 
+            */
+            parent::__construct($array);    
+            $this->setCouleur($array["Couleur"]);
+            $this->setCouleurHTML($array["CouleurHTML"]);
+     }
 	public function calculerLoyer(CartePropriete $propriete){
 	
 	    switch ($propriete->getNombreMaisons()) {
@@ -46,4 +54,24 @@ class CaseDeJeuPropriete extends CaseDeJeuAchetable {
 
 		return $montant;
 	}
+	
+	//Getter & Setter
+	public function getCouleur() {
+	    return $this->Couleur;
+	}
+	
+	public function setCouleur($value) {
+	    $this->Couleur = $value;
+	}
+	public function getCouleurHTML() {
+	    return $this->couleurHTML;
+	}
+	public function setCouleurHTML($value) {
+	    $this->couleurHTML = $value;
+	}
+	
+	public function getType() {
+	    return "propriete";
+	}
+	 
 }

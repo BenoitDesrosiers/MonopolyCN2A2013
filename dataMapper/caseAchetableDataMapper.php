@@ -38,9 +38,9 @@ class CaseAchetableDataMapper extends Mapper {
             $array["GroupeDeCaseId"] = $array2["Id"];
             $array["Couleur"] = $array2["Couleur"];
             $array["CouleurHTML"] = $array2["CouleurHTML"];
-        	$obj = new CaseDeJeuPropriete($array); 
-        }
-        return $obj;        
+        	$obj = new CaseDeJeuPropriete($array);  
+       }
+       return $obj;        
     }
     
     protected function doInsert($object) {

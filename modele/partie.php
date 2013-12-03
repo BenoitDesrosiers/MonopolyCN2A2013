@@ -319,6 +319,7 @@ class Partie extends Objet implements EntreposageDatabase {
     }
     
 	public function jouerCoup($joueur) {
+		$joueur->avanceSurCase();
 	}
 
     public function getDebutPartie() {
@@ -364,8 +365,10 @@ class Partie extends Objet implements EntreposageDatabase {
     
     public function genererValeursDes() {
     // Génère une valeur aléatoire entre 1 et 6 pour les 2 deux dés
-    	$this->premierDes(rand(1, 6));
-    	$this->deuxiemeDes(rand(1, 6));
+    	$this->premierDes = rand(1, 6);
+    	echo "Premier des : " . $this->premierDes . "<br/>";
+    	$this->deuxiemeDes = rand(1, 6);
+    	echo "Deuxieme des : " . $this->deuxiemeDes . "<br/>";
     }
     
     public function valeurDes() {
@@ -374,8 +377,11 @@ class Partie extends Objet implements EntreposageDatabase {
     		return ($this->premierDes + $this->deuxiemeDes);
     	}
     	// Sinon, on lance un message d'erreur
+    	else if (($this->premierDes + $this->deuxiemeDes) >= 13 || ($this->premierDes + $this->deuxiemeDes) <= 1 ){
+    		affiche_erreur("ERREUR: La valeur retournee par les des est trop grande/petite: ".($this->premierDes + $this->deuxiemeDes));
+    	}
     	else {
-    		affiche_erreur("ERREUR: La valeur retournee par les des est trop grande/petite ou NULL.");
+    		affiche_erreur("ERREUR: La valeur retournee par les des est NULL");
     	}
     }
     

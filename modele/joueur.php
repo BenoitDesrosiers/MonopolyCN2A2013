@@ -101,20 +101,28 @@ class Joueur extends Objet  implements EntreposageDatabase{
     //fonctions pour jouer
 	public function brasseDes() {
 	    // Création de la partie et set des dés
-		$partie = Partie::parId(1);
+		$partie = Partie::parId($this->getPartieId());
 		$partie->genererValeursDes();
 		
 		// FIXME: Gérer un double
 		if ($partie->desValeursIdentiques()) {
 		// Si les valeurs des dés sont identiques...
-			echo "Meme valeurs";
+			echo "Meme valeurs <br/>";
 		}
+		
+		$tableauValeursDes = array($partie->getPremierDes(), $partie->getDeuxiemeDes());
+		
+		return $tableauValeursDes;
 	}
 	
-	public function avanceSurCase(CaseDeJeu $uneCase) {
+	public function avanceSurCase() {
+		$tableauValeur = $this::brasseDes();
+		
+		$partie = Partie::parId($this->getPartieId());
+		
 		// Ajustement de la position du joueur en ajoutant la valeur des d�s � la valeur de la position actuelle du joueur.
 			// ATTENTION : Pr�sentement, le setPosition est plac� dans cette classe en attendant que le dataMapper de joueur soit cr��. (Voir lignes 72 � 84)
-		$this->setPosition($this->getPosition() + $partie->valeurDes());
+		$this->setPosition($this->getPosition() + ($tableauValeur[0] + $tableauValeur[1]));
 		
 		// Cr�er et lancer une case de jeu
 		$uneCase = null;
@@ -132,9 +140,9 @@ class Joueur extends Objet  implements EntreposageDatabase{
 		endif;
 		
 		/// Output Tests ///
-		echo "Dice values: ".$partie->getPremierDes().", ".$partie->getDeuxiemeDes();
-		echo "<br/>";
-		echo $uneCase->getNom()." est une ".$uneCase->getType();
+		//echo "Dice values: " . $tableauValeur[0] . ", " . $tableauValeur[1];
+		//echo "<br/>";
+		//echo $uneCase->getNom()." est une ".$uneCase->getType();
 		/////////////////////
 		
 		$uneCase->atterrirSur($this);
