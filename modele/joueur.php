@@ -107,7 +107,7 @@ class Joueur extends Objet  implements EntreposageDatabase{
 		// FIXME: Gérer un double
 		if ($partie->desValeursIdentiques()) {
 		// Si les valeurs des dés sont identiques...
-			echo "Meme valeurs <br/>";
+			// echo "Meme valeurs <br/>";
 		}
 		
 		$tableauValeursDes = array($partie->getPremierDes(), $partie->getDeuxiemeDes());

@@ -36,8 +36,8 @@ switch ($action) {
         //TODO: verifier que c'est ˆ ce joueur de jouer. 
         //TODO: ca devrait �tre la partie qui dŽmarre le coup ???
         $partie->jouerCoup($joueur);
-        $tours = $partie->getJoueurTour();
-        echo "<br/>C'est le tour de : " . $tours[0];
+        //$tours = $partie->getJoueurTour();
+        //echo "<br/>C'est le tour de : " . $tours[0];
 	    include('./jouer_view.php');
 	    break;
 	case 'AcheterHotel' :
