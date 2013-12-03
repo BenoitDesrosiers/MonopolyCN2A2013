@@ -84,6 +84,21 @@
 	<div id="argent">
 		<!-- afficher l'argent du joueur ici -->
 	</div> <!-- argent -->
+	
+	<?php 
+		if ($joueur->getPosition() == 10 && $joueur->getToursRestantEnPrison() > 0){
+			if ($partie->getInteractionId() == 74){
+				$joueur->setToursRestantEnPrison($joueur->getToursRestantEnPrison()-1);
+				$partie->setInteractionId(-1);
+				//si l'interractionId est déja a 74
+				//la question a déja été posée et le joueur a refusé de sortir.
+			}
+			else {
+				$partie->setInteractionId(74);
+				include('./question_prison.php');
+			}
+		}
+	?>
 
 	<div id="propriete">
         <!-- afficher les proprietes du joueur ici -->  
