@@ -45,6 +45,19 @@ switch ($action) {
 			$partie->setInteractionId(777778);
 	    	include('./jouer_view.php');
 	    break; 
+	case 'AcheterMaison' :
+		$Proprietes = $joueur->getProprietes();
+		foreach($Proprietes as $case){
+			$id = $case->getCaseAssociee()->getId();
+			$maisonDejaPresentes = $case->getNombreMaisons();
+			$maisonAConstruire = $_POST['case'.$id];
+			//$case->setNombreMaisons();
+			$partie->setInteractionId(0);
+		}
+		include('./jouer_view.php');
+		break;
+
+	
 	    
 
 }

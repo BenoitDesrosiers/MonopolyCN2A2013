@@ -346,6 +346,19 @@ class Joueur extends Objet  implements EntreposageDatabase{
 	    return CartePropriete::pourJoueurs($this);
 	}
 	
+// 	public function getProprietesBatissable(){ //TODO : fonction à faire
+// 		$arrayDeProprietes = $this->getProprietes();
+// 		foreach ($arrayDeProprietes as $case){
+// 		if ($case->getCaseAssociee()->getType() = "propriete"){
+		
+// 		}
+			
+
+// 		}
+		
+		
+// 	}
+	
 	
 	
 }
