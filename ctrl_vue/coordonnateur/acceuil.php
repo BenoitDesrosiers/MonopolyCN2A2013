@@ -15,7 +15,7 @@ if (isset($_POST['action'])) {
 switch ($action) {
 	case 'liste_parties' :
 		// liste toutes les parties appartenant au coordonnateur presentement connecte
-		$coordonnateur = $_SESSION['usager']; //LISTEPARTIE 1.2 l'usager a ete entrepose dans connectionUsager/index.php a l'etape CONNECTION 1.2.5a
+		$coordonnateur = Usager::parCompte($_SESSION['usager']); //LISTEPARTIE 1.2 l'usager a ete entrepose dans connectionUsager/index.php a l'etape CONNECTION 1.2.5a
 		//LISTEPARTIE 1.3.x on va chercher les parties de ce coordonnateur
 		$parties = $coordonnateur->getPartiesEnCours();
 		$titrePage = "Accueil Coordonnateur";

@@ -22,13 +22,13 @@ if (isset($_POST['action'])) {
     $action = $_POST['action'];
 } elseif (isset($_GET['action'])) {
     $action = $_GET['action'];
-} elseif (isset($_SESSION['user'])) {
+} elseif (isset($_SESSION['usager'])) {
     $action = 'essai';
 } else {
     $action = 'essai';
 }
 
-$coordonnateur = $_SESSION['usager'];
+$coordonnateur = Usager::parCompte($_SESSION['usager']);
 
 switch ($action) {
 	

@@ -10,9 +10,9 @@
     <div id="contenue">
         <h1 class="top">Mon compte</h1>
         
-        <p><?php echo $_SESSION['usager']->getNom() . ' (' . $_SESSION['usager']->getCompte() . ')'; ?></p>
-        <p>Telephone: <?php echo  $_SESSION['usager']->getTelephone()?></p>
-        <p>Role: <?php echo  $_SESSION['usager']->role()?></p>
+        <p><?php echo $usager->getNom() . ' (' . $usager->getCompte() . ')'; ?></p>
+        <p>Telephone: <?php echo  $usager->getTelephone()?></p>
+        <p>Role: <?php echo  $usager->role()?></p>
        
         <form action="" method="post">
             <input type="hidden" name="action" value="voir_connection_edit" />

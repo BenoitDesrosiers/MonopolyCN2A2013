@@ -16,8 +16,8 @@
 				$usager_url = $GLOBALS['app_path'] .'/connectionUsager';
 				$deconnection_url = $usager_url . '?action=deconnection';
 				
-				 if (isset($_SESSION['usager'])) : ?>
-		 	<p>Bienvenue <?php echo $_SESSION['usager']->getNom()?></p>
+				 if (isset($usager)) : ?>
+		 	<p>Bienvenue <?php echo $usager->getNom()?></p>
 		 	<ul>
         		<li><a href="<?php echo $usager_url; ?>">Mon compte</a></li>
         		<li><a href="<?php echo $deconnection_url; ?>">Deconnection</a></li>

@@ -22,13 +22,13 @@ if (isset($_POST['action'])) {
     $action = $_POST['action'];
 } elseif (isset($_GET['action'])) {
     $action = $_GET['action'];
-} elseif (isset($_SESSION['user'])) {
+} elseif (isset($_SESSION['usager'])) {
     $action = 'afficher';
 } else {
     $action = 'test';
 }
 
-$usager = $_SESSION['usager'];
+$usager = Usager::parCompte($_SESSION['usager']);
 $joueur = Joueur::parComptePartie($usager->getCompte(), "1"); //FIXME pour les tests, on plug 1 comme numero de partie
 
 

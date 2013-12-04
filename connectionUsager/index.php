@@ -13,7 +13,7 @@ if (isset($_POST['action'])) {
     $action = $_POST['action'];
 } elseif (isset($_GET['action'])) {
     $action = $_GET['action'];
-} elseif (isset($_SESSION['user'])) {
+} elseif (isset($_SESSION['usager'])) {
     $action = 'voir_compte';
 } else {
     //CONNECTION 1.2.1 : on arrive ici a partir de login.php
@@ -27,6 +27,7 @@ if ($redirect=="") {
 $titrePage = "Connection";
 switch ($action) {
 	case 'voir_compte':
+	    $usager=Usager::parCompte($_SESSION['usager']);
 		include 'voir_connection_view.php';
 		break;
     case 'demande_de_connection':
@@ -46,7 +47,7 @@ switch ($action) {
         $usager = Usager::parComptePW($compte, $password);
         
         if ($usager <> null) {
-            $_SESSION['usager'] = $usager; //CONNECTION 1.2.5a : on entrepose l'usager dans la session pour le recuperer a l'etape LISTEPARTIE 1.2
+            $_SESSION['usager'] = $compte; //CONNECTION 1.2.5a : on entrepose l'usager dans la session pour le recuperer a l'etape LISTEPARTIE 1.2
             redirect($redirect); //CONNECTION 1.2.5.x : l'usager a ete cree correctement, on retourne a la page qui nous a appele (mise dans $redirect)
         } else {
             //CONNECTION 1.2.4a : l'usager n'existe pas dans la bd

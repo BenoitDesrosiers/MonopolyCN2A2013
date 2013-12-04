@@ -23,7 +23,7 @@ if (isset($_POST['action'])) {
 	$action = 'liste_parties';
 }
 
-$usager = $_SESSION['usager']; //TODO: demo bug, changer usager pour Usager
+$usager = Usager::parCompte($_SESSION['usager']); //TODO: demo bug, changer usager pour Usager
 
 switch ($action) {
 	case 'liste_parties' :

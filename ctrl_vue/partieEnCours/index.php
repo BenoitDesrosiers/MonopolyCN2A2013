@@ -17,10 +17,10 @@ if (isset($_POST['action'])) {
 	$action = 'afficheTableau';
 }
 
-$usager = $_SESSION['usager']; //TODO: ne pas mettre l'usager dans la session, mettre son id et le recreer chaque fois.
+$usager = Usager::parCompte($_SESSION['usager']); //TODO: ne pas mettre l'usager dans la session, mettre son id et le recreer chaque fois.
 $partieId = $_SESSION['partieId'];
 $partie = Partie::parId($partieId);
-$usager = $_SESSION['usager'];
+$usager = Usager::parCompte($_SESSION['usager']);
 $joueur = Joueur::parComptePartie($usager->getCompte(), $partieId);
 
 switch ($action) {

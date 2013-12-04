@@ -21,7 +21,8 @@ include "util/login.php";
 
 
 // affiche la page d'acceuil selon le type d'usager
-$usager = $_SESSION['usager']; //TODO: ne pas mettre l'usager dans la session, mettre son id et le recree chaque fois. 
+$usager=Usager::parCompte($_SESSION['usager']);
+ 
 
 switch ($usager->getRole()) {
 	case 'coordonnateur' :
