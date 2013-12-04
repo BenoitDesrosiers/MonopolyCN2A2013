@@ -10,10 +10,10 @@ class CaseAchetableDataMapper extends Mapper {
 	
     function __construct() {
         parent::__construct();
-        $this->selectStmt = self::$db->prepare("SELECT * FROM CaseAchetable where id=?");
+        $this->selectStmt = self::$db->prepare("SELECT * FROM CaseAchetable where Id=?");
         //TODO: ajouter tous les champs
-        $this->updateStmt = self::$db->prepare('update CaseAchetable set id=?, Titre=?, Prix=?  
-                                                    where id=?');
+        $this->updateStmt = self::$db->prepare('update CaseAchetable set Id=?, Titre=?, Prix=?  
+                                                    where Id=?');
         $this->insertStmt = self::$db->prepare("insert into CaseAchetable ( Titre, Prix ) values (?, ?)");
     }
 
@@ -41,6 +41,12 @@ class CaseAchetableDataMapper extends Mapper {
         	$obj = new CaseDeJeuPropriete($array);  
        }
        return $obj;        
+    }
+    protected function classeGeree() {
+        return "CaseDeJeuAchetable";
+    }
+    protected function doCleUnique() {
+        return (array("Id"));
     }
     
     protected function doInsert($object) {

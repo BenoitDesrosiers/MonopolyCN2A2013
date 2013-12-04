@@ -45,6 +45,13 @@ class CarteProprieteDataMapper extends Mapper {
        return $obj;        
     }
     
+    protected function classeGeree() {
+        return "CartePropriete";
+    }
+    protected function doCleUnique() {
+        return (array("CaseAchetableId", "JoueurPartiePartieEnCoursId"));
+    }
+    
     protected function doInsert($object) {
         //TODO: a faire
     }

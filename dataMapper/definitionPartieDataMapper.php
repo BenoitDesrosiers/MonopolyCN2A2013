@@ -7,10 +7,10 @@ class DefinitionPartieDataMapper extends Mapper {
     
     function __construct() {
         parent::__construct();
-        $this->selectStmt = self::$db->prepare("SELECT * FROM DefinitionPartie where id=?");
-        $this->updateStmt = self::$db->prepare('update DefinitionPartie set id=?, nom=?, Description=?, MaxNbJoueur=?  
-                                                    where id=?');
-        $this->insertStmt = self::$db->prepare("insert into DefinitionPartie ( nom, Description, MaxNbJoueur ) values (?, ?, ?)");
+        $this->selectStmt = self::$db->prepare("SELECT * FROM DefinitionPartie where Id=?");
+        $this->updateStmt = self::$db->prepare('update DefinitionPartie set Id=?, Nom=?, Description=?, MaxNbJoueur=?  
+                                                    where Id=?');
+        $this->insertStmt = self::$db->prepare("insert into DefinitionPartie ( Nom, Description, MaxNbJoueur ) values (?, ?, ?)");
         
     }
 
@@ -22,6 +22,12 @@ class DefinitionPartieDataMapper extends Mapper {
         $obj->setDescription($array['Description']);
         $obj->setMaxNbJoueur($array['MaxNbJoueur']);
         return $obj;        
+    }
+    protected function classeGeree() {
+        return "DefinitionPartie";
+    }
+    protected function doCleUnique() {
+        return (array("Id"));
     }
     
     protected function doInsert($object) {

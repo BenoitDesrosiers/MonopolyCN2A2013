@@ -7,7 +7,7 @@ class CaseActionDataMapper extends Mapper {
     
     function __construct() {
         parent::__construct();
-        $this->selectStmt = self::$db->prepare("SELECT * FROM CaseAction where id=?");
+        $this->selectStmt = self::$db->prepare("SELECT * FROM CaseAction where ID=?");
         //TODO: ajouter tous les champs
         $this->updateStmt = self::$db->prepare('UPDATE CaseAction 
         										SET ID=?, Nom=?, ActionID=?  
@@ -22,6 +22,12 @@ class CaseActionDataMapper extends Mapper {
         $obj = new CaseDeJeuAction($array);
 
         return $obj;        
+    }
+    protected function classeGeree() {
+        return "CaseDeJeuAction";
+    }
+    protected function doCleUnique() {
+        return (array("ID"));
     }
     
     protected function doInsert($object) {

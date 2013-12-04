@@ -25,6 +25,13 @@ class CoupureDataMapper extends Mapper {
                                  'PartieId'=>$array['JoueurPartiePartieEnCoursId'])) ;
     }
     
+    protected function classeGeree() {
+        return "Coupure";
+    }
+    protected function doCleUnique() {
+        return (array("JoueurPartieUsagerCompte", "JoueurPartiePartieEnCoursId"));
+    }
+    
     public function ajouteCoupuresA(Joueur $joueur) {
         //FIXME: c'est pas clean 
         /*

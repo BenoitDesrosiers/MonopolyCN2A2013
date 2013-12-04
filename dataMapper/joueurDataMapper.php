@@ -9,7 +9,7 @@ class JoueurDataMapper extends Mapper {
     function __construct() {
         parent::__construct(); 
         
-        $this->selectStmt = self::$db->prepare("SELECT * FROM JoueurPartie WHERE usagercompte = ? AND partieencoursid =? ");
+        $this->selectStmt = self::$db->prepare("SELECT * FROM JoueurPartie WHERE UsagerCompte = ? AND PartieEnCoursId =? ");
         $this->updateStmt = self::$db->prepare("update JoueurPartie set UsagerCompte = ?, PartieEncoursId = ?, PionId = ?, Position = ?, OrdreDeJeu = ?, EnPrison = ?, ToursRestants_Prison = ?
                                                 where usagercompte = ? AND partieencoursid =? ");
         $this->insertStmt = self::$db->prepare("insert into JoueurPartie ( UsagerCompte, PartieEncoursId, PionId, Position, OrdreDeJeu, EnPrison, ToursRestants_Prison ) values (?,?,?,?,?,?,?)");
@@ -28,7 +28,12 @@ class JoueurDataMapper extends Mapper {
 
         return $joueur;
     }
-    
+    protected function classeGeree() {
+        return "Joueur";
+    }
+    protected function doCleUnique() {
+        return (array("UsagerCompte", "PartieEnCoursId"));
+    }
     
     protected function doInsert( $objet) {
         //TODO: ajouter le check si l'objet est deja dans la BD. 

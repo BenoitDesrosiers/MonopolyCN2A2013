@@ -1,6 +1,7 @@
 <?php
-require_once('modele/database.php');
-require_once('interface/observateur.php');
+require_once "modele/database.php";
+require_once "interface/observateur.php";
+require_once "util/gestionInstance.php";
 /*
  * cette classe est tiree du livre PHP objects patterns and practice, 3rd edition (p227)
  */
@@ -22,20 +23,26 @@ abstract class Mapper implements Observateur {
     
     function find( array $cle) {
         /*
-         * find est la methode "generique" pour trouver un objet avec la cle egale a $id
-         * trouve l'objet qui a cet $id dans la bd
+         * find est la methode "generique" pour trouver un objet 
+         * trouve l'objet qui a cet $cle dans la bd
          * le selectStmt de la sous-classe doit selectionner selon cette cle
+         * 
+         * input
+         *     $cle : un array contenant les champs qui compose la clŽ 
          */
-        //TODO: garder les items dans un Registry pour eviter la duplication d'instance
-        //TODO: trouver un moyen pour les cas ou la cle est composee (au lieu de id, prendre un array. Devra matcher dans le selectStmt 
-        $this->selectStmt()->execute( $cle);
-        $array = $this->selectStmt()->fetch();
-        //$this->selectStmt()->closeCursor(); // appel optionnel non necessaire pour mysql
-        if (!is_array($array)){return null;} // aucune row de retourner, donc l'objet n'existe pas dans la bd. 
-        //if (!isset($array['id'])) {return null;}   //TODO: a quoi sert ce check? je l'ai enleve parce que le cles ne sont pas toujours ID
-        //CONNECTION 1.2.4.3.1 cree l'usager
-        $object = $this->createObject($array);
-        return $object;
+        $cleUnique = $this->cleUnique($cle);
+        if (GestionInstance::objetExiste($this, $cleUnique)) {
+            $objet = GestionInstance::extraitObjet($this, $cle);
+        } else {
+            $this->selectStmt()->execute( $cle);
+            $array = $this->selectStmt()->fetch();
+            //$this->selectStmt()->closeCursor(); // appel optionnel non necessaire pour mysql
+            if (!is_array($array)){return null;} // aucune row de retourner, donc l'objet n'existe pas dans la bd. 
+            //if (!isset($array['id'])) {return null;}   //TODO: a quoi sert ce check? je l'ai enleve parce que le cles ne sont pas toujours ID
+            //CONNECTION 1.2.4.3.1 cree l'usager
+            $objet = $this->createObject($array);
+        }
+        return $objet;
     }
     
     function findAll($pdoSelect) {
@@ -55,21 +62,6 @@ abstract class Mapper implements Observateur {
         return $listeItems;
     }
         
-     //   function findAll(array $array) {
-            /*
-             * retourne tous les objects correspondant aux criteres passes dans $array
-            */
-     /*      $this->selectAllStmt()->execute($array);
-            $listeItems = array();
-            foreach($this->selectAllStmt() as $row) {
-                $unItem = $this->createObject($row);
-                if ($unItem <> null) {
-                    $listeItems[] = $unItem;
-                }
-            }
-            return $listeItems;
-        }
-        */
     
     
     function createObject($array) {
@@ -77,8 +69,30 @@ abstract class Mapper implements Observateur {
          * cree un objet a partir d'un array associatif contenant tous les champs de la bd
         */
         //CONNECTION 1.2.4.3.2.x cree l'usager
-        $obj = $this->doCreateObject($array);
+        
+        //TODO: le call a objetExiste devrait se faire avant le find, afin d'eviter un fetch dans la bd
+        //      mais createObject est le dernier point commun avant de vraiement creer l'objet. 
+        //commence par utiliser un objet qui a deja ete cree
+        $cleUnique = $this->cleUnique($array);
+        if (GestionInstance::objetExiste($this, $cleUnique)) {
+            $obj = GestionInstance::extraitObjet($this, $cle);
+        } else {
+            //si cet objet est nouveau, on le cree et on l'enregistre
+            $obj = $this->doCreateObject($array);
+            GestionInstance::enregistre($this, $cleUnique, $obj);
+        }
         return $obj;
+    }
+    
+    protected function cleUnique(array $array) {
+        //FIXME mettre la fonction doCleUnique abstract en bas 
+        $classe = $this->classeGeree();
+        $cleArray = $this->doCleUnique();
+        $cleUnique = $classe;
+        foreach($cleArray as $cle) {
+            $cleUnique = $cleUnique . $array[$cle];
+        }
+        return array($cleUnique);
     }
     
     function insert( $obj ) {
@@ -95,5 +109,5 @@ abstract class Mapper implements Observateur {
     protected abstract function doCreateObject( array $array);
     protected abstract function doInsert( $object);
     protected abstract function selectStmt();
-    
+    //protected abstract function cleUnique(array $array);
 }

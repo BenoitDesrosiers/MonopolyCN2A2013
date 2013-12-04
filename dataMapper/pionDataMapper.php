@@ -18,7 +18,12 @@ class PionDataMapper extends Mapper {
     protected function doCreateObject( array $array) {
         return new Pion($array) ;
     }
-    
+    protected function classeGeree() {
+        return "Pion";
+    }
+    protected function doCleUnique() {
+        return (array("Id"));
+    }
     
     protected function doInsert( $objet) {
         //TODO: ajouter le check si l'objet est deja dans la BD. 

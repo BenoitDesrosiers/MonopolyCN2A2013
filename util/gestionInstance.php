@@ -5,35 +5,44 @@
  * 
  */
 
-require_once 'dataMapper/mapper.php';
 
 class GestionInstance {
     static protected $inventaire = array(); //l'array associative contenant les objets
 
-    public static function enregistre($appelant, array $cle, Mapper $dm) {
+    private static function creerCle($appelant, array $cle){
+        // concatene le nom de la classe appelant avec les champs de la cle pour obtenir une cle unique
+        $cleUnique = get_class($appelant);
+        foreach ($cle as $valeur) {
+            $cleUnique = $cleUnique . $valeur;
+        }
+        return $cleUnique;
+    } 
+    
+    public static function objetExiste($appelant, array $cle) {
+        return (array_key_exists(self::creerCle($appelant, $cle), self::$inventaire));
+    }
+    
+    public static function enregistre($appelant, array $cle, $objet) {
         /*
          *  $appelant : le nom de la classe appelante (mettre __CLASS__ dans l'appelant)
          *  $cle : l'array contenant les champs necessaire a la creation de l'objet
-         *  $dm : le datamapper qui doit etre appele si l'objet n'est pas deja cree
          */
         
-        // concatene les champs de la cle pour obtenir une cle unique
-        $cleUnique = $appelant;
-        foreach ($cle as $valeur) {
-            $cleUnique = $cleUnique . $valeur;
-        } 
-        
-        //trouve l'objet dans l'array, ou le cree via le datamapper
-        if (array_key_exists($cleUnique, self::$inventaire)) {
-            $objet = self::$inventaire[$cleUnique];
-        } else {
-            $objet = $dm->find($cle);
-            if (is_null($objet) ) {
-                //TODO: generer une exception
-            } else {
-                self::$inventaire[$cleUnique] = $objet;
-            }
+        if (!self::objetExiste($appelant, $cle)) {
+            self::$inventaire[$cleUnique] = $objet;
         }
-        return $objet;
-    }      
+        
+    }   
+    
+    //TODO: faudrait une fonction pour de-enregistrer les objets afin que le garbage manager puisse les détruires...
+    
+
+    public static function extraitObjet($appelant, array $cle) {
+        $cleUnique = self::creerCle($appelant, $cle);
+        $obj = null;
+        if (self::objetExiste($appelant, $cle)) {
+            $obj = self::$inventaire[$cleUnique];
+        }
+        return $obj;
+    }
 }

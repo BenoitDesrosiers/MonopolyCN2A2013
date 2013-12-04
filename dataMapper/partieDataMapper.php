@@ -7,10 +7,10 @@ class PartieDataMapper extends Mapper {
     
     function __construct() {
         parent::__construct();
-        $this->selectStmt = self::$db->prepare("SELECT * FROM PartieEnCours where id=?");
-        $this->updateStmt = self::$db->prepare('update PartieEnCours set id=?, nom=?, coordonnateur=?, DefinitionPartieId = ?, JoueurTour =?, DebutPartie = ?, InteractionId =? 
+        $this->selectStmt = self::$db->prepare("SELECT * FROM PartieEnCours where Id=?");
+        $this->updateStmt = self::$db->prepare('update PartieEnCours set Id=?, Nom=?, Coordonnateur=?, DefinitionPartieId = ?, JoueurTour =?, DebutPartie = ?, InteractionId =? 
                                                     where id=?');
-        $this->insertStmt = self::$db->prepare("insert into PartieEnCours ( nom, coordonnateur, DefinitionPartieId, JoueurTour, DebutPartie, InteractionId ) values (?, ?, ?, ?, ?, ?)");
+        $this->insertStmt = self::$db->prepare("insert into PartieEnCours ( Nom, Coordonnateur, DefinitionPartieId, JoueurTour, DebutPartie, InteractionId ) values (?, ?, ?, ?, ?, ?)");
         
     }
 
@@ -19,6 +19,13 @@ class PartieDataMapper extends Mapper {
         $partie =  new Partie($array );
         $partie->attache($this);
         return $partie;
+    }
+    
+    protected function classeGeree() {
+        return "Partie";
+    }
+    protected function doCleUnique() {
+        return (array("Id"));
     }
     
     protected function doInsert($object) {

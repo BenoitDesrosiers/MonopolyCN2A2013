@@ -35,9 +35,8 @@ class Usager {  //implements EntreposageDatabase {
     public static function parCompte($compte) {
         //CONNECTION 1.2.4.2.x : un data mapper sert a faire l'interface avec la bd. 
         $usagerMapper = new UsagerDataMapper();
-        $usager = GestionInstance::enregistre(__CLASS__, array($compte), $usagerMapper);
-        //CONNECTION 1.2.4.3.x : cherche l'usager avec ce compte dans la bd
-        //$usager = $usagerMapper->find(array($compte));
+        //CONNECTION 1.2.4.3.x : cherche l'usager avec ce compte dans la bd 
+        $usager = $usagerMapper->find(array($compte));
         //recree l'usager selon son type. 
         If ($usager->getRole() == 'coordonnateur') {
                 $mapper = new CoordonnateurDataMapper();
@@ -120,8 +119,10 @@ class Usager {  //implements EntreposageDatabase {
 
     // function de Jeu
 
+   /* obsolete
     public function joindrePartie(Partie $unePartie) {
          
     }
+    */
 
 }

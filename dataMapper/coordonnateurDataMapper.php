@@ -12,7 +12,10 @@ class CoordonnateurDataMapper extends UsagerDataMapper {
     protected function doCreateObject( array $array) {
         return new Coordonnateur($array) ;        
     }
-   
+    protected function classeGeree() {
+        return "Coordonnateur";
+    }
+    
     
     public function findAllCoordonnateur() {
         $queryTxt = "SELECT * FROM Usager WHERE Role = 'coordonnateur'";

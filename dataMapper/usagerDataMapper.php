@@ -1,5 +1,4 @@
 <?php
-
 require_once "dataMapper/mapper.php";
 require_once "modele/usager.php";
 
@@ -15,9 +14,26 @@ class UsagerDataMapper extends Mapper {
         
     }
 
+    
+    protected function doCleUnique() {
+        /* retourne la cle unique pour identifier cet objet dans la bd 
+         * utilise pour la gestion des instance 
+         * output
+         *     Une array contenant les champs a utiliser pour la cle dans la bd
+         */     
+       
+        return (array("Compte"));
+        
+    }
+    
+    protected function classeGeree() {
+        return "Usager";
+    }
+    
     protected function doCreateObject( array $array) {
         //CONNECTION 1.2.4.3.2.1 cree l'usager
-        return new Usager($array) ;        
+        return new Usager($array) ;
+        //TODO: ajouter le attache pour l'observer         
     }
     
     protected function doInsert( $object) {
@@ -34,9 +50,6 @@ class UsagerDataMapper extends Mapper {
     function selectStmt() {
         return $this->selectStmt;
     }
-    
-    
 
-   
    
 }

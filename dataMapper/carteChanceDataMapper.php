@@ -7,9 +7,9 @@ class CarteChanceDataMapper extends Mapper {
     
     function __construct() {
         parent::__construct();
-        $this->selectStmt = self::$db->prepare("SELECT * FROM Carte c where c.id=?");
-        $this->updateStmt = self::$db->prepare('update Carte set id=?, ActionId=?, TypeCarte=?, Description=? 
-                                                    where id=?');
+        $this->selectStmt = self::$db->prepare("SELECT * FROM Carte c where c.Id=?");
+        $this->updateStmt = self::$db->prepare('update Carte set Id=?, ActionId=?, TypeCarte=?, Description=? 
+                                                    where Id=?');
         $this->insertStmt = self::$db->prepare("insert into Carte ( ActionId, TypeCarte, Description ) values (?, ?, ?)");
     }
     
@@ -29,6 +29,12 @@ class CarteChanceDataMapper extends Mapper {
         $obj->setType($array['TypeCarte']);
         
         return $obj;        
+    }
+    protected function classeGeree() {
+        return "CarteChance";
+    }
+    protected function doCleUnique() {
+        return (array("Id"));
     }
     
     protected function doInsert( $object){
