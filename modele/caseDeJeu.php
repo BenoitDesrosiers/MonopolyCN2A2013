@@ -15,8 +15,37 @@ abstract class CaseDeJeu { // implements EntreposageDatabase {
         //$this->setPosition($array["Position"]);
     }
     
+
     // fonctions de jeu
-	public abstract function atterrirSur(Joueur $unJoueur); 
+	//public abstract function atterrirSur(Joueur $unJoueur); 
+
+    // static Factory
+    static abstract  function pourDefinitionPartie($idDefinitionPartie);
+    
+    public abstract function atterrirSur(Joueur $unJoueur);
+    // fonctions de jeu
+	/*public function atterrirSur(Joueur $unJoueur) { //TODO: a deplacer dans les sous-classes
+    	if($this->getType()=="achetable"){
+    		/* obsolete 
+    		 * 
+    		 *if($this->getProprietairePourPartieId($unJoueur->getPartieId()) != null){
+    		    $proprio = $this->getProprietairePourPartieId($unJoueur->getPartieId());
+    		    $proprio->chargerLoyerA($joueur, $this->calculerLoyer()); 
+    		}
+    		else {
+    			if($unJoueur->tenterAchat($this)){
+    			    $banque = new banque;
+    				$banque->vendrePropriete($unJoueur, $this);
+    			}
+    		}
+    		*/
+    	/*}
+    	else{
+    		/*Tommy---*/
+    		//$this->execute_action($unJoueur);
+    		/*---Tommy*/
+    	/*}
+    }*/
     
     // Getter & Setter
     public function getNom() {
@@ -39,7 +68,7 @@ abstract class CaseDeJeu { // implements EntreposageDatabase {
         $this->position = $value;
     }
     public abstract function getType();
-    
+   
     public function getCouleurHTML() {
         return "#ffffff"; //TODO: hack pour faire marcher le tableau d'affichage. 
     }

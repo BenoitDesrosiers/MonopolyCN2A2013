@@ -121,7 +121,20 @@ abstract class CaseDeJeuAchetable extends CaseDeJeu {
         $this->prix = $value;
     }
     
+	public function getCouleur() {
+        return $this->couleur;
+    }
+    public function setCouleur($value) {
+        $this->couleur = $value;
+    }
     
+    public function getCouleurHTML() {
+    	return $this->couleurHTML;
+    }
+    public function setCouleurHTML($value) {
+    	$this->couleurHTML = $value;
+    }
+        
     public function getURLLogo() {
         return $this->URLLogo;
     }

@@ -28,6 +28,7 @@ class CaseAchetableDataMapper extends Mapper {
         $query->execute();
         $array2  = $query->fetch();
 
+
         if($array2['IsCheminDeFer']==1){
         	$obj = new CaseDeJeuTrain($array );
         }
@@ -117,7 +118,7 @@ class CaseAchetableDataMapper extends Mapper {
     }
     
     function parPositionCase($position, $idDefinitionPartie) {
-    	// retourne un array contenant toutes les cases achetable du tableau
+    	// retourne une case achetable du tableau à une position spécifique
     
     	// commence par aller chercher la liste des Id dans la table DefinitionPartie_CaseAchetable
     	$queryTxt = 'SELECT * FROM DefinitionPartie_CaseAchetable

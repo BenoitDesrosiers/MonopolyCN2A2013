@@ -33,6 +33,7 @@ switch ($action) {
 	case 'JouerCoup' : 
         $titrePage= "Jouer un coup";
         $tableauDeJeu = $partie->getTableau();
+
         
         //TODO: verifier que c'est � ce joueur de jouer. 
         //TODO: ca devrait �tre la partie qui d�marre le coup ??? 

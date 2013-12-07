@@ -1,3 +1,10 @@
 eclipse.preferences.version=1
+<<<<<<< HEAD
 encoding//ctrl_vue/partieEnCours/index.php=UTF-8
 encoding//modele/joueur.php=UTF-8
+=======
+encoding//erreurs/erreur.php=UTF-8
+encoding//util/secure_conn.php=UTF-8
+encoding/<project>=UTF-8
+encoding/index.php=UTF-8
+>>>>>>> 1c68bc1f56c82e22ec39ba1cca6eab0564e801bf
