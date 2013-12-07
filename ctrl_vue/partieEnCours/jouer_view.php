@@ -17,7 +17,7 @@
     var xhr = null; 
     function getXhr()
     {
-         if(window.XMLHttpRequest)xhr = new XMLHttpRequest(); 
+        if(window.XMLHttpRequest)xhr = new XMLHttpRequest(); 
         else if(window.ActiveXObject)
           { 
           try{
@@ -45,6 +45,20 @@
              }
             }
         xhr.open("GET","<?php echo $GLOBALS['app_path']."/ajax/demoajax.php"?>",true);
+        xhr.send(null);
+    }
+
+    function AfficherInfoPropriete(caseId)
+    {
+        getXhr();
+        xhr.onreadystatechange = function()
+            {
+             if(xhr.readyState == 4 && xhr.status == 200)
+             {
+             document.getElementById('affichageInfos').innerHTML=xhr.responseText;
+             }
+            }
+        xhr.open("GET","<?php echo $GLOBALS['app_path']."/ajax/afficherinfopropriete.php?case=" ?>"+caseId,true);
         xhr.send(null);
     }
  
@@ -75,29 +89,23 @@
 				<li><a href="."><b>Rafraichir</b></a></li>
 	            <li><a href=".?action=JouerCoup"><b>Jouer</b></a></li> <!--//TODO verifier si c'est au tour de ce joueur de jouer un coup. Si non, afficher un piton refresh au lieu de jouer -->
 				<li><a href="#nogo" onClick="DemoAjax()"><b>demo Ajax</b></a></li>
+				<li><a href="#nogo" onClick="AfficherProprietesDuJoueur()"><b>Mes Propri&eacute;t&eacute;s</b></a></li>
 	            <li><a href="#nogo"><b>Achat Maison</b></a></li>
 				<li><a href=".?action=AcheterHotel"><b>Achat Hotel</b></a></li>
 				<li><a href="#nogo"><b>Quitter</b></a></li>
 			</ul>
 	</div> <!-- navigation -->
 	
+	<div id="affichageInfos">
+    </div>
 
 	<div id="argent">
 		<!-- afficher l'argent du joueur ici -->
 	</div> <!-- argent -->
 	
 	<?php 
-		if ($joueur->getPosition() == 10 && $joueur->getToursRestantEnPrison() > 0){
-			if ($partie->getInteractionId() == 74){
-				$joueur->setToursRestantEnPrison($joueur->getToursRestantEnPrison()-1);
-				$partie->setInteractionId(-1);
-				//si l'interractionId est déja a 74
-				//la question a déja été posée et le joueur a refusé de sortir.
-			}
-			else {
-				$partie->setInteractionId(74);
+		if ($partie->getInteractionId() == 74){
 				include('./question_prison.php');
-			}
 		}
 	?>
 

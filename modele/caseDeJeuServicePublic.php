@@ -17,7 +17,7 @@ class CaseDeJeuServicePublic extends CaseDeJeuAchetable {
 	}
 	
 	public function getType() {
-	    return "servicePublic";
+	    return "ServicePublic";
 	}
 	 
 }

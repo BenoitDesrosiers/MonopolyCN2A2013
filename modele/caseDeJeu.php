@@ -20,7 +20,7 @@ abstract class CaseDeJeu { // implements EntreposageDatabase {
 	//public abstract function atterrirSur(Joueur $unJoueur); 
 
     // static Factory
-    static abstract  function pourDefinitionPartie($idDefinitionPartie);
+    //static abstract  function pourDefinitionPartie($idDefinitionPartie);
     
     public abstract function atterrirSur(Joueur $unJoueur);
     // fonctions de jeu

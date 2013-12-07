@@ -43,7 +43,6 @@ switch ($action) {
 	
     case 'afficherTommy' :
     	$titrePage= "affichage du tableau de jeu";
-<<<<<<< HEAD
     	$partie = Partie::parId('1'); //ceci etant un demo, nous utiliserons la partie #1
     	$tableauDeJeu = $partie->getTableau();
     	
@@ -81,12 +80,6 @@ switch ($action) {
         $lignes[3]=array('viewBox'=>'0 0 75 100', 'type'=>'ligne', 'coin'=>true, 'carte'=>'carte', 'start'=>30, 'end'=>19, 'compare'=>$bigger, 'inc'=>$rem, 'dec'=>$add, 'rectW'=>75, 'rectH'=>30, 'rectX'=>0, 'rectY'=>0, 'nomX'=>0, 'nomY'=>50, 'nomTransform'=>'rotate(0 0,0)', 'prixX'=>0, 'prixY'=>86, 'prixTransform'=>'rotate(0 0,0)');
     	
       	include('./affichageTableau_view_Tommy.php');
-=======
-    	$partie = Partie::parId('1'); //ceci étant un démo, nous utiliserons la partie #1
-    	$tableauDeJeu = $partie->getTableau();
-    		
-      	include('./affichageTableau_view_1149647.php');
->>>>>>> a01a99c6dc3a7f75034acbb89a431960605fe47d
        	break;
     case 'afficherVero' :
 	    $titrePage= "affichage du tableau de jeu";

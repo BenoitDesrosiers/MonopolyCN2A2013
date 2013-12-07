@@ -33,28 +33,35 @@ switch ($action) {
 	case 'JouerCoup' : 
         $titrePage= "Jouer un coup";
         $tableauDeJeu = $partie->getTableau();
-
-        
-        //TODO: verifier que c'est � ce joueur de jouer. 
-        //TODO: ca devrait �tre la partie qui d�marre le coup ??? 
-        //$partie->setInteractionId(74);
-	    
-        
-	    //$joueur->brasseDes();
-	    
-	    /*if ($partie->getInteractionId() == -1){
-	    $joueur->setPosition(10); //FIXME: � enlever une fois les tests termines
-	    $joueur->setToursRestantEnPrison(2); //FIXME: � enlever une fois les tests termines
-	    }*/
-	    include('./jouer_view.php');
-	    break;
-	case '74' :
-		//le joueur veut payer
-		$joueur->paye(50);
-		$partie->setInteractionId(-1);
-		$joueur->setToursRestantEnPrison(0);
-		redirect('.?action=JouerCoup');
+        //TODO: verifier que c'est ˆ ce joueur de jouer. 
+        //TODO: ca devrait �tre la partie qui dŽmarre le coup ???
+        if ($joueur->getEnPrison() == 1){
+        	$partie->setInteractionId(74);
+        }
+        else {
+        	$partie->jouerCoup($joueur);
+        }
+        //$tours = $partie->getJoueurTour();
+        //echo "<br/>C'est le tour de : " . $tours[0];
+            include('./jouer_view.php');
+            break;
+            
+	case 'QuestionPrison' :
+		if($_GET['valeur'] == 'payer'){
+			$joueur->paye(50);
+			$joueur->setToursRestantEnPrison(0);
+			$partie->setInteractionId(0);
+			$joueur->setEnPrison(0);
+			redirect('.?action=JouerCoup');
+		}
+		elseif ($_GET['valeur'] == 'attendre') {
+			$joueur->setToursRestantEnPrison($joueur->getToursRestantEnPrison()-1);
+			$partie->setInteractionId(0);
+			if ($joueur->getToursRestantEnPrison() == 0) {
+				$joueur->setEnPrison(0);
+			}
+			redirect('.?afficheTableau');
+		}
 		break;
-
 }
 ?>
