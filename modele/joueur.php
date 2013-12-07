@@ -101,7 +101,7 @@ class Joueur extends Objet  implements EntreposageDatabase{
     //fonctions pour jouer
 	public function brasseDes() {	     
 		
-		if ($this->getPosition() == 10 && $this->getToursRestantEnPrison() != 0){
+		/*if ($this->getPosition() == 10 && $this->getToursRestantEnPrison() != 0){
 			$partie = Partie::parId($this->getPartieId());
 			if ($partie->getInteractionId() == 74){
 				$this->setToursRestantEnPrison($this->getToursRestantEnPrison()-1);
@@ -109,10 +109,10 @@ class Joueur extends Objet  implements EntreposageDatabase{
 				//$partie->setInteractionId(0);//chiffre inateignable
 			} 
 			else {
-				$partie->setInteractionId(74);//TODO: choisir un chiffre en symbiose avec le code des autres
+				include('./question_prison.php');
 			}
 		}
-		else {	    
+		else {	  */  
 			
 			//TODO: je crois que ca devrait �tre � la partie de brasser les d�s.
 			
@@ -137,7 +137,7 @@ class Joueur extends Objet  implements EntreposageDatabase{
 				echo "ATTENTION: Erreur lors de l'attribution de l'objet case achetable/case action par la position";
 			endif;
 			$uneCase->atterrirSur($this);
-		}
+		//}
 	}
 	
 	public function convertirMontantEnBillets( $montant ) {
