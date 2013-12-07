@@ -4,12 +4,13 @@
 <?php $i =0;
 $LongueurMax = 12;
 			//Boucle pour afficher la ligne du haut
+			
 			while($i != 11) :
 				$case = $tableauDeJeu->getCaseParPosition($i);
     			 if($i == 0 || $i == 10) {
   					$classe = "coin";
 					include 'affichage_case_view.php';
-					include 'pion_view.php';
+					
     			  } 
     			  else { 
 					$classe = "haut";
@@ -24,6 +25,7 @@ $LongueurMax = 12;
     			<?php $case = $tableauDeJeu->getCaseParPosition(50-$i);
 						$classe = "coteGauche";
 						include 'affichage_case_view.php';
+						
 						if($i == 11):?>
 							<td id="centre"colspan="9" rowspan="9">
 								<svg x="0px" y="0px" width="700px" height="700px" xmlns="http://www.w3.org/2000/svg" version="1.1">
@@ -40,6 +42,7 @@ $LongueurMax = 12;
 						$case = $tableauDeJeu->getCaseParPosition($i);
     					$classe = "coteDroit";
 						include 'affichage_case_view.php';
+						
 						$i++;?>
 					</tr>
     		<?php endwhile;?>
@@ -49,10 +52,12 @@ $LongueurMax = 12;
     				if ($i == 20 || $i == 30) {
 						 $classe = "coin"; 
 						 include 'affichage_case_view.php';
+						 
 					 }
     				else{
     				$classe = "bas";
     				include 'affichage_case_view.php';
+    				
     				}
     				 $i++;
     			endwhile;?>

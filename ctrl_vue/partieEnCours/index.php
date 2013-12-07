@@ -38,9 +38,7 @@ switch ($action) {
 			
 			
 		}
-		// Demander a la partie la liste des joueurs 
-		// Demander a chaque joueur sa position
-		// positionJoueur[laPosition] = couleur
+		echo $usager->getCompte();
 		include('./jouer_view.php');
 		
 	    break;
@@ -51,7 +49,7 @@ switch ($action) {
         
         //TODO: verifier que c'est ˆ ce joueur de jouer. 
         //TODO: ca devrait �tre la partie qui dŽmarre le coup ??? 
-	    $joueur->setPosition(6); //FIXME: ˆ enlever une fois les tests termines
+	    $joueur->setPosition(26); //FIXME: ˆ enlever une fois les tests termines
 	    $joueur->brasseDes();
 	    if($partie->getInteractionId() == 14){
 	    	$caseAchetable = $tableauDeJeu->getCaseParPosition($joueur->getPosition());	

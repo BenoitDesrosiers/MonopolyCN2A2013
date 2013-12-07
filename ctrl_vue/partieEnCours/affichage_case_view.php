@@ -88,10 +88,10 @@
 		   	else :?>
 		   		<?php echo $case->getNom();
 		   	endif;?></text>
-		   	<?php if(array_key_exists($case->getPosition(), $ar_joueur)){
+		   	<!--<?php if(array_key_exists($case->getPosition(), $ar_joueur)){
 		   		$couleur = $ar_joueur[$case->getPosition()]->getPionId();
 		   		include 'pion_view.php';
-					}?>
+					}?>-->
 		   	<?php if($case->getType() == "propriete" || $case->getType() == "ServicePublic" || $case->getType() == "train"){?>
 		   	 <text class="montant" x="<?php echo $x?>px" y="<?php echo $y+44?>px" transform="rotate(<?php echo $rotation?> <?php echo $xrotate ?>,<?php echo $yRotate ?>)"><?php echo $case->getPrix();?> $</text>
 		   	 <?php }?>
