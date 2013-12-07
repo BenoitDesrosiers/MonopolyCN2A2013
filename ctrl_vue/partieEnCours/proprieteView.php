@@ -1,5 +1,5 @@
 
-<svg width="75px" height="100px" xmlns="http://www.w3.org/2000/svg" version="1.1">
+<svg width="75px" height="110px" xmlns="http://www.w3.org/2000/svg" version="1.1">
 	<rect x="0px" y="0px" width="75px" height="30px" style="fill:<?php echo $case->getCouleurHTML();?>;"/>
 	<text class="titreP" x="38px" y="40px">
 		<?php $nomCase = $case->getNom();

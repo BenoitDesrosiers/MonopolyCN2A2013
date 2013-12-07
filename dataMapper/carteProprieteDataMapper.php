@@ -59,8 +59,11 @@ class CarteProprieteDataMapper extends Mapper {
                         $objet->getHypotheque(),
                         $objet->getNombreMaisons(),
                         $objet->getNombreHotels(),
+        		$objet->getCompteProprietaire(),
+        		$objet->getCaseId(),
+        		$objet->getPartieId()
                         );
-        $this->insertStmt->execute($values);       
+        $this->updateStmt->execute($values);       
     }
 
     function selectStmt() {

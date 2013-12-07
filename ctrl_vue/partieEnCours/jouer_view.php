@@ -48,6 +48,21 @@
         xhr.open("GET","<?php echo $GLOBALS['app_path']."/ajax/demoajax.php"?>",true);
         xhr.send(null);
     }
+    
+    function AfficherInfo(Id, partieId)
+    {
+
+        getXhr();
+        xhr.onreadystatechange = function()
+            {
+             if(xhr.readyState == 4 && xhr.status == 200)
+             {
+             document.getElementById('infoCase').innerHTML=xhr.responseText;
+             }
+            }
+        xhr.open("GET","<?php echo $GLOBALS['app_path']."/js/AfficherInformation.php?carteId="?>"+Id+"&partieId="+partieId,true);
+        xhr.send(null);
+    }
  
 </script>
     
@@ -85,28 +100,60 @@
 	<div id="argent">
 		<!-- afficher l'argent du joueur ici -->
 	</div> <!-- argent -->
-
+	<div>
+	 <?php if ($partie->getInteractionId()==12345) {?>
+	 	<p>Voulez vous vraiment hypothequer la case:
+	 	<?php
+	 	echo $nomCarte." ?";
+	 	include('./hypothequer.php');
+	 }
+	 else if ($partie->getInteractionId()==54321)
+	 {?>
+	 <p>Voulez vous vraiment racheter la case:
+	 	<?php
+	 	echo $nomCarte." ?";
+	 	include('./racheter.php');
+	 
+	 }?>
+	</div>
+	 
 	<div id="propriete">
 	<?php 
-			$carte = $joueur->getProprietes();
+			$carteP = $joueur->getProprietes();
+			$partieId = $joueur->getPartieId();
 			?>
 			<table border=1>
 			<tr>
 			<?php
-			foreach ( $carte as $propriete ) :
+			foreach ( $carteP as $propriete ) :
 				?>
 				<td class="carte2" >
 				<?php
-				//echo $propriete->getCaseId();
 				$case = $propriete->getCaseAssociee();
 				$Id = $propriete->getCaseId();
+				
 				include './proprieteView.php';
 				//echo $Id;
 				?>
 				<ul>
+			<?php 
+				//$carte = CartePropriete::pourCasePartie($Id, $partieId);
+				$valeurHypo = $propriete->getHypotheque();
+				if ($valeurHypo==1)
+					{
+						?>
+						<li><a href=".?action=racheter&carteId=<?php echo $Id?>"><b>Racheter</b></a></li>
+						<?php
+					}
+				else
+				{
+			?>
 				<li><a href=".?action=hypothequer&carteId=<?php echo $Id?>"><b>Hypothèquer</b></a></li>
-	            <li><a href="#nogo" onClick=""><b>Informations</b></a></li>
-	            </ul>>
+				<?php 
+				}
+				?>
+	            <li><a href="#nogo" onClick="AfficherInfo(<?php echo $Id?>, <?php echo $partieId?>)"><b>Informations</b></a></li>
+	            </ul>
 				</td>
 				
 				<?php
@@ -116,7 +163,10 @@
 			?>
 			</tr>
 			</table>
-        
+        <div id ="infoCase">
+    
+    </div>
     </div> <!-- propriete -->
+   
 	<?php include 'vue/piedpage.php'; ?>
     
