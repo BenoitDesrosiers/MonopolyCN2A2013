@@ -12,7 +12,7 @@ class banque  {
 	  	
 	  	//TODO: enlever, c'est pour du testing
 	  	$nouveauProprietaire = $carte->getCompteProprietaire();
-	  	echo $nouveauProprietaire;
+	  	
 	}
 	
 	public function fairePayer(Joueur $joueur, $montant) {

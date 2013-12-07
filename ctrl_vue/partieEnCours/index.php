@@ -29,10 +29,15 @@ switch ($action) {
 		$titrePage= $partie->getNom();
 		$tableauDeJeu = $partie->getTableau();
 		$joueur->getPionId();
+		$partie->setInteractionId(0);
 		//Faire un array[12345678] avec les positions des joueurs.
 		
-		foreach ($partie->getJoueurs() as $joueurListe)
-		//$joueurPos = new array()
+		foreach ($partie->getJoueurs() as $joueurListe) {
+			$joueurPos = $joueurListe->getPosition();
+			$ar_joueur[$joueurListe->getPosition()]=$joueurListe;
+			
+			
+		}
 		// Demander a la partie la liste des joueurs 
 		// Demander a chaque joueur sa position
 		// positionJoueur[laPosition] = couleur
@@ -42,12 +47,34 @@ switch ($action) {
 	case 'JouerCoup' : 
         $titrePage= "Jouer un coup";
         $tableauDeJeu = $partie->getTableau();
+        echo $joueur->getPosition();
+        
         //TODO: verifier que c'est ˆ ce joueur de jouer. 
         //TODO: ca devrait �tre la partie qui dŽmarre le coup ??? 
-	    $joueur->setPosition(1); //FIXME: ˆ enlever une fois les tests termines
+	    $joueur->setPosition(6); //FIXME: ˆ enlever une fois les tests termines
 	    $joueur->brasseDes();
+	    if($partie->getInteractionId() == 14){
+	    	$caseAchetable = $tableauDeJeu->getCaseParPosition($joueur->getPosition());	
+	    	$texteQuestion = "Voulez-vous achetez la case ". $caseAchetable->getNom(). " ?";
+	    }
 	    include('./jouer_view.php');
+	    
 	    break;
+	case 'repondreouinon' :
+		if($partie->getInteractionId() == 14){
+			$valeur = $_GET['valeur'];
+			if ($valeur == 'oui'){
+				$tableauDeJeu = $partie->getTableau();
+				$case = $tableauDeJeu->getCaseParPosition($joueur->getPosition());
+				$carte = CartePropriete::pourCasePartie($case->getId(), $partieId);
+				$banque = new banque;
+				$banque->vendrePropriete($joueur, $carte);
+				
+			}
+			$partie->setInteractionId(0);
+		}
+		include('./jouer_view.php');
+		break;
 
 }
 ?>

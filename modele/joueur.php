@@ -187,18 +187,18 @@ class Joueur extends Objet  implements EntreposageDatabase{
         foreach($argent as $billet=>$quantite){
                 $argentCtr += intval($billet) * $quantite; 
         }
-        echo "Le joueur a ".$argentCtr."$ et doit payer ".$montant."$";
-        echo "</br>";
+        //echo "Le joueur a ".$argentCtr."$ et doit payer ".$montant."$";
+        //echo "</br>";
         
         if($argentCtr < $montant){
                 echo "Le joueur n'a pas assez d'argent. ".($montant-$argentCtr)."$ de plus sont necessaire.";
         }
         else{
-                echo "Argent du joueur avant : ".$argentCtr."<br/>";
-                echo "Montant a payer: ".$montant."<br/>";
+                //echo "Argent du joueur avant : ".$argentCtr."<br/>";
+                //echo "Montant a payer: ".$montant."<br/>";
                 
                 $argentCtr -= $montant;
-                echo "Argent du joueur aprÃ¨s: ".$argentCtr."<br/>";
+                //echo "Argent du joueur aprÃ¨s: ".$argentCtr."<br/>";
                 
                 //creation de l'array de paiement exemple le joueur doit payer 350, il paye avec un 500
                 // montantCtr = valeur que le joueur recupere
@@ -259,9 +259,8 @@ class Joueur extends Objet  implements EntreposageDatabase{
         $this->setArgent($argent);
         //return $argent; //TODO: devrait retourner l'argent utilisŽe pour payer. 
     }
-
+	//Ne sert plus a rien!
 	public function tenterAchat(CartePropriete $carte){
-		$partie->setInteractionId(123456);//setter l'intéraction de la partie(int)
 	    return true;
 	}
 	

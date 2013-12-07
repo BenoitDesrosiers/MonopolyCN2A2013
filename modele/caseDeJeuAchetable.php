@@ -34,8 +34,6 @@ abstract class CaseDeJeuAchetable extends CaseDeJeu {
         $this->setNom($array["Titre"]);
         $this->setPrix($array["Prix"]);
         $this->setNom($array["Titre"]);
-        $this->setCouleur($array["Couleur"]);
-        $this->setCouleurHTML($array["CouleurHTML"]);
         $this->setGroupeDeCaseId($array["GroupeDeCaseId"]);
         $this->setLocation($array["Location"]);
         $this->setLocation1($array["Location1Maison"]);
@@ -87,11 +85,11 @@ abstract class CaseDeJeuAchetable extends CaseDeJeu {
                 //le joueur a atterit sur une case qui ne lui appartient pas 
                 $proprio->chargerLoyerA($unJoueur, $this->calculerLoyer($carte));
             }
-        } else { //pas de proprietaire = essayer de vendre la propriete
-            if($unJoueur->tenterAchat($carte)){
-                $banque = new banque;
-                $banque->vendrePropriete($unJoueur, $carte);
-            }
+        } else { 
+        	//pas de proprietaire = essayer de vendre la propriete
+            	$partie = Partie::parId($unJoueur->getPartieId());
+            	$partie->setInteractionId(14);
+            	
         }
     }
     
