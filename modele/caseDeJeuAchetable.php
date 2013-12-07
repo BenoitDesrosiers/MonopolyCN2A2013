@@ -94,7 +94,7 @@ abstract class CaseDeJeuAchetable extends CaseDeJeu {
     }
     
     
-    protected function nombreCartesMemeGroupeEtProprio(CartePropriete $propriete) {
+    public function nombreCartesMemeGroupeEtProprio(CartePropriete $propriete, Joueur $proprietare) {
         // retourne le nombre de carte d'un meme groupe appartenant au meme joueur
         $partie = Partie::parId($propriete->getPartieId());
         $casesDuGroupe = $partie->casesDuGroupe($this->getGroupeDeCaseId());
@@ -109,6 +109,8 @@ abstract class CaseDeJeuAchetable extends CaseDeJeu {
         }
         return $memeProprio;
     }
+    
+
     
     //Getters & Setters
    

@@ -95,7 +95,7 @@
 		
 		<?php 
 		
-		$Proprietes = $joueur->getProprietes(); //TODO: propriétées -achetable-
+		$Proprietes = $joueur->getProprietesBatissable($partie); //TODO: propriétées -achetable-
 		
 		echo "<table>";?>
 		<form action="." method="post" id="build">
@@ -105,12 +105,12 @@
 
 		echo "<tr>";
 		
-		echo $case->getCaseAssociee()->getNom();
+		echo $case->getNom();
 		
 		echo "</br>";
 		
 		echo "<label>Maison a construire:</label>"; ?>
-		<input type="text" name="case<?php echo $case->getCaseAssociee()->getId()?>" size="30" />
+		<input type="text" name="case<?php echo $case->getId()?>" size="30" />
 		
 		<?php
 			

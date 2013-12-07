@@ -346,18 +346,40 @@ class Joueur extends Objet  implements EntreposageDatabase{
 	    return CartePropriete::pourJoueurs($this);
 	}
 	
-// 	public function getProprietesBatissable(){ //TODO : fonction à faire
-// 		$arrayDeProprietes = $this->getProprietes();
-// 		foreach ($arrayDeProprietes as $case){
-// 		if ($case->getCaseAssociee()->getType() = "propriete"){
+	public function getProprietesBatissable(Partie $partie){ //TODO : fonction à faire
+		$arrayDeProprietesHabitable = array();
+		$comparaison = array();
+		$resultat = array();
+		$array = array();
+		$arrayIdDesProprietesHabitable = array();
+		$arrayDID2 = array();
+		$arrayDeProprietes = $this->getProprietes();
+		foreach ($arrayDeProprietes as $case){
+			if ($case->getCaseAssociee()->getType() == "propriete"){
+			$arrayDeProprietesHabitable[] = $case->getCaseAssociee();
+			$arrayIdDesProprietesHabitable[] = $case->getCaseAssociee()->getId();
+			}
+		}
+		foreach ($arrayDeProprietesHabitable as $case){
+			$array = $partie->casesDuGroupe($case->getGroupeDeCaseId());
+			foreach ($array as $shit){
+				$arrayDID2[] = $shit->getId();
+			}
+			$comparaison = array_intersect($arrayDID2, $arrayIdDesProprietesHabitable);
+			if ($comparaison == $arrayDID2){
+			//	if (array_intersect($resultat,$arrayDID) != null) {
+				foreach ($array as $caca){	
+				$resultat[] = $caca;
+				}
+			//	}	  
+			}
+		//	$arrayDID2[] = null;
 		
-// 		}
 			
-
-// 		}
+		}
 		
-		
-// 	}
+		return $resultat;
+	}
 	
 	
 	
