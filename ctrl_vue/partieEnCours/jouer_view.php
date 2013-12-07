@@ -90,8 +90,8 @@
 			if ($partie->getInteractionId() == 74){
 				$joueur->setToursRestantEnPrison($joueur->getToursRestantEnPrison()-1);
 				$partie->setInteractionId(-1);
-				//si l'interractionId est déja a 74, la question a déja été posée et le joueur a refusé de sortir.
-				//$partie->setInteractionId(0);//chiffre inateignable
+				//si l'interractionId est déja a 74
+				//la question a déja été posée et le joueur a refusé de sortir.
 			}
 			else {
 				$partie->setInteractionId(74);
