@@ -87,7 +87,7 @@
 
 	<?php if ($partie->getInteractionId() != 777778) { ?>
 	<div id="propriete">
-          // code normal david
+          
     </div> 
 	<?php }
 	else { ?>
