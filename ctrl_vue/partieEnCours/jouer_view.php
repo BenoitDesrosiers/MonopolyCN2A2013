@@ -104,13 +104,13 @@
 		foreach ($Proprietes as $case){	
 
 		echo "<tr>";
-		
-		echo $case->getNom();
-		
+
+		echo $case->getCaseAssociee()->getNom();
+
 		echo "</br>";
-		
+
 		echo "<label>Maison a construire:</label>"; ?>
-		<input type="text" name="case<?php echo $case->getId()?>" size="30" />
+		<input type="text" name="case<?php echo $case->getCaseAssociee()->getId()?>" size="30" />
 		
 		<?php
 			
