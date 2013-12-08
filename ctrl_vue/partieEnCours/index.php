@@ -46,6 +46,7 @@ switch ($action) {
 	    	include('./jouer_view.php');
 	    break; 
 	case 'AcheterMaison' :
+		$dejaConstruit = false;
  		$Proprietes = $joueur->getProprietesBatissable($partie);
  		foreach($Proprietes as $case){
 			if ($_POST['case'.$case->getCaseAssociee()->getId()]!=0){
@@ -53,8 +54,11 @@ switch ($action) {
 					foreach ($partie->casesDuGroupe($case->getCaseAssociee()->getGroupeDeCaseId()) as $terrain){
 						if ($case->getCaseId() != $terrain->getId()) {
 							if ($_POST['case'.$case->getCaseAssociee()->getId()]+$case->getNombreMaisons() == $_POST['case'.$terrain->getId()]+$case::pourCasePartie($terrain->getId(), $partie->getId())->getNombreMaisons() || $_POST['case'.$case->getCaseAssociee()->getId()]+$case->getNombreMaisons() == $_POST['case'.$terrain->getId()]+$case::pourCasePartie($terrain->getId(), $partie->getId())->getNombreMaisons()+1 || $_POST['case'.$case->getCaseAssociee()->getId()]+$case->getNombreMaisons() == $_POST['case'.$terrain->getId()]+$case::pourCasePartie($terrain->getId(), $partie->getId())->getNombreMaisons()-1) {
+								if ($dejaConstruit == false){
 								$case->setNombreMaisons($_POST['case'.$case->getCaseAssociee()->getId()]+$case->getNombreMaisons());
 								$joueur->paye($terrain::parId($case->getCaseAssociee()->getId())->getCoutMaison()*$_POST['case'.$case->getCaseAssociee()->getId()]);
+								$dejaConstruit = true;
+								}
 								//paye est fucké ben raide avec des ECHO dans le modele, da fuk
 								//quand paye sera fixé je ferai un check avant de setNombreMaisons
 							}
@@ -62,6 +66,7 @@ switch ($action) {
 					}
 				}
 			}
+			$dejaConstruit = false;
  		}
  		//TODO:mettre un message de confirmation ou d'erreur
 		$partie->setInteractionId(0);
