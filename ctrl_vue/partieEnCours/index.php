@@ -46,28 +46,60 @@ switch ($action) {
 	    	include('./jouer_view.php');
 	    break; 
 	case 'AcheterMaison' :
-		$dejaConstruit = false;
+		$validator = true;
+		$dejaTraite = array ();
+		$proposition = array();
+		$propositionId = array ();
+		$preproposition = array ();
+		$maisonDemandé = 0;
+		$nombreTerrainDuGroupe = 0;
  		$Proprietes = $joueur->getProprietesBatissable($partie);
- 		foreach($Proprietes as $case){
-			if ($_POST['case'.$case->getCaseAssociee()->getId()]!=0){
-				if ($_POST['case'.$case->getCaseAssociee()->getId()]+$case->getNombreMaisons()<=4) {
-					foreach ($partie->casesDuGroupe($case->getCaseAssociee()->getGroupeDeCaseId()) as $terrain){
-						if ($case->getCaseId() != $terrain->getId()) {
-							if ($_POST['case'.$case->getCaseAssociee()->getId()]+$case->getNombreMaisons() == $_POST['case'.$terrain->getId()]+$case::pourCasePartie($terrain->getId(), $partie->getId())->getNombreMaisons() || $_POST['case'.$case->getCaseAssociee()->getId()]+$case->getNombreMaisons() == $_POST['case'.$terrain->getId()]+$case::pourCasePartie($terrain->getId(), $partie->getId())->getNombreMaisons()+1 || $_POST['case'.$case->getCaseAssociee()->getId()]+$case->getNombreMaisons() == $_POST['case'.$terrain->getId()]+$case::pourCasePartie($terrain->getId(), $partie->getId())->getNombreMaisons()-1) {
-								if ($dejaConstruit == false){
-								$case->setNombreMaisons($_POST['case'.$case->getCaseAssociee()->getId()]+$case->getNombreMaisons());
-								$joueur->paye($terrain::parId($case->getCaseAssociee()->getId())->getCoutMaison()*$_POST['case'.$case->getCaseAssociee()->getId()]);
-								$dejaConstruit = true;
-								}
-								//paye est fucké ben raide avec des ECHO dans le modele, da fuk
-								//quand paye sera fixé je ferai un check avant de setNombreMaisons
-							}
-						}
-					}
-				}
-			}
-			$dejaConstruit = false;
+ 		foreach ($Proprietes as $case){
+ 			$maisonDemandé = $_POST['case'.$case->getCaseAssociee()->getId()] + $maisonDemandé;
  		}
+ 	//	if ($partie->getMaisons() >= $maisonDemandé) {
+ 			foreach($Proprietes as $case){
+ 				if ($_POST['case'.$case->getCaseAssociee()->getId()]>=1 && in_array($case->getCaseAssociee()->getGroupeDeCaseId(), $dejaTraite) == false){
+ 					$nombreTerrainDuGroupe = count($partie->casesDuGroupe($case->getCaseAssociee()->getGroupeDeCaseId()));
+ 					foreach ($partie->casesDuGroupe($case->getCaseAssociee()->getGroupeDeCaseId()) as $terrain){
+ 						$proposition[] = $_POST['case'.$terrain->getId()]+$case::pourCasePartie($terrain->getId(), $partie->getId())->getNombreMaisons();
+ 						$propositionId[] = $terrain->getId();
+ 						$preproposition[] = $case::pourCasePartie($terrain->getId(), $partie->getId())->getNombreMaisons();
+ 					}
+ 					if ($nombreTerrainDuGroupe == 2) {
+ 						if ($proposition[0] > 4 || $proposition[1] > 4) {
+ 							$validator = false;
+ 						}
+ 						if ($proposition[0] - $proposition[1] < -1 || $proposition[0] - $proposition[1] > 1){
+ 							$validator = false;
+ 						}
+ 					}
+ 					else {
+ 						if ($proposition[0] > 4 || $proposition[1] > 4 || $proposition[2] > 4) {
+ 							$validator = false;
+ 						}
+ 						if ($proposition[0] - $proposition[1] < -1 || $proposition[0] - $proposition[1] > 1 || $proposition[0] - $proposition[2] < -1 || $proposition[0] - $proposition[2] > 1 || $proposition[1] - $proposition[2] < -1 || $proposition[1] - $proposition[2] > 1){
+ 							$validator = false;
+ 						}
+ 					}
+ 					if ($validator == true) {
+ 						$x = 0;
+ 						foreach ($propositionId as $Id){
+ 							$case::pourCasePartie($Id, $partie->getId())->setNombreMaisons($proposition[$x]);
+ 							$joueur->paye(($proposition[$x]-$preproposition[$x])*$case->getCaseAssociee()->getCoutMaison());
+ 							$partie->setMaisons($partie->getMaisons()-($proposition[$x]-$preproposition[$x]));
+ 							$x++;
+ 						}
+ 					}
+ 					$dejaTraite[] = $case->getCaseAssociee()->getGroupeDeCaseId();
+ 				}
+ 				$validator = true;
+ 				$proposition = null;
+ 				$propositionId = null;
+ 				$preproposition = null;
+ 			}
+ 	//	}
+
  		//TODO:mettre un message de confirmation ou d'erreur
 		$partie->setInteractionId(0);
 		$tableauDeJeu = $partie->getTableau();
