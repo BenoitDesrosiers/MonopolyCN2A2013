@@ -47,6 +47,21 @@
         xhr.open("GET","<?php echo $GLOBALS['app_path']."/ajax/demoajax.php"?>",true);
         xhr.send(null);
     }
+
+    function ListeProprieteNonVendu(partieId)
+    {
+        getXhr();
+        xhr.onreadystatechange = function()
+            {
+             if(xhr.readyState == 4 && xhr.status == 200)
+             {
+                
+                     document.getElementById('proprieteNonVendu').innerHTML=xhr.responseText;
+             }
+            }
+        xhr.open("GET","<?php echo  $GLOBALS['app_path']."/ajax/proprieteNonVendu.php?partie="?>"+partieId,true);
+        xhr.send(null);
+    }
  
 </script>
     
@@ -64,6 +79,8 @@
         <div id="divTableau">
                  <div id="demoAjax">
                  </div>
+                 <div id="proprieteNonVendu">
+                             </div>
                 
                 <?php include 'tableauDeJeu_view.php' ?>
         </div>
@@ -75,6 +92,7 @@
 				<li><a href="."><b>Rafraichir</b></a></li>
 	            <li><a href=".?action=JouerCoup"><b>Jouer</b></a></li> <!--//TODO verifier si c'est au tour de ce joueur de jouer un coup. Si non, afficher un piton refresh au lieu de jouer -->
 				<li><a href="#nogo" onClick="DemoAjax()"><b>demo Ajax</b></a></li>
+				<li><a href="#nogo" onClick="ListeProprieteNonVendu(<?php echo $partieId?>)"><b>ProprieteNonVendu</b></a></li>
 	            <li><a href=".?action=AchatMaison"><b>Achat Maison</b></a></li>
 				<li><a href="#nogo"><b>Achat Hotel</b></a></li>
 				<li><a href="#nogo"><b>Quitter</b></a></li>
