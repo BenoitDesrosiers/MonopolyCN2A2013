@@ -22,38 +22,33 @@ $partieId = $_SESSION['partieId'];
 $partie = Partie::parId($partieId);
 $usager = $_SESSION['usager'];
 $joueur = Joueur::parComptePartie($usager->getCompte(), $partieId);
-
+$joueur->getPionId();
+//Boucle pour faire la liste de tout les joueurs dans la partie.
+foreach ($partie->getJoueurs() as $joueurListe) {
+	$joueurPos = $joueurListe->getPosition();
+	$ar_joueur[$joueurListe->getPosition()]=$joueurListe;
+}
 switch ($action) {
 	case 'afficheTableau' :
 		// affiche le tableau de jeu
 		$titrePage= $partie->getNom();
 		$tableauDeJeu = $partie->getTableau();
-		$joueur->getPionId();
 		$partie->setInteractionId(0);
-		//Faire un array[12345678] avec les positions des joueurs.
-		
-		foreach ($partie->getJoueurs() as $joueurListe) {
-			$joueurPos = $joueurListe->getPosition();
-			$ar_joueur[$joueurListe->getPosition()]=$joueurListe;
-			
-			
-		}
-		echo $usager->getCompte();
 		include('./jouer_view.php');
 		
 	    break;
 	case 'JouerCoup' : 
         $titrePage= "Jouer un coup";
         $tableauDeJeu = $partie->getTableau();
-        echo $joueur->getPosition();
         
         //TODO: verifier que c'est ˆ ce joueur de jouer. 
         //TODO: ca devrait �tre la partie qui dŽmarre le coup ??? 
-	    $joueur->setPosition(26); //FIXME: ˆ enlever une fois les tests termines
+	    $joueur->setPosition(7); //FIXME: ˆ enlever une fois les tests termines
 	    $joueur->brasseDes();
 	    if($partie->getInteractionId() == 14){
+	    	//création de la case pour pouvoir avoir le nom.
 	    	$caseAchetable = $tableauDeJeu->getCaseParPosition($joueur->getPosition());	
-	    	$texteQuestion = "Voulez-vous achetez la case ". $caseAchetable->getNom(). " ?";
+	    	$texteQuestion = "Voulez-vous achetez la case ". $caseAchetable->getNom(). "au montant de ".$caseAchetable->getPrix()." ?";
 	    }
 	    include('./jouer_view.php');
 	    
@@ -62,17 +57,23 @@ switch ($action) {
 		if($partie->getInteractionId() == 14){
 			$valeur = $_GET['valeur'];
 			if ($valeur == 'oui'){
+				//Création de la case pour prendre ces informations.
 				$tableauDeJeu = $partie->getTableau();
 				$case = $tableauDeJeu->getCaseParPosition($joueur->getPosition());
+				////////
+				//A partir de la case on crée la carte pour que le joueur puisse acheter la carte.
 				$carte = CartePropriete::pourCasePartie($case->getId(), $partieId);
-				$banque = new banque;
+				$banque = new banque; // On crée la banque
 				$banque->vendrePropriete($joueur, $carte);
-				
 			}
+			if($valeur == 'non'){
+				$tableauDeJeu = $partie->getTableau();
+			}
+			
 			$partie->setInteractionId(0);
 		}
 		include('./jouer_view.php');
+		
 		break;
-
 }
 ?>

@@ -63,11 +63,15 @@
 			$rotation = 0;
 			break;
 	}?>
+	<!--  Chaque case de jeu -->
 	<td class="<?php echo $classeCss?>">
 		<svg width="<?php echo $width ?>px" height="<?php echo $height ?>px" xmlns="http://www.w3.org/2000/svg" version="1.1">
+			<!-- Si c'est une case achetable du type propriété affichage du rectangle de couleur -->
 			<?php if($case->getType() == "propriete"){?>	
 				<rect x="<?php echo $xRect?>px" y="<?php echo $yRect?>px" width="<?php echo $widthRect ?>px" height="<?php echo $heightRect ?>px" style="fill:<?php echo $case->getCouleurHTML();?>;"/>
 			<?php }?>
+			<!-- Affichage du nom de la case et méthode pour couper le nom en deux ou trois partie 
+			si le nom est trop long. Coupage au espace avec une longueur maximum défini dans l'index-->
 			<text class="titreP" x="<?php echo $x?>px" y="<?php echo $y-10?>px" transform="rotate(<?php echo $rotation?> <?php echo $xrotate ?>,<?php echo $yRotate ?>)">
 			<?php $nomCase = $case->getNom();
 			$dernierEspace =0;
@@ -88,10 +92,12 @@
 		   	else :?>
 		   		<?php echo $case->getNom();
 		   	endif;?></text>
-		   	<!--<?php if(array_key_exists($case->getPosition(), $ar_joueur)){
+		   	<!-- Affichage du pion  avec le pionId du joueur stocker dans l'array défini dans l'index.-->
+		   	<?php if(array_key_exists($case->getPosition(), $ar_joueur)){
 		   		$couleur = $ar_joueur[$case->getPosition()]->getPionId();
 		   		include 'pion_view.php';
-					}?>-->
+					}?>
+			<!-- Affichage du prix si c'est une case achetable du type propriété, train ou service public. -->
 		   	<?php if($case->getType() == "propriete" || $case->getType() == "ServicePublic" || $case->getType() == "train"){?>
 		   	 <text class="montant" x="<?php echo $x?>px" y="<?php echo $y+44?>px" transform="rotate(<?php echo $rotation?> <?php echo $xrotate ?>,<?php echo $yRotate ?>)"><?php echo $case->getPrix();?> $</text>
 		   	 <?php }?>

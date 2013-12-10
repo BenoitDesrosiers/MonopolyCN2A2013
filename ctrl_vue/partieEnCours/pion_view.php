@@ -1,32 +1,43 @@
 <?php 
 switch ($couleur){
 	case '1':
-		$couleur = "#AEEE00";
+		$couleur = "#FF0101"; //rouge
 		break;
 	case '2':
-		$couleur = "#01B0F0";
+		$couleur = "#010101"; //noir
 		break;
 	case '3':
-		$couleur = "#FF0000";
+		$couleur = "#FFFFFF"; // orange pale
 		break;
 	case '4':
-		$couleur = "#FF8900";
+		$couleur = "#FFFF00"; // jaune
 		break;
 	case '5':
-		$couleur = "#6B1A6A";
+		$couleur = "#40FF00"; // vert
 		break;
 	case '6':
-		$couleur = "#191919";
+		$couleur = "#00FFFF"; //turquoise
 		break;
 	case '7':
-		$couleur = "#FF73BF";
+		$couleur = "#819FF7"; //bleu pale
 		break;
 	case '8':
-		$couleur = "#EACFB8";
+		$couleur = "#0000FF"; // bleu 
+		break;
+	case '9':
+		$couleur = "#BF00FF"; // mauve
+		break;
+	case '10':
+		$couleur = "#FF00FF"; // rose
+		break;
+	case '11':
+		$couleur = "#FF0040"; // rose foncé
+		break;
+	case '12':
+		$couleur = "#848484"; // gris
 		break;
 }
 ?>
 
-	<svg height="25" width="25" xmlns="http://www.w3.org/2000/svg" version="1.1">
-		<circle cx="13" cy="13" r="12" stroke="black" stroke-width="" fill="<?php echo $couleur?>" />
-	</svg>
+<!-- Pion de jeu avec la couleur -->	
+<circle cx="40" cy="50" r="12" stroke="black" stroke-width="" fill="<?php echo $couleur?>" />

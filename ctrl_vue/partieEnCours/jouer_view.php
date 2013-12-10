@@ -101,6 +101,7 @@
 			</ul>
 	</div> <!-- navigation -->
 	
+	
 	<div id="argent">
 		<!-- afficher l'argent du joueur ici -->
 	</div> <!-- argent -->
