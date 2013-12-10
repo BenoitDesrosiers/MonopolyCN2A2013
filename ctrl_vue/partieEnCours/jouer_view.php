@@ -49,6 +49,7 @@
     }
  
 </script>
+<script src="<?php echo $GLOBALS['app_path'];?>ajax/aideajax.js"></script>
     
 </head>
 
@@ -77,7 +78,8 @@
 				<li><a href="#nogo" onClick="DemoAjax()"><b>demo Ajax</b></a></li>
 	            <li><a href="#nogo"><b>Achat Maison</b></a></li>
 				<li><a href="#nogo"><b>Achat Hotel</b></a></li>
-				<li><a href=".?action=questionVtPropriete"><b>Ventre Propriété</b></a></li>
+				<li><a href=".?action=questionVtPropriete"><b>Ventre Propriété</b></a></li><!-- Tommy Teasdale -->
+				<li><a id="help"><b>Aide</b></a></li><!-- Tommy Teasdale -->
 				<li><a href="#nogo"><b>Quitter</b></a></li>
 			</ul>
 	</div> <!-- navigation -->
@@ -89,5 +91,8 @@
 	<div id="propriete">
         <!-- afficher les proprietes du joueur ici -->  
     </div> <!-- propriete -->
-	<?php include 'vue/piedpage.php'; ?>
+	<?php 
+    if($partie->getInteractionID()==404)
+        include('./vente_prop_view.php');// Tommy Teasdale
+    include 'vue/piedpage.php'; ?>
     

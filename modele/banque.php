@@ -19,4 +19,17 @@ class banque  {
 	    $joueur->paye($montant);
 	    
 	}
+	
+	/*---Tommy*/
+	public function vendreProprieteJoueur(Joueur $acheteur, Joueur $vendeur, CartePropriete $carte){
+        //Vendre une propriete d'un joueur a un autre joueur si celui à assez d'argent.
+	  	if($acheteur->tenterAchat($carte->getCaseAssociee()->getPrix())!=false){
+            $acheteur->paye($carte->getCaseAssociee()->getPrix());
+            $vendeur->encaisse($carte->getCaseAssociee()->getPrix());
+            $carte->setCompteProprietaire($acheteur->getCompte());
+        }
+	  	
+    }
+    /*Tommy---*/
+    
 }

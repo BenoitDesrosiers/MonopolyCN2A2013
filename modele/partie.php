@@ -20,7 +20,7 @@ class Partie extends Objet implements EntreposageDatabase {
     
     
     
-    protected $joueurs; // la liste des joueurs (de 1 ˆ 8)
+    protected $joueurs; // la liste des joueurs (de 1 ï¿½ 8)
     protected $tableau; // le tableau sur lequel se deroule la partie
     protected $banque;
     protected $des;
@@ -31,7 +31,7 @@ class Partie extends Objet implements EntreposageDatabase {
     protected $hotels;
 
     protected $definitionPartie = null; //l'objet representant la definition de partie. 
-    protected $interactionId; //l'id de l'interation qui est prŽsentement en cours. 
+    protected $interactionId; //l'id de l'interation qui est prï¿½sentement en cours. 
     
    
     public function __construct(array $array) {
@@ -42,7 +42,7 @@ class Partie extends Objet implements EntreposageDatabase {
         $this->joueurTour = $array["JoueurTour"];
         $this->debutPartie = DateTime::createFromFormat('Y-m-d h:i:s', $array["DebutPartie"]);
         $this->interactionId = $array["InteractionId"];
-        //TODO: ajouter dans la BD la position de la carte chance et CC prŽsentement sur le top
+        //TODO: ajouter dans la BD la position de la carte chance et CC prï¿½sentement sur le top
     }
     
     // Static Factory
@@ -138,7 +138,7 @@ class Partie extends Objet implements EntreposageDatabase {
     
     public function joueurPresent(Usager $usager) {
         /*
-         * verifie si un joueur est dŽjˆ dans cette partie
+         * verifie si un joueur est dï¿½jï¿½ dans cette partie
          */
         $joueurs = $this->getJoueurs();
         $present = false;
@@ -196,7 +196,7 @@ class Partie extends Objet implements EntreposageDatabase {
         //TODO: lazy load a partir de PartieEnCours_CarteCC
     }
     public function setCartesCaisseCommune($value) {
-        //TODO: je crois pas qu'on doit avoir un set puisque que c'est loadŽ
+        //TODO: je crois pas qu'on doit avoir un set puisque que c'est loadï¿½
         $this->cartesCaisseCommune = $value;
         $this->notifie("cartesCaisseCommune");
     }
@@ -280,15 +280,15 @@ class Partie extends Objet implements EntreposageDatabase {
         $cartes=CarteChance::pourDefinitionPartie($this->id);
         $prochaineCarte=CarteChance::parPositionCarte(14,$this->id);// Pour les besoins de la fonction en cours de developpement,
         // La carte pigee est la carte a la position 14
-        /*foreach($cartes as $carte){                               // Les cartes ne sont pas deplacees.
-         foreach($cartes as $carte){
-        if($carte->getPosition()==count($cartes))
-            $carte->setPosition(1);
-        else
-            $carte->setPosition($carte->getPosition()+1);
-        $carte->sauvegarder();
+        foreach($cartes as $carte){                               // Les cartes ne sont pas deplacees.
+            foreach($cartes as $carte){
+                if($carte->getPosition()==count($cartes))
+                    $carte->setPosition(1);
+                else
+                    $carte->setPosition($carte->getPosition()+1);
+            $carte->sauvegarder();
+            }
         }
-        }*/
     
         return $prochaineCarte;
     }
@@ -313,7 +313,7 @@ class Partie extends Objet implements EntreposageDatabase {
 	}
 
     public function getDebutPartie() {
-        return $this->debutPartie;
+        return $this->debutPartie->format('Y-m-d g:h:i');
     }
     public function setDebutPartie($value) {
         $this->debutPartie = $value;

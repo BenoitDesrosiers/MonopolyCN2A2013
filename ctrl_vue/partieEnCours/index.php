@@ -28,6 +28,7 @@ switch ($action) {
 		// affiche le tableau de jeu
 		$titrePage= $partie->getNom();
 		$tableauDeJeu = $partie->getTableau();
+		$partie->setInteractionID(0);
 		include('./jouer_view.php');
 	    break;
 	case 'JouerCoup' : 
@@ -39,6 +40,29 @@ switch ($action) {
 	    $joueur->brasseDes();
 	    include('./jouer_view.php');
 	    break;
-
+    /*---Tommy*/
+    case 'questionVtPropriete':
+        $titrePage = "AfficheTableau";
+        $tableauDeJeu = $partie->getTableau();
+        
+        $partie->setInteractionID(404);
+        
+        include('./jouer_view.php');
+        break;
+    case 'vtPropriete':
+        $titrePage= "afficheTableau";
+        $tableauDeJeu = $partie->getTableau();
+        
+        $joueurVt=Joueur::parComptePartie($_POST['joueur'],$partieId);
+        $proprieteVt=CartePropriete::pourCasePartie($_POST['propriete'],$partieId);
+        
+        /* Effectuer la vente */
+        $banque=new banque();
+        $banque->vendreProprieteJoueur($joueurVt,$joueur,$proprieteVt);
+        
+        $partie->setInteractionID(0);
+        include('./jouer_view.php');
+        break;
+    /*Tommy---*/
 }
 ?>
