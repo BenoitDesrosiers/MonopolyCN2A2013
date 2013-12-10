@@ -317,7 +317,12 @@ class Partie extends Objet implements EntreposageDatabase {
     }
     
 	public function jouerCoup($joueur) {
-		$joueur->avanceSurCase();
+		if ($joueur->getEnPrison() == 1){
+			$this->setInteractionId(74);
+		}
+		else {
+			$joueur->avanceSurCase();
+		}
 	}
 
     public function getDebutPartie() {

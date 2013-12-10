@@ -35,14 +35,10 @@ switch ($action) {
         $tableauDeJeu = $partie->getTableau();
         //TODO: verifier que c'est ˆ ce joueur de jouer. 
         //TODO: ca devrait �tre la partie qui dŽmarre le coup ???
-        if ($joueur->getEnPrison() == 1){
-        	$partie->setInteractionId(74);
-        }
-        else {
-        	$partie->jouerCoup($joueur);
-        }
-        //$tours = $partie->getJoueurTour();
-        //echo "<br/>C'est le tour de : " . $tours[0];
+       
+        $partie->jouerCoup($joueur);
+        
+        
             include('./jouer_view.php');
             break;
             
@@ -57,10 +53,23 @@ switch ($action) {
 		elseif ($_GET['valeur'] == 'attendre') {
 			$joueur->setToursRestantEnPrison($joueur->getToursRestantEnPrison()-1);
 			$partie->setInteractionId(0);
+			$partie->genererValeursDes();
 			if ($joueur->getToursRestantEnPrison() == 0) {
 				$joueur->setEnPrison(0);
 			}
+			elseif ($partie->desValeursIdentiques() == true) {
+				$joueur->setToursRestantEnPrison(0);
+				$joueur->setEnPrison(0);
+				redirect('.?action=JouerCoup');
+			}
 			redirect('.?afficheTableau');
+		}
+		elseif ($_GET['valeur'] == 'carte') {
+			//TODO:retirer la carte au joueur
+			$joueur->setToursRestantEnPrison(0);
+			$partie->setInteractionId(0);
+			$joueur->setEnPrison(0);
+			redirect('.?action=JouerCoup');
 		}
 		break;
 }

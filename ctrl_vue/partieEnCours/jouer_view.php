@@ -1,6 +1,6 @@
 <?php 
 /*
- * la partie est dŽmarrŽe. 
+ * la partie est dï¿½marrï¿½e. 
  * Affiche le tableau et l'info des joueurs. 
  * 
  */?>
@@ -89,7 +89,6 @@
 				<li><a href="."><b>Rafraichir</b></a></li>
 	            <li><a href=".?action=JouerCoup"><b>Jouer</b></a></li> <!--//TODO verifier si c'est au tour de ce joueur de jouer un coup. Si non, afficher un piton refresh au lieu de jouer -->
 				<li><a href="#nogo" onClick="DemoAjax()"><b>demo Ajax</b></a></li>
-				<li><a href="#nogo" onClick="AfficherProprietesDuJoueur()"><b>Mes Propri&eacute;t&eacute;s</b></a></li>
 	            <li><a href="#nogo"><b>Achat Maison</b></a></li>
 				<li><a href=".?action=AcheterHotel"><b>Achat Hotel</b></a></li>
 				<li><a href="#nogo"><b>Quitter</b></a></li>

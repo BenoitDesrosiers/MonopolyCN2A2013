@@ -8,9 +8,9 @@
 	<div id="navigation">
 		Vous &ecirc;tes en prison. </br>
 		Que voulez-vous faire?
-		<!--les boutons pour jouer: refresh, brasser, acheter Maison/hotel, quitter -->
 		<ul id="choixNavigation" class="menuAvecBouton">
 			<li><a href=".?action=QuestionPrison&valeur=attendre"><b>Attendre</b></a></li>
-            <li><a href=".?action=QuestionPrison&valeur=payer"><b>Payer</b></a></li> <!--//TODO verifier si c'est au tour de ce joueur de jouer un coup. Si non, afficher un piton refresh au lieu de jouer -->
+            <li><a href=".?action=QuestionPrison&valeur=payer"><b>Payer</b></a></li>
+            <li><a href=".?action=QuestionPrison&valeur=carte"><b>Carte</b></a></li>
 		</ul>
 	</div> <!-- navigation -->
