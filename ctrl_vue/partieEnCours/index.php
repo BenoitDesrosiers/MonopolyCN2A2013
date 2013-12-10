@@ -64,23 +64,12 @@ switch ($action) {
 		$partie->setInteractionId(12345);
 		$nomCarte = $carte->getCaseAssociee()->getNom();
 		include('./jouer_view.php');
-		//$carteId=$_GET['carteId'];
-		//$titrePage= "Hypothequer";
-		
-		
-		//$value = 1;
-		//$joueur->setHypotheque($value);
-		//include('./jouer_view.php');
-		//echo $carteId;
 	    break;
 	case 'validerHypothequer':
 		$titrePage= "valider Hypotheque";
 		$tableauDeJeu = $partie->getTableau();
 		$valeurInteraction=$_GET['valeurInteraction'];
-		//$carteId=$_GET['carteId'];
 		$carte = CartePropriete::pourCasePartie($_SESSION['carteId'], $partieId);
-		//unset($_SESSION['carteId']);
-		
 		if($valeurInteraction==1)
 		{
 			$value = 1;
@@ -112,9 +101,8 @@ switch ($action) {
 	    $tableauDeJeu = $partie->getTableau();
 	    $valeurInteraction=$_GET['valeurInteraction'];
 	    $carte = CartePropriete::pourCasePartie($_SESSION['carteId'], $partieId);
-	    $value = 0;
-	    $carte->setHypotheque($value);
-	    if($valeurInteraction==1)
+	    //$carte->setHypotheque(0);
+	    if($valeurInteraction==2)
 		{
 			$value = 0;
 			$carte->setHypotheque($value);
