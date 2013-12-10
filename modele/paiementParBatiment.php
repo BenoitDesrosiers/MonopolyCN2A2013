@@ -21,17 +21,16 @@ class paiementParBatiment {
 		}
     
         //carte de la Caisse Commune ou Chance, "hardcoder" avec leurs ID provenant de la BD.
-        		
-        if ($carte->getid() == "15") //TODO: mettre un switch
-        {
-        	$facture = $totalmaisons * 40 + $totalhotels * 115;
-        }
-        
-        if ($carte->getid() == "27")
-        {
-        	$facture = $totalmaisons * 25 + $totalhotels * 100;
-        }
- 
+
+		switch ($carte->getid()) {
+			case '15' :
+				$facture = $totalmaisons * 40 + $totalhotels * 115;
+				break;
+			case '27' :
+				$facture = $totalmaisons * 25 + $totalhotels * 100;
+				break;
+		}
+		
         //paiement a la banque a partir du $joueur du montant $facture
          
         $banque = new banque; 
