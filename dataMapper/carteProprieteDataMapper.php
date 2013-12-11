@@ -50,7 +50,7 @@ class CarteProprieteDataMapper extends Mapper {
     }
     
     function update( $objet, $sujet) {
-        //FIXME: j'ai change le updateStmt pour un insertStmt car le changement de proprietaire ne se fait que sur un achat jusqu'ˆ maintenant, mais quand on voudra vendre une propriete, ca va planter
+        //FIXME: j'ai change le updateStmt pour un insertStmt car le changement de proprietaire ne se fait que sur un achat jusqu'ï¿½ maintenant, mais quand on voudra vendre une propriete, ca va planter
         //FIXME: faudrait verifier si l'enregistrement existe, si oui, faire le update, sinon faire une insert
         $values= array ($objet->getCompteProprietaire(), 
                         $objet->getPartieId(), 
@@ -60,7 +60,35 @@ class CarteProprieteDataMapper extends Mapper {
                         $objet->getNombreMaisons(),
                         $objet->getNombreHotels(),
                         );
-        $this->insertStmt->execute($values);       
+        $selectStatement = self::$db->prepare('SELECT * FROM joueurpartie_caseachetable 
+        										WHERE JoueurPartiePartieEnCoursId = :partieId 
+        										AND JoueurPartieUsagerCompte = :usagerCompte 
+        										AND CaseAchetableId = :caseId');
+        $selectStatement->bindParam(':partieId', $values[1]);
+        $selectStatement->bindParam(':usagerCompte', $values[0]);
+        $selectStatement->bindParam(':caseId', $values[2]);
+        $selectStatement->execute();
+        if (sizeof($selectStatement->fetchAll()) >= 1) {
+        	/*$updateStatement = self::$db->prepare('UPDATE joueurpartie_caseachetable 
+        											SET JoueurPartieUsagerCompte = :usagerCompte, JoueurPartiePartieEnCoursId = :partieId, CaseAchetableId = :caseId, 
+        												OrdreAffichage = :ordreAffichage, Hypotheque = :hypotheque, NombreMaisons = :nombreMaisons, NombreHotels = :nombreHotels  
+                                                    WHERE JoueurPartieUsagerCompte = :usagerCompte
+        											AND CaseAchetableId = :caseId 
+        											AND JoueurPartiePartieEnCoursId = :partieId');
+        	$updateStatement->bindParam(':usagerCompte', $values[0]);
+        	$updateStatement->bindParam(':partieId', $values[1]);
+        	$updateStatement->bindParam(':caseId', $values[2]);
+        	$updateStatement->bindParam(':ordreAffichage', $values[3]);
+        	$updateStatement->bindParam(':hypotheque', $values[4]);
+        	$updateStatement->bindParam(':nombreMaisons', $values[5]);
+        	$updateStatement->bindParam(':nombreHotels', $values[6]);
+        	$updateStatement->execute();*/
+        	$values = array_merge($values, array($objet->getCompteProprietaire(), $objet->getCaseId(), $objet->getPartieId()));
+        	$this->updateStmt->execute($values);
+        }
+        else {
+        	$this->insertStmt->execute($values);
+        }       
     }
 
     function selectStmt() {

@@ -14,9 +14,11 @@ class PartieDataMapper extends Mapper {
         
     }
 
-    protected function doCreateObject( array $array) {
+    protected function doCreateObject( array $array) {        
+    	$nbrJoueurs = self::nombreJoueurs($_SESSION['partieId']);
+        $array['NombreJoueurs'] = $nbrJoueurs;
         
-        $partie =  new Partie($array );
+        $partie = new Partie($array);
         $partie->attache($this);
         return $partie;
     }
@@ -31,7 +33,7 @@ class PartieDataMapper extends Mapper {
                         $object->getCoordonnateur(), 
                         $object->getDefinitionPartieId(),
                         $object->getJoueurTour(),
-                        $object->getDebutPartie()->format('Y-m-d h:i:s'),
+                        $object->getDebutPartie(),
                         $object->getInteractionId());
         $this->insertStmt->execute($values);
         $id = self::$db->lastInsertId();
@@ -78,6 +80,18 @@ class PartieDataMapper extends Mapper {
         } else {
             return false;
         }
+     }
+      
+     function nombreJoueurs ($idPartieEnCours) {
+     // Retourne le nombre de joueurs dans la partie
+
+     	$requete = self::$db->prepare("SELECT COUNT(*) FROM joueurpartie WHERE PartieEnCoursId = :partieEnCoursId AND OrdreDeJeu > 0 ");
+     	$requete->bindParam('partieEnCoursId', $_SESSION['partieId']);
+     	$requete->execute();
+     	$resultats = $requete->fetch();
+     	return $resultats[0];
+     }
+        
         
      function positionJoueur($idPartieEnCours, $compteUsager) {
      	// Retourne la position du $compteUsager dans la partie $idPartieEnCours.
@@ -107,7 +121,6 @@ class PartieDataMapper extends Mapper {
      	return $item;
      }
         
-    }
     function findPourCoordonnateur( $idCoordonnateur) {
         //TODO: remplacer par un call a findAll en mettant selectAllStmt = au select. ??? est ce que ca fit dans le modele ou ca va melanger le selectAllStmt, on saura pas lequel est pour etre appele 
         // cree les parties associees a un coordonnateur a partir de la db

@@ -31,7 +31,7 @@ switch ($action) {
 	    // attente du demarrage de la partie
 	   
 	    $partie = Partie::parId($partieId);
-	    if ($_POST['quitter']) {
+	    if ((isset($_POST['quitter'])) && $_POST['quitter']) {
 	        //TODO: quitter la partie veut dire enlever le joueur de la liste des joueurs
 	    } else {
             if ($partie->estDemarre()) {
@@ -65,7 +65,7 @@ switch ($action) {
 	    if (!$disponible) {
 	        // le pion a ete pris par quelqu'un d'autre, on recommence
 	        $titrePage = "Choix du pion";
-	        $msg = "Votre pion a ŽtŽ pris, choississez un autre pion";
+	        $msg = "Votre pion a ï¿½tï¿½ pris, choississez un autre pion";
 	        include('demandePion_view.php');
 	    } else {
 	        $joueur->setPionId($pionDemande);

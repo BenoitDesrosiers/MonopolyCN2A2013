@@ -74,4 +74,47 @@ background-color:#ecfcf4;
 table, table tr, table td {padding:none;border-spacing:0;}
 
 
+/* Style de la liste diffusant les informations de la partie */
+
+#sectionInfosPartie {
+	margin-left: 20px;
+	margin-top: 35%;
+	padding-top: 10px;
+	width: 15%;
+	border: 3px solid black;
+	border-radius: 5px;
+	background: -moz-linear-gradient(bottom, #2A2A84, #7D7DC4);
+	text-shadow: 2px 2px 8px black;
+	box-shadow: 2px 2px 5px black;
+}
+
+#sectionInfosPartie li {
+	color: white;	
+	font-weight: bold;
+}
+
+#sectionInfosPartie > button {
+	width: 50%;
+	margin-left: 25%;
+}
+
+#listeInfosPartie {
+	list-style: none;
+	padding: 0;
+	margin-left: 5%;
+	color: black;
+}
+
+#listeJoueurs {
+	padding: 0; 
+	margin: 0;
+	color: white;
+	padding-top: 10px;
+}
+
+li#joueurJouant {
+	color: lightblue;
+}
+
+
 

@@ -23,6 +23,12 @@ $partie = Partie::parId($partieId);
 $usager = $_SESSION['usager'];
 $joueur = Joueur::parComptePartie($usager->getCompte(), $partieId);
 
+if (isset ($_POST['caseId'])) {
+	$caseId = $_POST['caseId'];
+}
+
+// $partie->setJoueurTour($joueur->getOrdreDeJeu());
+
 switch ($action) {
 	case 'afficheTableau' :
 		// affiche le tableau de jeu
@@ -40,11 +46,26 @@ switch ($action) {
         //echo "<br/>C'est le tour de : " . $tours[0];
 	    include('./jouer_view.php');
 	    break;
-	case 'AcheterHotel' :
+	case 'GenererAchatHotel' :
 		$titrePage = "Acheter un hôtel";
 		$tableauDeJeu = $partie->getTableau();
+		$joueur->genererListeCases();
+		include('./achat_hotel_view.php');
 	    include('./jouer_view.php');
+	    break;
+	case 'AcheterHotel' :
+		$case = CaseDeJeuAchetable::parId($caseId);
+		$titrePage = "Achat d'hotêl: " . $case->getNom();
+		$tableauDeJeu = $partie->getTableau();
+		
+		if ($joueur->acheterHotel($caseId) == true) {
+			echo "Vous avez acheté un hôtel pour le terrain: " . $case->getNom();
+		}
+		else {
+			echo "Vous n'avez pas assez d'argent pour vous procurer cet h&ocirc;tel.";
+		}
+		
+		include('./jouer_view.php');
 		break;
-
 }
 ?>

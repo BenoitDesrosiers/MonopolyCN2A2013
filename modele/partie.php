@@ -20,7 +20,7 @@ class Partie extends Objet implements EntreposageDatabase {
     
     
     
-    protected $joueurs; // la liste des joueurs (de 1 � 8)
+    protected $nombreJoueursActifs; // nombre de joueurs restants
     protected $tableau; // le tableau sur lequel se deroule la partie
     protected $banque;
     protected $premierDes;
@@ -43,6 +43,7 @@ class Partie extends Objet implements EntreposageDatabase {
         $this->joueurTour = $array["JoueurTour"];
         $this->debutPartie = DateTime::createFromFormat('Y-m-d h:i:s', $array["DebutPartie"]);
         $this->interactionId = $array["InteractionId"];
+        $this->nombreJoueursActifs = $array["NombreJoueurs"];
         //TODO: ajouter dans la BD la position de la carte chance et CC pr�sentement sur le top
     }
     
@@ -121,7 +122,7 @@ class Partie extends Objet implements EntreposageDatabase {
     
     public function heureDebut() {
     
-        return $this->getDebutPartie()->format('H:i');
+        return $this->getDebutPartie();//->format('H:i');
     }
     
     public function demarrerPartie()
@@ -235,7 +236,7 @@ class Partie extends Objet implements EntreposageDatabase {
     	$this->deuxiemeDes = $value;
     }
 
-    public function getJoueurs() {    
+    public function getJoueurs() {
         return Joueur::PourPartie($this->getId());
     }
     
@@ -316,12 +317,40 @@ class Partie extends Objet implements EntreposageDatabase {
         return $casesDuGroupe;
     }
     
+    public function tourDuJoueur ($joueur) {
+    // Vérifie si c'est bien le tour du joueur '$joueur' à jouer
+
+    	if ($this->joueurTour == $joueur->getOrdreDeJeu()) {
+    		return true;
+    	}
+    	else {
+    		return false;
+    	}
+    }
+    
 	public function jouerCoup($joueur) {
-		$joueur->avanceSurCase();
+	// Joue un coup pour faire avancer un joueur	
+		
+		if ($this->tourDuJoueur($joueur)) {
+		// Si c'est le tour de ce joueur, jouer le coup
+			$joueur->avanceSurCase();
+		}
+		else {
+			echo "Ce n'est pas votre tour.";
+		}
+	}
+	
+	public function avancerTour () {
+	// Incrémente la variable joueurTour pour que le prochain joueur puisse jouer
+		$this->setJoueurTour($this->getJoueurTour() + 1);
+		if ($this->getJoueurTour() > $this->nombreJoueursActifs) {
+		// Si joueurTour dépasse le nombre de joueurs dans la partie, soustrait le nombre de joueurs actifs
+			$this->setJoueurTour($this->getJoueurTour() - $this->nombreJoueursActifs);
+		}
 	}
 
     public function getDebutPartie() {
-        return $this->debutPartie;
+        return $this->debutPartie->format('Y-m-d h:i:s');
     }
     public function setDebutPartie($value) {
         $this->debutPartie = $value;
@@ -364,23 +393,12 @@ class Partie extends Objet implements EntreposageDatabase {
     public function genererValeursDes() {
     // G�n�re une valeur al�atoire entre 1 et 6 pour les 2 deux d�s
     	$this->premierDes = rand(1, 6);
-    	echo "Premier des : " . $this->premierDes . "<br/>";
     	$this->deuxiemeDes = rand(1, 6);
+    	
+    	// Output Test //
+    	echo "Premier des : " . $this->premierDes . "<br/>";
     	echo "Deuxieme des : " . $this->deuxiemeDes . "<br/>";
-    }
-    
-    public function valeurDes() {
-    // Retourne la valeur de la somme des d�s
-    	if (($this->premierDes + $this->deuxiemeDes) >= 2 && ($this->premierDes + $this->deuxiemeDes) <= 12 ) {
-    		return ($this->premierDes + $this->deuxiemeDes);
-    	}
-    	// Sinon, on lance un message d'erreur
-    	else if (($this->premierDes + $this->deuxiemeDes) >= 13 || ($this->premierDes + $this->deuxiemeDes) <= 1 ){
-    		affiche_erreur("ERREUR: La valeur retournee par les des est trop grande/petite: ".($this->premierDes + $this->deuxiemeDes));
-    	}
-    	else {
-    		affiche_erreur("ERREUR: La valeur retournee par les des est NULL");
-    	}
+    	////////////////
     }
     
     public function desValeursIdentiques () {
@@ -392,5 +410,7 @@ class Partie extends Objet implements EntreposageDatabase {
     		return false;
     	}
     }
+    
+    // TODO : Get & Set de nombreJoueursActifs
 }
 ?>
