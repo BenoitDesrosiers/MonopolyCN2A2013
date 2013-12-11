@@ -99,6 +99,12 @@ class Joueur extends Objet  implements EntreposageDatabase{
     */
     
     //fonctions pour jouer
+    
+    public function mettreEnPrison() {
+    	$this->setEnPrison(true);
+    	$this->setPosition(10);
+    	$this->setToursRestantEnPrison(3);
+    }
 
 	public function brasseDes() {
 	    // Création de la partie et set des dés
