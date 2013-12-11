@@ -7,6 +7,7 @@
  */
 require_once('../util/main.php');
 
+// Obtenir le nombre de message d'aide dans la BD
 function getNbAide(){
     $bd=Database::getDB();
     
@@ -19,6 +20,7 @@ function getNbAide(){
     return $ctr;
 }
 
+// Obtenir un message d'aide dans la BD
 function getAide($a_numaide){
     $bd=Database::getDB();
     

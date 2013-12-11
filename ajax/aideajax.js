@@ -2,9 +2,12 @@
  -- Par Tommy Teasdale
 */
 var ajax;   // Connection AJAX
+var nbAide; // Nombre de message d'aide dans la base de donnée
 
+// Récupérer un message de la BD
 function getAide(){
     
+    // Générer un nombre aléatoire entre 1 et le nombre de messages d'aide
     var randnum=Math.floor(Math.random()*nbAide)+1;
     
     ajax.onreadystatechange = function(){
@@ -19,6 +22,7 @@ function getAide(){
     ajax.send("action=getaide&aide="+randnum);
 }
 
+// Obtenir le nombre de message d'aide dans la bd
 function getNbAide(){
     
     ajax.onreadystatechange = function(){
@@ -49,11 +53,14 @@ window.addEventListener('load',function(){
         return 0;
     } 
     
+    // Obtenir l'URI de base de la page
     array_URL = document.URL.split("/",4);
     URLbase=array_URL[0]+"\/"+array_URL[1]+"\/"+array_URL[2]+"\/"+array_URL[3]+"\/";
     
+    // Attribut un Listener de l'évènement click au bouton d'aide
     var btnAide=document.getElementById('help');
     btnAide.addEventListener('click',getAide);
     
+    // Obtenir le nombre de message d'aide dans la bd
     getNbAide();
 });
