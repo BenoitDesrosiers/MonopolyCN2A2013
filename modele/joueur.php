@@ -18,6 +18,7 @@ class Joueur extends Objet  implements EntreposageDatabase{
     protected $position;
     protected $ordreDeJeu;
     protected $enPrison;
+    protected $surStationnementGratuit;    // Tommy
     protected $toursRestantEnPrison;
     protected $argent; // une array associative contenant le nombre de billets de chaque sortes.
     
@@ -102,6 +103,11 @@ class Joueur extends Objet  implements EntreposageDatabase{
 	public function brasseDes() {
 	    //TODO: je crois que ca devrait �tre � la partie de brasser les d�s. 
 	    
+	    // Retirer le statut sur la case stationnement gratuit
+	    // Si le joueur était dessus
+	    if($this->getSurStationnementGratuit())
+	        $this->setSurStationnementGratuit(false);
+	    
 		// Creation des des
 		//FIXME: faire la vrai cr�ation des d�s
 		$des1 = array('ID' => 0, 'Val' => 1);
@@ -159,7 +165,7 @@ class Joueur extends Objet  implements EntreposageDatabase{
 	    /*input
 	     * $billets: soit un array de billets (valeur et qte)
 	     *           soit un int qui sera convertit en array de billets
-	     */ 
+	     */
 	    if (is_array($argent)) {
 	        //la fonction a recu un array (montant et qte)
 	        $billets = $argent;
@@ -362,5 +368,14 @@ class Joueur extends Objet  implements EntreposageDatabase{
 	public function getProprietes() {
 	    return CartePropriete::pourJoueurs($this);
 	}
+	/*---Tommy*/
+	public function setSurStationnementGratuit($value){
+        $this->surStationnementGratuit=$value;
+    }
+    
+    public function getSurStationnementGratuit(){
+        return $this->surStationnementGratuit;
+    }
+    /*Tommy---*/
 	
 }

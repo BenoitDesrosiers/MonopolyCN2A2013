@@ -20,6 +20,5 @@ class ActionCarte extends Action{
             $carte=$partie->getProchaireCarteChance();
         
         $carte->execute($unJoueur);
-        
     }
 }

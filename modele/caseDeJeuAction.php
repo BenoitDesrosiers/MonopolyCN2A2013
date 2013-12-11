@@ -66,13 +66,15 @@ class CaseDeJeuAction extends CaseDeJeu {
     }
     
     // Actions
-    public function execute_action(Joueur $joueur){
+    public function atterrirSur(Joueur $joueur){
         switch($this->actionId){
             case 42:
             case 43:
                 $xyz = new ActionCarte($this->actionId);
                 $xyz->execute($joueur);
                 break;
+            case 44:
+                $joueur->setSurStationnementGratuit(true);
             default:    // Remplacer ceci pour d'autre type d'action
                 return 0;
         }

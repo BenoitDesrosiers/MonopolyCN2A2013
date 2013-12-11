@@ -1,23 +1,11 @@
 /*
  -- Par Tommy Teasdale
 */
+var ajax;   // Connection AJAX
+
 function getAide(){
-    var ajax;
     
     var randnum=Math.floor(Math.random()*nbAide)+1;
-    
-    if(window.XMLHttpRequest){
-        ajax = new XMLHttpRequest(); 
-    }else if(window.ActiveXObject){ 
-        try{
-            ajax = new ActiveXObject("Msxml2.XMLHTTP");
-        } catch (e){
-            ajax = new ActiveXObject("Microsoft.XMLHTTP");
-        }
-    }else{
-        alert("Votre navigateur ne supporte pas les objets XMLHTTPRequest..."); 
-        ajax = false; 
-    } 
     
     ajax.onreadystatechange = function(){
         if(ajax.readyState == 4 && ajax.status == 200){
@@ -32,20 +20,6 @@ function getAide(){
 }
 
 function getNbAide(){
-    var ajax;
-    
-    if(window.XMLHttpRequest){
-        ajax = new XMLHttpRequest(); 
-    }else if(window.ActiveXObject){ 
-        try{
-            ajax = new ActiveXObject("Msxml2.XMLHTTP");
-        } catch (e){
-            ajax = new ActiveXObject("Microsoft.XMLHTTP");
-        }
-    }else{
-        alert("Votre navigateur ne supporte pas les objets XMLHTTPRequest..."); 
-        ajax = false; 
-    } 
     
     ajax.onreadystatechange = function(){
         if(ajax.readyState == 4 && ajax.status == 200){
@@ -59,6 +33,21 @@ function getNbAide(){
 }
 
 window.addEventListener('load',function(){
+    
+    // Créer l'instance XMLHttpRequest approprié pour le navigateur
+    if(window.XMLHttpRequest){
+        ajax = new XMLHttpRequest(); 
+    }else if(window.ActiveXObject){ 
+        try{
+            ajax = new ActiveXObject("Msxml2.XMLHTTP");
+        } catch (e){
+            ajax = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+    }else{
+        alert("Votre navigateur ne supporte pas les objets XMLHTTPRequest..."); 
+        ajax = false;
+        return 0;
+    } 
     
     array_URL = document.URL.split("/",4);
     URLbase=array_URL[0]+"\/"+array_URL[1]+"\/"+array_URL[2]+"\/"+array_URL[3]+"\/";
