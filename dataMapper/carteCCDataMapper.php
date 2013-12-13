@@ -49,32 +49,7 @@ class CarteCCDataMapper extends Mapper {
         return $this->selectStmt;
     }
     
-    function nomLibre($nom) {
-        /*
-         * verifie si ce $nom est deja utilise pour une autre partie
-         * 
-         * Retour
-         *     true: le nom n'est pas utilise
-         *     false: une partie a deja ce nom
-         */
-        $queryTxt = 'SELECT * FROM DefinitionPartie
-                WHERE nom = :nom';
-        $query = self::$db->prepare($queryTxt);
-        $query->bindValue(':nom', $nom);
-        $query->setFetchMode(PDO::FETCH_ASSOC);
-        $query->execute();
-        
-        $listeItems = array();
-        
-        foreach($query as $row) {
-            $unItem = $this->createObject($row);
-            if ($unItem <> null) {
-                $listeItems[] = $unItem;
-            }
-        }
-        return $listeItems;
-        
-    }
+    
     
     function pourDefinitionPartie($idDefinitionPartie) {
         // retourne un array contenant toutes les cases actions du tableau
@@ -120,5 +95,25 @@ class CarteCCDataMapper extends Mapper {
                     }
             }
             return $item;
+    }
+    
+    function pourJoueurPourPartie($compte, $idPartie){
+    	$queryTxt = 'SELECT CarteId FROM joueurpartie_carte WHERE JoueurPartieUsagerCompte = :compte AND JoueurPartiePartieEnCoursId = :idPartie';
+    	$query = self::$db->prepare($queryTxt);
+    	$query->bindValue(':compte', $compte);
+    	$query->bindValue(':idPartie', $idPartie);
+    	$query->setFetchMode(PDO::FETCH_ASSOC);
+    	$query->execute();
+
+    	$listeItems = array();
+    	
+    	foreach($query as $row) {
+    		$item = $this->find(array($row['CarteId']));
+    		//TODO: ajouter un check pour ne par creer des cartes Chance dans les CC
+    		if ($item->getType() == "CCg") {
+                $listeItems[] = $item;
+    		}
+    	}
+    	return $listeItems;
     }
 }

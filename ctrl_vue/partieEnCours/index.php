@@ -28,15 +28,44 @@ switch ($action) {
 		// affiche le tableau de jeu
 		$titrePage= $partie->getNom();
 		$tableauDeJeu = $partie->getTableau();
+        $partie->setInteractionId(0);
 		include('./jouer_view.php');
 	    break;
 	case 'JouerCoup' : 
         $titrePage= "Jouer un coup";
         $tableauDeJeu = $partie->getTableau();
-        //TODO: verifier que c'est ˆ ce joueur de jouer. 
-        //TODO: ca devrait tre la partie qui dŽmarre le coup ??? 
-	    $joueur->setPosition(6); //FIXME: ˆ enlever une fois les tests termines
+        //TODO: verifier que c'est Ë† ce joueur de jouer. 
+        //TODO: ca devrait ï¿½tre la partie qui dÅ½marre le coup ??? 
+	    $joueur->setPosition(6); //FIXME: Ë† enlever une fois les tests termines
 	    $joueur->brasseDes();
+	    include('./jouer_view.php');
+	    break;
+	case 'VendreCarteAction' : 
+        $titrePage= "Vente Carte";
+        $tableauDeJeu = $partie->getTableau();
+        $partie->setInteractionId(27);
+        $carteActionId = $_GET['carteActionId'];
+	    include('./jouer_view.php');
+	    break;
+	case 'VendreCarteS' : 
+        $titrePage= "Vente Carte";
+		$idcarteAction = $_POST['btnSoumettre'];
+		$montantVente = $_POST['montantVente'];
+		$compteJoueur = $_POST['compteJoueur'];
+		
+		$joueurVente = Joueur::parComptePartie($compteJoueur, $partie->getId());
+		
+		try{
+			$joueurVente->paye($montantVente);
+			$joueur->encaisse($montantVente);
+			//TODO Je sais comment changer le propriÃ©taire MAIS Benoit n'aime pas cette faÃ§on de faire.
+		}
+		catch (Exception $e){
+			echo $e->getMessage();
+		}
+		
+        $tableauDeJeu = $partie->getTableau();
+        $partie->setInteractionId(0);
 	    include('./jouer_view.php');
 	    break;
 

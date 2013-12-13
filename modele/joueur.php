@@ -20,6 +20,7 @@ class Joueur extends Objet  implements EntreposageDatabase{
     protected $enPrison;
     protected $toursRestantEnPrison;
     protected $argent; // une array associative contenant le nombre de billets de chaque sortes.
+    protected $listeCartes = array();
     
     function __construct(array $array) {
         /*
@@ -100,14 +101,14 @@ class Joueur extends Objet  implements EntreposageDatabase{
     
     //fonctions pour jouer
 	public function brasseDes() {
-	    //TODO: je crois que ca devrait tre ˆ la partie de brasser les dŽs. 
+	    //TODO: je crois que ca devrait ï¿½tre ï¿½ la partie de brasser les dï¿½s. 
 	    
 		// Creation des des
-		//FIXME: faire la vrai crŽation des dŽs
+		//FIXME: faire la vrai crï¿½ation des dï¿½s
 		$des1 = array('ID' => 0, 'Val' => 1);
 		$des2 = array('ID' => 1, 'Val' => 1);
 		
-		//FIXME: on fait quoi quand y'a un double? faudrait mettre la partie dans un Žtat permettant ˆ ce joueur de rejouer
+		//FIXME: on fait quoi quand y'a un double? faudrait mettre la partie dans un ï¿½tat permettant ï¿½ ce joueur de rejouer
 		// Ajustement de la position du joueur
 		$this->setPosition($this->getPosition() + $des1['Val'] + $des2['Val']);
 				
@@ -134,7 +135,7 @@ class Joueur extends Objet  implements EntreposageDatabase{
 	     */
          //FIXME: la vraie facon de faire serait d'aller chercher une definition des billets disponibles pour cette definition de partie
          //       mais ca n'existe pas pour l'instant, donc on prend 1,5,10,20,50,100,500 
-         //FIXME: cette conversion ne devrait pas etre fait par Joueur, ca devrait tre une fonction gŽnŽrique a laquelle on passerait l'array $coupuresDisponibles
+         //FIXME: cette conversion ne devrait pas etre fait par Joueur, ca devrait ï¿½tre une fonction gï¿½nï¿½rique a laquelle on passerait l'array $coupuresDisponibles
          
 	     $coupuresDisponibles =  array('1'=>1, '5'=>5, '10'=>10, '20'=>20, '50'=>50, '100'=>100, '500'=>500);
 	     $clesCoupures = array('500', '100', '50', '20', '10', '5', '1'); //on commence par le plus gros billets
@@ -169,7 +170,7 @@ class Joueur extends Objet  implements EntreposageDatabase{
 	    }
 	    $monArgent = $this->getArgent();
         foreach ($billets as $valeur => $qte) {
-            $monArgent[$valeur] += $qte; //TODO: verifier que les qte sont positives, ou accepter les nŽgatives mais planter si y'en a pas assez. La fonction ferait donc un encaisse et un dŽcaisse
+            $monArgent[$valeur] += $qte; //TODO: verifier que les qte sont positives, ou accepter les nï¿½gatives mais planter si y'en a pas assez. La fonction ferait donc un encaisse et un dï¿½caisse
         }	    
         $this->setArgent($monArgent);
 	}
@@ -191,7 +192,8 @@ class Joueur extends Objet  implements EntreposageDatabase{
         echo "</br>";
         
         if($argentCtr < $montant){
-                echo "Le joueur n'a pas assez d'argent. ".($montant-$argentCtr)."$ de plus sont necessaire.";
+        	throw new Excception("Le jouer n'a pas assÃ© d'argent");
+                //echo "Le joueur n'a pas assez d'argent. ".($montant-$argentCtr)."$ de plus sont necessaire.";
         }
         else{
                 echo "Argent du joueur avant : ".$argentCtr."<br/>";
@@ -257,7 +259,7 @@ class Joueur extends Objet  implements EntreposageDatabase{
         }
         //appel la fonction encaisse pour mettre a jour l'argent du joueur.
         $this->setArgent($argent);
-        //return $argent; //TODO: devrait retourner l'argent utilisŽe pour payer. 
+        //return $argent; //TODO: devrait retourner l'argent utilisï¿½e pour payer. 
     }
 
 	public function tenterAchat(CartePropriete $carte){
@@ -344,6 +346,16 @@ class Joueur extends Objet  implements EntreposageDatabase{
 	
 	public function getProprietes() {
 	    return CartePropriete::pourJoueurs($this);
+	}
+	
+	public function getListeCartes() {
+		//Retourne la liste des cartes chance et caisse commune du joueur
+		$cartesChance = CarteChance::pourJoueur($this);
+		$cartesCC = CarteCC::pourJoueur($this);
+		
+		$this->listeCartes = array_merge($cartesChance, $cartesCC);
+		
+		return $this->listeCartes;
 	}
 	
 }

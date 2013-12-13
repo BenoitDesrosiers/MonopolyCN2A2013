@@ -47,7 +47,24 @@
         xhr.open("GET","<?php echo $GLOBALS['app_path']."/ajax/demoajax.php"?>",true);
         xhr.send(null);
     }
- 
+
+    function detailJoueur(idPartie){
+    	if (window.XMLHttpRequest){
+    		xmlhttp=new XMLHttpRequest();
+    	}
+    	else{
+    		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    	}
+
+    	xmlhttp.onreadystatechange=function(){
+    		if(xmlhttp.readyState==4 && xmlhttp.status==200){
+    			document.getElementById("argent").innerHTML=xmlhttp.responseText;
+    		}
+    	};
+
+    	xmlhttp.open("GET","<?php echo $GLOBALS['app_path']."/ajax/detail_joueur.php"?>?idPartie="+idPartie,true);
+    	xmlhttp.send();
+    }
 </script>
     
 </head>
@@ -80,10 +97,38 @@
 				<li><a href="#nogo"><b>Quitter</b></a></li>
 			</ul>
 	</div> <!-- navigation -->
+	
+	<div id="cartesAction" style="margin-left:40px">
+		<?php
+			foreach ($joueur->getListeCartes() as $carte) {
+				$laCarte = $carte;
+				include 'carteAction_view.php';
+				if($partie->getInteractionId() == 27 && $carteActionId == $carte->getId()) {
+					echo '<form action="." method="post">';
+					echo '<input type="hidden" name="action" value="VendreCarteS"/>';
+					echo 'Choisir un joueur : ';
+					echo '<select name="compteJoueur">';
+					foreach ($partie->getJoueurs() as $joueurListe) {
+						if($joueur->getCompte() != $joueurListe->getCompte()){
+							echo '<option value="' . $joueurListe->getCompte() . '">' . $joueurListe->getCompte() . '</option>';
+						}
+					}
+					echo '</select> <br/>';
+					echo 'Montant de vente : ';
+					echo '<input type="text" name="montantVente" value="" style="width:50px"> <br/>';
+					echo '<button type="submit" name="btnSoumettre" value="' . $carte->getId() . '">Soumettre</button>';
+					echo '</form>';
+				}
+				else {
+					echo '<a href=".?action=VendreCarteAction&carteActionId=' . $carte->getId() . '">Vendre</a>';
+				}
+			}
+		?>
+	</div>
 
 	<div id="argent">
-		<!-- afficher l'argent du joueur ici -->
-	</div> <!-- argent -->
+		<button type="button"  onclick="detailJoueur(<?php echo $partie->getId(); ?>)"> Afficher le detail des joueurs</button>
+	</div>
 
 	<div id="propriete">
         <!-- afficher les proprietes du joueur ici -->  
