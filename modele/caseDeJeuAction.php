@@ -65,6 +65,9 @@ class CaseDeJeuAction extends CaseDeJeu {
         //TODO: devrait pas mettre 0, devrait generer une erreur
     }
     
+    public function atterrirSur(Joueur $unJoueur) {
+   		$this->execute_action($unJoueur);
+    }
     // Actions
     public function execute_action(Joueur $joueur){
         switch($this->actionId){

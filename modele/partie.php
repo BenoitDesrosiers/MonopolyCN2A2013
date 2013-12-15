@@ -9,6 +9,9 @@ require_once "modele/definitionPartie.php";
 require_once "modele/carteChance.php";
 require_once "modele/carteCC.php";
 
+//TODO: plutot que d'avoir ces constantes, on devrait avoir une fonction qui verifie l'etat
+define("INTERACTION_ACHATPROPRIETE", 14);
+
 class Partie extends Objet implements EntreposageDatabase {
     protected $id;
     protected $nom;
@@ -154,6 +157,7 @@ class Partie extends Objet implements EntreposageDatabase {
     public function getNom() {
         return $this->nom;
     }
+    
     public function setNom($value) {
         $this->nom = $value;
         $this->notifie("nom");
@@ -162,6 +166,7 @@ class Partie extends Objet implements EntreposageDatabase {
     public function getCoordonnateur() {
         return $this->coordonnateur;
     }
+    
     public function setCoordonnateur($value) {
         $this->coordonnateur = $value;
         $this->notifie("coordonnateur");
@@ -170,6 +175,7 @@ class Partie extends Objet implements EntreposageDatabase {
     public function getHotels() {
         return $this->hotels;
     }
+    
     public function setHotels($value) {
         $this->hotels = $value;
         $this->notifie("hotels");
@@ -178,6 +184,7 @@ class Partie extends Objet implements EntreposageDatabase {
     public function getMaisons() {
         return $this->maisons;
     }
+    
     public function setMaisons($value) {
         $this->maisons = $value;        
         $this->notifie("maisons");
@@ -186,6 +193,7 @@ class Partie extends Objet implements EntreposageDatabase {
     public function getPions() {
         return $this->pions;
     }
+    
     public function setPions($value) {
         $this->pions = $value;
         $this->notifie("pions");
@@ -195,6 +203,7 @@ class Partie extends Objet implements EntreposageDatabase {
         return $this->cartesCaisseCommune;
         //TODO: lazy load a partir de PartieEnCours_CarteCC
     }
+    
     public function setCartesCaisseCommune($value) {
         //TODO: je crois pas qu'on doit avoir un set puisque que c'est loadŽ
         $this->cartesCaisseCommune = $value;
@@ -205,6 +214,7 @@ class Partie extends Objet implements EntreposageDatabase {
     public function getCartesChance() {
         return $this->cartesChance;
     }
+    
     public function setCartesChance($value) {
         $this->cartesChance = $value;
         $this->notifie("cartesChance");
@@ -213,6 +223,7 @@ class Partie extends Objet implements EntreposageDatabase {
     public function getDes() {
         return $this->des;
     }
+    
     public function setDes($value) {
         $this->des = $value;
         //pas de notifie() parce que ca va pas dans la bd
@@ -221,12 +232,11 @@ class Partie extends Objet implements EntreposageDatabase {
     public function getBanque() {
         return $this->banque;
     }
+    
     public function setBanque($value) {
         $this->banque = $value;
         $this->notifie("banque");
     }
-
-    
 
     public function getJoueurs() {    
         return Joueur::PourPartie($this->getId());

@@ -58,7 +58,7 @@
 												 else :
 												 	 echo $case->getNom();
 												 endif;?></text>
-										<text class="montant" x="38px" y="65px" transform="rotate(180 38,35)"><?php echo $case->getPrix();?> $</text>
+										<text class="montant" x="38px" y="60px" transform="rotate(180 38,37)"><?php echo $case->getPrix();?> $</text>
 									</svg>
 								</td>
 							<?php else :?>

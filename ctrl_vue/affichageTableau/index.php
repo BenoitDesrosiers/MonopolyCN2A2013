@@ -2,6 +2,7 @@
 /* 
  * page affichant le tableau de jeu 
  * 
+ * cette page est pour la correction uniquement
  */
 require_once('../../util/main.php');
 require_once('util/secure_conn.php');
@@ -111,7 +112,7 @@ switch ($action) {
 		include('./atterirSur_view.php');
 		$joueur = Joueur::parComptePartie("benoit", "1");
 		$caseDM=new CaseAchetableDataMapper();
-		$case=$caseDM->find(array("27"));
+		$case=$caseDM->find(array("1"));
 		$case->atterrirSur($joueur);
 		     
 	    break;

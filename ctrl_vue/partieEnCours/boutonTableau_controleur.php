@@ -10,7 +10,7 @@
 		include 'vue/piedpage.php';
 	
 		$joueurActuel = $joueur;
-		$joueurActuel->setPosition(47);
+		$joueurActuel->setPosition(1);
 		$joueurActuel->brasseDes();
 		
 		

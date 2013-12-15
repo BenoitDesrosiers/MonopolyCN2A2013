@@ -85,11 +85,11 @@ abstract class CaseDeJeuAchetable extends CaseDeJeu {
                 //le joueur a atterit sur une case qui ne lui appartient pas 
                 $proprio->chargerLoyerA($unJoueur, $this->calculerLoyer($carte));
             }
-        } else { //pas de proprietaire = essayer de vendre la propriete
-            if($unJoueur->tenterAchat($carte)){
-                $banque = new banque;
-                $banque->vendrePropriete($unJoueur, $carte);
-            }
+        } else { 
+        	//pas de proprietaire = essayer de vendre la propriete
+            	$partie = Partie::parId($unJoueur->getPartieId());
+            	$partie->setInteractionId(INTERACTION_ACHATPROPRIETE);
+            	
         }
     }
     
@@ -131,6 +131,7 @@ abstract class CaseDeJeuAchetable extends CaseDeJeu {
     public function getHypotheque() {
         return $this->hypotheque;
     }
+    
     public function setHypotheque($value) {
         $this->hypotheque = $value;
     }

@@ -44,7 +44,7 @@ class PartieDataMapper extends Mapper {
                         $object->getCoordonnateur(), 
                         $object->getDefinitionPartieId(),
                         $object->getJoueurTour(),
-                        $object->getDebutPartie(),
+                        $object->getDebutPartie()->format('Y-m-d h:i:s'),
                         $object->getInteractionId(),
                         $object->getId());
         $this->updateStmt->execute($values);

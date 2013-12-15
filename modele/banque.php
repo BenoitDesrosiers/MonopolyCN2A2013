@@ -10,9 +10,6 @@ class banque  {
 	  	$joueur->paye($carte->getCaseAssociee()->getPrix());
 	  	$carte->setCompteProprietaire($joueur->getCompte());
 	  	
-	  	//TODO: enlever, c'est pour du testing
-	  	$nouveauProprietaire = $carte->getCompteProprietaire();
-	  	echo $nouveauProprietaire;
 	}
 	
 	public function fairePayer(Joueur $joueur, $montant) {

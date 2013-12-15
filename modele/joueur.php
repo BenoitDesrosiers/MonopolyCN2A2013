@@ -100,14 +100,14 @@ class Joueur extends Objet  implements EntreposageDatabase{
     
     //fonctions pour jouer
 	public function brasseDes() {
-	    //TODO: je crois que ca devrait être à la partie de brasser les dés. 
+	    //TODO: je crois que ca devrait etre a la partie de brasser les des. 
 	    
 		// Creation des des
-		//FIXME: faire la vrai création des dés
+		//FIXME: faire la vrai creation des des
 		$des1 = array('ID' => 0, 'Val' => 1);
 		$des2 = array('ID' => 1, 'Val' => 1);
 		
-		//FIXME: on fait quoi quand y'a un double? faudrait mettre la partie dans un état permettant à ce joueur de rejouer
+		//FIXME: on fait quoi quand y'a un double? faudrait mettre la partie dans un etat permettant a ce joueur de rejouer
 		// Ajustement de la position du joueur
 		$this->setPosition($this->getPosition() + $des1['Val'] + $des2['Val']);
 				
@@ -134,7 +134,7 @@ class Joueur extends Objet  implements EntreposageDatabase{
 	     */
          //FIXME: la vraie facon de faire serait d'aller chercher une definition des billets disponibles pour cette definition de partie
          //       mais ca n'existe pas pour l'instant, donc on prend 1,5,10,20,50,100,500 
-         //FIXME: cette conversion ne devrait pas etre fait par Joueur, ca devrait être une fonction générique a laquelle on passerait l'array $coupuresDisponibles
+         //FIXME: cette conversion ne devrait pas etre fait par Joueur, ca devrait etre une fonction generique a laquelle on passerait l'array $coupuresDisponibles
          
 	     $coupuresDisponibles =  array('1'=>1, '5'=>5, '10'=>10, '20'=>20, '50'=>50, '100'=>100, '500'=>500);
 	     $clesCoupures = array('500', '100', '50', '20', '10', '5', '1'); //on commence par le plus gros billets
@@ -169,7 +169,7 @@ class Joueur extends Objet  implements EntreposageDatabase{
 	    }
 	    $monArgent = $this->getArgent();
         foreach ($billets as $valeur => $qte) {
-            $monArgent[$valeur] += $qte; //TODO: verifier que les qte sont positives, ou accepter les négatives mais planter si y'en a pas assez. La fonction ferait donc un encaisse et un décaisse
+            $monArgent[$valeur] += $qte; //TODO: verifier que les qte sont positives, ou accepter les n≈Ωgatives mais planter si y'en a pas assez. La fonction ferait donc un encaisse et un d≈Ωcaisse
         }	    
         $this->setArgent($monArgent);
 	}
@@ -187,22 +187,16 @@ class Joueur extends Objet  implements EntreposageDatabase{
         foreach($argent as $billet=>$quantite){
                 $argentCtr += intval($billet) * $quantite; 
         }
-        echo "Le joueur a ".$argentCtr."$ et doit payer ".$montant."$";
-        echo "</br>";
+        //echo "Le joueur a ".$argentCtr."$ et doit payer ".$montant."$";
+        //echo "</br>";
         
         if($argentCtr < $montant){
                 echo "Le joueur n'a pas assez d'argent. ".($montant-$argentCtr)."$ de plus sont necessaire.";
         }
-        else{
-                echo "Argent du joueur avant : ".$argentCtr."<br/>";
-                echo "Montant a payer: ".$montant."<br/>";
-                
-                $argentCtr -= $montant;
-                echo "Argent du joueur apr√®s: ".$argentCtr."<br/>";
-                
+        else{               
+                $argentCtr -= $montant;             
                 //creation de l'array de paiement exemple le joueur doit payer 350, il paye avec un 500
-                // montantCtr = valeur que le joueur recupere
-                // quantiteCtr = quantite de billet utilise
+             
                 foreach($argent as $billet=>$quantite){
                         if($quantite != 0){
                                 if($montant > 0){
@@ -257,13 +251,9 @@ class Joueur extends Objet  implements EntreposageDatabase{
         }
         //appel la fonction encaisse pour mettre a jour l'argent du joueur.
         $this->setArgent($argent);
-        //return $argent; //TODO: devrait retourner l'argent utilisée pour payer. 
+        //return $argent; //TODO: devrait retourner l'argent utilis≈Ωe pour payer. 
     }
 
-	public function tenterAchat(CartePropriete $carte){
-	    return true;
-	}
-	
 	public function chargerLoyerA($locataire, $loyer){
 	    $locataire->paye($loyer);
 	    $this->encaisse($loyer);

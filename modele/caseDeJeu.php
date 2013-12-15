@@ -19,21 +19,9 @@ abstract class CaseDeJeu { // implements EntreposageDatabase {
     //static abstract  function pourDefinitionPartie($idDefinitionPartie);
     
     // fonctions de jeu
+
 	public function atterrirSur(Joueur $unJoueur) { //TODO: a deplacer dans les sous-classes
     	if($this->getType()=="achetable"){
-    		/* obsolete 
-    		 * 
-    		 *if($this->getProprietairePourPartieId($unJoueur->getPartieId()) != null){
-    		    $proprio = $this->getProprietairePourPartieId($unJoueur->getPartieId());
-    		    $proprio->chargerLoyerA($joueur, $this->calculerLoyer()); 
-    		}
-    		else {
-    			if($unJoueur->tenterAchat($this)){
-    			    $banque = new banque;
-    				$banque->vendrePropriete($unJoueur, $this);
-    			}
-    		}
-    		*/
     	}
     	else{
     		/*Tommy---*/
