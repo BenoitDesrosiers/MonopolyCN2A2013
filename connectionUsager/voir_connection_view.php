@@ -11,8 +11,7 @@
         <h1 class="top">Mon compte</h1>
         
         <p><?php echo $usager->getNom() . ' (' . $usager->getCompte() . ')'; ?></p>
-        <p>Telephone: <?php echo  $usager->getTelephone()?></p>
-        <p>Role: <?php echo  $usager->role()?></p>
+        <p>Role: <?php echo  $usager->getRole()?></p>
        
         <form action="" method="post">
             <input type="hidden" name="action" value="voir_connection_edit" />

@@ -30,9 +30,9 @@ abstract class Mapper implements Observateur {
          * input
          *     $cle : un array contenant les champs qui compose la clŽ 
          */
-        $cleUnique = $this->cleUnique($cle);
-        if (GestionInstance::objetExiste($this, $cleUnique)) {
-            $objet = GestionInstance::extraitObjet($this, $cle);
+        $cleComposee = $this->cleUnique($cle);
+        if (GestionInstance::objetExiste($cleComposee)) {
+            $objet = GestionInstance::extraitObjet($cleComposee);
         } else {
             $this->selectStmt()->execute( $cle);
             $array = $this->selectStmt()->fetch();
@@ -64,35 +64,36 @@ abstract class Mapper implements Observateur {
         
     
     
-    function createObject($array) {
+    function createObject(array $array) {
         /*
          * cree un objet a partir d'un array associatif contenant tous les champs de la bd
         */
         //CONNECTION 1.2.4.3.2.x cree l'usager
-        
-        //TODO: le call a objetExiste devrait se faire avant le find, afin d'eviter un fetch dans la bd
-        //      mais createObject est le dernier point commun avant de vraiement creer l'objet. 
-        //commence par utiliser un objet qui a deja ete cree
-        $cleUnique = $this->cleUnique($array);
-        if (GestionInstance::objetExiste($this, $cleUnique)) {
-            $obj = GestionInstance::extraitObjet($this, $cle);
+       
+        //commence par essayer d'utiliser un objet qui a deja ete cree
+        $cleComposee = $this->cleUnique($array);
+        if (GestionInstance::objetExiste($cleComposee)) {
+            $obj = GestionInstance::extraitObjet($cleComposee);
         } else {
             //si cet objet est nouveau, on le cree et on l'enregistre
             $obj = $this->doCreateObject($array);
-            GestionInstance::enregistre($this, $cleUnique, $obj);
+            GestionInstance::enregistre($cleComposee, $obj);
         }
         return $obj;
     }
     
     protected function cleUnique(array $array) {
         //FIXME mettre la fonction doCleUnique abstract en bas 
+        /*
+         * recoit un array associative contenant la cle pour l'objet a creer 
+         */
         $classe = $this->classeGeree();
         $cleArray = $this->doCleUnique();
         $cleUnique = $classe;
         foreach($cleArray as $cle) {
             $cleUnique = $cleUnique . $array[$cle];
         }
-        return array($cleUnique);
+        return $cleUnique;
     }
     
     function insert( $obj ) {

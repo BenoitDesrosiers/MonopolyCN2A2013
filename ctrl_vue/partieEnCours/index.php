@@ -17,7 +17,7 @@ if (isset($_POST['action'])) {
 	$action = 'afficheTableau';
 }
 
-$usager = Usager::parCompte($_SESSION['usager']); //TODO: ne pas mettre l'usager dans la session, mettre son id et le recreer chaque fois.
+$usager = Usager::parCompte($_SESSION['usager']);
 $partieId = $_SESSION['partieId'];
 $partie = Partie::parId($partieId);
 $usager = Usager::parCompte($_SESSION['usager']);
@@ -28,7 +28,7 @@ switch ($action) {
 		// affiche le tableau de jeu
 		$titrePage= $partie->getNom();
 		$tableauDeJeu = $partie->getTableau();
-		include('./jouer_view.php');
+		include('vue/jouer_view.php');
 	    break;
 	case 'JouerCoup' : 
         $titrePage= "Jouer un coup";
@@ -37,7 +37,7 @@ switch ($action) {
         //TODO: ca devrait tre la partie qui dŽmarre le coup ??? 
 	    $joueur->setPosition(1); //FIXME: ˆ enlever une fois les tests termines
 	    $joueur->brasseDes();
-	    include('./jouer_view.php');
+	    include('vue/jouer_view.php');
 	    break;
 
 }

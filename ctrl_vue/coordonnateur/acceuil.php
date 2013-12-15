@@ -48,7 +48,6 @@ switch ($action) {
 		// 'edit' contient l'id de la partie a editer
 		//TODO: valider que l'id est numerique
 		//TODO: valider que la partie appartient bien au coordonnateur
-		//TODO: aller chercher la partie correspondant dans l'usager connecte et le mettre dans une var de session pour le recuperer plus tard
 		$redirection = "ctrl_vue/partieEdition?action=edit&partieId=" . $_POST['partieId'];
 		redirect($redirection);
 		break;

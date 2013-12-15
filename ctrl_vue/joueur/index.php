@@ -17,8 +17,7 @@ if (isset($_POST['action'])) {
 	$action = 'attenteConnectionPartie';
 }
 
-$usager = Usager::parCompte($_SESSION['usager']); //TODO: ne pas mettre l'usager dans la session, mettre son id et le recree chaque fois.
-
+$usager = Usager::parCompte($_SESSION['usager']); 
 if (isset($_POST['partieId'])) {
     $partieId=$_POST['partieId'];
 } else if (isset($_GET['partieId'])) {

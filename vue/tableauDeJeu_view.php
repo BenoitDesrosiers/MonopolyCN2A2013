@@ -1,10 +1,14 @@
-
+<!-- Affiche le tableau de jeu
+     input:
+         $tableauDeJeu : une instance de la classe Tableau
+         
+  -->
 <table id="plateau" cellspacing="0" border="0">
 <tr>
 <?php $i =0;
 while($i != 11) :
-$case = $tableauDeJeu->getCaseParPosition($i);
-$LongueurMax = 12;
+    $case = $tableauDeJeu->getCaseParPosition($i);
+    $LongueurMax = 12;
 	    			 	if($i == 0 || $i == 10) :?>
 	    			 		 <td class="caseCoin">
 	    			 		 	<svg width="100px" height="100px" xmlns="http://www.w3.org/2000/svg" version="1.1">
@@ -35,17 +39,17 @@ $LongueurMax = 12;
 												endwhile;
 												if(strlen(substr($nomCase, 0, $dernierEspace)) > $LongueurMax) :
 													echo substr(substr($nomCase, 0, $dernierEspace), 0, strpos(substr($nomCase, 0, $dernierEspace), ' '));?>
-													<tspan class="titreP" x="38px" y="25px"> <?php echo substr(substr($nomCase, 0, $dernierEspace), strpos(substr($nomCase, 0, $dernierEspace), ' '), $dernierEspace);?></tspan>
-													<tspan class="titreP" x="38px" y="35px"><?php echo substr($nomCase, $dernierEspace + 1);?></tspan>
+													<tspan class="titreP" x="38px" dy="10px"> <?php echo substr(substr($nomCase, 0, $dernierEspace), strpos(substr($nomCase, 0, $dernierEspace), ' '), $dernierEspace);?></tspan>
+													<tspan class="titreP" x="38px" dy="10px"><?php echo substr($nomCase, $dernierEspace + 1);?></tspan>
 												<?php else :
 													echo substr($nomCase, 0, $dernierEspace);?>
-													<tspan class="titreP" x="38px" y="25px"><?php echo substr($nomCase, $dernierEspace + 1);?></tspan>
+													<tspan class="titreP" x="38px" y="25px"><?php echo "aaa" . substr($nomCase, $dernierEspace + 1);?></tspan>
 												
 												<?php endif;
 												 else :
 												 	 echo $case->getNom();
 												 endif;?></text>
-										<text class="montant" x="38px" y="65px" transform="rotate(180 38,35)"><?php echo $case->getPrix();?> $</text>
+										<text class="montant" x="38px" y="55px" transform="rotate(180 38,35)"><?php echo $case->getPrix();?> $</text>
 									</svg>
 								</td>
 							<?php else :?>
@@ -63,8 +67,8 @@ $LongueurMax = 12;
 												endwhile;
 												if(strlen(substr($nomCase, 0, $dernierEspace)) > $LongueurMax) :
 													echo substr(substr($nomCase, 0, $dernierEspace), 0, strpos(substr($nomCase, 0, $dernierEspace), ' '));?>
-													<tspan class="titreP" x="38px" y="25px"> <?php echo substr(substr($nomCase, 0, $dernierEspace), strpos(substr($nomCase, 0, $dernierEspace), ' '), $dernierEspace);?></tspan>
-													<tspan class="titreP" x="38px" y="35px"><?php echo substr($nomCase, $dernierEspace + 1);?></tspan>
+													<tspan class="titreP" x="38px" dy="10px"> <?php echo substr(substr($nomCase, 0, $dernierEspace), strpos(substr($nomCase, 0, $dernierEspace), ' '), $dernierEspace);?></tspan>
+													<tspan class="titreP" x="38px" dy="10px"><?php echo substr($nomCase, $dernierEspace + 1);?></tspan>
 												<?php else :
 													echo substr($nomCase, 0, $dernierEspace);?>
 													<tspan class="titreP" x="38px" y="25px"><?php echo substr($nomCase, $dernierEspace + 1);?></tspan>
@@ -73,7 +77,7 @@ $LongueurMax = 12;
 												 else :?>
 												 	<?php echo $case->getNom();
 												 endif;?></text>
-										<text class="montant" x="38px" y="65px" transform="rotate(180 38,35)"><?php echo $case->getPrix();?> $</text>
+										<text class="montant" x="38px" y="55px" transform="rotate(180 38,35)"><?php echo $case->getPrix();?> $</text>
 									</svg>
 								</td>
 							<?php endif;?>
@@ -116,7 +120,7 @@ $LongueurMax = 12;
 												 else :?>
 												 <?php echo $case->getNom();
 												 endif;?></text>
-									<text class="montant" x="38px" y="65px" transform="rotate(90 38,35)"><?php echo $case->getPrix();?> $</text>
+									<text class="montant" x="38px" y="55px" transform="rotate(90 38,35)"><?php echo $case->getPrix();?> $</text>
 								</svg>
 							</td>
 							<?php else: ?>
@@ -144,7 +148,7 @@ $LongueurMax = 12;
 												else :?>
 												 <?php echo $case->getNom();
 												 endif;?></text>
-									<text class="montant" x="38px" y="65px" transform="rotate(90 38,35)"><?php echo $case->getPrix();?> $</text>
+									<text class="montant" x="38px" y="55px" transform="rotate(90 38,35)"><?php echo $case->getPrix();?> $</text>
 								</svg>
 							</td>
 							<?php endif;?>

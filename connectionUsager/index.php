@@ -58,7 +58,7 @@ switch ($action) {
         break;
     
     case 'deconnection':
-        unset($_SESSION['usagers']);
+        unset($_SESSION['usager']);
         redirect('.');
         break;
     default:

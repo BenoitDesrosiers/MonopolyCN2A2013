@@ -22,12 +22,13 @@ if (isset($_POST['action'])) {
 	$action = 'liste_parties';
 }
 
+$usager = Usager::parCompte($_SESSION['usager']); //LISTEPARTIE 1.2 l'usager a ete entrepose dans connectionUsager/index.php a l'etape CONNECTION 1.2.5a
+
 switch ($action) {
 	case 'liste_parties' :
 		// liste toutes les parties appartenant au coordonnateur presentement connecte
-		$coordonnateur = Usager::parCompte($_SESSION['usager']); //LISTEPARTIE 1.2 l'usager a ete entrepose dans connectionUsager/index.php a l'etape CONNECTION 1.2.5a
 		//LISTEPARTIE 1.3.x on va chercher les parties de ce coordonnateur
-		$parties = $coordonnateur->getPartiesEnCours();
+		$parties = $usager->getPartiesEnCours();
 		$titrePage = "Accueil Coordonnateur";
 		//LISTEPARTIE 1.4.x affiche les parties trouvees
 		include('liste_parties_view.php');

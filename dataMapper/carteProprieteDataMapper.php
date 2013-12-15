@@ -57,7 +57,8 @@ class CarteProprieteDataMapper extends Mapper {
     }
     
     function update( $objet, $sujet) {
-        //FIXME: j'ai change le updateStmt pour un insertStmt car le changement de proprietaire ne se fait que sur un achat jusqu'ˆ maintenant, mais quand on voudra vendre une propriete, ca va planter
+        //FIXME: j'ai change le updateStmt pour un insertStmt car le changement de proprietaire ne se fait que sur un achat jusqu'ˆ maintenant, 
+        //       mais quand on voudra vendre une propriete, ca va planter
         //FIXME: faudrait verifier si l'enregistrement existe, si oui, faire le update, sinon faire une insert
         $values= array ($objet->getCompteProprietaire(), 
                         $objet->getPartieId(), 

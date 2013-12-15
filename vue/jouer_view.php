@@ -3,6 +3,10 @@
  * la partie est dŽmarrŽe. 
  * Affiche le tableau et l'info des joueurs. 
  * 
+ * input:
+ *    $tableauDeJeu : instance de Tableau. Utilise par tableauDeJeu.php
+ *    $usager : instance de Usager. Utilise par headCommun.php
+ *    
  */?>
 
 <!DOCTYPE html>
@@ -65,7 +69,7 @@
                  <div id="demoAjax">
                  </div>
                 
-                <?php include 'tableauDeJeu_view.php' ?>
+                <?php include 'vue/tableauDeJeu_view.php' ?>
         </div>
     </div> <!-- contenu -->
     </div> <!-- enveloppe -->
