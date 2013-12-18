@@ -1,9 +1,17 @@
 
+
 <table id="plateau" cellspacing="0" border="0">
 <tr>
 
-<?php $i =0;
-$LongueurMax = 12;
+<?php 
+    //Boucle creant un tableau des joueurs selon leur position. Utilisee pour l'affichage des pions
+    foreach ($partie->getJoueurs() as $joueurListe) {
+        $joueurPos = $joueurListe->getPosition();
+        $ar_joueur[$joueurListe->getPosition()]=$joueurListe;
+    }
+
+    $i =0;
+    $LongueurMax = 12;
 			//Boucle pour afficher la ligne du haut
 			
 			while($i != 11) :
@@ -20,7 +28,7 @@ $LongueurMax = 12;
     			  $i++;
     		 endwhile;?>
 	    		</tr>
-	    	<!-- Boucle pour afficher les deux lignes du cotés plus le centre du plateau de jeu -->
+	    	<!-- Boucle pour afficher les deux lignes du cotï¿½s plus le centre du plateau de jeu -->
     		<?php while($i != 20) :?>
     			<tr>
     			<?php $case = $tableauDeJeu->getCaseParPosition(50-$i);

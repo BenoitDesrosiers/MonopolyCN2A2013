@@ -8,9 +8,9 @@ class PartieDataMapper extends Mapper {
     function __construct() {
         parent::__construct();
         $this->selectStmt = self::$db->prepare("SELECT * FROM PartieEnCours where id=?");
-        $this->updateStmt = self::$db->prepare('update PartieEnCours set id=?, nom=?, coordonnateur=?, DefinitionPartieId = ?, JoueurTour =?, DebutPartie = ?, InteractionId =? 
+        $this->updateStmt = self::$db->prepare('update PartieEnCours set id=?, nom=?, coordonnateur=?, DefinitionPartieId = ?, JoueurTour =?, DebutPartie = ?, InteractionId =?, JouerEncore = ? 
                                                     where id=?');
-        $this->insertStmt = self::$db->prepare("insert into PartieEnCours ( nom, coordonnateur, DefinitionPartieId, JoueurTour, DebutPartie, InteractionId ) values (?, ?, ?, ?, ?, ?)");
+        $this->insertStmt = self::$db->prepare("insert into PartieEnCours ( nom, coordonnateur, DefinitionPartieId, JoueurTour, DebutPartie, InteractionId, JouerEncore ) values (?, ?, ?, ?, ?, ?, ?)");
         
     }
 
@@ -35,7 +35,8 @@ class PartieDataMapper extends Mapper {
                         $object->getDefinitionPartieId(),
                         $object->getJoueurTour(),
                         $object->getDebutPartie(),
-                        $object->getInteractionId());
+                        $object->getInteractionId(),
+                        $object->getJouerEncore());
         $this->insertStmt->execute($values);
         $id = self::$db->lastInsertId();
         $object->setId($id);
@@ -49,6 +50,7 @@ class PartieDataMapper extends Mapper {
                         $object->getJoueurTour(),
                         $object->getDebutPartie(),
                         $object->getInteractionId(),
+                        $object->getJouerEncore,
                         $object->getId());
         $this->updateStmt->execute($values);
     }

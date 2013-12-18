@@ -23,11 +23,7 @@ $partieId = $_SESSION['partieId'];
 $partie = Partie::parId($partieId);
 $joueur = Joueur::parComptePartie($usager->getCompte(), $partieId);
 
-//Boucle creant un tableau des joueurs selon leur position. Utilisee pour l'affichage des pions
-foreach ($partie->getJoueurs() as $joueurListe) {
-	$joueurPos = $joueurListe->getPosition();
-	$ar_joueur[$joueurListe->getPosition()]=$joueurListe;
-}
+
 
 switch ($action) {
 	case 'afficheTableau' :
@@ -42,14 +38,22 @@ switch ($action) {
         $tableauDeJeu = $partie->getTableau();
         
         //TODO: verifier que c'est a ce joueur de jouer. 
-	    //$joueur->setPosition(7); //FIXME: a enlever une fois les tests termines
         $partie->jouerCoup($joueur);
-	    
-	    if($partie->getInteractionId() == INTERACTION_ACHATPROPRIETE){
-	    	//creation de la case pour pouvoir avoir le nom.
-	    	$caseAchetable = $tableauDeJeu->getCaseParPosition($joueur->getPosition());	
-	    	$texteQuestion = "Voulez-vous achetez la case ". $caseAchetable->getNom(). " au montant de ".$caseAchetable->getPrix()." ?";
+	    $partie = Partie::parId($partie->getId()); //FIXME force le reload de la partie juste pour avoir l'interraction. A enlever quand les factories retournerons toujours la meme instance
+	    switch ($partie->getInteractionId()) {
+	        case 0:
+	            //aucune interaction a faire, donc on avance au prochain joueur
+	            $partie->avancerTour();
+	            break;
+	        case INTERACTION_ACHATPROPRIETE:
+	            //creation de la case pour pouvoir avoir le nom
+	            $caseAchetable = $tableauDeJeu->getCaseParPosition($joueur->getPosition());
+	            $texteQuestion = "Voulez-vous achetez la case ". $caseAchetable->getNom(). " au montant de ".$caseAchetable->getPrix()." ?";
+	            break;
+	        default:
+	            //TODO mettre une exception
 	    }
+	    
 	    include('./jouer_view.php');
 	    break;
 	case 'repondreouinon' :
@@ -69,6 +73,7 @@ switch ($action) {
 			}
 			
 			$partie->setInteractionId(0);
+			$partie->avancerTour(); //FIXME: ca devrait etre juste a une place, mais je sais aps ou encore
 		}
 		include('./jouer_view.php');
 		break;
@@ -96,6 +101,7 @@ switch ($action) {
 		}
 		
 		include('./jouer_view.php');
+		$partie->avancerTour(); //FIXME: ca devrait etre juste a une place, mais je sais aps ou encore
 		break;
 }
 ?>

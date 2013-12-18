@@ -44,7 +44,7 @@ abstract class Carte implements EntreposageDatabase {
         (is_numeric($value))?$this->position=$value:0;
     }
     
-    public function getPositon(){
+    public function getPosition(){
         return $this->position;
     }
     

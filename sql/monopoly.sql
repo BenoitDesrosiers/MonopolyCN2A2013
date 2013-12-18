@@ -634,6 +634,7 @@ CREATE TABLE IF NOT EXISTS `PartieEnCours` (
   `JoueurTour` int(10) NOT NULL,
   `DebutPartie` datetime NOT NULL,
   `InteractionId` int(10) NOT NULL,
+  `JouerEncore` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'le joueur a eux un double, il doit rejouer',
 
   PRIMARY KEY (`Id`),
   KEY `Coordonnateur` (`Coordonnateur`),
@@ -644,11 +645,8 @@ CREATE TABLE IF NOT EXISTS `PartieEnCours` (
 -- Contenu de la table `PartieEnCours`
 --
 
-INSERT INTO `PartieEnCours` (`Id`, `Coordonnateur`, `DefinitionPartieId`, `Nom`, `JoueurTour`, `DebutPartie`, `InteractionId`) VALUES
-(1, 'benoit', 1, 'Partie1', 1, '0000-00-00 00:00:00', 0),
-(2, 'benoit', 2, 'Partie2', 2, '0000-00-00 00:00:00', 0),
-(3, 'benoit', 1, 'Partie3', 1, '0000-00-00 00:00:00', 0),
-(4, 'benoit', 1, 'Partie4', 1, '0000-00-00 00:00:00', 0);
+INSERT INTO `PartieEnCours` (`Id`, `Coordonnateur`, `DefinitionPartieId`, `Nom`, `JoueurTour`, `DebutPartie`, `InteractionId`, `JouerEncore`) VALUES
+(1, 'benoit', 1, 'Partie1', 2, '2013-12-04 09:09:26', 0, 0);
 
 -- --------------------------------------------------------
 

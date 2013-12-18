@@ -118,8 +118,14 @@
         <!-- afficher les proprietes du joueur ici -->  
     </div> <!-- propriete -->
     
-    <?php if( $partie->getInteractionId() == INTERACTION_ACHATPROPRIETE){ 
-    		include 'achatPropriete.php';
-    }?>
+    <?php 
+        switch ($partie->getInteractionId()) {
+            case INTERACTION_ACHATPROPRIETE: 
+        		include 'questionOuiNon_view.php';
+        	break;
+            default:
+                //fait rien
+        }
+    ?>
 	<?php include 'vue/piedpage.php'; ?>
     

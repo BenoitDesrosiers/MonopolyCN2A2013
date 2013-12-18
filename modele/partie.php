@@ -33,7 +33,7 @@ class Partie extends Objet implements EntreposageDatabase {
 
     protected $definitionPartie = null; //l'objet representant la definition de partie. 
     protected $interactionId; //l'id de l'interation qui est presentement en cours. 
-    
+    protected $jouerEncore; //indique qu'un double vient d'etre joue et qu'on ne doit pas avancer le joueur
    
     public function __construct(array $array) {
         $this->id = $array["Id"];
@@ -44,6 +44,7 @@ class Partie extends Objet implements EntreposageDatabase {
         $this->debutPartie = DateTime::createFromFormat('Y-m-d h:i:s', $array["DebutPartie"]);
         $this->interactionId = $array["InteractionId"];
         $this->nombreJoueursActifs = $array["NombreJoueurs"];
+        $this->jouerEncore = $array["JouerEncore"];
         //TODO: ajouter dans la BD la position de la carte chance et CC presentement sur le top
     }
     
@@ -279,15 +280,15 @@ class Partie extends Objet implements EntreposageDatabase {
 	//Fonctions autres
     public function getProchaineCarteCC(){
         $cartes=CarteCC::pourDefinitionPartie($this->id);
-        $prochaineCarte=CarteCC::pourPositionCarte(1,$this->id);  // Carte au sommet de la pile
+        $prochaineCarte=CarteCC::parPositionCarte(1,$this->id);  // Carte au sommet de la pile
     
         if(!$prochaineCarte->getType=="CCg"){
             foreach($cartes as $carte){
-                if($carte->getPosition()==1)
+                if($carte->getPosition()==1) {
                     $carte->setPosition(count($cartes));
-                else
-                    $carte->setPosition($carte->getPosition()-1);
-                $carte->sauvegarder();
+                } else {
+                     $carte->setPosition($carte->getPosition()-1);
+                }
             }
         }
     
@@ -352,11 +353,17 @@ class Partie extends Objet implements EntreposageDatabase {
 	
 	public function avancerTour () {
 	// Incremente la variable joueurTour pour que le prochain joueur puisse jouer
-		$this->setJoueurTour($this->getJoueurTour() + 1);
-		if ($this->getJoueurTour() > $this->nombreJoueursActifs) {
-		// Si joueurTour dépasse le nombre de joueurs dans la partie, soustrait le nombre de joueurs actifs
-			$this->setJoueurTour($this->getJoueurTour() - $this->nombreJoueursActifs);
-		}
+	    if ($this->getJouerEncore() == 0) { //on a pas eu un double
+    		$this->setJoueurTour($this->getJoueurTour() + 1);
+	    	if ($this->getJoueurTour() > $this->nombreJoueursActifs) {
+		        // Si joueurTour dépasse le nombre de joueurs dans la partie, soustrait le nombre de joueurs actifs
+			    $this->setJoueurTour($this->getJoueurTour() - $this->nombreJoueursActifs);
+		    }
+	    } else {
+	        //on a eu un double: reset le flag pour indiquer qu'il a été traité
+	        //TODO: s'assurer que le flag est reset aussi si jamais le joueur est elimine entre ses 2 coups. 
+	        $this->setJouerEncore(0);
+	    }
 	}
 
     public function getDebutPartie() {
@@ -398,6 +405,15 @@ class Partie extends Objet implements EntreposageDatabase {
     
     public function getInteractionId() {
         return $this->interactionId;
+    }
+    
+    public function setJouerEncore($value) {
+        $this->jouerEncore = $value;
+        $this->notifie("jouerEncore");
+    }
+    
+    public function getJouerEncore() {
+        return $this->jouerEncore;
     }
     
     public function genererValeursDes() {

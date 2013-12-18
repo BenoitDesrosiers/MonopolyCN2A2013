@@ -114,12 +114,14 @@ class Joueur extends Objet  implements EntreposageDatabase{
 	
 		$tableauValeur = $this::brasseDes(); // Brasse les des
 		$partie = Partie::parId($this->getPartieId()); // Cree la partie
-		if ($tableauValeur[0] != $tableauValeur[1]) { // Si les des ne sont pas de la même valeur
-			$partie->avancerTour(); // Ne pas avancer l'ordre des tour pour le prochain joueur
+		
+		//FIXME: faut pas avancer le tour tout de suite car il peut y avoir une interraction a faire
+		if ($tableauValeur[0] == $tableauValeur[1]) { // les des sont de la même valeur, on set le flag pour indiquer de rejouer
+			$partie->setJouerEncore(1); 
 		}
 		$this->setPosition($this->getPosition() + ($tableauValeur[0] + $tableauValeur[1])); // Ajustement de la position du joueur en ajoutant la valeur des des et la valeur de la position actuelle du joueur.
 		$uneCase = null; // Creer et lancer une case de jeu
-		
+		$lesCases=$partie->getTableau()->getCases();
 		foreach ($partie->getTableau()->getCases() as $case) : //TODO: remplacer par getCaseParPosition
 		// Verifie si la case existe
 			if ($case->getPosition() == $this->getPosition()) :

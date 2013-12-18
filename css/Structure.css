@@ -54,6 +54,11 @@ div#navigation
 	background: white;
 }
 
+div#interaction
+{
+    background: white;
+}
+
 div#extra
 {
 	background:#FF8539;
@@ -89,6 +94,13 @@ div#navigation
 	float:left;
 	width:240px;
 }
+
+div#interaction
+{
+    float:left;
+    width:240px;
+}
+
 div#argent
 {
     float:left;

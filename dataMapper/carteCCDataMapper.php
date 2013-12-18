@@ -90,7 +90,7 @@ class CarteCCDataMapper extends Mapper {
         $listeItems = array();
         
         foreach($query as $row) {
-            $unItem = $this->find($row['CarteId']);
+            $unItem = $this->find(array($row['CarteId']));
             if ($unItem <> null) {
                 //set la position a partir de celle trouvee dans PartienEnCours_CarteCC
                 $unItem->setPosition($row['Position']);
@@ -113,7 +113,7 @@ class CarteCCDataMapper extends Mapper {
             $query->execute();
     
             foreach($query as $row) {
-                    $item = $this->find($row['CarteId']);
+                    $item = $this->find(array($row['CarteId']));
                     if ($item <> null) {
                             //set la position a partir de celle trouvee dans PartienEnCours_CarteCC
                             $item->setPosition($row['Position']);
