@@ -148,7 +148,7 @@
 				else
 				{
 			?>
-				<li><a href=".?action=hypothequer&carteId=<?php echo $Id?>"><b>Hypothèquer</b></a></li>
+				<li><a href=".?action=hypothequer&carteId=<?php echo $Id?>"><b>Hypoth&ecirc;quer</b></a></li>
 				<?php 
 				}
 				?>
