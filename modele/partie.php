@@ -19,14 +19,12 @@ class Partie extends Objet implements EntreposageDatabase {
     protected $definitionPartieId; //l'id de la definition de partie
     protected $joueurTour;
     protected $debutPartie; //la date et heure du debut de la partie, en tant qu'objet Date
-     
     
-    
-    
-    protected $joueurs; // la liste des joueurs (de 1 ˆ 8)
+    protected $nombreJoueursActifs; // nombre de joueurs restants
     protected $tableau; // le tableau sur lequel se deroule la partie
     protected $banque;
-    protected $des;
+    protected $premierDes;
+    protected $deuxiemeDes;
     protected $cartesChance;
     protected $cartesCaisseCommune;
     protected $pions;
@@ -34,7 +32,7 @@ class Partie extends Objet implements EntreposageDatabase {
     protected $hotels;
 
     protected $definitionPartie = null; //l'objet representant la definition de partie. 
-    protected $interactionId; //l'id de l'interation qui est prŽsentement en cours. 
+    protected $interactionId; //l'id de l'interation qui est presentement en cours. 
     
    
     public function __construct(array $array) {
@@ -45,7 +43,8 @@ class Partie extends Objet implements EntreposageDatabase {
         $this->joueurTour = $array["JoueurTour"];
         $this->debutPartie = DateTime::createFromFormat('Y-m-d h:i:s', $array["DebutPartie"]);
         $this->interactionId = $array["InteractionId"];
-        //TODO: ajouter dans la BD la position de la carte chance et CC prŽsentement sur le top
+        $this->nombreJoueursActifs = $array["NombreJoueurs"];
+        //TODO: ajouter dans la BD la position de la carte chance et CC presentement sur le top
     }
     
     // Static Factory
@@ -123,7 +122,7 @@ class Partie extends Objet implements EntreposageDatabase {
     
     public function heureDebut() {
     
-        return $this->getDebutPartie()->format('H:i');
+        return $this->getDebutPartie();//->format('H:i');
     }
     
     public function demarrerPartie()
@@ -141,7 +140,7 @@ class Partie extends Objet implements EntreposageDatabase {
     
     public function joueurPresent(Usager $usager) {
         /*
-         * verifie si un joueur est dŽjˆ dans cette partie
+         * verifie si un joueur est deja dans cette partie
          */
         $joueurs = $this->getJoueurs();
         $present = false;
@@ -205,7 +204,7 @@ class Partie extends Objet implements EntreposageDatabase {
     }
     
     public function setCartesCaisseCommune($value) {
-        //TODO: je crois pas qu'on doit avoir un set puisque que c'est loadŽ
+        //FIXME: je crois pas qu'on doit avoir un set puisque que c'est loade
         $this->cartesCaisseCommune = $value;
         $this->notifie("cartesCaisseCommune");
     }
@@ -220,14 +219,6 @@ class Partie extends Objet implements EntreposageDatabase {
         $this->notifie("cartesChance");
     }
 
-    public function getDes() {
-        return $this->des;
-    }
-    
-    public function setDes($value) {
-        $this->des = $value;
-        //pas de notifie() parce que ca va pas dans la bd
-    }
 
     public function getBanque() {
         return $this->banque;
@@ -236,6 +227,22 @@ class Partie extends Objet implements EntreposageDatabase {
     public function setBanque($value) {
         $this->banque = $value;
         $this->notifie("banque");
+    }
+
+    public function getPremierDes() {
+    	return $this->premierDes;
+    }
+    
+    public function setPremierDes($value) {
+    	$this->premierDes = $value;
+    }
+    
+    public function getDeuxiemeDes() {
+    	return $this->deuxiemeDes;
+    }
+    
+    public function setDeuxiemeDes($value) {
+    	$this->deuxiemeDes = $value;
     }
 
     public function getJoueurs() {    
@@ -248,6 +255,7 @@ class Partie extends Objet implements EntreposageDatabase {
         $this->joueurs = $value;
     }
     */
+    
     public function getId() {
         return $this->id;
     }
@@ -319,11 +327,40 @@ class Partie extends Objet implements EntreposageDatabase {
         return $casesDuGroupe;
     }
     
+    public function tourDuJoueur ($joueur) {
+    // VÃ©rifie si c'est bien le tour du joueur '$joueur' Ã  jouer
+
+    	if ($this->joueurTour == $joueur->getOrdreDeJeu()) {
+    		return true;
+    	}
+    	else {
+    		return false;
+    	}
+    }
+    
 	public function jouerCoup($joueur) {
+	// Joue un coup pour faire avancer un joueur	
+		
+		if ($this->tourDuJoueur($joueur)) {
+		// Si c'est le tour de ce joueur, jouer le coup
+			$joueur->avanceSurCase();
+		}
+		else {
+			echo "Ce n'est pas votre tour."; //TODO: generer une exception
+		}
+	}
+	
+	public function avancerTour () {
+	// Incremente la variable joueurTour pour que le prochain joueur puisse jouer
+		$this->setJoueurTour($this->getJoueurTour() + 1);
+		if ($this->getJoueurTour() > $this->nombreJoueursActifs) {
+		// Si joueurTour dÃ©passe le nombre de joueurs dans la partie, soustrait le nombre de joueurs actifs
+			$this->setJoueurTour($this->getJoueurTour() - $this->nombreJoueursActifs);
+		}
 	}
 
     public function getDebutPartie() {
-        return $this->debutPartie;
+        return $this->debutPartie->format('Y-m-d h:i:s');
     }
     public function setDebutPartie($value) {
         $this->debutPartie = $value;
@@ -362,5 +399,29 @@ class Partie extends Objet implements EntreposageDatabase {
     public function getInteractionId() {
         return $this->interactionId;
     }
+    
+    public function genererValeursDes() {
+    // Genere une valeur aleatoire entre 1 et 6 pour les 2 deux des
+    	$this->premierDes = rand(1, 6); //TODO: utiliser les setters 
+    	$this->deuxiemeDes = rand(1, 6);
+    	
+    	// Output Test // 
+    	//TODO: enlever
+    	echo "Premier des : " . $this->premierDes . "<br/>";
+    	echo "Deuxieme des : " . $this->deuxiemeDes . "<br/>";
+    	////////////////
+    }
+    
+    public function desValeursIdentiques () {
+    // Retourne un bool dependamment si les valeurs des des sont identiques
+    	if ($this->premierDes == $this->deuxiemeDes) { //TODO: utiliser les getters
+    		return true;
+    	}
+    	else {
+    		return false;
+    	}
+    }
+    
+    // TODO : Get & Set de nombreJoueursActifs
 }
 ?>

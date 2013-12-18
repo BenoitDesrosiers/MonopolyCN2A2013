@@ -20,6 +20,7 @@ class Joueur extends Objet  implements EntreposageDatabase{
     protected $enPrison;
     protected $toursRestantEnPrison;
     protected $argent; // une array associative contenant le nombre de billets de chaque sortes.
+    protected $listeCasesId; // (array) : contient l'id des cases des proprietes admissibles pour l'achat de maison/hotel
     
     function __construct(array $array) {
         /*
@@ -92,36 +93,45 @@ class Joueur extends Objet  implements EntreposageDatabase{
         $this->getDataMapper->insert($this);
     }
     
-    /*TODO: obsolete ?
-     * public function update() {
-        $this->getDatamapper->update($this);
-    }
-    */
-    
     //fonctions pour jouer
+    
 	public function brasseDes() {
-	    //TODO: je crois que ca devrait etre a la partie de brasser les des. 
+	  // Creation des des
+	  /* output:
+	   *     un array contenant les valeurs des 2 des (integer) 
+	   */
 	    
-		// Creation des des
-		//FIXME: faire la vrai creation des des
-		$des1 = array('ID' => 0, 'Val' => 1);
-		$des2 = array('ID' => 1, 'Val' => 1);
-		
-		//FIXME: on fait quoi quand y'a un double? faudrait mettre la partie dans un etat permettant a ce joueur de rejouer
-		// Ajustement de la position du joueur
-		$this->setPosition($this->getPosition() + $des1['Val'] + $des2['Val']);
-				
-		// Creer et lancer une case de jeu		
-		$uneCase = null;
-		
+
 		$partie = Partie::parId($this->getPartieId());
-		$tableau = $partie->getTableau();
-		$uneCase = $tableau->getCaseParPosition($this->getPosition());
+		
+		$partie->genererValeursDes(); // Genere la valeur des des
+		$tableauValeursDes = array($partie->getPremierDes(), $partie->getDeuxiemeDes()); // Stockage de la valeur des 2 des dans un array
+		return $tableauValeursDes;
+	}
+	
+	public function avanceSurCase() {
+	// Avance le joueur sur la case selon sa position et la valeur des des
+	
+		$tableauValeur = $this::brasseDes(); // Brasse les des
+		$partie = Partie::parId($this->getPartieId()); // Cree la partie
+		if ($tableauValeur[0] != $tableauValeur[1]) { // Si les des ne sont pas de la même valeur
+			$partie->avancerTour(); // Ne pas avancer l'ordre des tour pour le prochain joueur
+		}
+		$this->setPosition($this->getPosition() + ($tableauValeur[0] + $tableauValeur[1])); // Ajustement de la position du joueur en ajoutant la valeur des des et la valeur de la position actuelle du joueur.
+		$uneCase = null; // Creer et lancer une case de jeu
+		
+		foreach ($partie->getTableau()->getCases() as $case) : //TODO: remplacer par getCaseParPosition
+		// Verifie si la case existe
+			if ($case->getPosition() == $this->getPosition()) :
+				$uneCase = $case;
+			endif;			
+		endforeach;
 		
 		if ($uneCase == null) :
-		    //TODO: changer pour afficher_erreur 
-			echo "ATTENTION: Erreur lors de l'attribution de l'objet case achetable/case action par la position";
+		// Si la case est null, lancer un message d'erreur
+			affiche_erreur("ATTENTION: Erreur lors de l'attribution de l'objet case achetable/case action par la position");
 		endif;
+		
 		$uneCase->atterrirSur($this);
 	}
 	
@@ -135,6 +145,7 @@ class Joueur extends Objet  implements EntreposageDatabase{
          //FIXME: la vraie facon de faire serait d'aller chercher une definition des billets disponibles pour cette definition de partie
          //       mais ca n'existe pas pour l'instant, donc on prend 1,5,10,20,50,100,500 
          //FIXME: cette conversion ne devrait pas etre fait par Joueur, ca devrait etre une fonction generique a laquelle on passerait l'array $coupuresDisponibles
+
          
 	     $coupuresDisponibles =  array('1'=>1, '5'=>5, '10'=>10, '20'=>20, '50'=>50, '100'=>100, '500'=>500);
 	     $clesCoupures = array('500', '100', '50', '20', '10', '5', '1'); //on commence par le plus gros billets
@@ -152,7 +163,6 @@ class Joueur extends Objet  implements EntreposageDatabase{
 	     }
 	     
 	     return $coupuresFinales;
-	    
 	}
 	
 	public function encaisse( $argent) {
@@ -187,35 +197,27 @@ class Joueur extends Objet  implements EntreposageDatabase{
         foreach($argent as $billet=>$quantite){
                 $argentCtr += intval($billet) * $quantite; 
         }
-        //echo "Le joueur a ".$argentCtr."$ et doit payer ".$montant."$";
-        //echo "</br>";
         
         if($argentCtr < $montant){
                 echo "Le joueur n'a pas assez d'argent. ".($montant-$argentCtr)."$ de plus sont necessaire.";
         }
         else{               
                 $argentCtr -= $montant;             
+
                 //creation de l'array de paiement exemple le joueur doit payer 350, il paye avec un 500
              
                 foreach($argent as $billet=>$quantite){
                         if($quantite != 0){
                                 if($montant > 0){
-                                        //echo "Montant : ".$montant."</br>";
                                 		$quantiteCtr = ceil($montant / intval($billet));
                                 		if($quantiteCtr > $quantite)
                                 			$quantiteCtr = $quantite;
                                         $montant -=  $quantiteCtr *intval($billet);
-                                        //echo "Montant : ".$montant."</br>";
                                         $montantCtr = $montant;
-                                        //echo "MontantCtr : ".$montantCtr."</br>";
                                         $quantite -= $quantiteCtr ; 
                                         if($montantCtr < 0){
                                                 $montantCtr *= -1;
-                                                //echo "MontantCtr : ".$montantCtr."</br>";
                                         }               
-                                	//echo "Billet actuel : " . $billet . "</br>";
-                                	//echo "quantite actuel : " . $quantiteCtr . "</br>";   
-                                	//echo "montantctr : " . $montantCtr . "</br>";                                     
                                 }
                                 
                         } 
@@ -230,20 +232,12 @@ class Joueur extends Objet  implements EntreposageDatabase{
                 //montantCtr = valeur que le joueur recupere
                 // quantiteCtr = quantite de billet recupere
                 foreach($argent as $billet=>$quantite){
-                	//echo "montantctr retour: ". $montantCtr . "</br>";
                         if($billet <= $montantCtr){
                                     $quantiteCtr = floor($montantCtr / intval($billet));
                                     $quantite += $quantiteCtr;
-                                    
-                                    //echo "Billet retour :".$billet."</br>";
-                                    //echo "Quantite Retour : ".$quantiteCtr."</br>";
-                                    
                                     if($quantiteCtr != 0){
                                             $montantCtr -= intval($billet) * $quantiteCtr;
-                                            //echo "Montant Retour ".$montantCtr."</br>";
                                     }
-                           
-                               
                         }
                         $argent[$billet]=$quantite;
                 }
@@ -251,9 +245,91 @@ class Joueur extends Objet  implements EntreposageDatabase{
         }
         //appel la fonction encaisse pour mettre a jour l'argent du joueur.
         $this->setArgent($argent);
-        //return $argent; //TODO: devrait retourner l'argent utilisŽe pour payer. 
+        //return $argent; //TODO: devrait retourner l'argent utilisee pour payer. 
     }
 
+
+	public function tenterAchat($montant) {
+	    return true;
+	}
+	
+	public function acheterHotel ($caseId) {
+	// Achete un hotel au joueur sur une case
+	
+		$case = CaseDeJeuAchetable::parId($caseId);
+		
+		if ($this->tenterAchat($case->getCoutHotel())) {
+			
+			$this->paye($case->getCoutHotel()); // Paye pour l'hotel
+			
+			$propriete = CartePropriete::pourCasePartie($caseId, $this->getPartieId());
+			
+			$propriete->setNombreHotels($propriete->getNombreHotels() + 1); // Ajoute un hotel sur la case
+			$propriete->setNombreMaisons(0); // Remet le nombre de maisons a 0
+			
+			return true; //TODO: remplacer ca par une exception
+		}
+		
+		else {
+			return false; 
+		}
+	}
+	
+	public function genererListeCases () { //TODO: renommer pour listeCasesBatissables
+		// Genere la liste des groupes de cases complets possedes par le joueur
+		$partie = Partie::parId($this->getPartieId());
+	
+		$this->listeCasesId = null;
+		$groupeId = 0;
+	
+		foreach ($this->getProprietes() as $propriete) {
+			// Boucle qui passe a travers chaque propriete du joueur
+			
+			$case = CaseDeJeuPropriete::parId($propriete->getCaseId()); // Attribu une case avec la propriete
+	
+			if ($groupeId != $case->getGroupeDeCaseId() && strcmp($case->getType(), "propriete") == 0 ) {
+				// Si l'id du groupe de case est different et que c'est une case propriete
+					
+				$groupeId = $case->getGroupeDeCaseId(); // Met l'id de groupe a jour
+				$nombreGroupeComplet = sizeof($partie->casesDuGroupe($case->getGroupeDeCaseId())); // Nombre de cases totales de l'id de groupe
+				$nombreGroupePossedees = $case->nombreCartesMemeGroupeEtProprio($propriete); // Nombre de cases possedes avec le même id de groupe
+	
+				if ($nombreGroupeComplet == $nombreGroupePossedees) {
+					// Verifie si le joueur a toutes les cartes d'un groupe
+					
+					$groupeCases = $partie->casesDuGroupe($case->getGroupeDeCaseId()); // Cree un array de cases avec l'id du groupe de cases
+					
+					$groupeOk = true;
+					$arrayCasesAdmissiblesId = null;
+					
+					foreach ($groupeCases as $caseDuGroupe) {
+					// Boucle qui traverse l'array de cases d'un groupe
+					
+						$propriete = CartePropriete::pourCasePartie($caseDuGroupe->getId(), $partie->getId()); // Cree la carte propriete a partir de l'id de la case
+						
+						if ($propriete->getNombreMaisons() <= 3 && $propriete->getNombreHotels() < 1) { 
+						//Si le nombre de maison est inferieur a 3, ce groupe est refuse
+							$groupeOk = false;
+						}
+						else if ($propriete->getNombreMaisons() == 4 && $propriete->getHypotheque() != 1) {
+							$arrayCasesAdmissiblesId[] = $caseDuGroupe->getId();
+						}
+					}
+					
+					if ($groupeOk == true) {
+						if ($this->listeCasesId != null) {
+							$this->listeCasesId = array_merge($this->listeCasesId, $arrayCasesAdmissiblesId); // Ajoute l'id de la case dans la liste
+						}
+						
+						else {
+							$this->listeCasesId = $arrayCasesAdmissiblesId;
+						}
+					}
+				}
+			}
+		}
+	}
+	
 	public function chargerLoyerA($locataire, $loyer){
 	    $locataire->paye($loyer);
 	    $this->encaisse($loyer);
@@ -334,6 +410,10 @@ class Joueur extends Objet  implements EntreposageDatabase{
 	
 	public function getProprietes() {
 	    return CartePropriete::pourJoueurs($this);
+	}
+	
+	public function getListeCases() {
+		return $this->listeCasesId;
 	}
 	
 }

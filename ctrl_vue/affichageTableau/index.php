@@ -30,6 +30,7 @@ if (isset($_POST['action'])) {
     $action = 'afficher';
 }
 
+
 $coordonnateur = $_SESSION['usager'];
 
 switch ($action) {

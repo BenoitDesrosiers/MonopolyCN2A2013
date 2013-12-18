@@ -17,8 +17,6 @@ class CaseActionDataMapper extends Mapper {
     }
 
     protected function doCreateObject( array $array) {
-        
-        //TODO: creer 3 autres sous-clase de CaseDeJeuAchetable et les appeler CasePropriete, CaseTrain et CaseService et creer la bon selon le type provenant de GroupeDeCase
         $obj = new CaseDeJeuAction($array);
 
         return $obj;        
@@ -53,33 +51,6 @@ class CaseActionDataMapper extends Mapper {
     /*
      * fonctions specific a ce datamapper
      */
-    
-    function nomLibre($nom) {
-        /*
-         * verifie si ce $nom est deja utilise pour une autre partie
-         * 
-         * Retour
-         *     true: le nom n'est pas utilise
-         *     false: une partie a deja ce nom
-         */
-        $queryTxt = 'SELECT * FROM DefinitionPartie
-                WHERE nom = :nom';
-        $query = self::$db->prepare($queryTxt);
-        $query->bindValue(':nom', $nom);
-        $query->setFetchMode(PDO::FETCH_ASSOC);
-        $query->execute();
-        
-        $listeItems = array();
-        
-        foreach($query as $row) {
-            $unItem = $this->createObject($row);
-            if ($unItem <> null) {
-                $listeItems[] = $unItem;
-            }
-        }
-        return $listeItems;
-        
-    }
     
     function pourDefinitionPartie($idDefinitionPartie) {
         // retourne un array contenant toutes les cases actions du tableau
@@ -118,7 +89,7 @@ class CaseActionDataMapper extends Mapper {
     	foreach($query as $row) {
     		$item = $this->find(array($row['CaseActionId']));
     		if ($item <> null) {
-    			//set la position a partir de celle trouvee dans DefinitionPartie_CaseAchetable
+    			//set la position a partir de celle trouvee dans DefinitionPartie_CaseAction
     			$item->setPosition($row['Position']);
     		}
     	}

@@ -50,8 +50,6 @@ class CarteProprieteDataMapper extends Mapper {
     }
     
     function update( $objet, $sujet) {
-        //FIXME: j'ai change le updateStmt pour un insertStmt car le changement de proprietaire ne se fait que sur un achat jusqu'ˆ maintenant, mais quand on voudra vendre une propriete, ca va planter
-        //FIXME: faudrait verifier si l'enregistrement existe, si oui, faire le update, sinon faire une insert
         $values= array ($objet->getCompteProprietaire(), 
                         $objet->getPartieId(), 
                         $objet->getCaseId(), 
@@ -60,7 +58,25 @@ class CarteProprieteDataMapper extends Mapper {
                         $objet->getNombreMaisons(),
                         $objet->getNombreHotels(),
                         );
-        $this->insertStmt->execute($values);       
+        
+        //verifie si l'enregistrement existe deja
+        $selectStatement = self::$db->prepare('SELECT * FROM joueurpartie_caseachetable 
+        										WHERE JoueurPartiePartieEnCoursId = :partieId 
+        										AND JoueurPartieUsagerCompte = :usagerCompte 
+        										AND CaseAchetableId = :caseId');
+        $selectStatement->bindParam(':partieId', $values[1]);
+        $selectStatement->bindParam(':usagerCompte', $values[0]);
+        $selectStatement->bindParam(':caseId', $values[2]);
+        $selectStatement->execute();
+        if (sizeof($selectStatement->fetchAll()) >= 1) {
+            //si il existe, on l'update
+        	$values = array_merge($values, array($objet->getCompteProprietaire(), $objet->getCaseId(), $objet->getPartieId()));
+        	$this->updateStmt->execute($values);
+        }
+        else {
+            //si non, on l'ajoute. 
+        	$this->insertStmt->execute($values);
+        }       
     }
 
     function selectStmt() {

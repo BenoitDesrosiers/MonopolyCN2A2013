@@ -3,7 +3,10 @@
  * la partie est demarree. 
  * Affiche le tableau et l'info des joueurs. 
  * 
- */?>
+ * TODO: renommer cette view partieEnCours_view.php
+ * 
+ */
+ ?>
 
 <!DOCTYPE html>
 <html>
@@ -65,9 +68,11 @@
 </script>
     
 </head>
-
-<body>
-
+<?php
+	$compteUsager = $usager->getCompte(); //TODO: envoyer cette declaration dans info_partie_viewphp
+?>
+<body onload="activationRafraichissement('<?php echo $compteUsager;?>')"> <!-- Lance l'affichage automatique des informations de la partie dès que le body s'affiche -->
+<?php //TODO: remplacer ce onload par un window.onload = function() dans info_partie_view.php ?>
     <?php include 'vue/enteteCommune.php'; ?>
     
     <?php //TODO ajouter une section pour le menu, l'interaction , pour les cartes, pour l'info du joueur, ... ?>
@@ -98,12 +103,13 @@
 				<li><a href="#nogo" onClick="DemoAjax()"><b>demo Ajax</b></a></li>
 				<li><a href="#nogo" onClick="ListeProprieteVendu(<?php echo $partieId?>)"><b>Propri&eacute;t&eacute;s vendues</b></a></li>
 	            <li><a href="#nogo"><b>Achat Maison</b></a></li>
-				<li><a href="#nogo"><b>Achat Hotel</b></a></li>
+				<li><a href=".?action=GenererAchatHotel"><b>Achat Hotel</b></a></li>
 				<li><a href="#nogo"><b>Quitter</b></a></li>
 			</ul>
 	</div> <!-- navigation -->
-	
-	
+
+	<?php require_once 'info_partie_view.php';?>
+
 	<div id="argent">
 		<!-- afficher l'argent du joueur ici -->
 	</div> <!-- argent -->
@@ -111,6 +117,7 @@
 	<div id="propriete">
         <!-- afficher les proprietes du joueur ici -->  
     </div> <!-- propriete -->
+    
     <?php if( $partie->getInteractionId() == INTERACTION_ACHATPROPRIETE){ 
     		include 'achatPropriete.php';
     }?>

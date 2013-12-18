@@ -51,7 +51,7 @@ abstract class CaseDeJeu { // implements EntreposageDatabase {
         $this->position = $value;
     }
     public abstract function getType();
-    
+   
     public function getCouleurHTML() {
         return "#ffffff"; //TODO: hack pour faire marcher le tableau d'affichage. 
     }
