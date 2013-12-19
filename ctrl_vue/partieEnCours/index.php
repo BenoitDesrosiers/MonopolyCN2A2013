@@ -23,15 +23,9 @@ $partieId = $_SESSION['partieId'];
 $partie = Partie::parId($partieId);
 $usager = $_SESSION['usager'];
 $joueur = Joueur::parComptePartie($usager->getCompte(), $partieId);
-//if ($bool==false)
-//{
-//$carte = CartePropriete::pourCasePartie($carteId, $partieId);
-//}else echo "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-
 
 switch ($action) {
 	case 'afficheTableau' :
-		//$carteId=$_GET['carteId'];
 		// affiche le tableau de jeu
 		$titrePage= $partie->getNom();
 		$tableauDeJeu = $partie->getTableau();
