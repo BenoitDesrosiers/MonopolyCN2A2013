@@ -75,8 +75,9 @@ class CaseDeJeuAction extends CaseDeJeu {
                 break;
             case 44:
                 $joueur->setSurStationnementGratuit(true);
+                break;
             default:    // Remplacer ceci pour d'autre type d'action
-                return 0;
+                return 0; //FIXME cette fonction retour 0 juste dans ce cas? est-ce qu'elle doit faire un return ?
         }
     }
 
