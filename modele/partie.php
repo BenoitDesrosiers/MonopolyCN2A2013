@@ -369,9 +369,9 @@ class Partie extends Objet implements EntreposageDatabase {
     public function genererValeursDes() {
     // G�n�re une valeur al�atoire entre 1 et 6 pour les 2 deux d�s
     	$this->premierDes = rand(1, 6);
-    	echo "Premier des : " . $this->premierDes . "<br/>";
+    	//echo "Premier des : " . $this->premierDes . "<br/>";
     	$this->deuxiemeDes = rand(1, 6);
-    	echo "Deuxieme des : " . $this->deuxiemeDes . "<br/>";
+    	//echo "Deuxieme des : " . $this->deuxiemeDes . "<br/>";
     }
     
     public function valeurDes() {
