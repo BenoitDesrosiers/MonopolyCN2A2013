@@ -134,7 +134,7 @@
 		<?php
 			foreach ($joueur->getListeCartes() as $carte) {
 				$laCarte = $carte;
-				//include 'carteAction_view.php';
+				include 'carteAction_view.php';
 				
 			}
 		?>
@@ -143,7 +143,7 @@
 	<?php require_once 'info_partie_view.php';?>
 
 	<div id="argent">
-		<!-- button type="button"  onclick="detailJoueur(<?php echo $partie->getId(); ?>)"> Afficher le detail des joueurs</button-->
+		<button type="button"  onclick="detailJoueur(<?php echo $partie->getId(); ?>)"> Afficher le detail des joueurs</button>
 	</div>
 
 	<div id="propriete">

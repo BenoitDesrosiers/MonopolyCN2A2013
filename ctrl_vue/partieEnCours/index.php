@@ -60,7 +60,8 @@ switch ($action) {
 		if($partie->getInteractionId() == INTERACTION_ACHATPROPRIETE){
 			$valeur = $_GET['valeur']; //TODO: valider que ce champ existe
 			if ($valeur == 'oui') {
-				//Creation de la case pour prendre ses informations.
+				//TODO: envoyer ca dans Joueur->acheterProprieteCourante()
+				//Creation de la case pour prendre ses informations. 
 				$tableauDeJeu = $partie->getTableau();
 				$case = $tableauDeJeu->getCaseParPosition($joueur->getPosition());
 				//A partir de la case on cree la carte pour que le joueur puisse acheter la carte.
