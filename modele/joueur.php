@@ -18,6 +18,7 @@ class Joueur extends Objet  implements EntreposageDatabase{
     protected $position;
     protected $ordreDeJeu;
     protected $enPrison;
+    protected $surStationnementGratuit;
     protected $toursRestantEnPrison;
     protected $argent; // une array associative contenant le nombre de billets de chaque sortes.
     
@@ -237,8 +238,24 @@ class Joueur extends Objet  implements EntreposageDatabase{
     }
 
 
-	public function tenterAchat($montant) {
-	    return true;
+    public function tenterAchat($montant){
+	    //verifie si le joueur a assez d'argen pour acheter la propriete
+	    //TODO: je crois que tenterAchat a changer de semantique ... verifier qu'est ce qui arrive si ca retourne faux. 
+		$argent = $this->getArgent();
+
+        $montantCtr = 0;
+        $argentCtr = 0;
+        
+        //verification argent
+        //si le joueur a assez d'argent pour payer 
+        foreach($argent as $billet=>$quantite){
+                $argentCtr += intval($billet) * $quantite; 
+        }
+        
+        if($argentCtr < $montant){
+               return false;
+        }
+        return true;
 	}
 	
 	public function acheterHotel ($caseId) {
@@ -391,6 +408,14 @@ class Joueur extends Objet  implements EntreposageDatabase{
 			}	
 		}
 		return $resultat;
+	}
+	
+	public function setSurStationnementGratuit($value){ //FIXME: ca sert a quoi ca ???? c'est pas utilise
+		$this->surStationnementGratuit=$value;
+	}
+	
+	public function getSurStationnementGratuit(){
+		return $this->surStationnementGratuit;
 	}
 
 }

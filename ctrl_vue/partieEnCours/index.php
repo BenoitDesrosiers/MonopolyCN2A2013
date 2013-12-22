@@ -182,6 +182,24 @@ switch ($action) {
  		$tableauDeJeu = $partie->getTableau();
  		include('./jouer_view.php');
  		break;
-	
+ 	case 'questionVtPropriete':
+ 		$titrePage = "AfficheTableau";
+ 		$tableauDeJeu = $partie->getTableau();
+		$partie->setInteractionId(INTERACTION_VENTEPROPRIETE); 		
+ 		include('./jouer_view.php');
+ 		break;
+ 	case 'vtPropriete':
+ 		$titrePage= "afficheTableau";
+ 		$tableauDeJeu = $partie->getTableau();
+		$joueurVt=Joueur::parComptePartie($_POST['joueur'],$partieId);
+		$proprieteVt=CartePropriete::pourCasePartie($_POST['propriete'],$partieId);
+		
+		/* Effectuer la vente */
+		$banque=new banque();
+		$banque->vendreProprieteJoueur($joueurVt,$joueur,$proprieteVt);
+ 		
+		$partie->setInteractionId(0);
+		include('./jouer_view.php');
+		break;
 }
 ?>

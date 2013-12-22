@@ -1,6 +1,0 @@
-Fait :
-
--todo de ma fonction précédente : paiementparbatiment
--fonction acheter maison
--javascript afficher propriete non vendue
--extra : carte chance actionid 24 et 27

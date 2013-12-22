@@ -68,7 +68,8 @@
     }
  
 </script>
-    
+<script src="<?php echo $GLOBALS['app_path'];?>ajax/aideajax.js"></script>
+  
 </head>
 <?php
 	$compteUsager = $usager->getCompte(); //TODO: envoyer cette declaration dans info_partie_viewphp
@@ -83,8 +84,6 @@
 	<div id="contenu">
 	    
         <div id="divTableau">
-                 <div id="demoAjax">
-                 </div>
                  
                  <div id="proprieteVendu"> <!-- pour ajax de vero -->
      			 </div>
@@ -108,6 +107,8 @@
 				<li><a href="#nogo" onClick="ListeProprieteNonVendu(<?php echo $partieId?>)"><b>ProprieteNonVendu</b></a></li>	           
 	            <li><a href=".?action=AchatMaison"><b>Achat Maison</b></a></li>
 				<li><a href=".?action=GenererAchatHotel"><b>Achat Hotel</b></a></li>
+				<li><a href=".?action=questionVtPropriete"><b>Vente Propriété</b></a></li><!-- Tommy Teasdale -->
+				<li><a id="help"><b>Aide</b></a></li>
 				<li><a href="#nogo"><b>Quitter</b></a></li>
 			</ul>
 	</div> <!-- navigation -->
@@ -132,6 +133,9 @@
         		break;
             case INTERACTION_ACHATMAISON:
             	include('./achat_maison_view.php');
+            	break;
+            case INTERACTION_VENTEPROPRIETE:
+            	include('./vente_prop_view.php');
             	break;
             default:
                 //fait rien

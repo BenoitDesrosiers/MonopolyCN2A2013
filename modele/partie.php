@@ -13,6 +13,8 @@ require_once "modele/carteCC.php";
 define("INTERACTION_ACHATPROPRIETE", 1);
 define("INTERACTION_ACHATHOTEL",2);
 define("INTERACTION_ACHATMAISON",3);
+define("INTERACTION_VENTEPROPRIETE",4);
+
 class Partie extends Objet implements EntreposageDatabase {
     protected $id;
     protected $nom;
@@ -298,17 +300,16 @@ class Partie extends Objet implements EntreposageDatabase {
     
     public function getProchaineCarteChance(){
         $cartes=CarteChance::pourDefinitionPartie($this->id);
-        $prochaineCarte=CarteChance::parPositionCarte(14,$this->id);// Pour les besoins de la fonction en cours de developpement,
-        // La carte pigee est la carte a la position 14
-        /*foreach($cartes as $carte){                               // Les cartes ne sont pas deplacees.
-         foreach($cartes as $carte){
-        if($carte->getPosition()==count($cartes))
-            $carte->setPosition(1);
-        else
-            $carte->setPosition($carte->getPosition()+1);
-        $carte->sauvegarder();
-        }
-        }*/
+        foreach($cartes as $carte){                               // Les cartes ne sont pas deplacees.
+        	foreach($cartes as $carte){
+        		if($carte->getPosition()==count($cartes)) {
+            		$carte->setPosition(1);
+        		} else {
+            		$carte->setPosition($carte->getPosition()+1);
+        		}
+				$carte->sauvegarder();
+        	}
+       	}
     
         return $prochaineCarte;
     }

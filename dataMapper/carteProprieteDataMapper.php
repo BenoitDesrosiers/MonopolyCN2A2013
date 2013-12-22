@@ -8,11 +8,11 @@ class CarteProprieteDataMapper extends Mapper {
 	
     function __construct() {
         parent::__construct();
-        $this->selectStmt = self::$db->prepare("SELECT * FROM joueurpartie_caseachetable where CaseAchetableId= ? and JoueurPartiePartieEnCoursId= ? ");
-        $this->updateStmt = self::$db->prepare('update joueurpartie_caseachetable set JoueurPartieUsagerCompte=?, JoueurPartiePartieEnCoursId=?, 
+        $this->selectStmt = self::$db->prepare("SELECT * FROM JoueurPartie_CaseAchetable where CaseAchetableId= ? and JoueurPartiePartieEnCoursId= ? ");
+        $this->updateStmt = self::$db->prepare('update JoueurPartie_CaseAchetable set JoueurPartieUsagerCompte=?, JoueurPartiePartieEnCoursId=?, 
                                                         CaseAchetableId=?, OrdreAffichage=?, Hypotheque=?, NombreMaisons=?, NombreHotels=?  
-                                                    where JoueurPartieUsagerCompte = ? and CaseAchetableId= ? and JoueurPartiePartieEnCoursId= ?');
-        $this->insertStmt = self::$db->prepare("insert into joueurpartie_caseachetable ( JoueurPartieUsagerCompte, JoueurPartiePartieEnCoursId, 
+                                                    where CaseAchetableId= ? and JoueurPartiePartieEnCoursId= ?');
+        $this->insertStmt = self::$db->prepare("insert into JoueurPartie_CaseAchetable ( JoueurPartieUsagerCompte, JoueurPartiePartieEnCoursId, 
                                                         CaseAchetableId, OrdreAffichage, Hypotheque, NombreMaisons, NombreHotels) values (?,?,?,?,?,?,?)");
     }
 
@@ -60,23 +60,15 @@ class CarteProprieteDataMapper extends Mapper {
                         );
         
         //verifie si l'enregistrement existe deja
-        $selectStatement = self::$db->prepare('SELECT * FROM joueurpartie_caseachetable 
-        										WHERE JoueurPartiePartieEnCoursId = :partieId 
-        										AND JoueurPartieUsagerCompte = :usagerCompte 
-        										AND CaseAchetableId = :caseId');
-        $selectStatement->bindParam(':partieId', $values[1]);
-        $selectStatement->bindParam(':usagerCompte', $values[0]);
-        $selectStatement->bindParam(':caseId', $values[2]);
-        $selectStatement->execute();
-        if (sizeof($selectStatement->fetchAll()) >= 1) {
-            //si il existe, on l'update
-        	$values = array_merge($values, array($objet->getCompteProprietaire(), $objet->getCaseId(), $objet->getPartieId()));
-        	$this->updateStmt->execute($values);
+        $obj = parent::find(array($objet->getCaseId(),$objet->getPartieId()));
+        
+        if ($obj === null) { //si il n'est pas la, on l'ajoute
+            $this->insertStmt->execute($values);
+        }else{ // si il est la, on l'update
+             $values[]=$objet->getCaseId();
+             $values[]=$objet->getPartieId();
+             $this->updateStmt->execute($values);
         }
-        else {
-            //si non, on l'ajoute. 
-        	$this->insertStmt->execute($values);
-        }       
     }
  
     function selectStmt() {

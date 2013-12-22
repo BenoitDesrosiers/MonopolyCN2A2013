@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.2.4
+-- version 3.5.2.2
 -- http://www.phpmyadmin.net
 --
--- Serveur: localhost
--- Généré le : Dim 22 Décembre 2013 à 02:50
--- Version du serveur: 5.1.44
--- Version de PHP: 5.3.1
+-- Client: localhost
+-- Généré le: Mar 03 Décembre 2013 à 14:29
+-- Version du serveur: 5.5.27
+-- Version de PHP: 5.4.7
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -535,7 +535,7 @@ CREATE TABLE IF NOT EXISTS `JoueurPartie` (
 
 INSERT INTO `JoueurPartie` (`UsagerCompte`, `PartieEnCoursId`, `PionId`, `Position`, `OrdreDeJeu`, `EnPrison`, `ToursRestants_Prison`) VALUES
 ('benoit', 1, 1, 0, 1, 0, 0),
-('marc', 1, 3, 15, 3, 0, 0),
+('marc', 1, 3, 8, 3, 0, 0),
 ('tom', 1, 2, 0, 2, 0, 0),
 ('vero', 1, 4, 0, 4, 0, 0);
 
@@ -560,28 +560,28 @@ CREATE TABLE IF NOT EXISTS `JoueurPartie_Argent` (
 --
 
 INSERT INTO `JoueurPartie_Argent` (`ArgentMontant`, `JoueurPartieUsagerCompte`, `JoueurPartiePartieEnCoursId`, `Quantite`) VALUES
-(1, 'benoit', 1, 10),
-(1, 'marc', 1, 30),
-(1, 'tom', 1, 0),
+(1, 'benoit', 1, 140),
+(1, 'marc', 1, 5),
+(1, 'tom', 1, 5),
 (1, 'vero', 1, 5),
 (5, 'benoit', 1, 0),
-(5, 'marc', 1, 0),
-(5, 'tom', 1, 0),
+(5, 'marc', 1, 5),
+(5, 'tom', 1, 5),
 (5, 'vero', 1, 5),
 (10, 'benoit', 1, 0),
-(10, 'marc', 1, 1),
-(10, 'tom', 1, 0),
+(10, 'marc', 1, 7),
+(10, 'tom', 1, 7),
 (10, 'vero', 1, 7),
 (20, 'benoit', 1, 0),
-(20, 'marc', 1, 0),
+(20, 'marc', 1, 5),
 (20, 'tom', 1, 5),
 (20, 'vero', 1, 5),
 (50, 'benoit', 1, 0),
-(50, 'marc', 1, 1),
+(50, 'marc', 1, 2),
 (50, 'tom', 1, 2),
 (50, 'vero', 1, 2),
 (100, 'benoit', 1, 0),
-(100, 'marc', 1, 2),
+(100, 'marc', 1, 7),
 (100, 'tom', 1, 7),
 (100, 'vero', 1, 7),
 (500, 'benoit', 1, 0),
@@ -635,13 +635,11 @@ CREATE TABLE IF NOT EXISTS `JoueurPartie_CaseAchetable` (
 --
 
 INSERT INTO `JoueurPartie_CaseAchetable` (`JoueurPartieUsagerCompte`, `JoueurPartiePartieEnCoursId`, `CaseAchetableId`, `OrdreAffichage`, `Hypotheque`, `NombreMaisons`, `NombreHotels`) VALUES
-('benoit', 1, 1, 1, 0, 0, 1),
+('benoit', 1, 1, 1, 0, 2, 0),
+('benoit', 1, 3, 2, 0, 0, 1),
 ('benoit', 1, 6, 3, 0, 0, 1),
-('marc', 1, 3, 2, 0, 0, 3),
 ('marc', 1, 5, 1, 0, 0, 0),
-('marc', 1, 14, 0, 0, 0, 0),
 ('marc', 1, 15, 2, 0, 0, 0),
-('marc', 1, 24, 0, 0, 0, 0),
 ('marc', 1, 25, 3, 0, 0, 0),
 ('marc', 1, 35, 4, 0, 0, 0),
 ('tom', 1, 18, 2, 1, 0, 0),
@@ -661,7 +659,6 @@ CREATE TABLE IF NOT EXISTS `PartieEnCours` (
   `JoueurTour` int(10) NOT NULL,
   `DebutPartie` datetime NOT NULL,
   `InteractionId` int(10) NOT NULL,
-  `JouerEncore` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`Id`),
   KEY `Coordonnateur` (`Coordonnateur`),
   KEY `DefinitionPartieId` (`DefinitionPartieId`)
@@ -671,11 +668,11 @@ CREATE TABLE IF NOT EXISTS `PartieEnCours` (
 -- Contenu de la table `PartieEnCours`
 --
 
-INSERT INTO `PartieEnCours` (`Id`, `Coordonnateur`, `DefinitionPartieId`, `Nom`, `JoueurTour`, `DebutPartie`, `InteractionId`, `JouerEncore`) VALUES
-(1, 'benoit', 1, 'Partie1', 1, '2013-11-22 11:11:11', 0, 0),
-(2, 'benoit', 2, 'Partie2', 2, '0000-00-00 00:00:00', 0, 0),
-(3, 'benoit', 1, 'Partie3', 1, '0000-00-00 00:00:00', 0, 0),
-(4, 'benoit', 1, 'Partie4', 1, '0000-00-00 00:00:00', 0, 0);
+INSERT INTO `PartieEnCours` (`Id`, `Coordonnateur`, `DefinitionPartieId`, `Nom`, `JoueurTour`, `DebutPartie`, `InteractionId`) VALUES
+(1, 'benoit', 1, 'Partie1', 1, '2013-11-22 11:11:11', 404),
+(2, 'benoit', 2, 'Partie2', 2, '0000-00-00 00:00:00', 0),
+(3, 'benoit', 1, 'Partie3', 1, '0000-00-00 00:00:00', 0),
+(4, 'benoit', 1, 'Partie4', 1, '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -803,3 +800,7 @@ INSERT INTO `Usager` (`Compte`, `Nom`, `MotDePasse`, `Role`) VALUES
 ('marc', 'Marc-André', '1a91d62f7ca67399625a4368a6ab5d4a3baa6073', 'joueur'),
 ('tom', 'Tommy', '1a91d62f7ca67399625a4368a6ab5d4a3baa6073', 'joueur'),
 ('vero', 'Veronique', '1a91d62f7ca67399625a4368a6ab5d4a3baa6073', 'coordonnateur');
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
