@@ -4,7 +4,7 @@ require_once('modele/usager.php');
 require_once('modele/joueur.php');
 require_once('modele/partie.php');
 require_once ('modele/cartePropriete.php');
-require_once ('modele/CaseDeJeu.php');
+require_once ('modele/caseDeJeuAchetable.php');
 
         
 	$partie = Partie::parId($_GET['partie']);
