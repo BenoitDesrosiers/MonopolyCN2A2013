@@ -160,6 +160,9 @@
 			</ul>
 	</div> <!-- navigation -->
 	
+	<div id="affichageInfos">
+	</div>
+	
 	<!-- div id="cartesAction" style="margin-left:40px"-->
 		<?php
 			foreach ($joueur->getListeCartes() as $carte) {
