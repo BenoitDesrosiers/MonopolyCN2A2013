@@ -350,7 +350,11 @@ class Partie extends Objet implements EntreposageDatabase {
 		
 		if ($this->tourDuJoueur($joueur)) {
 		// Si c'est le tour de ce joueur, jouer le coup
-			$joueur->avanceSurCase();
+			if ($joueur->getEnPrison() == 1){
+                $this->setInteractionId(INTERACTION_SORTIRDEPRISON);
+            } else {
+            	$joueur->avanceSurCase();
+            }
 		}
 		else {
 			echo "Ce n'est pas votre tour."; //TODO: generer une exception

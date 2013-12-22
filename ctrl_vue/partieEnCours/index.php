@@ -300,7 +300,8 @@ switch ($action) {
 				$joueur->setToursRestantEnPrison(0);
 				$joueur->setEnPrison(0);
 				redirect('.?action=JouerCoup');
-			}
+			} 	
+			$partie->avancerTour(); //FIXME: ca devrait etre juste a une place, mais je sais pas ou encore
 			redirect('.?afficheTableau');
 		}
 		elseif ($_GET['valeur'] == 'carte') {
