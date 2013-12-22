@@ -33,7 +33,7 @@ class CaseDeJeuAction extends CaseDeJeu {
         $dataMapper = new CaseActionDataMapper();
         return $dataMapper->parPositionCase($positionCase, $idDefinitionPartie);
     }
-    
+        
     // interface entreposageDatabase
     public function getDataMapper() {
         return new CaseActionDataMapper();

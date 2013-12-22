@@ -126,11 +126,6 @@ class Joueur extends Objet  implements EntreposageDatabase{
 			endif;			
 		endforeach;
 		
-		if ($uneCase == null) :
-		// Si la case est null, lancer un message d'erreur
-			affiche_erreur("ATTENTION: Erreur lors de l'attribution de l'objet case achetable/case action par la position");
-		endif;
-		
 		$uneCase->atterrirSur($this);
 	}
 	

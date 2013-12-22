@@ -17,6 +17,7 @@ define("INTERACTION_VENTEPROPRIETE",4);
 define("INTERACTION_VENDRECARTEACTION",5);
 define("INTERACTION_HYPOTHEQUER",6);
 define("INTERACTION_RACHETER",7);
+define("INTERACTION_SORTIRDEPRISON",8);
 
 class Partie extends Objet implements EntreposageDatabase {
     protected $id;
@@ -425,12 +426,6 @@ class Partie extends Objet implements EntreposageDatabase {
     // Genere une valeur aleatoire entre 1 et 6 pour les 2 deux des
     	$this->premierDes = rand(1, 6); //TODO: utiliser les setters 
     	$this->deuxiemeDes = rand(1, 6);
-    	
-    	// Output Test // 
-    	//TODO: enlever
-    	echo "Premier des : " . $this->premierDes . "<br/>";
-    	echo "Deuxieme des : " . $this->deuxiemeDes . "<br/>";
-    	////////////////
     }
     
     public function desValeursIdentiques () {

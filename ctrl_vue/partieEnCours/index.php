@@ -281,6 +281,35 @@ switch ($action) {
 		$texteQuestion = "Voulez-vous racheter la case ". $nomCarte ." ?";
 		include('./jouer_view.php');
 		break;
-
+	case 'QuestionPrison' :
+		if($_GET['valeur'] == 'payer'){
+			$joueur->paye(50);
+			$joueur->setToursRestantEnPrison(0);
+			$partie->setInteractionId(0);
+			$joueur->setEnPrison(0);
+			redirect('.?action=JouerCoup');
+		}
+		elseif ($_GET['valeur'] == 'attendre') {
+			$joueur->setToursRestantEnPrison($joueur->getToursRestantEnPrison()-1);
+			$partie->setInteractionId(0);
+			$partie->genererValeursDes();
+			if ($joueur->getToursRestantEnPrison() == 0) {
+				$joueur->setEnPrison(0);
+			}
+			elseif ($partie->desValeursIdentiques() == true) {
+				$joueur->setToursRestantEnPrison(0);
+				$joueur->setEnPrison(0);
+				redirect('.?action=JouerCoup');
+			}
+			redirect('.?afficheTableau');
+		}
+		elseif ($_GET['valeur'] == 'carte') {
+			//TODO:retirer la carte au joueur
+			$joueur->setToursRestantEnPrison(0);
+			$partie->setInteractionId(0);
+			$joueur->setEnPrison(0);
+			redirect('.?action=JouerCoup');
+		}
+		break;
 }
 ?>

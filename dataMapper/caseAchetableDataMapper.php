@@ -118,6 +118,7 @@ class CaseAchetableDataMapper extends Mapper {
     
     function parPositionCase($position, $idDefinitionPartie) {
     	// retourne une case achetable du tableau a une position specifique
+    	
     
     	// commence par aller chercher la liste des Id dans la table DefinitionPartie_CaseAchetable
     	$queryTxt = 'SELECT * FROM DefinitionPartie_CaseAchetable

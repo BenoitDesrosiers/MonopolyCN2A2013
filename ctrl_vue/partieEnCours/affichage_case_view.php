@@ -65,7 +65,9 @@
 	}?>
 	<!--  Chaque case de jeu -->
 	<td class="<?php echo $classeCss?>">
-		<svg width="<?php echo $width ?>px" height="<?php echo $height ?>px" xmlns="http://www.w3.org/2000/svg" version="1.1">
+		<svg <?php if($case->getType() == "propriete" || $case->getType() == "ServicePublic" || $case->getType() == "train"){?> 
+                onClick="AfficherInfoPropriete(<?php echo $case->getId() ?>)"
+                <?php }?> width="<?php echo $width ?>px" height="<?php echo $height ?>px" xmlns="http://www.w3.org/2000/svg" version="1.1">
 			<!-- Si c'est une case achetable du type propriete affichage du rectangle de couleur -->
 			<?php if($case->getType() == "propriete"){?>	
 				<rect x="<?php echo $xRect?>px" y="<?php echo $yRect?>px" width="<?php echo $widthRect ?>px" height="<?php echo $heightRect ?>px" style="fill:<?php echo $case->getCouleurHTML();?>;"/>

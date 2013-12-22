@@ -32,7 +32,7 @@ class PartieDataMapper extends Mapper {
         //TODO ajouter un check si le coordonnateur n'est pas null ou inexistant
         $values = array($object->getNom(), 
                         $object->getCoordonnateur(), 
-                        $object->getDefinitionPartieId(),
+                        $object->getDiefnitionPartieId(),
                         $object->getJoueurTour(),
                         $object->getDebutPartie(),
                         $object->getInteractionId(),

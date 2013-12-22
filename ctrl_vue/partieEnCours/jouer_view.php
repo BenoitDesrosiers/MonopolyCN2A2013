@@ -100,6 +100,20 @@
         xhr.open("GET","<?php echo $GLOBALS['app_path']."/js/AfficherInformation.php?carteId="?>"+Id+"&partieId="+partieId,true);
         xhr.send(null);
     }
+    
+    function AfficherInfoPropriete(caseId)
+    {
+        getXhr();
+        xhr.onreadystatechange = function()
+            {
+             if(xhr.readyState == 4 && xhr.status == 200)
+             {
+             document.getElementById('affichageInfos').innerHTML=xhr.responseText;
+             }
+            }
+        xhr.open("GET","<?php echo $GLOBALS['app_path']."/ajax/afficherinfopropriete.php?case=" ?>"+caseId,true);
+        xhr.send(null);
+    }
 </script>
 <script src="<?php echo $GLOBALS['app_path'];?>ajax/aideajax.js"></script>
   
@@ -186,7 +200,9 @@
             	break;
             case INTERACTION_RACHETER:
             	include('./interaction_questionOuiNon_view.php');
-            	 
+            	break;
+            case INTERACTION_SORTIRDEPRISON:
+            	include('./question_prison.php');
             	break;
             default:
                 //fait rien

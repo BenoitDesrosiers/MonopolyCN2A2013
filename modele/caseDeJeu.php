@@ -20,15 +20,8 @@ abstract class CaseDeJeu { // implements EntreposageDatabase {
     
     // fonctions de jeu
 
-	public function atterrirSur(Joueur $unJoueur) { //TODO: a deplacer dans les sous-classes
-    	if($this->getType()=="achetable"){
-    	}
-    	else{
-    		/*Tommy---*/
-    		$this->execute_action($unJoueur);
-    		/*---Tommy*/
-    	}
-    }
+	abstract public function atterrirSur(Joueur $unJoueur); //TODO: a deplacer dans les sous-classes
+    	
     
     // Getter & Setter
     public function getNom() {
