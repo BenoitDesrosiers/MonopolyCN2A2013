@@ -13,7 +13,7 @@
 <head>
     <?php include 'vue/headCommun.php'; ?>
     <link rel="stylesheet" type="text/css" href="<?php echo $GLOBALS['app_path'].'css/Structure.css'?>">
-	<link rel="stylesheet" type="text/css" href="<?php echo $GLOBALS['app_path'].'css//Menu.css'?>">
+	<link rel="stylesheet" type="text/css" href="<?php echo $GLOBALS['app_path'].'css/Menu.css'?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo $GLOBALS['app_path'].'css/Button.css'?>">
 	    
 <script type='text/javascript'>
@@ -130,20 +130,20 @@
 			</ul>
 	</div> <!-- navigation -->
 	
-	<div id="cartesAction" style="margin-left:40px">
+	<!-- div id="cartesAction" style="margin-left:40px"-->
 		<?php
 			foreach ($joueur->getListeCartes() as $carte) {
 				$laCarte = $carte;
-				include 'carteAction_view.php';
+				//include 'carteAction_view.php';
 				
 			}
 		?>
-	</div>
+	<!--  /div-->
 
 	<?php require_once 'info_partie_view.php';?>
 
 	<div id="argent">
-		<button type="button"  onclick="detailJoueur(<?php echo $partie->getId(); ?>)"> Afficher le detail des joueurs</button>
+		<!-- button type="button"  onclick="detailJoueur(<?php echo $partie->getId(); ?>)"> Afficher le detail des joueurs</button-->
 	</div>
 
 	<div id="propriete">

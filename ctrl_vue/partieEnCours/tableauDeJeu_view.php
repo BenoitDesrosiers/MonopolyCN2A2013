@@ -28,7 +28,7 @@
     			  $i++;
     		 endwhile;?>
 	    		</tr>
-	    	<!-- Boucle pour afficher les deux lignes du cot�s plus le centre du plateau de jeu -->
+	    	<!-- Boucle pour afficher les deux lignes du cotes plus le centre du plateau de jeu -->
     		<?php while($i != 20) :?>
     			<tr>
     			<?php $case = $tableauDeJeu->getCaseParPosition(50-$i);
