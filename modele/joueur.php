@@ -417,5 +417,13 @@ class Joueur extends Objet  implements EntreposageDatabase{
 	public function getSurStationnementGratuit(){
 		return $this->surStationnementGratuit;
 	}
+	
+	public function getListeCartes() {
+		//Retourne la liste des cartes chance et caisse commune du joueur
+		$cartesChance = CarteChance::pourJoueur($this);
+		$cartesCC = CarteCC::pourJoueur($this);
+	
+		return array_merge($cartesChance, $cartesCC);
+	}
 
 }

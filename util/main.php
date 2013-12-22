@@ -7,7 +7,7 @@ $doc_root =  $_SERVER['DOCUMENT_ROOT'];
 $uri = $_SERVER['REQUEST_URI'];
 $dirs = explode('/', $uri);
 // app_path doit contenir le nombre de dirs necessaire selon le path du dir de l'application a partir de DOCUMENT_ROOT
-$app_path = '/' . $dirs[1] . '/'; // . $dirs[2] . '/';
+$app_path = '/' . $dirs[1] ;//. '/' . $dirs[2] . '/';
 
 
 // set le include path

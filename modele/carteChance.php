@@ -21,6 +21,11 @@ class CarteChance extends Carte{
             return $dataMapper->parPositionCarte($positionCarte, $idDefinitionPartie);
     }
     
+    static function pourJoueur($joueur){
+    	$dataMapper = new CarteChanceDataMapper();
+    	return $dataMapper->pourJoueurPourPartie($joueur->getCompte(), $joueur->getPartieId());
+    }
+    
     public function getDataMapper() {
         return new CarteChanceDataMapper();
     }

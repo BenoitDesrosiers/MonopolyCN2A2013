@@ -96,4 +96,24 @@ class CarteChanceDataMapper extends Mapper {
             }
             return $item;
     }
+    
+    function pourJoueurPourPartie($compte, $idPartie){
+    	$queryTxt = 'SELECT CarteId FROM joueurpartie_carte WHERE JoueurPartieUsagerCompte = :compte AND JoueurPartiePartieEnCoursId = :idPartie';
+    	$query = self::$db->prepare($queryTxt);
+    	$query->bindValue(':compte', $compte);
+    	$query->bindValue(':idPartie', $idPartie);
+    	$query->setFetchMode(PDO::FETCH_ASSOC);
+    	$query->execute();
+
+    	$listeItems = array();
+    	
+    	foreach($query as $row) {
+    		$item = $this->find(array($row['CarteId']));
+    		//TODO: ajouter un check pour ne par creer des cartes CC dans les Chance
+    		if ($item->getType() == "Chanceg") {
+                $listeItems[] = $item;
+    		}
+    	}
+    	return $listeItems;
+    }
 }

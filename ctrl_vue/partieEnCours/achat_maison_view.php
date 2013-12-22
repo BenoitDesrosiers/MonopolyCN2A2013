@@ -1,4 +1,3 @@
-<div id="interaction">
 <?php        	
     $Proprietes = $joueur->getProprietesBatissable($partie);         	
     echo "<table>";?>
@@ -19,4 +18,3 @@
         <label>&nbsp;</label>
         <input type="submit" value="Build" />
     </form>
-</div> <!-- interactoin -->

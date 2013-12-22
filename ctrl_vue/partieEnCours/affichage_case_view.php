@@ -10,8 +10,8 @@
 			$classeCss = "caseCoin";
 			$width = 100; // La longueur de la case
 			$height = 100; // La hauteur de la case
-			$xrotate = 37; // l’abscisse du centre de rotation 
-			$yRotate = 50; //l’ordonnee
+			$xrotate = 37; // l'abscisse du centre de rotation 
+			$yRotate = 50; //l'ordonnee
 			$rotation = 180; // Degree de rotation
 		    break;
 		case 'haut':

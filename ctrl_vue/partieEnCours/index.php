@@ -201,5 +201,33 @@ switch ($action) {
 		$partie->setInteractionId(0);
 		include('./jouer_view.php');
 		break;
+	case 'VendreCarteAction' :
+		$titrePage= "Vente Carte";
+		$tableauDeJeu = $partie->getTableau();
+		$partie->setInteractionId(INTERACTION_VENDRECARTEACTION);
+		$carteActionId = $_GET['carteActionId'];
+		include('./jouer_view.php');
+		break;
+	case 'VendreCarteS' :
+		$titrePage= "Vente Carte";
+		$idcarteAction = $_POST['btnSoumettre'];
+		$montantVente = $_POST['montantVente'];
+		$compteJoueur = $_POST['compteJoueur'];
+	
+		$joueurVente = Joueur::parComptePartie($compteJoueur, $partie->getId());
+	
+		try{
+			$joueurVente->paye($montantVente);
+			$joueur->encaisse($montantVente);
+			//TODO Je sais comment changer le propriétaire MAIS Benoit n'aime pas cette façon de faire.
+		}
+		catch (Exception $e){
+			echo $e->getMessage();
+		}
+	
+		$tableauDeJeu = $partie->getTableau();
+		$partie->setInteractionId(0);
+		include('./jouer_view.php');
+		break;
 }
 ?>

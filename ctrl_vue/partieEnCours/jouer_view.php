@@ -66,7 +66,24 @@
         xhr.open("GET","<?php echo  $GLOBALS['app_path']."/ajax/proprieteNonVendu.php?partie="?>"+partieId,true);
         xhr.send(null);
     }
- 
+
+    function detailJoueur(idPartie){
+    	if (window.XMLHttpRequest){
+    		xmlhttp=new XMLHttpRequest();
+    	}
+    	else{
+    		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    	}
+
+    	xmlhttp.onreadystatechange=function(){
+    		if(xmlhttp.readyState==4 && xmlhttp.status==200){
+    			document.getElementById("argent").innerHTML=xmlhttp.responseText;
+    		}
+    	};
+
+    	xmlhttp.open("GET","<?php echo $GLOBALS['app_path']."/ajax/detail_joueur.php"?>?idPartie="+idPartie,true);
+    	xmlhttp.send();
+    }
 </script>
 <script src="<?php echo $GLOBALS['app_path'];?>ajax/aideajax.js"></script>
   
@@ -112,12 +129,22 @@
 				<li><a href="#nogo"><b>Quitter</b></a></li>
 			</ul>
 	</div> <!-- navigation -->
+	
+	<div id="cartesAction" style="margin-left:40px">
+		<?php
+			foreach ($joueur->getListeCartes() as $carte) {
+				$laCarte = $carte;
+				include 'carteAction_view.php';
+				
+			}
+		?>
+	</div>
 
 	<?php require_once 'info_partie_view.php';?>
 
 	<div id="argent">
-		<!-- afficher l'argent du joueur ici -->
-	</div> <!-- argent -->
+		<button type="button"  onclick="detailJoueur(<?php echo $partie->getId(); ?>)"> Afficher le detail des joueurs</button>
+	</div>
 
 	<div id="propriete">
         <!-- afficher les proprietes du joueur ici -->  
