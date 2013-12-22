@@ -20,7 +20,6 @@ class Joueur extends Objet  implements EntreposageDatabase{
     protected $enPrison;
     protected $toursRestantEnPrison;
     protected $argent; // une array associative contenant le nombre de billets de chaque sortes.
-    protected $listeCasesId; // (array) : contient l'id des cases des proprietes admissibles pour l'achat de maison/hotel
     
     function __construct(array $array) {
         /*
@@ -52,7 +51,6 @@ class Joueur extends Objet  implements EntreposageDatabase{
     public static function parComptePartie($compte, $partieId) {
         $mapper = new JoueurDataMapper();
         $joueur = $mapper->find(array($compte, $partieId));
-        
         return $joueur;
     }
     
@@ -100,10 +98,8 @@ class Joueur extends Objet  implements EntreposageDatabase{
 	  /* output:
 	   *     un array contenant les valeurs des 2 des (integer) 
 	   */
-	    
-
+	   
 		$partie = Partie::parId($this->getPartieId());
-		
 		$partie->genererValeursDes(); // Genere la valeur des des
 		$tableauValeursDes = array($partie->getPremierDes(), $partie->getDeuxiemeDes()); // Stockage de la valeur des 2 des dans un array
 		return $tableauValeursDes;
@@ -147,7 +143,6 @@ class Joueur extends Objet  implements EntreposageDatabase{
          //FIXME: la vraie facon de faire serait d'aller chercher une definition des billets disponibles pour cette definition de partie
          //       mais ca n'existe pas pour l'instant, donc on prend 1,5,10,20,50,100,500 
          //FIXME: cette conversion ne devrait pas etre fait par Joueur, ca devrait etre une fonction generique a laquelle on passerait l'array $coupuresDisponibles
-
          
 	     $coupuresDisponibles =  array('1'=>1, '5'=>5, '10'=>10, '20'=>20, '50'=>50, '100'=>100, '500'=>500);
 	     $clesCoupures = array('500', '100', '50', '20', '10', '5', '1'); //on commence par le plus gros billets
@@ -163,7 +158,6 @@ class Joueur extends Objet  implements EntreposageDatabase{
 	         }
 	         $i++;
 	     }
-	     
 	     return $coupuresFinales;
 	}
 	
@@ -187,10 +181,8 @@ class Joueur extends Objet  implements EntreposageDatabase{
 	}
 
     public function paye($montant) {
-                
 		//Fonction aller chercher argent dans la database
 		$argent = $this->getArgent();
-
         $montantCtr = 0;
         $argentCtr = 0;
         
@@ -199,11 +191,10 @@ class Joueur extends Objet  implements EntreposageDatabase{
         foreach($argent as $billet=>$quantite){
                 $argentCtr += intval($billet) * $quantite; 
         }
-        
-        if($argentCtr < $montant){
+        if ($argentCtr < $montant) { //TODO: faire une exeption
                 echo "Le joueur n'a pas assez d'argent. ".($montant-$argentCtr)."$ de plus sont necessaire.";
         }
-        else{               
+        else {               
                 $argentCtr -= $montant;             
 
                 //creation de l'array de paiement exemple le joueur doit payer 350, il paye avec un 500
@@ -221,13 +212,9 @@ class Joueur extends Objet  implements EntreposageDatabase{
                                                 $montantCtr *= -1;
                                         }               
                                 }
-                                
                         } 
-                 
                         $argent[$billet]=$quantite;     
-                        
-                }
-                
+                }             
                 //creation de l'array que le joueur doit encaisser apres avoir payer
                 //exemple il a payer 350 avec un billet de 500 donc il doit encaisser 150
                 //update l'array d'argent total du joueur
@@ -243,7 +230,6 @@ class Joueur extends Objet  implements EntreposageDatabase{
                         }
                         $argent[$billet]=$quantite;
                 }
-                
         }
         //appel la fonction encaisse pour mettre a jour l'argent du joueur.
         $this->setArgent($argent);
@@ -256,59 +242,41 @@ class Joueur extends Objet  implements EntreposageDatabase{
 	}
 	
 	public function acheterHotel ($caseId) {
-	// Achete un hotel au joueur sur une case
-	
+		// Achete un hotel au joueur sur une case
 		$case = CaseDeJeuAchetable::parId($caseId);
-		
 		if ($this->tenterAchat($case->getCoutHotel())) {
-			
 			$this->paye($case->getCoutHotel()); // Paye pour l'hotel
-			
 			$propriete = CartePropriete::pourCasePartie($caseId, $this->getPartieId());
-			
 			$propriete->setNombreHotels($propriete->getNombreHotels() + 1); // Ajoute un hotel sur la case
 			$propriete->setNombreMaisons(0); // Remet le nombre de maisons a 0
-			
 			return true; //TODO: remplacer ca par une exception
 		}
-		
 		else {
 			return false; 
 		}
 	}
 	
-	public function genererListeCases () { //TODO: renommer pour listeCasesBatissables
-		// Genere la liste des groupes de cases complets possedes par le joueur
+	public function listeCasesHotelBatissable() { 
+		// Genere la liste des groupes des cases sur lequel un hotel peut etre batit. 
 		$partie = Partie::parId($this->getPartieId());
-	
-		$this->listeCasesId = null;
+		$listeCasesId = null;
 		$groupeId = 0;
-	
 		foreach ($this->getProprietes() as $propriete) {
 			// Boucle qui passe a travers chaque propriete du joueur
-			
 			$case = CaseDeJeuPropriete::parId($propriete->getCaseId()); // Attribu une case avec la propriete
-	
 			if ($groupeId != $case->getGroupeDeCaseId() && strcmp($case->getType(), "propriete") == 0 ) {
 				// Si l'id du groupe de case est different et que c'est une case propriete
-					
 				$groupeId = $case->getGroupeDeCaseId(); // Met l'id de groupe a jour
 				$nombreGroupeComplet = sizeof($partie->casesDuGroupe($case->getGroupeDeCaseId())); // Nombre de cases totales de l'id de groupe
 				$nombreGroupePossedees = $case->nombreCartesMemeGroupeEtProprio($propriete); // Nombre de cases possedes avec le même id de groupe
-	
 				if ($nombreGroupeComplet == $nombreGroupePossedees) {
 					// Verifie si le joueur a toutes les cartes d'un groupe
-					
 					$groupeCases = $partie->casesDuGroupe($case->getGroupeDeCaseId()); // Cree un array de cases avec l'id du groupe de cases
-					
 					$groupeOk = true;
 					$arrayCasesAdmissiblesId = null;
-					
 					foreach ($groupeCases as $caseDuGroupe) {
 					// Boucle qui traverse l'array de cases d'un groupe
-					
 						$propriete = CartePropriete::pourCasePartie($caseDuGroupe->getId(), $partie->getId()); // Cree la carte propriete a partir de l'id de la case
-						
 						if ($propriete->getNombreMaisons() <= 3 && $propriete->getNombreHotels() < 1) { 
 						//Si le nombre de maison est inferieur a 3, ce groupe est refuse
 							$groupeOk = false;
@@ -317,19 +285,18 @@ class Joueur extends Objet  implements EntreposageDatabase{
 							$arrayCasesAdmissiblesId[] = $caseDuGroupe->getId();
 						}
 					}
-					
 					if ($groupeOk == true) {
-						if ($this->listeCasesId != null) {
-							$this->listeCasesId = array_merge($this->listeCasesId, $arrayCasesAdmissiblesId); // Ajoute l'id de la case dans la liste
+						if ($listeCasesId != null) {
+							$listeCasesId = array_merge($listeCasesId, $arrayCasesAdmissiblesId); // Ajoute l'id de la case dans la liste
 						}
-						
 						else {
-							$this->listeCasesId = $arrayCasesAdmissiblesId;
+							$listeCasesId = $arrayCasesAdmissiblesId;
 						}
 					}
 				}
 			}
 		}
+		return $listeCasesId;
 	}
 	
 	public function chargerLoyerA($locataire, $loyer){
@@ -414,8 +381,16 @@ class Joueur extends Objet  implements EntreposageDatabase{
 	    return CartePropriete::pourJoueurs($this);
 	}
 	
-	public function getListeCases() {
-		return $this->listeCasesId;
+	public function getProprietesBatissable(Partie $partie){
+		$resultat = array();
+		foreach ($this->getProprietes() as $case){
+			if ($case->getCaseAssociee()->getType() == "propriete") {
+				if (count($partie->casesDuGroupe($case->getCaseAssociee()->getGroupeDeCaseId()))==$case->getCaseAssociee()->nombreCartesMemeGroupeEtProprio($case)){
+					$resultat[] = $case;
+				}
+			}	
+		}
+		return $resultat;
 	}
-	
+
 }

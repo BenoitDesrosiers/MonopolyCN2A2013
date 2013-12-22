@@ -199,9 +199,5 @@ abstract class CaseDeJeuAchetable extends CaseDeJeu {
     public function setGroupeDeCaseId($value) {
         $this->groupeDeCaseId = $value;
     }
-    
-    
-   
-     
-    
+  
 }

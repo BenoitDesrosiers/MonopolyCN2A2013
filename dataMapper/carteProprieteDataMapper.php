@@ -78,7 +78,7 @@ class CarteProprieteDataMapper extends Mapper {
         	$this->insertStmt->execute($values);
         }       
     }
-
+ 
     function selectStmt() {
         return $this->selectStmt;
     }

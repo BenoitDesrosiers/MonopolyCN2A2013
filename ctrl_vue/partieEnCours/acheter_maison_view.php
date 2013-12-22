@@ -1,12 +1,9 @@
 <?php 
 /*
- * la partie est demarree. 
+ * la partie est dŽmarrŽe. 
  * Affiche le tableau et l'info des joueurs. 
  * 
- * TODO: renommer cette view partieEnCours_view.php
- * 
- */
- ?>
+ */?>
 
 <!DOCTYPE html>
 <html>
@@ -37,44 +34,26 @@
           } 
     }
      
-    function ListeProprieteVendu(partieId)
+    function DemoAjax()
     {
         getXhr();
         xhr.onreadystatechange = function()
             {
              if(xhr.readyState == 4 && xhr.status == 200)
              {
-                
-             	document.getElementById('proprieteVendu').innerHTML=xhr.responseText;
+             document.getElementById('demoAjax').innerHTML=xhr.responseText;
              }
             }
-        xhr.open("GET","<?php echo  $GLOBALS['app_path']."/ajax/proprieteVendu.php?partie="?>"+partieId,true);
-        xhr.send(null);
-    }
-    
-    function ListeProprieteNonVendu(partieId)
-    {
-        getXhr();
-        xhr.onreadystatechange = function()
-            {
-             if(xhr.readyState == 4 && xhr.status == 200)
-             {
-                
-                     document.getElementById('proprieteNonVendu').innerHTML=xhr.responseText;
-             }
-            }
-        xhr.open("GET","<?php echo  $GLOBALS['app_path']."/ajax/proprieteNonVendu.php?partie="?>"+partieId,true);
+        xhr.open("GET","<?php echo $GLOBALS['app_path']."/ajax/demoajax.php"?>",true);
         xhr.send(null);
     }
  
 </script>
     
 </head>
-<?php
-	$compteUsager = $usager->getCompte(); //TODO: envoyer cette declaration dans info_partie_viewphp
-?>
-<body onload="activationRafraichissement('<?php echo $compteUsager;?>')"> <!-- Lance l'affichage automatique des informations de la partie dÃ¨s que le body s'affiche -->
-<?php //TODO: remplacer ce onload par un window.onload = function() dans info_partie_view.php ?>
+
+<body>
+
     <?php include 'vue/enteteCommune.php'; ?>
     
     <?php //TODO ajouter une section pour le menu, l'interaction , pour les cartes, pour l'info du joueur, ... ?>
@@ -85,34 +64,22 @@
         <div id="divTableau">
                  <div id="demoAjax">
                  </div>
-                 
-                 <div id="proprieteVendu"> <!-- pour ajax de vero -->
-     			 </div>
-     			 <div id="proprieteNonVendu"> <!-- pour ajax de sam -->
-                 </div>
                 
-                <?php include 'tableauDeJeu_view.php'
-				 ?>
-                
-                
+                <?php include 'tableauDeJeu_view.php' ?>
         </div>
     </div> <!-- contenu -->
     </div> <!-- enveloppe -->
     <div id="navigation">
-           <?php //TODO mettre le bouton disable dependamment de l'interaction en cours ?>
 			<!--les boutons pour jouer: refresh, brasser, acheter Maison/hotel, quitter -->
 			<ul id="choixNavigation" class="menuAvecBouton">
 				<li><a href="."><b>Rafraichir</b></a></li>
 	            <li><a href=".?action=JouerCoup"><b>Jouer</b></a></li> <!--//TODO verifier si c'est au tour de ce joueur de jouer un coup. Si non, afficher un piton refresh au lieu de jouer -->
-				<li><a href="#nogo" onClick="ListeProprieteVendu(<?php echo $partieId?>)"><b>Propri&eacute;t&eacute;s&nbsp;vendues</b></a></li>
-				<li><a href="#nogo" onClick="ListeProprieteNonVendu(<?php echo $partieId?>)"><b>ProprieteNonVendu</b></a></li>	           
+				<li><a href="#nogo" onClick="DemoAjax()"><b>demo Ajax</b></a></li>
 	            <li><a href=".?action=AchatMaison"><b>Achat Maison</b></a></li>
-				<li><a href=".?action=GenererAchatHotel"><b>Achat Hotel</b></a></li>
+				<li><a href="#nogo"><b>Achat Hotel</b></a></li>
 				<li><a href="#nogo"><b>Quitter</b></a></li>
 			</ul>
 	</div> <!-- navigation -->
-
-	<?php require_once 'info_partie_view.php';?>
 
 	<div id="argent">
 		<!-- afficher l'argent du joueur ici -->
@@ -121,21 +88,5 @@
 	<div id="propriete">
         <!-- afficher les proprietes du joueur ici -->  
     </div> <!-- propriete -->
-    
-    <?php 
-        switch ($partie->getInteractionId()) {
-            case INTERACTION_ACHATPROPRIETE: 
-        		include 'questionOuiNon_view.php';
-        		break;
-        	case INTERACTION_ACHATHOTEL:
-        		include('./achat_hotel_view.php');
-        		break;
-            case INTERACTION_ACHATMAISON:
-            	include('./achat_maison_view.php');
-            	break;
-            default:
-                //fait rien
-        }
-    ?>
 	<?php include 'vue/piedpage.php'; ?>
     

@@ -1,5 +1,6 @@
-Tout le code dans la branch Sam 
+Fait :
 
-est le fruit de Sam. (Copyright)
-
-et de la branch Master par Benoit.
+-todo de ma fonction précédente : paiementparbatiment
+-fonction acheter maison
+-javascript afficher propriete non vendue
+-extra : carte chance actionid 24 et 27

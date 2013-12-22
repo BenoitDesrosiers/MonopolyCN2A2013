@@ -10,8 +10,9 @@ require_once "modele/carteChance.php";
 require_once "modele/carteCC.php";
 
 //TODO: plutot que d'avoir ces constantes, on devrait avoir une fonction qui verifie l'etat
-define("INTERACTION_ACHATPROPRIETE", 14);
-
+define("INTERACTION_ACHATPROPRIETE", 1);
+define("INTERACTION_ACHATHOTEL",2);
+define("INTERACTION_ACHATMAISON",3);
 class Partie extends Objet implements EntreposageDatabase {
     protected $id;
     protected $nom;

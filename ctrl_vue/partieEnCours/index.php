@@ -80,28 +80,108 @@ switch ($action) {
 	case 'GenererAchatHotel' :
 		$titrePage = "Acheter un hôtel";
 		$tableauDeJeu = $partie->getTableau();
-		$joueur->genererListeCases();
-		include('./achat_hotel_view.php');  //TODO a deplacer dans jouer_view avec une interaction
+		$partie->setInteractionId(INTERACTION_ACHATHOTEL);
 	    include('./jouer_view.php');
 	    break;
 	case 'AcheterHotel' :
-	    if (isset ($_POST['caseId'])) {
-	        $caseId = $_POST['caseId'];
-        }
+		$partie->setInteractionId(0);
+    	if (isset ($_POST['caseId'])) {
+    		$caseId = $_POST['caseId'];
+    	}
+    
+    	$case = CaseDeJeuAchetable::parId($caseId);
+    	$titrePage = "Achat d'h&ocirc;tel: " . $case->getNom();
+    	$tableauDeJeu = $partie->getTableau();
+    
+    	if ($joueur->acheterHotel($caseId) == true) {
+    		echo "Vous avez acheté un hôtel pour le terrain: " . $case->getNom();
+    	}
+    	else {
+    		echo "Vous n'avez pas assez d'argent pour vous procurer cet h&ocirc;tel."; //TODO: a deplacer dans jouer_view
+    	}
+    
+    	include('./jouer_view.php');
+    	$partie->avancerTour(); //FIXME: ca devrait etre juste a une place, mais je sais aps ou encore
+    	break;
+	case 'AchatMaison' :
+    	$titrePage= "Acheter Maison(s)";
+    	$tableauDeJeu = $partie->getTableau();
+		$partie->setInteractionId(INTERACTION_ACHATMAISON);
+    	include('./jouer_view.php');
+	    break; 
+	case 'AcheterMaison' :
+		
+		//TODO: déplacer toute cette validation dans cartePropriet: estBatissableMaison($nombreMaison), et ajouter un msg si non batissable 
+		$validator = true; //flag de validation des conditions d'achats, si vrai, la transaction est valide.
+		$dejaTraite = array (); //array contenant les id des groupes de cases deja traite
+		$proposition = array(); //array contennant la proposition du joueur pour un groupe de case donne
+		$propositionId = array (); //array contenant les identificateurs des cases pour la proposition
+		$preproposition = array (); //array contenant l'etat des cases avant la proposition
+		$maisonDemande = 0; //contient le nombre de maison desire par le joueur pour sa transaction
+		$nombreTerrainDuGroupe = 0; //contient le nombre de terrain dans un groupe de case
+		$facture = 0; //facture pour le joueur pour completer la transaction
+ 		$Proprietes = $joueur->getProprietesBatissable($partie);
+ 		foreach ($Proprietes as $case){
+ 			$maisonDemande = $_POST['case'.$case->getCaseAssociee()->getId()] + $maisonDemande;
+ 		}
+ 		// TODO: Ajouter le nombre de maison disponible a la partie, lors de la creation de la partie, dans la base de donnee
+ 	//	if ($partie->getMaisons() >= $maisonDemande) { 
+ 			foreach($Proprietes as $case){ //parcours des proprietes batissable du joueur
+ 				if ($_POST['case'.$case->getCaseAssociee()->getId()]>=1 && in_array($case->getCaseAssociee()->getGroupeDeCaseId(), $dejaTraite) == false){//verifie si un traitement est demande sur la case et si ce groupe de case a deja ete traite
+ 					$nombreTerrainDuGroupe = count($partie->casesDuGroupe($case->getCaseAssociee()->getGroupeDeCaseId())); //nombre de terrain appartant a la case a traiter
+ 					foreach ($partie->casesDuGroupe($case->getCaseAssociee()->getGroupeDeCaseId()) as $terrain){ //parcours les cases du groupe ou un traitement est demande
+ 						$proposition[] = $_POST['case'.$terrain->getId()]+$case::pourCasePartie($terrain->getId(), $partie->getId())->getNombreMaisons(); //proposition contient la proposition du joueur pour un groupe de cases donne
+ 						$propositionId[] = $terrain->getId(); //identification des terrains de la proposition
+ 						$preproposition[] = $case::pourCasePartie($terrain->getId(), $partie->getId())->getNombreMaisons(); //etat des cases avant l'application de la proposition
+ 						if ($case::pourCasePartie($terrain->getId(), $partie->getId())->getNombreHotels() != 0) { //verifie si les cases ont un hotel.
+ 							$validator = false;
+ 						}
+ 					}
+ 					if ($nombreTerrainDuGroupe == 2) {
+ 						if ($proposition[0] > 4 || $proposition[1] > 4) { //verifie si la proposition contient des cases avec plus de 4 maisons
+ 							$validator = false;
+ 						}
+ 						if ($proposition[0] - $proposition[1] < -1 || $proposition[0] - $proposition[1] > 1){ //verification de la regle du +1 maison max
+ 							$validator = false;
+ 						}
+ 					}
+ 					else {
+ 						if ($proposition[0] > 4 || $proposition[1] > 4 || $proposition[2] > 4) { //verifie si la proposition contient des cases avec plus de 4 maisons
+ 							$validator = false;
+ 						}
+ 						if ($proposition[0] - $proposition[1] < -1 || $proposition[0] - $proposition[1] > 1 || $proposition[0] - $proposition[2] < -1 || $proposition[0] - $proposition[2] > 1 || $proposition[1] - $proposition[2] < -1 || $proposition[1] - $proposition[2] > 1){ //v�rification de la r�gle du +1 maison max
+ 							$validator = false;
+ 						}
+ 					}
+ 					if ($validator == true) {
+ 						$x = 0;
+ 						foreach ($propositionId as $Id){ //calcul de la facture pour verification vue que joueur->paye n'indique pas si la transaction echoue
+ 							$facture = ($proposition[$x]-$preproposition[$x])*$case->getCaseAssociee()->getCoutMaison() + $facture;
+ 							$x++;
+ 						}
+ 						if ($joueur->getArgent() >= $facture) { //TODO:joueur->paye devrait retourner un erreur si le joueur ne peut payer. 
+ 							$x = 0;
+ 							foreach ($propositionId as $Id){
+ 								$case::pourCasePartie($Id, $partie->getId())->setNombreMaisons($proposition[$x]); //mise a jour du nombre de maison de la case
+ 								$partie->setMaisons($partie->getMaisons()-($proposition[$x]-$preproposition[$x])); //mise a jour du nombre de maison disponible a la partie
+ 								$x++;
+ 							}
+ 							$joueur->paye($facture);
+ 						}
+ 					}
+ 					$dejaTraite[] = $case->getCaseAssociee()->getGroupeDeCaseId(); //ajout du numero de groupe a l'array dejaTraite dans le but de ne pas traiter plusieurs fois un meme groupe
+ 				}
+ 				$validator = true;
+ 				$proposition = null;	//variable de travail reinitialise avant le prochain tour de boucle
+ 				$propositionId = null;
+ 				$preproposition = null;
+ 				$facture = 0;
+ 			}
+	  	//TODO:mettre un message de confirmation ou d'erreur
+ 		$partie->setInteractionId(0);
+ 		$tableauDeJeu = $partie->getTableau();
+ 		include('./jouer_view.php');
+ 		break;
 	
-		$case = CaseDeJeuAchetable::parId($caseId);
-		$titrePage = "Achat d'h&ocirc;tel: " . $case->getNom();
-		$tableauDeJeu = $partie->getTableau();
-		
-		if ($joueur->acheterHotel($caseId) == true) {
-			echo "Vous avez acheté un hôtel pour le terrain: " . $case->getNom();
-		}
-		else {
-			echo "Vous n'avez pas assez d'argent pour vous procurer cet h&ocirc;tel."; //TODO: a deplacer dans jouer_view
-		}
-		
-		include('./jouer_view.php');
-		$partie->avancerTour(); //FIXME: ca devrait etre juste a une place, mais je sais aps ou encore
-		break;
 }
 ?>
