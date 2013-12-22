@@ -107,10 +107,16 @@ div#argent
     width:240px;
 }
 
+div#infoCase
+{
+    float:left;
+    /*width:240px;*/
+}
+
 div#propriete
 {
     float:left;
-    width:240px;
+    /*width:240px;*/
 }
 div#extra
 {

@@ -59,7 +59,7 @@ class CarteProprieteDataMapper extends Mapper {
                         $objet->getNombreHotels(),
                         );
         
-        //verifie si l'enregistrement existe deja
+        //verifie si l'enregistrement existe deja 
         $obj = parent::find(array($objet->getCaseId(),$objet->getPartieId()));
         
         if ($obj === null) { //si il n'est pas la, on l'ajoute

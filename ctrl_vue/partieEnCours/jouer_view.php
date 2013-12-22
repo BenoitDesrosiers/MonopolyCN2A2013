@@ -15,6 +15,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo $GLOBALS['app_path'].'css/Structure.css'?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo $GLOBALS['app_path'].'css/Menu.css'?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo $GLOBALS['app_path'].'css/Button.css'?>">
+	<link rel="stylesheet" type="text/css" href="<?php echo $GLOBALS['app_path'].'css/table.css'?>">
 	    
 <script type='text/javascript'>
     var xhr = null; 
@@ -84,6 +85,21 @@
     	xmlhttp.open("GET","<?php echo $GLOBALS['app_path']."/ajax/detail_joueur.php"?>?idPartie="+idPartie,true);
     	xmlhttp.send();
     }
+    
+     function AfficherInfo(Id, partieId)
+    {
+
+        getXhr();
+        xhr.onreadystatechange = function()
+            {
+             if(xhr.readyState == 4 && xhr.status == 200)
+             {
+             document.getElementById('infoCase').innerHTML=xhr.responseText;
+             }
+            }
+        xhr.open("GET","<?php echo $GLOBALS['app_path']."/js/AfficherInformation.php?carteId="?>"+Id+"&partieId="+partieId,true);
+        xhr.send(null);
+    }
 </script>
 <script src="<?php echo $GLOBALS['app_path'];?>ajax/aideajax.js"></script>
   
@@ -150,23 +166,81 @@
         <!-- afficher les proprietes du joueur ici -->  
     </div> <!-- propriete -->
     
+    <div id="interaction">
     <?php 
         switch ($partie->getInteractionId()) {
             case INTERACTION_ACHATPROPRIETE: 
-        		include 'questionOuiNon_view.php';
+        		include './interaction_questionOuiNon_view.php';
         		break;
         	case INTERACTION_ACHATHOTEL:
-        		include('./achat_hotel_view.php');
+        		include('./interaction_achat_hotel_view.php');
         		break;
             case INTERACTION_ACHATMAISON:
-            	include('./achat_maison_view.php');
+            	include('./interaction_achat_maison_view.php');
             	break;
             case INTERACTION_VENTEPROPRIETE:
-            	include('./vente_prop_view.php');
+            	include('./interaction_vente_prop_view.php');
+            	break;
+            case INTERACTION_HYPOTHEQUER:
+            	include('./interaction_questionOuiNon_view.php');
+            	break;
+            case INTERACTION_RACHETER:
+            	include('./interaction_questionOuiNon_view.php');
+            	 
             	break;
             default:
                 //fait rien
         }
     ?>
+    </div>
+   
+	
+	<div id="propriete">
+	<?php 
+			$carteP = $joueur->getProprietes();
+			$partieId = $joueur->getPartieId();
+			?>
+			<table border=1>
+			<tr>
+			<?php
+			foreach ( $carteP as $propriete ) :
+				
+				$case = $propriete->getCaseAssociee();
+				$Id = $propriete->getCaseId();
+				$classe = "bas";
+				$LongueurMax = 12; 
+				include './affichage_case_view.php';
+				?>
+				<td>
+				<?php
+				$valeurHypo = $propriete->getHypotheque();
+				if ($valeurHypo==1)
+					{
+						?>
+						<li><a href=".?action=racheter&carteId=<?php echo $Id?>"><b>Racheter</b></a></li>
+						<?php
+					}
+				else
+				{
+				?>
+				<li><a href=".?action=hypothequer&carteId=<?php echo $Id?>"><b>Hypoth&ecirc;quer</b></a></li>
+				<?php 
+				}
+				?>
+	            <li><a href="#nogo" onClick="AfficherInfo(<?php echo $Id?>, <?php echo $partieId?>)"><b>Informations</b></a></li>
+	            </ul>
+				</td>
+				
+				<?php
+				
+			endforeach;
+			
+			?>
+			</tr>
+			</table>
+        <div id ="infoCase">
+    
+    </div>
+    </div> <!-- propriete -->
 	<?php include 'vue/piedpage.php'; ?>
     

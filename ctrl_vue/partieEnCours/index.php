@@ -6,6 +6,7 @@ require_once('../../util/main.php');
 require_once('modele/usager.php');
 require_once('modele/joueur.php');
 require_once('modele/partie.php');
+require_once('modele/paiementALaBanque.php');
 
 session_start();
 
@@ -45,6 +46,8 @@ switch ($action) {
 	            //aucune interaction a faire, donc on avance au prochain joueur
 	            $partie->avancerTour();
 	            break;
+	        //un call a $partie->avancerTour() doit etre fait dans tous les call backs des interactions
+	        
 	        case INTERACTION_ACHATPROPRIETE:
 	            //creation de la case pour pouvoir avoir le nom
 	            $caseAchetable = $tableauDeJeu->getCaseParPosition($joueur->getPosition());
@@ -57,25 +60,48 @@ switch ($action) {
 	    include('./jouer_view.php');
 	    break;
 	case 'repondreouinon' :
-		if($partie->getInteractionId() == INTERACTION_ACHATPROPRIETE){
-			$valeur = $_GET['valeur']; //TODO: valider que ce champ existe
-			if ($valeur == 'oui') {
-				//TODO: envoyer ca dans Joueur->acheterProprieteCourante()
-				//Creation de la case pour prendre ses informations. 
+		switch ($partie->getInteractionId()) {
+			case INTERACTION_ACHATPROPRIETE:
+				$valeur = $_GET['valeur']; //TODO: valider que ce champ existe
+				if ($valeur == 'oui') {
+					//TODO: envoyer ca dans Joueur->acheterProprieteCourante()
+					//Creation de la case pour prendre ses informations. 
+					$tableauDeJeu = $partie->getTableau();
+					$case = $tableauDeJeu->getCaseParPosition($joueur->getPosition());
+					//A partir de la case on cree la carte pour que le joueur puisse acheter la carte.
+					$carte = CartePropriete::pourCasePartie($case->getId(), $partieId);
+					$banque = new banque; // On cree la banque
+					$banque->vendrePropriete($joueur, $carte);
+				}
+				if ($valeur == 'non') {
+					$tableauDeJeu = $partie->getTableau();
+				}	
+				$partie->avancerTour(); //FIXME: ca devrait etre juste a une place, mais je sais pas ou encore
+				break;
+			case INTERACTION_HYPOTHEQUER:
 				$tableauDeJeu = $partie->getTableau();
-				$case = $tableauDeJeu->getCaseParPosition($joueur->getPosition());
-				//A partir de la case on cree la carte pour que le joueur puisse acheter la carte.
-				$carte = CartePropriete::pourCasePartie($case->getId(), $partieId);
-				$banque = new banque; // On cree la banque
-				$banque->vendrePropriete($joueur, $carte);
-			}
-			if ($valeur == 'non') {
+				$valeurInteraction=$_GET['valeur'];
+				$carte = CartePropriete::pourCasePartie($_SESSION['carteId'], $partieId);
+				if($valeurInteraction=='oui') {
+					$carte->setHypotheque(1);
+					$montant = ($carte->getCaseAssociee()->getHypotheque());
+					$joueur->encaisse($montant);
+				}
+				break;
+			case INTERACTION_RACHETER:
 				$tableauDeJeu = $partie->getTableau();
-			}
-			
-			$partie->setInteractionId(0);
-			$partie->avancerTour(); //FIXME: ca devrait etre juste a une place, mais je sais aps ou encore
-		}
+				$valeurInteraction=$_GET['valeur'];
+				$carte = CartePropriete::pourCasePartie($_SESSION['carteId'], $partieId);
+				if($valeurInteraction=="oui") {
+					$carte->setHypotheque(0);
+					$nomCarte = $carte->getCaseAssociee()->getNom();
+					$mrCash = new paiementALaBanque();
+					$montant = ($carte->getCaseAssociee()->getPrix())/2;
+					$billet = $mrCash->fairePayer($joueur, $montant);
+				}
+				break;
+			}				
+		$partie->setInteractionId(0);		
 		include('./jouer_view.php');
 		break;
 	case 'GenererAchatHotel' :
@@ -189,6 +215,12 @@ switch ($action) {
 		$partie->setInteractionId(INTERACTION_VENTEPROPRIETE); 		
  		include('./jouer_view.php');
  		break;
+ 	case 'affichePropriete' :
+		$carteId=$_GET['carteId'];
+		$titrePage= $partie->getNom();
+		$tableauDeJeu = $partie->getTableau();
+		include('./jouer_view.php');
+		break;
  	case 'vtPropriete':
  		$titrePage= "afficheTableau";
  		$tableauDeJeu = $partie->getTableau();
@@ -225,10 +257,30 @@ switch ($action) {
 		catch (Exception $e){
 			echo $e->getMessage();
 		}
-	
 		$tableauDeJeu = $partie->getTableau();
 		$partie->setInteractionId(0);
 		include('./jouer_view.php');
 		break;
+	case 'hypothequer':
+		$_SESSION['carteId']=$_GET['carteId'];
+		$carte = CartePropriete::pourCasePartie($_SESSION['carteId'], $partieId);
+		$tableauDeJeu = $partie->getTableau();
+		$partie->setInteractionId(INTERACTION_HYPOTHEQUER);
+		$nomCarte = $carte->getCaseAssociee()->getNom();
+		$texteQuestion = "Voulez-vous hypoth&eacute;quer la case ". $nomCarte ." ?";
+		include('./jouer_view.php');
+		break;
+	
+	case 'racheter':
+		$_SESSION['carteId']=$_GET['carteId'];
+		$partie->setInteractionId(INTERACTION_RACHETER);
+		$carte = CartePropriete::pourCasePartie($_SESSION['carteId'], $partieId);
+		$nomCarte = $carte->getCaseAssociee()->getNom();
+		$titrePage= "racheter";
+		$tableauDeJeu = $partie->getTableau();
+		$texteQuestion = "Voulez-vous racheter la case ". $nomCarte ." ?";
+		include('./jouer_view.php');
+		break;
+
 }
 ?>

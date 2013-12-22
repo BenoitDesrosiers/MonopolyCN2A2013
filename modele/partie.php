@@ -15,6 +15,8 @@ define("INTERACTION_ACHATHOTEL",2);
 define("INTERACTION_ACHATMAISON",3);
 define("INTERACTION_VENTEPROPRIETE",4);
 define("INTERACTION_VENDRECARTEACTION",5);
+define("INTERACTION_HYPOTHEQUER",6);
+define("INTERACTION_RACHETER",7);
 
 class Partie extends Objet implements EntreposageDatabase {
     protected $id;
