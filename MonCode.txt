@@ -1,5 +1,0 @@
-Tout le code dans la branch Sam 
-
-est le fruit de Sam. (Copyright)
-
-et de la branch Master par Benoit.

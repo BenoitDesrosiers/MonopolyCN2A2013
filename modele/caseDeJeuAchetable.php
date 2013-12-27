@@ -85,16 +85,16 @@ abstract class CaseDeJeuAchetable extends CaseDeJeu {
                 //le joueur a atterit sur une case qui ne lui appartient pas 
                 $proprio->chargerLoyerA($unJoueur, $this->calculerLoyer($carte));
             }
-        } else { //pas de proprietaire = essayer de vendre la propriete
-            if($unJoueur->tenterAchat($carte)){
-                $banque = new banque;
-                $banque->vendrePropriete($unJoueur, $carte);
-            }
+        } else { 
+        	//pas de proprietaire = essayer de vendre la propriete
+            	$partie = Partie::parId($unJoueur->getPartieId());
+            	$partie->setInteractionId(INTERACTION_ACHATPROPRIETE);
+            	
         }
     }
     
     
-    protected function nombreCartesMemeGroupeEtProprio(CartePropriete $propriete) {
+    public function nombreCartesMemeGroupeEtProprio(CartePropriete $propriete) {
         // retourne le nombre de carte d'un meme groupe appartenant au meme joueur
         $partie = Partie::parId($propriete->getPartieId());
         $casesDuGroupe = $partie->casesDuGroupe($this->getGroupeDeCaseId());
@@ -119,8 +119,7 @@ abstract class CaseDeJeuAchetable extends CaseDeJeu {
     public function setPrix($value) {
         $this->prix = $value;
     }
-    
-    
+            
     public function getURLLogo() {
         return $this->URLLogo;
     }
@@ -131,6 +130,7 @@ abstract class CaseDeJeuAchetable extends CaseDeJeu {
     public function getHypotheque() {
         return $this->hypotheque;
     }
+    
     public function setHypotheque($value) {
         $this->hypotheque = $value;
     }
@@ -199,9 +199,5 @@ abstract class CaseDeJeuAchetable extends CaseDeJeu {
     public function setGroupeDeCaseId($value) {
         $this->groupeDeCaseId = $value;
     }
-    
-    
-   
-     
-    
+  
 }

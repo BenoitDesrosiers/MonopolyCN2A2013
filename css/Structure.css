@@ -1,4 +1,4 @@
-/* cette structure est base sur http://blog.html.it/layoutgala/ modele #24 -> nav et extra fixed width, contenu liquid. J'ai ajoutŽ body min-width */
+/* cette structure est base sur http://blog.html.it/layoutgala/ modele #24 -> nav et extra fixed width, contenu liquid. J'ai ajoute body min-width */
  
 html,body
 {
@@ -54,6 +54,11 @@ div#navigation
 	background: white;
 }
 
+div#interaction
+{
+    background: white;
+}
+
 div#extra
 {
 	background:#FF8539;
@@ -89,16 +94,29 @@ div#navigation
 	float:left;
 	width:240px;
 }
+
+div#interaction
+{
+    float:left;
+    width:240px;
+}
+
 div#argent
 {
     float:left;
     width:240px;
 }
 
+div#infoCase
+{
+    float:left;
+    /*width:240px;*/
+}
+
 div#propriete
 {
     float:left;
-    width:240px;
+    /*width:240px;*/
 }
 div#extra
 {

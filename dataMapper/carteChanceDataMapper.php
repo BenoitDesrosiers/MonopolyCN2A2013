@@ -71,7 +71,7 @@ class CarteChanceDataMapper extends Mapper {
         $listeItems = array();
         
         foreach($query as $row) {
-            $unItem = $this->find($row['CarteId']);
+            $unItem = $this->find(array($row['CarteId']));
             if ($unItem <> null) {
                 //set la position a partir de celle trouvee dans PartienEnCours_CarteCC
                 $unItem->setPosition($row['Position']);
@@ -94,12 +94,32 @@ class CarteChanceDataMapper extends Mapper {
             $query->execute();
     
             foreach($query as $row) {
-                    $item = $this->find($row['CarteId']);
+                    $item = $this->find(array($row['CarteId']));
                     if ($item <> null) {
                             //set la position a partir de celle trouvee dans PartienEnCours_CarteCC
                             $item->setPosition($row['Position']);
                     }
             }
             return $item;
+    }
+    
+    function pourJoueurPourPartie($compte, $idPartie){
+    	$queryTxt = 'SELECT CarteId FROM joueurpartie_carte WHERE JoueurPartieUsagerCompte = :compte AND JoueurPartiePartieEnCoursId = :idPartie';
+    	$query = self::$db->prepare($queryTxt);
+    	$query->bindValue(':compte', $compte);
+    	$query->bindValue(':idPartie', $idPartie);
+    	$query->setFetchMode(PDO::FETCH_ASSOC);
+    	$query->execute();
+
+    	$listeItems = array();
+    	
+    	foreach($query as $row) {
+    		$item = $this->find(array($row['CarteId']));
+    		//TODO: ajouter un check pour ne par creer des cartes CC dans les Chance
+    		if ($item->getType() == "Chanceg") {
+                $listeItems[] = $item;
+    		}
+    	}
+    	return $listeItems;
     }
 }

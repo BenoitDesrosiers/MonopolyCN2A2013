@@ -17,10 +17,12 @@ class CaseActionDataMapper extends Mapper {
     }
 
     protected function doCreateObject( array $array) {
-        
-        //TODO: creer 3 autres sous-clase de CaseDeJeuAchetable et les appeler CasePropriete, CaseTrain et CaseService et creer la bon selon le type provenant de GroupeDeCase
         $obj = new CaseDeJeuAction($array);
-
+		//FIXME: j'ai pas de attache pour devenir un observer. C'est pas grave pour l'instant puisque je ne change pas l'objet
+		//       mais quand on aura un gestionnaire, faudra etre capable de changer les parametre. 
+		//       y'a un probleme avec la position de la case (setPosition). Ca vient de la table DefinitionPartie_CaseAction. 
+		//       Est-ce que cet objet sera en fait un utilisateur de CaseAction? et faudrait un classe caseActionPartie qui a la position et qui utilise
+		//       une caseAction pour avoir le reste de l'info?. Est-ce que ca serait la meme chose pour caseDeJeuPropriete. 
         return $obj;        
     }
     protected function classeGeree() {
@@ -60,33 +62,6 @@ class CaseActionDataMapper extends Mapper {
      * fonctions specific a ce datamapper
      */
     
-    function nomLibre($nom) {
-        /*
-         * verifie si ce $nom est deja utilise pour une autre partie
-         * 
-         * Retour
-         *     true: le nom n'est pas utilise
-         *     false: une partie a deja ce nom
-         */
-        $queryTxt = 'SELECT * FROM DefinitionPartie
-                WHERE nom = :nom';
-        $query = self::$db->prepare($queryTxt);
-        $query->bindValue(':nom', $nom);
-        $query->setFetchMode(PDO::FETCH_ASSOC);
-        $query->execute();
-        
-        $listeItems = array();
-        
-        foreach($query as $row) {
-            $unItem = $this->createObject($row);
-            if ($unItem <> null) {
-                $listeItems[] = $unItem;
-            }
-        }
-        return $listeItems;
-        
-    }
-    
     function pourDefinitionPartie($idDefinitionPartie) {
         // retourne un array contenant toutes les cases actions du tableau
         
@@ -104,6 +79,8 @@ class CaseActionDataMapper extends Mapper {
             $unItem = $this->find(array($row['CaseActionId']));
             if ($unItem <> null) {
                 //set la position a partir de celle trouvee dans DefinitionPartie_CaseAction
+                //FIXME: si je fais un set, c'est donc que ca devrait faire un update dans la BD... mais ca ne le fait pas parce que la position est juste dans
+                //       l'objet, et pas dans la bd puisque ca vient d'une autre table????
                 $unItem->setPosition($row['Position']);
                 $listeItems[] = $unItem;
             }
@@ -124,7 +101,7 @@ class CaseActionDataMapper extends Mapper {
     	foreach($query as $row) {
     		$item = $this->find(array($row['CaseActionId']));
     		if ($item <> null) {
-    			//set la position a partir de celle trouvee dans DefinitionPartie_CaseAchetable
+    			//set la position a partir de celle trouvee dans DefinitionPartie_CaseAction
     			$item->setPosition($row['Position']);
     		}
     	}

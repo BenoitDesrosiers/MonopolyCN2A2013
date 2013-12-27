@@ -33,7 +33,7 @@ class CaseDeJeuAction extends CaseDeJeu {
         $dataMapper = new CaseActionDataMapper();
         return $dataMapper->parPositionCase($positionCase, $idDefinitionPartie);
     }
-    
+        
     // interface entreposageDatabase
     public function getDataMapper() {
         return new CaseActionDataMapper();
@@ -65,16 +65,22 @@ class CaseDeJeuAction extends CaseDeJeu {
         //TODO: devrait pas mettre 0, devrait generer une erreur
     }
     
+    public function atterrirSur(Joueur $joueur) {
+   		$this->execute_action($joueur);
+    }
     // Actions
     public function execute_action(Joueur $joueur){
-        switch($this->actionId){
+    switch($this->actionId){
             case 42:
             case 43:
                 $xyz = new ActionCarte($this->actionId);
                 $xyz->execute($joueur);
                 break;
+            case 44:
+                $joueur->setSurStationnementGratuit(true);
+                break;
             default:    // Remplacer ceci pour d'autre type d'action
-                return 0;
+                return 0; //FIXME cette fonction retour 0 juste dans ce cas? est-ce qu'elle doit faire un return ?
         }
     }
 

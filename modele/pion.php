@@ -1,6 +1,6 @@
 <?php
 
-require_once "dataMapper/PionDataMapper.php";
+require_once "dataMapper/pionDataMapper.php";
 
 require_once "interface/entreposageDatabase.php";
 

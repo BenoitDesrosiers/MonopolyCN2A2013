@@ -8,11 +8,11 @@ class CarteProprieteDataMapper extends Mapper {
 	
     function __construct() {
         parent::__construct();
-        $this->selectStmt = self::$db->prepare("SELECT * FROM joueurpartie_caseachetable where CaseAchetableId= ? and JoueurPartiePartieEnCoursId= ? ");
-        $this->updateStmt = self::$db->prepare('update joueurpartie_caseachetable set JoueurPartieUsagerCompte=?, JoueurPartiePartieEnCoursId=?, 
+        $this->selectStmt = self::$db->prepare("SELECT * FROM JoueurPartie_CaseAchetable where CaseAchetableId= ? and JoueurPartiePartieEnCoursId= ? ");
+        $this->updateStmt = self::$db->prepare('update JoueurPartie_CaseAchetable set JoueurPartieUsagerCompte=?, JoueurPartiePartieEnCoursId=?, 
                                                         CaseAchetableId=?, OrdreAffichage=?, Hypotheque=?, NombreMaisons=?, NombreHotels=?  
-                                                    where JoueurPartieUsagerCompte = ? and CaseAchetableId= ? and JoueurPartiePartieEnCoursId= ?');
-        $this->insertStmt = self::$db->prepare("insert into joueurpartie_caseachetable ( JoueurPartieUsagerCompte, JoueurPartiePartieEnCoursId, 
+                                                    where CaseAchetableId= ? and JoueurPartiePartieEnCoursId= ?');
+        $this->insertStmt = self::$db->prepare("insert into JoueurPartie_CaseAchetable ( JoueurPartieUsagerCompte, JoueurPartiePartieEnCoursId, 
                                                         CaseAchetableId, OrdreAffichage, Hypotheque, NombreMaisons, NombreHotels) values (?,?,?,?,?,?,?)");
     }
 
@@ -57,10 +57,7 @@ class CarteProprieteDataMapper extends Mapper {
     }
     
     function update( $objet, $sujet) {
-        //FIXME: j'ai change le updateStmt pour un insertStmt car le changement de proprietaire ne se fait que sur un achat jusqu'ˆ maintenant, 
-        //       mais quand on voudra vendre une propriete, ca va planter
-        //FIXME: faudrait verifier si l'enregistrement existe, si oui, faire le update, sinon faire une insert
-        $values= array ($objet->getCompteProprietaire(), 
+       	$values= array ($objet->getCompteProprietaire(), 
                         $objet->getPartieId(), 
                         $objet->getCaseId(), 
                         $objet->getOrdreAffichage(),
@@ -68,7 +65,17 @@ class CarteProprieteDataMapper extends Mapper {
                         $objet->getNombreMaisons(),
                         $objet->getNombreHotels(),
                         );
-        $this->insertStmt->execute($values);       
+        
+        //verifie si l'enregistrement existe deja 
+        $obj = parent::find(array($objet->getCaseId(),$objet->getPartieId()));
+        
+        if ($obj === null) { //si il n'est pas la, on l'ajoute
+            $this->insertStmt->execute($values);
+        }else{ // si il est la, on l'update
+             $values[]=$objet->getCaseId();
+             $values[]=$objet->getPartieId();
+             $this->updateStmt->execute($values);
+        }
     }
 
     function selectStmt() {

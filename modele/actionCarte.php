@@ -15,11 +15,10 @@ class ActionCarte extends Action{
         $partie=Partie::parId($unJoueur->getPartieId());
         
         if($this->id==42)
-            $carte=$partie->getProchaireCarteCC();
+            $carte=$partie->getProchaineCarteCC();
         elseif($this->id==43)
-            $carte=$partie->getProchaireCarteChance();
+            $carte=$partie->getProchaineCarteChance();
         
         $carte->execute($unJoueur);
-        
     }
 }

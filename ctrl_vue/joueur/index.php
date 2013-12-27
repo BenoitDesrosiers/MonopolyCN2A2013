@@ -30,7 +30,7 @@ switch ($action) {
 	    // attente du demarrage de la partie
 	   
 	    $partie = Partie::parId($partieId);
-	    if ($_POST['quitter']) {
+	    if ((isset($_POST['quitter'])) && $_POST['quitter']) {
 	        //TODO: quitter la partie veut dire enlever le joueur de la liste des joueurs
 	    } else {
             if ($partie->estDemarre()) {
@@ -38,11 +38,11 @@ switch ($action) {
                 $joueur = Joueur::parComptePartie($usager->getCompte(), $partie->getId());
                 $pions = $partie->pionsDisponibles();
                 $titrePage = "Choix du pion";
-                $msg = "Choississez un pion";
+                $msg = "Choisissez un pion";
                 include('demandePion_view.php');
             } else {
     	        /* la partie n'est pas demarree, on doit donc attendre */
-                $titrePage = "Attente demarrage de la partie";
+                $titrePage = "Attente d&eacute;marrage de la partie";
                 include('attenteDemarragePartie_view.php');
             }
 	    }
@@ -64,7 +64,7 @@ switch ($action) {
 	    if (!$disponible) {
 	        // le pion a ete pris par quelqu'un d'autre, on recommence
 	        $titrePage = "Choix du pion";
-	        $msg = "Votre pion a ŽtŽ pris, choississez un autre pion";
+	        $msg = "Votre pion a &eacute;t&eacute; pris, choisissez un autre pion";
 	        include('demandePion_view.php');
 	    } else {
 	        $joueur->setPionId($pionDemande);

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Serveur: localhost
--- Généré le : Mar 08 Octobre 2013 à 13:30
+-- Généré le : Dim 22 Décembre 2013 à 02:50
 -- Version du serveur: 5.1.44
 -- Version de PHP: 5.3.1
 
@@ -75,6 +75,27 @@ INSERT INTO `Action` (`Id`, `Reference`, `Description`) VALUES
 (46, 46, 'taxe de luxe'),
 (47, 47, 'impot sur revenu'),
 (48, 48, 'visitez prison');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `Aide`
+--
+
+CREATE TABLE IF NOT EXISTS `Aide` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `texte` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+--
+-- Contenu de la table `Aide`
+--
+
+INSERT INTO `Aide` (`id`, `texte`) VALUES
+(1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed suscipit ipsum in eros pharetra lobortis. Sed molestie dui id euismod hendrerit. Nunc tristique mi justo, a tincidunt nisl tincidunt non. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultricies arcu et nibh blandit vulputate. In dapibus tellus ut sem sodales ultricies. Donec suscipit viverra viverra.\r\n\r\nSed mi eros, pharetra eu nibh eu, iaculis accumsan turpis. Duis id justo malesuada, scelerisque elit id, blandit diam. Aenean sit amet nunc at augue commodo adipiscing. Etiam feugiat bibendum quam. Donec eu nisi eget eros euismod dapibus vitae at augue. Integer placerat lacinia leo, vel consequat metus. Aliquam eu congue libero. Cras luctus elit magna, sit amet posuere sem eleifend ac. Sed porttitor, massa nec laoreet faucibus, urna dolor convallis velit, sit amet tempus libero arcu at eros. Nam auctor ligula quis est varius convallis. In at erat ipsum. Vivamus eu rutrum nunc. Nullam sagittis, nunc ac dictum fermentum, neque sapien gravida quam, in pulvinar ante felis eget dolor. Nam dui tortor, consectetur eu quam eget, facilisis aliquam lacus.'),
+(2, 'Pellentesque iaculis erat nec nisi interdum aliquet. Vivamus condimentum facilisis molestie. Aliquam blandit elit et justo viverra sollicitudin. Proin vel rhoncus enim. Mauris fringilla, turpis quis rhoncus consectetur, sem tellus blandit odio, ut pretium ipsum velit a arcu. Sed suscipit porttitor massa et ornare. Pellentesque sagittis fermentum eros, ac egestas massa commodo sed. Mauris pellentesque nunc eu interdum ultrices.\r\n\r\nEtiam ut elit metus. Nulla elementum fermentum sapien vitae auctor. Ut posuere varius magna id mattis. Donec sed ultrices turpis, eget sagittis augue. Donec sit amet dolor justo. Morbi pretium magna quis sapien fermentum, vitae vulputate eros sodales. Sed hendrerit mi sit amet lobortis pulvinar. Donec eleifend at felis a venenatis. Nunc euismod vel augue eget gravida. Nam rhoncus egestas urna et suscipit. Sed nisl nulla, facilisis nec dignissim sit amet, viverra sed ipsum. Mauris lobortis nulla odio, vel eleifend dui vehicula sit amet. Morbi nibh nibh, bibendum vitae sapien sed, egestas posuere urna.'),
+(3, 'Nam rutrum orci non nulla elementum, sit amet convallis ligula sodales. Sed quis pharetra est. Duis feugiat pharetra venenatis. Integer ipsum justo, rhoncus nec tristique eget, malesuada id metus. Nam accumsan eros nulla, non interdum nisl faucibus ut. Etiam vehicula nulla eget magna laoreet, ut posuere nulla imperdiet. Donec blandit diam nec nunc laoreet sagittis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed sollicitudin magna eget sapien mattis consequat. Ut eget suscipit dui. Praesent mattis ultricies velit, vel elementum neque. Sed sit amet consectetur dui. Donec tempor lacus sed nibh sollicitudin, at eleifend mi commodo. Aliquam et nulla vestibulum, mollis mi euismod, congue turpis. Ut ac ante ac tortor viverra ultrices sit amet sed magna. Phasellus accumsan quam sed justo dictum aliquet.\r\n\r\nCras eget nisl imperdiet, ultrices nunc non, venenatis sapien. Vivamus hendrerit ornare lectus sit amet ultrices. Nunc auctor velit in felis euismod tincidunt. Fusce ac suscipit enim. Sed placerat nibh at est ullamcorper mollis. Nunc viverra lorem ac justo consectetur, id eleifend leo bibendum. Morbi interdum est at posuere lacinia. Fusce rhoncus eget nisi at pellentesque. Morbi eget posuere turpis. In rhoncus dictum sem, vitae hendrerit tellus posuere at. Nulla nisi est, luctus id facilisis eget, aliquam eu nulla. Integer in tortor auctor, tristique velit ut, aliquam tellus. Donec mi risus, mollis sed elementum a, venenatis a ipsum. Cras eu neque ligula. Donec sit amet quam pellentesque, fermentum dolor sit amet, cursus quam. Duis feugiat mollis leo, vitae dignissim tellus commodo a.');
 
 -- --------------------------------------------------------
 
@@ -514,7 +535,7 @@ CREATE TABLE IF NOT EXISTS `JoueurPartie` (
 
 INSERT INTO `JoueurPartie` (`UsagerCompte`, `PartieEnCoursId`, `PionId`, `Position`, `OrdreDeJeu`, `EnPrison`, `ToursRestants_Prison`) VALUES
 ('benoit', 1, 1, 0, 1, 0, 0),
-('marc', 1, 3, 0, 3, 0, 0),
+('marc', 1, 3, 15, 3, 0, 0),
 ('tom', 1, 2, 0, 2, 0, 0),
 ('vero', 1, 4, 0, 4, 0, 0);
 
@@ -540,28 +561,32 @@ CREATE TABLE IF NOT EXISTS `JoueurPartie_Argent` (
 
 INSERT INTO `JoueurPartie_Argent` (`ArgentMontant`, `JoueurPartieUsagerCompte`, `JoueurPartiePartieEnCoursId`, `Quantite`) VALUES
 (1, 'benoit', 1, 10),
-(1, 'marc', 1, 0),
+(1, 'marc', 1, 30),
 (1, 'tom', 1, 0),
-(1, 'vero', 1, 0),
-(5, 'benoit', 1, 3),
-(5, 'marc', 1, 2),
-(5, 'tom', 1, 2),
-(5, 'vero', 1, 2),
-(10, 'benoit', 1, 3),
-(10, 'marc', 1, 3),
-(10, 'tom', 1, 3),
-(10, 'vero', 1, 5),
-(50, 'benoit', 1, 2),
-(50, 'marc', 1, 2),
-(50, 'tom', 1, 4),
+(1, 'vero', 1, 5),
+(5, 'benoit', 1, 0),
+(5, 'marc', 1, 0),
+(5, 'tom', 1, 0),
+(5, 'vero', 1, 5),
+(10, 'benoit', 1, 0),
+(10, 'marc', 1, 1),
+(10, 'tom', 1, 0),
+(10, 'vero', 1, 7),
+(20, 'benoit', 1, 0),
+(20, 'marc', 1, 0),
+(20, 'tom', 1, 5),
+(20, 'vero', 1, 5),
+(50, 'benoit', 1, 0),
+(50, 'marc', 1, 1),
+(50, 'tom', 1, 2),
 (50, 'vero', 1, 2),
-(100, 'benoit', 1, 1),
-(100, 'marc', 1, 4),
+(100, 'benoit', 1, 0),
+(100, 'marc', 1, 2),
 (100, 'tom', 1, 7),
-(100, 'vero', 1, 4),
+(100, 'vero', 1, 7),
 (500, 'benoit', 1, 0),
-(500, 'marc', 1, 0),
-(500, 'tom', 1, 0),
+(500, 'marc', 1, 1),
+(500, 'tom', 1, 1),
 (500, 'vero', 1, 1);
 
 -- --------------------------------------------------------
@@ -610,11 +635,13 @@ CREATE TABLE IF NOT EXISTS `JoueurPartie_CaseAchetable` (
 --
 
 INSERT INTO `JoueurPartie_CaseAchetable` (`JoueurPartieUsagerCompte`, `JoueurPartiePartieEnCoursId`, `CaseAchetableId`, `OrdreAffichage`, `Hypotheque`, `NombreMaisons`, `NombreHotels`) VALUES
-('benoit', 1, 1, 1, 0, 2, 0),
-('benoit', 1, 3, 2, 0, 0, 1),
+('benoit', 1, 1, 1, 0, 0, 1),
 ('benoit', 1, 6, 3, 0, 0, 1),
+('marc', 1, 3, 2, 0, 0, 3),
 ('marc', 1, 5, 1, 0, 0, 0),
+('marc', 1, 14, 0, 0, 0, 0),
 ('marc', 1, 15, 2, 0, 0, 0),
+('marc', 1, 24, 0, 0, 0, 0),
 ('marc', 1, 25, 3, 0, 0, 0),
 ('marc', 1, 35, 4, 0, 0, 0),
 ('tom', 1, 18, 2, 1, 0, 0),
@@ -634,21 +661,21 @@ CREATE TABLE IF NOT EXISTS `PartieEnCours` (
   `JoueurTour` int(10) NOT NULL,
   `DebutPartie` datetime NOT NULL,
   `InteractionId` int(10) NOT NULL,
-
+  `JouerEncore` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`Id`),
   KEY `Coordonnateur` (`Coordonnateur`),
   KEY `DefinitionPartieId` (`DefinitionPartieId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=5 ;
 
 --
 -- Contenu de la table `PartieEnCours`
 --
 
-INSERT INTO `PartieEnCours` (`Id`, `Coordonnateur`, `DefinitionPartieId`, `Nom`, `JoueurTour`, `DebutPartie`, `InteractionId`) VALUES
-(1, 'benoit', 1, 'Partie1', 1, '0000-00-00 00:00:00', 0),
-(2, 'benoit', 2, 'Partie2', 2, '0000-00-00 00:00:00', 0),
-(3, 'benoit', 1, 'Partie3', 1, '0000-00-00 00:00:00', 0),
-(4, 'benoit', 1, 'Partie4', 1, '0000-00-00 00:00:00', 0);
+INSERT INTO `PartieEnCours` (`Id`, `Coordonnateur`, `DefinitionPartieId`, `Nom`, `JoueurTour`, `DebutPartie`, `InteractionId`, `JouerEncore`) VALUES
+(1, 'benoit', 1, 'Partie1', 1, '2013-11-22 11:11:11', 0, 0),
+(2, 'benoit', 2, 'Partie2', 2, '0000-00-00 00:00:00', 0, 0),
+(3, 'benoit', 1, 'Partie3', 1, '0000-00-00 00:00:00', 0, 0),
+(4, 'benoit', 1, 'Partie4', 1, '0000-00-00 00:00:00', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -776,111 +803,3 @@ INSERT INTO `Usager` (`Compte`, `Nom`, `MotDePasse`, `Role`) VALUES
 ('marc', 'Marc-André', '1a91d62f7ca67399625a4368a6ab5d4a3baa6073', 'joueur'),
 ('tom', 'Tommy', '1a91d62f7ca67399625a4368a6ab5d4a3baa6073', 'joueur'),
 ('vero', 'Veronique', '1a91d62f7ca67399625a4368a6ab5d4a3baa6073', 'coordonnateur');
-
---
--- Contraintes pour les tables exportées
---
-
---
--- Contraintes pour la table `Carte`
---
-ALTER TABLE `Carte`
-  ADD CONSTRAINT `Carte_ibfk_1` FOREIGN KEY (`ActionId`) REFERENCES `action` (`Id`) ON UPDATE CASCADE;
-
---
--- Contraintes pour la table `CaseAchetable`
---
-ALTER TABLE `CaseAchetable`
-  ADD CONSTRAINT `CaseAchetable_ibfk_1` FOREIGN KEY (`GroupeDeCaseId`) REFERENCES `groupedecase` (`Id`) ON UPDATE CASCADE;
-
---
--- Contraintes pour la table `CaseAction`
---
-ALTER TABLE `CaseAction`
-  ADD CONSTRAINT `fk_CaseAction_Action1` FOREIGN KEY (`ActionID`) REFERENCES `action` (`Id`) ON UPDATE CASCADE;
-
---
--- Contraintes pour la table `DefinitionPartie_Argent`
---
-ALTER TABLE `DefinitionPartie_Argent`
-  ADD CONSTRAINT `DefinitionPartie_Argent_ibfk_1` FOREIGN KEY (`DefinitionPartieId`) REFERENCES `definitionpartie` (`Id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `DefinitionPartie_Argent_ibfk_2` FOREIGN KEY (`ArgentMontant`) REFERENCES `argent` (`Montant`) ON UPDATE CASCADE;
-
---
--- Contraintes pour la table `DefinitionPartie_Carte`
---
-ALTER TABLE `DefinitionPartie_Carte`
-  ADD CONSTRAINT `DefinitionPartie_Carte_ibfk_1` FOREIGN KEY (`DefinitionPartieId`) REFERENCES `definitionpartie` (`Id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `DefinitionPartie_Carte_ibfk_2` FOREIGN KEY (`CarteId`) REFERENCES `carte` (`Id`) ON UPDATE CASCADE;
-
---
--- Contraintes pour la table `DefinitionPartie_CaseAchetable`
---
-ALTER TABLE `DefinitionPartie_CaseAchetable`
-  ADD CONSTRAINT `DefinitionPartie_CaseAchetable_ibfk_1` FOREIGN KEY (`CaseAchetableId`) REFERENCES `caseachetable` (`Id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `DefinitionPartie_CaseAchetable_ibfk_2` FOREIGN KEY (`DefinitionPartieId`) REFERENCES `definitionpartie` (`Id`) ON UPDATE CASCADE;
-
---
--- Contraintes pour la table `DefinitionPartie_CaseAction`
---
-ALTER TABLE `DefinitionPartie_CaseAction`
-  ADD CONSTRAINT `DefinitionPartie_CaseAction_ibfk_1` FOREIGN KEY (`DefinitionPartieId`) REFERENCES `definitionpartie` (`Id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `DefinitionPartie_CaseAction_ibfk_2` FOREIGN KEY (`CaseActionId`) REFERENCES `caseaction` (`ID`) ON UPDATE CASCADE;
-
---
--- Contraintes pour la table `DefinitionPartie_Pion`
---
-ALTER TABLE `DefinitionPartie_Pion`
-  ADD CONSTRAINT `DefinitionPartie_Pion_ibfk_1` FOREIGN KEY (`DefinitionPartieId`) REFERENCES `definitionpartie` (`Id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `DefinitionPartie_Pion_ibfk_2` FOREIGN KEY (`PionId`) REFERENCES `pion` (`Id`) ON UPDATE CASCADE;
-
---
--- Contraintes pour la table `JoueurPartie`
---
-ALTER TABLE `JoueurPartie`
-  ADD CONSTRAINT `JoueurPartie_fk` FOREIGN KEY (`UsagerCompte`) REFERENCES `usager` (`Compte`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `JoueurPartie_fk2` FOREIGN KEY (`PartieEnCoursId`) REFERENCES `partieencours` (`Id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `JoueurPartie_fk3` FOREIGN KEY (`PionId`) REFERENCES `pion` (`Id`) ON UPDATE CASCADE;
-
---
--- Contraintes pour la table `JoueurPartie_Argent`
---
-ALTER TABLE `JoueurPartie_Argent`
-  ADD CONSTRAINT `fk4_JoueurPartieargent` FOREIGN KEY (`JoueurPartieUsagerCompte`,`JoueurPartiePartieEnCoursId`) REFERENCES `joueurpartie` (`UsagerCompte`,`PartieEnCoursId`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_JoueurPartieargent` FOREIGN KEY (`ArgentMontant`) REFERENCES `argent` (`Montant`) ON UPDATE CASCADE;
-
---
--- Contraintes pour la table `JoueurPartie_Carte`
---
-ALTER TABLE `JoueurPartie_Carte`
-  ADD CONSTRAINT `JoueurPartie_Carte_ibfk_1` FOREIGN KEY (`CarteId`) REFERENCES `carte` (`Id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `JoueurPartie_Carte_ibfk_2` FOREIGN KEY (`JoueurPartiePartieEnCoursId`) REFERENCES `joueurpartie` (`PartieEnCoursId`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `JoueurPartie_Carte_ibfk_3` FOREIGN KEY (`JoueurPartieUsagerCompte`) REFERENCES `joueurpartie` (`UsagerCompte`) ON UPDATE CASCADE;
-
---
--- Contraintes pour la table `JoueurPartie_CaseAchetable`
---
-ALTER TABLE `JoueurPartie_CaseAchetable`
-  ADD CONSTRAINT `JoueurPartie_CaseAchetable_ibfk_1` FOREIGN KEY (`CaseAchetableId`) REFERENCES `caseachetable` (`Id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `JoueurPartie_CaseAchetable_ibfk_2` FOREIGN KEY (`JoueurPartieUsagerCompte`) REFERENCES `joueurpartie` (`UsagerCompte`) ON UPDATE CASCADE;
-
---
--- Contraintes pour la table `PartieEnCours`
---
-ALTER TABLE `PartieEnCours`
-  ADD CONSTRAINT `PartieEnCours_ibfk_1` FOREIGN KEY (`Coordonnateur`) REFERENCES `usager` (`Compte`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `PartieEnCours_ibfk_2` FOREIGN KEY (`DefinitionPartieId`) REFERENCES `definitionpartie` (`Id`) ON UPDATE CASCADE;
-
---
--- Contraintes pour la table `PartieEnCours_CarteCC`
---
-ALTER TABLE `PartieEnCours_CarteCC`
-  ADD CONSTRAINT `PartieEnCours_CarteCC_ibfk_1` FOREIGN KEY (`PartieEnCoursId`) REFERENCES `partieencours` (`Id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `PartieEnCours_CarteCC_ibfk_2` FOREIGN KEY (`CarteId`) REFERENCES `carte` (`Id`) ON UPDATE CASCADE;
-
---
--- Contraintes pour la table `PartieEnCours_CarteChance`
---
-ALTER TABLE `PartieEnCours_CarteChance`
-  ADD CONSTRAINT `PartieEnCours_CarteChance_ibfk_1` FOREIGN KEY (`PartieEnCoursId`) REFERENCES `partieencours` (`Id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `PartieEnCours_CarteChance_ibfk_2` FOREIGN KEY (`CarteId`) REFERENCES `carte` (`Id`) ON UPDATE CASCADE;

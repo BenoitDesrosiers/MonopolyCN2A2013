@@ -21,7 +21,7 @@
 			<button type="submit" name="AtterirSur">Atterir sur une case non Achete</button>
      		<button type="submit" name="PaiementParBatiment">Tester Paiement Par Batiment</button>
      		<button type="submit" name="FairePayerJoueur">Tester faire payer joueur</button>
-     		
+     	
      		<?php //LISTEJOUEUR 1 vous pouvez ajouter le bouton pour lister les joueurs ici ?>
      	</form>
     	<h1>Liste des parties disponibles</h1>

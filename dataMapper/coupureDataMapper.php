@@ -61,7 +61,7 @@ class CoupureDataMapper extends Mapper {
         $coupures = $objet->getArgent();
         // commence par effacer tout l'argent courant du joueur
         // on doit faire ca car si la bd avait un billet de 50$ et que maintenant il n'y a plus de 50$, il restera dans la bd. 
-        $queryTxt = 'DELETE FROM joueurPartie_Argent
+        $queryTxt = 'DELETE FROM JoueurPartie_Argent
                         WHERE JoueurPartieUsagerCompte = :joueurId
                             AND JoueurPartiePartieEnCoursId = :partieId';
         $query = self::$db->prepare($queryTxt);

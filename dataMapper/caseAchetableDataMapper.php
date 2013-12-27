@@ -28,14 +28,14 @@ class CaseAchetableDataMapper extends Mapper {
         $query->execute();
         $array2  = $query->fetch();
      
-        $array["GroupeDeCaseId"] = $array2["Id"];
-        
-       if($array2['IsCheminDeFer']=="1") {
-               $obj = new CaseDeJeuTrain($array );
+       if($array2['IsCheminDeFer']==1){
+        	$obj = new CaseDeJeuTrain($array );
        }
-       elseif($array2['IsServicePublique']=="1") {
-            $obj = new CaseDeJeuServicePublic($array);
-       } else {
+        elseif($array2['IsServicePublique']==1){
+        	$obj = new CaseDeJeuServicePublic($array);
+        }
+        else {
+            $array["GroupeDeCaseId"] = $array2["Id"];
             $array["Couleur"] = $array2["Couleur"];
             $array["CouleurHTML"] = $array2["CouleurHTML"];
         	$obj = new CaseDeJeuPropriete($array);  
@@ -123,7 +123,8 @@ class CaseAchetableDataMapper extends Mapper {
     }
     
     function parPositionCase($position, $idDefinitionPartie) {
-    	// retourne un array contenant toutes les cases achetable du tableau
+    	// retourne une case achetable du tableau a une position specifique
+    	
     
     	// commence par aller chercher la liste des Id dans la table DefinitionPartie_CaseAchetable
     	$queryTxt = 'SELECT * FROM DefinitionPartie_CaseAchetable
@@ -144,21 +145,5 @@ class CaseAchetableDataMapper extends Mapper {
     	return $item;
     }
     
-   /* obsolete
-    *  static function loadPrix($proprieteId) {
-        // retourne un array contenant tout les prix de la propriete
-    
-        // commence par aller chercher les prix dans la table CaseAchetable
-        $queryTxt = 'SELECT * FROM CaseAchetable
-        				WHERE Id = :id';
-        $query = self::$db->prepare($queryTxt);
-        $query->bindValue(':id', $proprieteId);
-        $query->setFetchMode(PDO::FETCH_ASSOC);
-        $query->execute();
-    
-        $listePrix = $query->fetch();
-       
-        return $listePrix;
-    }
-    */
+ 
 }
